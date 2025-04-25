@@ -1,0 +1,10 @@
+I am trying to do 2 things
+
+1. I want to change the values in the pre_final.csv(queried from the pre_final view in the ) sqlite_scrapper.db to be 1 floating point number, e.g. 1 becomes a 0.8 or 5 becomes 5.3
+2. Some fights are still not showing up in the pre_final view even though they are found in all the other tables, just not the final table. Can you try to track down where these fights are going and how to get them into the pre_final view?
+
+For exaemple this fight:
+
+Dustin Ortiz vs. Alexandre Pantoja
+
+doesn't appear in the pre_final.csv file even though that fight is located in the other tables. The problem most likely resides in the src/sql_scripts/ufc_sql_final_views.sql script
