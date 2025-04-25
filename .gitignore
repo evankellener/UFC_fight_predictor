@@ -1,0 +1,30 @@
+# Ignore Python virtual environments
+ufc_env/
+ufc_env_old/
+
+# Ignore temporary data files
+data/tmp/
+*.csv
+
+# General Python ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
