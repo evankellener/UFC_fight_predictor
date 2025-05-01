@@ -95,6 +95,42 @@ class DNNFightPredictor:
             'opp_precomp_winsum3', 'opp_precomp_losssum3','opp_precomp_elo_change_3'
         ]
 
+        self.main_stats_cols = [
+            'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
+            'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
+            'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
+            'precomp_totalacc_perc', 'precomp_headacc_perc', 'precomp_bodyacc_perc', 'precomp_legacc_perc',
+            'precomp_distacc_perc','precomp_clinchacc_perc','precomp_groundacc_perc',
+            'precomp_winsum', 'precomp_losssum','precomp_elo',
+            'precomp_sigstr_pm5', 'precomp_tdavg5', 'precomp_sapm5', 'precomp_subavg5',
+            'precomp_tddef5', 'precomp_sigstr_perc5', 'precomp_strdef5', 'precomp_tdacc_perc5',
+            'precomp_totalacc_perc5', 'precomp_headacc_perc5', 'precomp_bodyacc_perc5', 'precomp_legacc_perc5',
+            'precomp_distacc_perc5','precomp_clinchacc_perc5','precomp_groundacc_perc5',
+            'precomp_winsum5', 'precomp_losssum5','precomp_elo_change_5',
+            'precomp_sigstr_pm3', 'precomp_tdavg3', 'precomp_sapm3', 'precomp_subavg3',
+            'precomp_tddef3', 'precomp_sigstr_perc3', 'precomp_strdef3', 'precomp_tdacc_perc3',
+            'precomp_totalacc_perc3', 'precomp_headacc_perc3', 'precomp_bodyacc_perc3', 'precomp_legacc_perc3',
+            'precomp_distacc_perc3','precomp_clinchacc_perc3','precomp_groundacc_perc3',
+            'precomp_winsum3', 'precomp_losssum3','precomp_elo_change_3',
+            'opp_age', 'opp_HEIGHT', 'opp_WEIGHT', 'opp_REACH','opp_weightindex', 'opp_weight_of_fight',
+            'opp_precomp_sigstr_pm', 'opp_precomp_tdavg', 'opp_precomp_sapm', 'opp_precomp_subavg',
+            'opp_precomp_tddef', 'opp_precomp_sigstr_perc', 'opp_precomp_strdef', 'opp_precomp_tdacc_perc',
+            'opp_precomp_totalacc_perc', 'opp_precomp_headacc_perc','opp_precomp_bodyacc_perc','opp_precomp_legacc_perc',
+            'opp_precomp_distacc_perc','opp_precomp_clinchacc_perc','opp_precomp_groundacc_perc',
+            'opp_precomp_winsum', 'opp_precomp_losssum', 'opp_precomp_elo',
+            'opp_precomp_sigstr_pm5', 'opp_precomp_tdavg5', 'opp_precomp_sapm5', 'opp_precomp_subavg5',
+            'opp_precomp_tddef5', 'opp_precomp_sigstr_perc5', 'opp_precomp_strdef5', 'opp_precomp_tdacc_perc5',
+            'opp_precomp_totalacc_perc5', 'opp_precomp_headacc_perc5','opp_precomp_bodyacc_perc5','opp_precomp_legacc_perc5',
+            'opp_precomp_distacc_perc5','opp_precomp_clinchacc_perc5','opp_precomp_groundacc_perc5',
+            'opp_precomp_winsum5', 'opp_precomp_losssum5','opp_precomp_elo_change_5',
+            'opp_precomp_sigstr_pm3', 'opp_precomp_tdavg3', 'opp_precomp_sapm3', 'opp_precomp_subavg3',
+            'opp_precomp_tddef3', 'opp_precomp_sigstr_perc3', 'opp_precomp_strdef3', 'opp_precomp_tdacc_perc3',
+            'opp_precomp_totalacc_perc3', 'opp_precomp_headacc_perc3','opp_precomp_bodyacc_perc3','opp_precomp_legacc_perc3',
+            'opp_precomp_distacc_perc3','opp_precomp_clinchacc_perc3','opp_precomp_groundacc_perc3',
+            'opp_precomp_winsum3', 'opp_precomp_losssum3','opp_precomp_elo_change_3'
+        ]
+
+
         selected_features = [
             'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
             'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
@@ -228,6 +264,8 @@ class DNNFightPredictor:
         # Extract features and targets using the stored column names
         train_X = train_data[self.main_stats_cols]
         train_y = train_data['result']
+
+
         
         test_X = test_data[self.main_stats_cols]
         test_y = test_data['result']
@@ -825,7 +863,10 @@ class DNNFightPredictor:
             
         # Combine all fight features
         X_test_postcomp = pd.concat(fight_features, ignore_index=True)
+        # turn X_test_postcomp into a csv and save it in '../data/tmp'
+        print(f"Saved test features to {os.path.join(project_root, 'data', 'tmp', 'X_test_postcomp.csv')}")
         y_test_postcomp = pd.Series(fight_labels)
+        X_test_postcomp.to_csv('../data/tmp/X_test_postcomp', index=False)
         
         # Scale the features
         X_test_postcomp_scaled = scaler.transform(X_test_postcomp)

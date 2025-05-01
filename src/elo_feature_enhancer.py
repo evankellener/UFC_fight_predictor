@@ -181,7 +181,19 @@ class EloFeatureEnhancer:
             swapped_rows.append(original)
             swapped_rows.append(swapped)
 
-        return pd.DataFrame(swapped_rows)
+        result_df = pd.DataFrame(swapped_rows)
+
+        # Drop all "Unnamed" columns
+        result_df = result_df.loc[:, ~result_df.columns.str.startswith("Unnamed")]
+
+        # Round float columns to 2 decimal places
+        float_cols = result_df.select_dtypes(include=['float32', 'float64']).columns
+        result_df[float_cols] = result_df[float_cols].round(2)
+
+        result_df['DATE'] = pd.to_datetime(result_df['DATE'], errors='coerce')
+        result_df = result_df[result_df['DATE'].dt.year >= 2009]
+
+        return result_df
     
     def filter_by_fight_count(self, min_fights=2):
         # Count fights for each fighter
