@@ -1,9 +1,0 @@
-this works fine:
-
-from elo_feature_enhancer import EloFeatureEnhancer
-
-but for some reason this doesn't:
-
-from sanity_check import SanityCheck
-
-why?
