@@ -52,7 +52,7 @@ class DNNFightPredictor:
         self.filtered_data = filtered_data
         
         # Store column names for later use
-        self.main_stats_cols = [
+        self.elo_columns = [
             'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
             'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
             'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
@@ -89,20 +89,20 @@ class DNNFightPredictor:
         
         elo_columns = ['precomp_elo','precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo','opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',]
 
-        # Make sure all columns in main_stats_cols exist, if not create them with default value 0
-        for col in self.main_stats_cols:
+        # Make sure all columns in elo_columns exist, if not create them with default value 0
+        for col in self.elo_columns:
             if col not in filtered_data.columns:
                 filtered_data[col] = 0
                 
         # Convert all columns to numeric to avoid type issues
-        for col in self.main_stats_cols:
+        for col in self.elo_columns:
             filtered_data[col] = pd.to_numeric(filtered_data[col], errors='coerce')
             
         # Fill NaN values with 0
-        filtered_data[self.main_stats_cols] = filtered_data[self.main_stats_cols].fillna(0)
+        filtered_data[self.elo_columns] = filtered_data[self.elo_columns].fillna(0)
 
         # Extract features from filtered data
-        X = filtered_data[self.main_stats_cols]
+        X = filtered_data[self.elo_columns]
         
         # Convert result column to numeric and ensure it's binary (0 or 1)
         # This is crucial to fix the "Invalid dtype: object" error in TensorFlow
@@ -118,7 +118,7 @@ class DNNFightPredictor:
         os.makedirs(os.path.dirname(feature_names_path), exist_ok=True)
         
         with open(feature_names_path, 'w') as f:
-            for col in self.main_stats_cols:
+            for col in self.elo_columns:
                 f.write(f"{col}\n")
                 
         return X, y
@@ -149,12 +149,12 @@ class DNNFightPredictor:
         print(f"Testing set size: {len(test_data)}")
         
         # Extract features and targets using the stored column names
-        train_X = train_data[self.main_stats_cols]
+        train_X = train_data[self.elo_columns]
         train_y = train_data['result']
 
 
         
-        test_X = test_data[self.main_stats_cols]
+        test_X = test_data[self.elo_columns]
         test_y = test_data['result']
         
         # Standardize features based on training data

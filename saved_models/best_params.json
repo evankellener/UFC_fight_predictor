@@ -1,1 +1,1 @@
-{"learning_rate": 0.001454603294786294, "batch_size": 64, "dropout_rate": 0.34159865755511554, "l2_reg": 0.0001025198173141607, "layer_size_0": 64, "layer_size_1": 16, "layer_size_2": 64, "layer_size_3": 32}
+{"learning_rate": 8.365196682217405e-05, "batch_size": 16, "dropout_rate": 0.1901448061415038, "l2_reg": 2.1931340451597754e-05, "layer_size_0": 112, "layer_size_1": 64, "layer_size_2": 96, "layer_size_3": 96}

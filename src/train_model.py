@@ -18,7 +18,7 @@ def load_and_prepare_data():
     data = pd.read_csv(data_path)
     
     # Define features to include in the model
-    main_stats_cols = [
+    elo_columns = [
         'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
         'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
         'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
@@ -55,8 +55,8 @@ def load_and_prepare_data():
     ]
     
     # Check which columns actually exist in the dataset
-    available_cols = [col for col in main_stats_cols if col in data.columns]
-    missing_cols = [col for col in main_stats_cols if col not in data.columns]
+    available_cols = [col for col in elo_columns if col in data.columns]
+    missing_cols = [col for col in elo_columns if col not in data.columns]
     
     if missing_cols:
         print(f"Warning: The following columns are missing from the dataset: {missing_cols}")

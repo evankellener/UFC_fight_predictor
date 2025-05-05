@@ -60,6 +60,7 @@ class DNNFightPredictor:
         self.filtered_data = filtered_data
         
         # Store column names for later use
+        '''
         self.main_stats_cols = [
             'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
             'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
@@ -94,128 +95,24 @@ class DNNFightPredictor:
             'opp_precomp_distacc_perc3','opp_precomp_clinchacc_perc3','opp_precomp_groundacc_perc3',
             'opp_precomp_winsum3', 'opp_precomp_losssum3','opp_precomp_elo_change_3'
         ]
+        '''
 
-        self.main_stats_cols = [
-            'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
-            'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
-            'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
-            'precomp_totalacc_perc', 'precomp_headacc_perc', 'precomp_bodyacc_perc', 'precomp_legacc_perc',
-            'precomp_distacc_perc','precomp_clinchacc_perc','precomp_groundacc_perc',
-            'precomp_winsum', 'precomp_losssum','precomp_elo',
-            'precomp_sigstr_pm5', 'precomp_tdavg5', 'precomp_sapm5', 'precomp_subavg5',
-            'precomp_tddef5', 'precomp_sigstr_perc5', 'precomp_strdef5', 'precomp_tdacc_perc5',
-            'precomp_totalacc_perc5', 'precomp_headacc_perc5', 'precomp_bodyacc_perc5', 'precomp_legacc_perc5',
-            'precomp_distacc_perc5','precomp_clinchacc_perc5','precomp_groundacc_perc5',
-            'precomp_winsum5', 'precomp_losssum5','precomp_elo_change_5',
-            'precomp_sigstr_pm3', 'precomp_tdavg3', 'precomp_sapm3', 'precomp_subavg3',
-            'precomp_tddef3', 'precomp_sigstr_perc3', 'precomp_strdef3', 'precomp_tdacc_perc3',
-            'precomp_totalacc_perc3', 'precomp_headacc_perc3', 'precomp_bodyacc_perc3', 'precomp_legacc_perc3',
-            'precomp_distacc_perc3','precomp_clinchacc_perc3','precomp_groundacc_perc3',
-            'precomp_winsum3', 'precomp_losssum3','precomp_elo_change_3',
-            'opp_age', 'opp_HEIGHT', 'opp_WEIGHT', 'opp_REACH','opp_weightindex', 'opp_weight_of_fight',
-            'opp_precomp_sigstr_pm', 'opp_precomp_tdavg', 'opp_precomp_sapm', 'opp_precomp_subavg',
-            'opp_precomp_tddef', 'opp_precomp_sigstr_perc', 'opp_precomp_strdef', 'opp_precomp_tdacc_perc',
-            'opp_precomp_totalacc_perc', 'opp_precomp_headacc_perc','opp_precomp_bodyacc_perc','opp_precomp_legacc_perc',
-            'opp_precomp_distacc_perc','opp_precomp_clinchacc_perc','opp_precomp_groundacc_perc',
-            'opp_precomp_winsum', 'opp_precomp_losssum', 'opp_precomp_elo',
-            'opp_precomp_sigstr_pm5', 'opp_precomp_tdavg5', 'opp_precomp_sapm5', 'opp_precomp_subavg5',
-            'opp_precomp_tddef5', 'opp_precomp_sigstr_perc5', 'opp_precomp_strdef5', 'opp_precomp_tdacc_perc5',
-            'opp_precomp_totalacc_perc5', 'opp_precomp_headacc_perc5','opp_precomp_bodyacc_perc5','opp_precomp_legacc_perc5',
-            'opp_precomp_distacc_perc5','opp_precomp_clinchacc_perc5','opp_precomp_groundacc_perc5',
-            'opp_precomp_winsum5', 'opp_precomp_losssum5','opp_precomp_elo_change_5',
-            'opp_precomp_sigstr_pm3', 'opp_precomp_tdavg3', 'opp_precomp_sapm3', 'opp_precomp_subavg3',
-            'opp_precomp_tddef3', 'opp_precomp_sigstr_perc3', 'opp_precomp_strdef3', 'opp_precomp_tdacc_perc3',
-            'opp_precomp_totalacc_perc3', 'opp_precomp_headacc_perc3','opp_precomp_bodyacc_perc3','opp_precomp_legacc_perc3',
-            'opp_precomp_distacc_perc3','opp_precomp_clinchacc_perc3','opp_precomp_groundacc_perc3',
-            'opp_precomp_winsum3', 'opp_precomp_losssum3','opp_precomp_elo_change_3'
-        ]
+        self.elo_columns = ['precomp_elo','precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo','opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',]
 
-
-        selected_features = [
-            'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
-            'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
-            'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
-            'precomp_totalacc_perc', 'precomp_headacc_perc', 'precomp_bodyacc_perc', 'precomp_legacc_perc',
-            'precomp_distacc_perc', 'precomp_clinchacc_perc', 'precomp_groundacc_perc', 'precomp_winsum', 'precomp_losssum',
-            'precomp_sigstr_pm3', 'precomp_tdavg3', 'precomp_sapm3', 'precomp_subavg3',
-            'precomp_tddef3', 'precomp_sigstr_perc3', 'precomp_strdef3', 'precomp_tdacc_perc3',
-            'precomp_totalacc_perc3', 'precomp_headacc_perc3', 'precomp_bodyacc_perc3', 'precomp_legacc_perc3',
-            'precomp_distacc_perc3', 'precomp_clinchacc_perc3', 'precomp_groundacc_perc3',
-            'precomp_winsum3', 'precomp_losssum3',
-            'precomp_sigstr_pm5', 'precomp_tdavg5', 'precomp_sapm5', 'precomp_subavg5',
-            'precomp_tddef5', 'precomp_sigstr_perc5', 'precomp_strdef5', 'precomp_tdacc_perc5',
-            'precomp_totalacc_perc5', 'precomp_headacc_perc5', 'precomp_bodyacc_perc5', 'precomp_legacc_perc5',
-            'precomp_distacc_perc5', 'precomp_clinchacc_perc5', 'precomp_groundacc_perc5',
-            'precomp_winsum5', 'precomp_losssum5',
-            'precomp_elo', 'elo_diff_pre', 'precomp_elo_change_3', 'precomp_elo_change_5',
-            
-            'precomp_tot_time_in_cage', 'precomp_tot_time_in_cage_3', 'precomp_tot_time_in_cage_5',
-            'precomp_sigstraccsum', 'precomp_boutcount', 'precomp_winavg', 'precomp_winavg3', 'precomp_winavg5',
-            'precomp_lossavg', 'precomp_lossavg3', 'precomp_lossavg5', 'precomp_kosum', 'precomp_koavg',
-            'precomp_kosum3', 'precomp_koavg3', 'precomp_kosum5', 'precomp_koavg5', 'precomp_kodsum',
-            'precomp_kodavg', 'precomp_kodsum3', 'precomp_kodavg3', 'precomp_kodsum5', 'precomp_kodavg5',
-            'precomp_subwsum', 'precomp_subwavg', 'precomp_subwsum3', 'precomp_subwavg3', 'precomp_subsum5',
-            'precomp_subwavg5', 'precomp_subwdsum', 'precomp_subwdavg', 'precomp_subdsum3', 'precomp_subwdavg3',
-            'precomp_subwdsum5', 'precomp_subwdavg5', 'precomp_udecsum', 'precomp_udecavg', 'precomp_udecsum3',
-            'precomp_udecavg3', 'precomp_udecsum5', 'precomp_udecavg5', 'precomp_udecdsum', 'precomp_udecdavg',
-            'precomp_udecdsum3', 'precomp_udecdavg3', 'precomp_udecdsum5', 'precomp_udecdavg5', 'precomp_sdecsum',
-            'precomp_sdecavg', 'precomp_sdecsum3', 'precomp_sdecavg3', 'precomp_sdecsum5', 'precomp_sdecavg5',
-            'precomp_sdecdsum', 'precomp_sdecdavg', 'precomp_sdecdsum3', 'precomp_sdecdavg3', 'precomp_sdecdsum5',
-            'precomp_sdecdavg5', 'precomp_mdecsum', 'precomp_mdecavg', 'precomp_mdecsum3', 'precomp_mdecavg3',
-            'precomp_mdecsum5', 'precomp_mdecavg5', 'precomp_mdecdsum', 'precomp_mdecdavg', 'precomp_mdecdsum3',
-            'precomp_mdecdavg3', 'precomp_mdecdsum5', 'precomp_mdecdavg5',
-            # Opponent Features
-            'opp_age', 'opp_HEIGHT', 'opp_WEIGHT', 'opp_REACH', 'opp_weightindex',
-            'opp_precomp_sigstr_pm', 'opp_precomp_tdavg', 'opp_precomp_sapm', 'opp_precomp_subavg',
-            'opp_precomp_tddef', 'opp_precomp_sigstr_perc', 'opp_precomp_strdef', 'opp_precomp_tdacc_perc',
-            'opp_precomp_totalacc_perc', 'opp_precomp_headacc_perc', 'opp_precomp_bodyacc_perc', 'opp_precomp_legacc_perc',
-            'opp_precomp_distacc_perc', 'opp_precomp_clinchacc_perc', 'opp_precomp_groundacc_perc', 'opp_precomp_winsum', 'opp_precomp_losssum',
-            'opp_precomp_sigstr_pm3', 'opp_precomp_tdavg3', 'opp_precomp_sapm3', 'opp_precomp_subavg3',
-            'opp_precomp_tddef3', 'opp_precomp_sigstr_perc3', 'opp_precomp_strdef3', 'opp_precomp_tdacc_perc3',
-            'opp_precomp_totalacc_perc3', 'opp_precomp_headacc_perc3', 'opp_precomp_bodyacc_perc3', 'opp_precomp_legacc_perc3',
-            'opp_precomp_distacc_perc3', 'opp_precomp_clinchacc_perc3', 'opp_precomp_groundacc_perc3',
-            'opp_precomp_winsum3', 'opp_precomp_losssum3', 'opp_weight_avg3',
-            'opp_precomp_elo', 'opp_elo_diff_pre', 'opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',
-            'opp_precomp_sigstr_pm5', 'opp_precomp_tdavg5', 'opp_precomp_sapm5', 'opp_precomp_subavg5',
-            'opp_precomp_tddef5', 'opp_precomp_sigstr_perc5', 'opp_precomp_strdef5', 'opp_precomp_tdacc_perc5',
-            'opp_precomp_totalacc_perc5', 'opp_precomp_headacc_perc5', 'opp_precomp_bodyacc_perc5', 'opp_precomp_legacc_perc5',
-            'opp_precomp_distacc_perc5', 'opp_precomp_clinchacc_perc5', 'opp_precomp_groundacc_perc5',
-            'opp_precomp_winsum5', 'opp_precomp_losssum5', 'opp_precomp_elo_change_5',
-
-                'opp_precomp_tot_time_in_cage', 'opp_precomp_tot_time_in_cage_3', 'opp_precomp_tot_time_in_cage_5',
-                'opp_precomp_sigstraccsum', 'opp_precomp_boutcount', 'opp_precomp_winavg', 'opp_precomp_winavg3', 'opp_precomp_winavg5',
-                'opp_precomp_lossavg', 'opp_precomp_lossavg3', 'opp_precomp_lossavg5', 'opp_precomp_kosum', 'opp_precomp_koavg',
-                'opp_precomp_kosum3', 'opp_precomp_koavg3', 'opp_precomp_kosum5', 'opp_precomp_koavg5', 'opp_precomp_kodsum',
-                'opp_precomp_kodavg', 'opp_precomp_kodsum3', 'opp_precomp_kodavg3', 'opp_precomp_kodsum5', 'opp_precomp_kodavg5',
-                'opp_precomp_subwsum', 'opp_precomp_subwavg3', 
-                'opp_precomp_subwavg5', 'opp_precomp_subwdsum', 'opp_precomp_subwdavg', 'opp_precomp_subwdavg3',
-                'opp_precomp_subwdsum5', 'opp_precomp_subwdavg5', 'opp_precomp_udecsum', 'opp_precomp_udecavg', 'opp_precomp_udecsum3',
-                'opp_precomp_udecavg3', 'opp_precomp_udecsum5', 'opp_precomp_udecavg5', 'opp_precomp_udecdsum', 'opp_precomp_udecdavg',
-                'opp_precomp_udecdsum3', 'opp_precomp_udecdavg3', 'opp_precomp_udecdsum5', 'opp_precomp_udecdavg5', 'opp_precomp_sdecsum',
-                'opp_precomp_sdecavg', 'opp_precomp_sdecsum3', 'opp_precomp_sdecavg3', 'opp_precomp_sdecsum5', 'opp_precomp_sdecavg5',
-                'opp_precomp_sdecdsum', 'opp_precomp_sdecdavg', 'opp_precomp_sdecdsum3', 'opp_precomp_sdecdavg3', 'opp_precomp_sdecdsum5',
-                'opp_precomp_sdecdavg5', 'opp_precomp_mdecsum', 'opp_precomp_mdecavg', 'opp_precomp_mdecsum3', 'opp_precomp_mdecavg3',
-                'opp_precomp_mdecsum5', 'opp_precomp_mdecavg5', 'opp_precomp_mdecdsum', 'opp_precomp_mdecdavg', 'opp_precomp_mdecdsum3',
-                'opp_precomp_mdecdavg3', 'opp_precomp_mdecdsum5', 'opp_precomp_mdecdavg5'
-
-        ]
-
-        elo_columns = ['precomp_elo','precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo','opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',]
-
-        # Make sure all columns in main_stats_cols exist, if not create them with default value 0
-        for col in self.main_stats_cols:
+        # Make sure all columns in elo_columns exist, if not create them with default value 0
+        for col in self.elo_columns:
             if col not in filtered_data.columns:
                 filtered_data[col] = 0
                 
         # Convert all columns to numeric to avoid type issues
-        for col in self.main_stats_cols:
+        for col in self.elo_columns:
             filtered_data[col] = pd.to_numeric(filtered_data[col], errors='coerce')
             
         # Fill NaN values with 0
-        filtered_data[self.main_stats_cols] = filtered_data[self.main_stats_cols].fillna(0)
+        filtered_data[self.elo_columns] = filtered_data[self.elo_columns].fillna(0)
 
         # Extract features from filtered data
-        X = filtered_data[self.main_stats_cols]
+        X = filtered_data[self.elo_columns]
         
         # Convert result column to numeric and ensure it's binary (0 or 1)
         # This is crucial to fix the "Invalid dtype: object" error in TensorFlow
@@ -231,7 +128,7 @@ class DNNFightPredictor:
         os.makedirs(os.path.dirname(feature_names_path), exist_ok=True)
         
         with open(feature_names_path, 'w') as f:
-            for col in self.main_stats_cols:
+            for col in self.elo_columns:
                 f.write(f"{col}\n")
                 
         return X, y
@@ -262,12 +159,14 @@ class DNNFightPredictor:
         print(f"Testing set size: {len(test_data)}")
         
         # Extract features and targets using the stored column names
-        train_X = train_data[self.main_stats_cols]
+        train_X = train_data[self.elo_columns]
         train_y = train_data['result']
 
 
         
-        test_X = test_data[self.main_stats_cols]
+        test_X = test_data[self.elo_columns]
+        #save the test data to a file
+        test_X.to_csv('../data/tmp/test_data.csv', index=False)
         test_y = test_data['result']
         
         # Standardize features based on training data
@@ -571,467 +470,120 @@ class DNNFightPredictor:
         
         return history
 
-    def evaluate_generalization_with_postcomp(self, use_best_model=True, stored_stats_path='../data/tmp/recent_fighter_stats.pkl'):
+    def evaluate_generalization_with_postcomp_stats(self):
         """
-        Evaluate the model's generalization performance using post-computation values
-        instead of pre-computation values. This version uses the most up-to-date fighter stats
-        to see how well the model generalizes when given the most current information.
-        
-        This method uses saved postcomp stats for fighters, even those that didn't have enough
-        fights to be included in the training data, allowing for better generalization assessment.
-        
-        Args:
-            use_best_model (bool): If True, uses the best model from hyperparameter tuning
-                                   if available, otherwise falls back to the default model.
-            stored_stats_path (str): Path to the stored fighter stats pickle file
+        I want a dataset that contains all matchups in the data for the last year but it contains the postcomp values for every fighter's most recent fight.
+
+        And then evaluate the generalization performance of the model on this dataset.
+
+        For example:
+
+        Today is 2025-05-02
+
+        The earlist fight in the dataset going back one year is 2024-05-04
+
+        AlexandrePantoja vs. SteveErceg happened on 2024-05-04. I would want to include this fight in the dataset but I want to use the postcomp values from their most recent fights.
+
+        AlexandrePantoja's most recent fight was on 2023-12-16 against Brandon Royval. I want to use the postcomp values where for example I would replace the 'precomp_sigstr_pm' from AlexandrePantoja vs Steve Erceg with 'postcomp_sigstr_pm' AlexandrePantoja vs Brandon Royval and so on.
+        Steve Erceg's most fight was on 2024-03-02 against Matt Schnell. I want to use the postcomp values where for example I would replace the 'precomp_sigstr_pm' from Steve Erceg vs AlexandrePantoja with 'postcomp_sigstr_pm' Steve Erceg vs Matt Schnell and so on.
+
+        I want to apply this to all fights in the dataset that happened in the last year.
         """
-        import os
-        import sqlite3
-        import tensorflow as tf
-        from sklearn.preprocessing import StandardScaler
+        # Get today's date
+        today = pd.to_datetime("today")
+        # Get the date one year ago
+        one_year_ago = today - pd.DateOffset(years=1)
+        # Filter the dataset to include only fights that happened in the last year
+        recent_fights = self.data[self.data['DATE'] >= one_year_ago]
+        #postcomp stats
+        postcomp_cols = [
+            'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
+            'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
+            'precomp_totalacc_perc', 'precomp_headacc_perc', 'precomp_bodyacc_perc', 'precomp_legacc_perc',
+            'precomp_distacc_perc','precomp_clinchacc_perc','precomp_groundacc_perc',
+            'precomp_winsum', 'precomp_losssum','precomp_elo',
+            'precomp_sigstr_pm5', 'precomp_tdavg5', 'precomp_sapm5', 'precomp_subavg5',
+            'precomp_tddef5', 'precomp_sigstr_perc5', 'precomp_strdef5', 'precomp_tdacc_perc5',
+            'precomp_totalacc_perc5', 'precomp_headacc_perc5', 'precomp_bodyacc_perc5', 'precomp_legacc_perc5',
+            'precomp_distacc_perc5','precomp_clinchacc_perc5','precomp_groundacc_perc5',
+            'precomp_winsum5', 'precomp_losssum5','precomp_elo_change_5',
+            'precomp_sigstr_pm3', 'precomp_tdavg3', 'precomp_sapm3', 'precomp_subavg3',
+            'precomp_tddef3', 'precomp_sigstr_perc3', 'precomp_strdef3', 'precomp_tdacc_perc3',
+            'precomp_totalacc_perc3', 'precomp_headacc_perc3', 'precomp_bodyacc_perc3', 'precomp_legacc_perc3',
+            'precomp_distacc_perc3','precomp_clinchacc_perc3','precomp_groundacc_perc3',
+            'precomp_winsum3', 'precomp_losssum3','precomp_elo_change_3']
+        # for every fight in the dataset I want to get the most postcomp values for every fighter's most recent fight
+        for index, row in recent_fights.iterrows():
+            fighter1 = row['FIGHTER']
+            fighter2 = row['opp_FIGHTER']
+            date = row['DATE']
+            # Get the most recent fight for fighter1
+            fighter1_recent_fight = self.data[(self.data['FIGHTER'] == fighter1) | (self.data['opp_FIGHTER'] == fighter1)]
+            fighter1_recent_fight = fighter1_recent_fight[fighter1_recent_fight['DATE'] < date]
+            if len(fighter1_recent_fight) > 0:
+                fighter1_recent_fight = fighter1_recent_fight.iloc[-1]
+                for col in postcomp_cols:
+                    self.data.at[index, col] = fighter1_recent_fight[col.replace('postcomp', 'precomp')]
+            # Get the most recent fight for fighter2
+            fighter2_recent_fight = self.data[(self.data['FIGHTER'] == fighter2) | (self.data['opp_FIGHTER'] == fighter2)]
+            fighter2_recent_fight = fighter2_recent_fight[fighter2_recent_fight['DATE'] < date]
+            if len(fighter2_recent_fight) > 0:
+                fighter2_recent_fight = fighter2_recent_fight.iloc[-1]
+                for col in postcomp_cols:
+                    self.data.at[index, col] = fighter2_recent_fight[col.replace('precomp', 'postcomp')]
+
+            # Save the modified row back to the dataset
+            self.data.at[index, 'DATE'] = date
+        # Now we can use this modified dataset to evaluate the model
+        # Filter the dataset to include only fights that happened in the last year
+        recent_fights = self.data[self.data['DATE'] >= one_year_ago]
+        # Extract features and targets
+        X_recent = recent_fights[self.elo_columns]
+        y_recent = recent_fights['result']
+        # Standardize features based on training data
+        X_recent_scaled = self.scaler.transform(X_recent)
+        # Evaluate the model on this new dataset
+        loss, accuracy = self.model.evaluate(X_recent_scaled, y_recent, verbose=0)
+        print(f"Generalization accuracy on recent fights: {accuracy:.4f}")
+        # Get predictions for the test set
+        y_pred_proba = self.model.predict(X_recent_scaled)
+        y_pred = (y_pred_proba > 0.5).astype(int).flatten()
+        # Calculate classification metrics
         from sklearn.metrics import (
-            accuracy_score, precision_score, recall_score, 
-            f1_score, roc_auc_score, roc_curve, confusion_matrix,
-            classification_report
+            classification_report, precision_score, recall_score,
+            f1_score, roc_auc_score, roc_curve, confusion_matrix
         )
         import matplotlib.pyplot as plt
-        import pandas as pd
-        import numpy as np
-        import pickle
-        
-        # Load stored fighter stats if available
-        recent_fighter_stats = {}
-        try:
-            with open(stored_stats_path, 'rb') as f:
-                recent_fighter_stats = pickle.load(f)
-            print(f"Loaded stored postcomp stats for {len(recent_fighter_stats)} fighters")
-        except Exception as e:
-            print(f"Could not load stored fighter stats: {e}")
-            print("Will proceed with regular postcomp evaluation")
-        
-        # Connect to the SQLite database to get the weightclass lookup table
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(script_dir)
-        db_path = os.path.join(project_root, 'data', 'sqlite_db', 'sqlite_scrapper.db')
-        
-        # Load weightclass lookup data
-        try:
-            conn = sqlite3.connect(db_path)
-            weightclass_df = pd.read_sql_query("SELECT * FROM weightclass_lookup", conn)
-            conn.close()
-            print(f"Loaded weightclass lookup table with {len(weightclass_df)} entries")
-            
-            # Create a lookup dictionary for weight -> weightindex based on sex
-            weight_to_index = {}
-            for _, row in weightclass_df.iterrows():
-                key = (row['weight'], row['sex'])
-                weight_to_index[key] = row['weightindex']
-                
-            print(f"Created weightclass lookup dictionary")
-        except Exception as e:
-            print(f"Error loading weightclass lookup table: {e}")
-            print("Will proceed without weightclass lookup")
-            weight_to_index = {}
-        
-        # Determine which model to use for evaluation
-        evaluation_model = None
-        model_source = ""
-        
-        if use_best_model and hasattr(self, 'best_model') and self.best_model is not None:
-            evaluation_model = self.best_model
-            model_source = "best model from hyperparameter tuning"
-        elif use_best_model:
-            # Try to load the saved best model
-            best_model_path = os.path.join(project_root, 'saved_models', 'best_model.h5')
-            
-            if os.path.exists(best_model_path):
-                try:
-                    evaluation_model = tf.keras.models.load_model(best_model_path)
-                    model_source = f"saved best model loaded from {best_model_path}"
-                except Exception as e:
-                    print(f"Failed to load best model: {str(e)}")
-                    evaluation_model = self.model
-                    model_source = "default model (best model failed to load)"
-            else:
-                evaluation_model = self.model
-                model_source = "default model (no best model found)"
-        else:
-            evaluation_model = self.model
-            model_source = "default model (as requested)"
-        
-        # Make sure a model is available for evaluation
-        if evaluation_model is None:
-            raise ValueError("No model available for evaluation. Please train a model first.")
-        
-        print(f"\nUsing {model_source} for generalization evaluation with postcomp values")
-        
-        # Get test data - this is chronologically separated data 
-        # from the latest year in the dataset
-        test_data = self.filtered_data[self.filtered_data['DATE'] > (self.filtered_data['DATE'].max() - pd.DateOffset(years=1))]
-        print(f"Test set size: {len(test_data)} fights")
-        
-        # Create a mapping from postcomp to precomp columns
-        postcomp_to_precomp = {}
-        for col in self.main_stats_cols:
-            if col.startswith('precomp_'):
-                postcomp_col = col.replace('precomp_', 'postcomp_')
-                postcomp_to_precomp[postcomp_col] = col
-            elif col.startswith('opp_precomp_'):
-                postcomp_col = col.replace('opp_precomp_', 'opp_postcomp_')
-                postcomp_to_precomp[postcomp_col] = col
-        
-        # Process each test fight using postcomp values
-        fight_features = []
-        fight_labels = []
-        fight_ids = []
-        
-        # Load the scaler
-        try:
-            from joblib import load
-            
-            scaler_path = os.path.join(project_root, 'saved_models', 'feature_scaler.joblib')
-            
-            if os.path.exists(scaler_path):
-                print(f"Loading saved scaler from {scaler_path}")
-                scaler = load(scaler_path)
-            else:
-                print("Saved scaler not found, will use the scaler from training")
-                scaler = self.scaler
-        except Exception as e:
-            print(f"Error loading scaler: {str(e)}, using training scaler")
-            scaler = self.scaler
-        
-        # Process each fight in the test set
-        skipped_fights = 0
-        used_stored_stats = 0
-        
-        for _, fight in test_data.iterrows():
-            fighter = fight['FIGHTER']
-            opponent = fight['opp_FIGHTER']  # Using opp_FIGHTER instead of OPPONENT
-            date = fight['DATE']
-            label = fight['result']
-            
-            # First try to use stored postcomp stats if available
-            fighter_stats_found = fighter in recent_fighter_stats
-            opponent_stats_found = opponent in recent_fighter_stats
-            
-            # Initialize feature dictionaries
-            fighter_features = {}
-            opponent_features = {}
-            
-            # Use stored stats if available, otherwise fall back to previous method
-            if fighter_stats_found and opponent_stats_found:
-                used_stored_stats += 1
-                fighter_stored = recent_fighter_stats[fighter]
-                opponent_stored = recent_fighter_stats[opponent]
-                
-                # Process stored fighter stats
-                for col in self.main_stats_cols:
-                    if not col.startswith('opp_'):
-                        # If using precomp, check if postcomp exists in stored stats
-                        if col.startswith('precomp_'):
-                            postcomp_col = col.replace('precomp_', 'postcomp_')
-                            if postcomp_col in fighter_stored:
-                                fighter_features[col] = fighter_stored[postcomp_col]
-                            else:
-                                # Use regular feature if postcomp doesn't exist
-                                fighter_features[col] = fighter_stored.get(col, 0)
-                        else:
-                            # For non-comp columns, use as is
-                            fighter_features[col] = fighter_stored.get(col, 0)
-                
-                # Process stored opponent stats
-                for col in self.main_stats_cols:
-                    if not col.startswith('opp_'):
-                        # If using precomp, check if postcomp exists in stored stats
-                        if col.startswith('precomp_'):
-                            postcomp_col = col.replace('precomp_', 'postcomp_')
-                            if postcomp_col in opponent_stored:
-                                opponent_features[col] = opponent_stored[postcomp_col]
-                            else:
-                                # Use regular feature if postcomp doesn't exist
-                                opponent_features[col] = opponent_stored.get(col, 0)
-                        else:
-                            # For non-comp columns, use as is
-                            opponent_features[col] = opponent_stored.get(col, 0)
-            else:
-                # Fall back to original method - try to find previous fights in dataset
-                fighter_prev_fights = self.data[
-                    (self.data['FIGHTER'] == fighter) & 
-                    (self.data['DATE'] < date)
-                ].sort_values('DATE', ascending=False)
-                
-                opponent_prev_fights = self.data[
-                    (self.data['FIGHTER'] == opponent) & 
-                    (self.data['DATE'] < date)
-                ].sort_values('DATE', ascending=False)
-                
-                # Skip if either fighter doesn't have a previous fight
-                if len(fighter_prev_fights) == 0 or len(opponent_prev_fights) == 0:
-                    skipped_fights += 1
-                    continue
-                    
-                # Get the most recent previous fight for each fighter
-                fighter_prev_fight = fighter_prev_fights.iloc[0].copy()
-                opponent_prev_fight = opponent_prev_fights.iloc[0].copy()
-                
-                # Extract non-opponent-specific features from fighter
-                for col in self.main_stats_cols:
-                    if not col.startswith('opp_'):
-                        # If using precomp, check if postcomp exists
-                        if col.startswith('precomp_') and col.replace('precomp_', 'postcomp_') in fighter_prev_fight:
-                            postcomp_col = col.replace('precomp_', 'postcomp_')
-                            value = fighter_prev_fight[postcomp_col]
-                            fighter_features[col] = value
-                        else:
-                            # Use existing feature
-                            if col in fighter_prev_fight:
-                                fighter_features[col] = fighter_prev_fight[col]
-                            else:
-                                fighter_features[col] = 0
-                
-                # Extract non-opponent-specific features from opponent
-                for col in self.main_stats_cols:
-                    if not col.startswith('opp_'):
-                        # If using precomp, check if postcomp exists
-                        if col.startswith('precomp_') and col.replace('precomp_', 'postcomp_') in opponent_prev_fight:
-                            postcomp_col = col.replace('precomp_', 'postcomp_')
-                            value = opponent_prev_fight[postcomp_col]
-                            opponent_features[col] = value
-                        else:
-                            # Use existing feature
-                            if col in opponent_prev_fight:
-                                opponent_features[col] = opponent_prev_fight[col]
-                            else:
-                                opponent_features[col] = 0
-            
-            # Convert to model input format
-            fighter_vs_opponent = fighter_features.copy()
-            
-            # Add opponent features 
-            for col, value in opponent_features.items():
-                if not col.startswith('opp_'):
-                    # Convert to opponent column format
-                    if col.startswith('precomp_'):
-                        opp_col = col.replace('precomp_', 'opp_precomp_')
-                    else:
-                        opp_col = f'opp_{col}'
-                    fighter_vs_opponent[opp_col] = value
-            
-            # Update weightindex if needed using the lookup table
-            if fighter_stats_found and 'sex' in recent_fighter_stats[fighter] and 'WEIGHT' in recent_fighter_stats[fighter] and weight_to_index:
-                weight = recent_fighter_stats[fighter]['WEIGHT']
-                sex = recent_fighter_stats[fighter]['sex']
-                if (weight, sex) in weight_to_index:
-                    fighter_vs_opponent['weightindex'] = weight_to_index[(weight, sex)]
-                    
-            if opponent_stats_found and 'sex' in recent_fighter_stats[opponent] and 'WEIGHT' in recent_fighter_stats[opponent] and weight_to_index:
-                weight = recent_fighter_stats[opponent]['WEIGHT']
-                sex = recent_fighter_stats[opponent]['sex']
-                if (weight, sex) in weight_to_index:
-                    fighter_vs_opponent['opp_weightindex'] = weight_to_index[(weight, sex)]
-            
-            # Convert to dataframe for model input
-            fight_df = pd.DataFrame([fighter_vs_opponent])
-            
-            # Ensure we have all required feature columns with the correct order
-            feature_file_path = os.path.join(project_root, 'saved_models', 'feature_names.txt')
-            if os.path.exists(feature_file_path):
-                with open(feature_file_path, 'r') as f:
-                    all_features = [line.strip() for line in f.readlines()]
-            else:
-                all_features = self.main_stats_cols
-                
-            # Fill missing columns with 0
-            for col in all_features:
-                if col not in fight_df.columns:
-                    fight_df[col] = 0
-            
-            # Reorder columns to match training data
-            fight_df = fight_df[all_features]
-            
-            # Add to collection
-            fight_features.append(fight_df)
-            fight_labels.append(label)
-            fight_ids.append((fighter, opponent, date))
-        
-        print(f"Processed {len(fight_features)} test fights (used stored stats for {used_stored_stats} fights, skipped {skipped_fights} with no data)")
-        
-        if len(fight_features) == 0:
-            print("No valid test fights found with postcomp data. Unable to evaluate.")
-            return {}
-            
-        # Combine all fight features
-        X_test_postcomp = pd.concat(fight_features, ignore_index=True)
-        # turn X_test_postcomp into a csv and save it in '../data/tmp'
-        print(f"Saved test features to {os.path.join(project_root, 'data', 'tmp', 'X_test_postcomp.csv')}")
-        y_test_postcomp = pd.Series(fight_labels)
-        X_test_postcomp.to_csv('../data/tmp/X_test_postcomp', index=False)
-        
-        # Scale the features
-        X_test_postcomp_scaled = scaler.transform(X_test_postcomp)
-        
-        # Make predictions
-        y_pred_proba = evaluation_model.predict(X_test_postcomp_scaled, verbose=0)
-        y_pred = (y_pred_proba > 0.5).astype(int).flatten()
-        
         # Calculate metrics
-        accuracy = accuracy_score(y_test_postcomp, y_pred)
-        precision = precision_score(y_test_postcomp, y_pred)
-        recall = recall_score(y_test_postcomp, y_pred)
-        f1 = f1_score(y_test_postcomp, y_pred)
-        auc_roc = roc_auc_score(y_test_postcomp, y_pred_proba)
-        conf_matrix = confusion_matrix(y_test_postcomp, y_pred)
-        report = classification_report(y_test_postcomp, y_pred)
-        
+        precision = precision_score(y_recent, y_pred)
+        recall = recall_score(y_recent, y_pred)
+        f1 = f1_score(y_recent, y_pred)
+        auc_roc = roc_auc_score(y_recent, y_pred_proba)
+        conf_matrix = confusion_matrix(y_recent, y_pred)
+        report = classification_report(y_recent, y_pred)
         # Print comprehensive results
-        print("\n========== Generalization Performance with Postcomp Values ==========")
+        print("\n========== Generalization Performance on Recent Fights ==========")
         print(f"Test accuracy: {accuracy:.4f}")
+        print(f"Test loss: {loss:.4f}")
         print(f"Precision: {precision:.4f}")
         print(f"Recall: {recall:.4f}")
         print(f"F1-score: {f1:.4f}")
+
+
         print(f"AUC-ROC: {auc_roc:.4f}")
-        
         print("\nConfusion Matrix:")
         print(f"TN: {conf_matrix[0, 0]} | FP: {conf_matrix[0, 1]}")
         print(f"FN: {conf_matrix[1, 0]} | TP: {conf_matrix[1, 1]}")
-        
         # Calculate positive and negative predictive values
         ppv = conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[0, 1]) if (conf_matrix[1, 1] + conf_matrix[0, 1]) > 0 else 0
         npv = conf_matrix[0, 0] / (conf_matrix[0, 0] + conf_matrix[1, 0]) if (conf_matrix[0, 0] + conf_matrix[1, 0]) > 0 else 0
         print(f"Positive Predictive Value: {ppv:.4f}")
         print(f"Negative Predictive Value: {npv:.4f}")
-        
         print("\nDetailed Classification Report:")
         print(report)
-        
-        # Calculate accuracy by month
-        test_dates = [date for _, _, date in fight_ids]
-        
-        if len(test_dates) > 0:
-            # Group by month and calculate accuracy
-            test_data_with_preds = pd.DataFrame({
-                'date': test_dates,
-                'actual': y_test_postcomp,
-                'predicted': y_pred,
-                'probability': y_pred_proba.flatten()
-            })
-            
-            test_data_with_preds['year_month'] = pd.to_datetime(test_data_with_preds['date']).dt.to_period('M')
-            
-            # Calculate monthly metrics
-            monthly_metrics = test_data_with_preds.groupby('year_month').apply(
-                lambda x: pd.Series({
-                    'accuracy': accuracy_score(x['actual'], x['predicted']),
-                    'precision': precision_score(x['actual'], x['predicted'], zero_division=0),
-                    'recall': recall_score(x['actual'], x['predicted'], zero_division=0),
-                    'f1': f1_score(x['actual'], x['predicted'], zero_division=0),
-                    'auc': roc_auc_score(x['actual'], x['probability']) if len(set(x['actual'])) > 1 else np.nan,
-                    'count': len(x)
-                })
-            )
-            
-            print("\nMetrics by Month:")
-            print(monthly_metrics.to_string())
-            
-            # Plot ROC curve
-            try:
-                plt.figure(figsize=(10, 8))
-                fpr, tpr, _ = roc_curve(y_test_postcomp, y_pred_proba)
-                plt.plot(fpr, tpr, label=f'ROC Curve (AUC = {auc_roc:.3f})')
-                plt.plot([0, 1], [0, 1], 'k--')
-                plt.xlim([0.0, 1.0])
-                plt.ylim([0.0, 1.05])
-                plt.xlabel('False Positive Rate')
-                plt.ylabel('True Positive Rate')
-                plt.title('ROC Curve Using Postcomp Values')
-                plt.legend(loc="lower right")
-                
-                # Save plot to project directory
-                plot_path = os.path.join(project_root, 'postcomp_roc_curve.png')
-                plt.savefig(plot_path)
-                print(f"ROC curve saved to {plot_path}")
-            except Exception as e:
-                print(f"Could not generate ROC curve plot: {e}")
-                
-        # Compare with original evaluation results if available
-        try:
-            original_metrics = self.evaluate_generalization(use_best_model=use_best_model)
-            
-            print("\n========== Comparison with Original Evaluation ==========")
-            print(f"                Original    With Postcomp")
-            print(f"Accuracy:       {original_metrics.get('accuracy', 0):.4f}       {accuracy:.4f}")
-            print(f"Precision:      {original_metrics.get('precision', 0):.4f}       {precision:.4f}")
-            print(f"Recall:         {original_metrics.get('recall', 0):.4f}       {recall:.4f}")
-            print(f"F1-score:       {original_metrics.get('f1', 0):.4f}       {f1:.4f}")
-            print(f"AUC-ROC:        {original_metrics.get('auc_roc', 0):.4f}       {auc_roc:.4f}")
-            
-            # Calculate improvement percentages
-            acc_improve = (accuracy - original_metrics.get('accuracy', 0)) / original_metrics.get('accuracy', 1) * 100
-            prec_improve = (precision - original_metrics.get('precision', 0)) / original_metrics.get('precision', 1) * 100
-            recall_improve = (recall - original_metrics.get('recall', 0)) / original_metrics.get('recall', 1) * 100
-            f1_improve = (f1 - original_metrics.get('f1', 0)) / original_metrics.get('f1', 1) * 100
-            auc_improve = (auc_roc - original_metrics.get('auc_roc', 0)) / original_metrics.get('auc_roc', 1) * 100
-            
-            print(f"\nImprovement Percentages:")
-            print(f"Accuracy:  {acc_improve:+.2f}%")
-            print(f"Precision: {prec_improve:+.2f}%")
-            print(f"Recall:    {recall_improve:+.2f}%")
-            print(f"F1-score:  {f1_improve:+.2f}%")
-            print(f"AUC-ROC:   {auc_improve:+.2f}%")
-            
-            # Save comparison metrics to a file for future reference
-            try:
-                comparison_path = os.path.join(project_root, 'precomp_vs_postcomp.png')
-                
-                # Plot comparison
-                labels = ['Accuracy', 'Precision', 'Recall', 'F1-score', 'AUC-ROC']
-                original_values = [original_metrics.get('accuracy', 0), 
-                                original_metrics.get('precision', 0), 
-                                original_metrics.get('recall', 0),
-                                original_metrics.get('f1', 0), 
-                                original_metrics.get('auc_roc', 0)]
-                postcomp_values = [accuracy, precision, recall, f1, auc_roc]
-                
-                x = np.arange(len(labels))
-                width = 0.35
-                
-                plt.figure(figsize=(12, 6))
-                plt.bar(x - width/2, original_values, width, label='Original (Precomp)')
-                plt.bar(x + width/2, postcomp_values, width, label='With Postcomp')
-                
-                plt.ylabel('Score')
-                plt.title('Comparison: Precomp vs. Postcomp Evaluation')
-                plt.xticks(x, labels)
-                plt.ylim(0, 1.0)
-                plt.legend()
-                
-                for i, v in enumerate(original_values):
-                    plt.text(i - width/2, v + 0.02, f"{v:.3f}", ha='center')
-                
-                for i, v in enumerate(postcomp_values):
-                    plt.text(i + width/2, v + 0.02, f"{v:.3f}", ha='center')
-                
-                plt.tight_layout()
-                plt.savefig(comparison_path)
-                print(f"Comparison chart saved to {comparison_path}")
-            except Exception as e:
-                print(f"Could not create comparison chart: {e}")
-            
-        except Exception as e:
-            print(f"\nCould not compare with original evaluation: {e}")
-        
-        # Return comprehensive metrics as a dictionary
-        metrics = {
-            'accuracy': accuracy,
-            'precision': precision,
-            'recall': recall,
-            'f1': f1,
-            'auc_roc': auc_roc
-        }
-        
-        return metrics
-        
+
+
+
     def evaluate_generalization(self, use_best_model=True):
         """
         Evaluate the model's generalization performance on chronologically separated test data.
@@ -1083,6 +635,14 @@ class DNNFightPredictor:
         # Evaluate on the test set (which contains the latest year of data)
         # NOTE: Use evaluation_model instead of self.model to ensure we're testing the right model
         loss, accuracy = evaluation_model.evaluate(self.X_test, self.y_test, verbose=1)
+        # save self.X_test to a csv file in '../data/tmp'
+        # puth the feature neames from saved_models/feature_names.txt and put them into a list called feature_names
+        feature_names = []
+        with open('../saved_models/feature_names.txt', 'r') as f:
+            feature_names = [line.strip() for line in f.readlines()]
+        #convers self.X_test to a dataframe
+        self.X_test = pd.DataFrame(self.X_test, columns=feature_names)
+        self.X_test.to_csv('../data/tmp/X_test.csv', index=False)
         
         # Get predictions for the test set
         # NOTE: Use evaluation_model instead of self.model to ensure we're testing the right model
@@ -1377,7 +937,7 @@ class DNNFightPredictor:
         fight1_df = pd.DataFrame([fight1_features])
         fight2_df = pd.DataFrame([fight2_features])
         
-        # Check if feature_names.txt exists, if not create it using main_stats_cols
+        # Check if feature_names.txt exists, if not create it using elo_columns
         script_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(script_dir)
         feature_file_path = os.path.join(project_root, 'saved_models', 'feature_names.txt')
@@ -1386,9 +946,9 @@ class DNNFightPredictor:
             print(f"Feature names file not found, creating from current columns")
             os.makedirs(os.path.dirname(feature_file_path), exist_ok=True)
             with open(feature_file_path, 'w') as f:
-                for col in self.main_stats_cols:
+                for col in self.elo_columns:
                     f.write(f"{col}\n")
-            all_features = self.main_stats_cols
+            all_features = self.elo_columns
         else:
             # Load feature list from file
             with open(feature_file_path, 'r') as f:
@@ -1563,8 +1123,8 @@ class DNNFightPredictor:
             # Compute mean absolute SHAP values across all test samples
             mean_shap_values = np.abs(shap_values.values).mean(axis=0)
             
-            # Get the features from main_stats_cols
-            feature_importance = list(zip(self.main_stats_cols, mean_shap_values))
+            # Get the features from elo_columns
+            feature_importance = list(zip(self.elo_columns, mean_shap_values))
             feature_importance.sort(key=lambda x: x[1])  # Sort by SHAP value (ascending)
             
             # Get the top 20 features
