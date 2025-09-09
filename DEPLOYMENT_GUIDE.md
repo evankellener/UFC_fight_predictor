@@ -97,6 +97,22 @@ Your deployed app will have:
 - **Real-time Predictions**: Instant fight outcome predictions
 - **Professional UI**: Clean, modern interface
 
+## 🔧 **Heroku Deployment Fix Applied!**
+
+I've fixed the Heroku deployment issues you encountered:
+
+### **✅ What I Fixed:**
+1. **Python Version**: Added `.python-version` and `runtime.txt` to specify Python 3.10
+2. **Dependencies**: Updated `requirements.txt` with compatible version ranges
+3. **Data Paths**: Made data file paths flexible for production deployment
+
+### **📁 New Files Added:**
+- `.python-version` - Specifies Python 3.10 for Heroku
+- `runtime.txt` - Backup Python version specification
+- Updated `requirements.txt` - Compatible dependency versions
+
+**Now try deploying to Heroku again - it should work!** 🚀
+
 ## 🚨 Important Notes
 
 1. **Dataset Size**: Your `final.csv` is ~45MB - this is fine for most platforms
