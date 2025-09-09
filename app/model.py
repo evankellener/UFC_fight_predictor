@@ -28,7 +28,15 @@ except ImportError:
 class UFCFightPredictor:
     def __init__(self):
         """Initialize the UFC Fight Predictor with data and model"""
-        self.data_path = '../data/tmp/final.csv'
+        # Use absolute path for production deployment
+        if os.path.exists('../data/tmp/final.csv'):
+            self.data_path = '../data/tmp/final.csv'
+        elif os.path.exists('data/tmp/final.csv'):
+            self.data_path = 'data/tmp/final.csv'
+        else:
+            # For production, try to find the data file
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            self.data_path = os.path.join(current_dir, '..', 'data', 'tmp', 'final.csv')
         self.target = "win"
         
         # Initialize the FightOutcomeModel from ensemble_model_best.py
