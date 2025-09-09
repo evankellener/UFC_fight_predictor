@@ -29,14 +29,27 @@ class UFCFightPredictor:
     def __init__(self):
         """Initialize the UFC Fight Predictor with data and model"""
         # Use absolute path for production deployment
-        if os.path.exists('../data/tmp/final.csv'):
-            self.data_path = '../data/tmp/final.csv'
-        elif os.path.exists('data/tmp/final.csv'):
-            self.data_path = 'data/tmp/final.csv'
-        else:
-            # For production, try to find the data file
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            self.data_path = os.path.join(current_dir, '..', 'data', 'tmp', 'final.csv')
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Try multiple possible locations for the data file
+        possible_paths = [
+            '../data/tmp/final.csv',
+            'data/tmp/final.csv',
+            os.path.join(current_dir, '..', 'data', 'tmp', 'final.csv'),
+            os.path.join(current_dir, 'data', 'tmp', 'final.csv'),
+            os.path.join(os.getcwd(), 'data', 'tmp', 'final.csv'),
+            os.path.join(os.getcwd(), '..', 'data', 'tmp', 'final.csv')
+        ]
+        
+        self.data_path = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                self.data_path = path
+                print(f"Found data file at: {path}")
+                break
+        
+        if self.data_path is None:
+            raise FileNotFoundError("Could not find final.csv in any expected location. Tried: " + ", ".join(possible_paths))
         self.target = "win"
         
         # Initialize the FightOutcomeModel from ensemble_model_best.py

@@ -28,11 +28,23 @@ def initialize_predictor():
     """Initialize the UFC Fight Predictor model"""
     global predictor
     try:
+        print("Initializing UFC Fight Predictor...")
         predictor = UFCFightPredictor()
         print("UFC Fight Predictor initialized successfully!")
         return True
+    except FileNotFoundError as e:
+        print(f"Data file not found: {e}")
+        print("Make sure final.csv is in the correct location")
+        return False
+    except ImportError as e:
+        print(f"Import error: {e}")
+        print("Make sure all required modules are installed")
+        return False
     except Exception as e:
         print(f"Error initializing predictor: {e}")
+        print(f"Error type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
         return False
 
 @app.route('/')
