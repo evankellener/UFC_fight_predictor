@@ -35,10 +35,16 @@ class UFCFightPredictor:
         possible_paths = [
             '../data/tmp/final.csv',
             'data/tmp/final.csv',
+            '../data/final.csv',
+            'data/final.csv',
             os.path.join(current_dir, '..', 'data', 'tmp', 'final.csv'),
             os.path.join(current_dir, 'data', 'tmp', 'final.csv'),
+            os.path.join(current_dir, '..', 'data', 'final.csv'),
+            os.path.join(current_dir, 'data', 'final.csv'),
             os.path.join(os.getcwd(), 'data', 'tmp', 'final.csv'),
-            os.path.join(os.getcwd(), '..', 'data', 'tmp', 'final.csv')
+            os.path.join(os.getcwd(), '..', 'data', 'tmp', 'final.csv'),
+            os.path.join(os.getcwd(), 'data', 'final.csv'),
+            os.path.join(os.getcwd(), '..', 'data', 'final.csv')
         ]
         
         self.data_path = None
