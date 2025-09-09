@@ -417,7 +417,7 @@ class SimpleElo:
             data[col] = pd.to_numeric(data[col], errors='coerce')
         
         # Initialize diff columns if they don't exist
-        for col in ['elo_diff_pre', 'elo_diff_post', 'opp_elo_diff_pre', 'opp_elo_diff_post']:
+        for col in ['elo_prev_pre', 'elo_prev_post', 'opp_elo_prev_pre', 'opp_elo_prev_post']:
             if col not in data.columns:
                 data[col] = 0
                 
@@ -432,8 +432,8 @@ class SimpleElo:
                 idx = fighter_data.index[i]
                 prev_idx = fighter_data.index[i-1]
                 
-                data.loc[idx, 'elo_diff_pre'] = float(fighter_data.iloc[i]['precomp_elo'] - fighter_data.iloc[i-1]['precomp_elo'])
-                data.loc[idx, 'elo_diff_post'] = float(fighter_data.iloc[i]['postcomp_elo'] - fighter_data.iloc[i-1]['postcomp_elo'])
+                data.loc[idx, 'elo_prev_pre'] = float(fighter_data.iloc[i]['precomp_elo'] - fighter_data.iloc[i-1]['precomp_elo'])
+                data.loc[idx, 'elo_prev_post'] = float(fighter_data.iloc[i]['postcomp_elo'] - fighter_data.iloc[i-1]['postcomp_elo'])
         
         # Do the same for opponents
         for fighter in data['opp_FIGHTER'].unique():
@@ -445,15 +445,15 @@ class SimpleElo:
                 idx = fighter_data.index[i]
                 prev_idx = fighter_data.index[i-1]
                 
-                data.loc[idx, 'opp_elo_diff_pre'] = float(fighter_data.iloc[i]['opp_precomp_elo'] - fighter_data.iloc[i-1]['opp_precomp_elo'])
-                data.loc[idx, 'opp_elo_diff_post'] = float(fighter_data.iloc[i]['opp_postcomp_elo'] - fighter_data.iloc[i-1]['opp_postcomp_elo'])
+                data.loc[idx, 'opp_elo_prev_pre'] = float(fighter_data.iloc[i]['opp_precomp_elo'] - fighter_data.iloc[i-1]['opp_precomp_elo'])
+                data.loc[idx, 'opp_elo_prev_post'] = float(fighter_data.iloc[i]['opp_postcomp_elo'] - fighter_data.iloc[i-1]['opp_postcomp_elo'])
 
         # Convert Elo columns to numeric to ensure consistent data types
         for col in ['precomp_elo', 'opp_precomp_elo', 'postcomp_elo', 'opp_postcomp_elo']:
             data[col] = pd.to_numeric(data[col], errors='coerce')
             
         # Initialize diff columns if they don't exist
-        for col in ['elo_diff_pre', 'elo_diff_post', 'opp_elo_diff_pre', 'opp_elo_diff_post']:
+        for col in ['elo_prev_pre', 'elo_prev_post', 'opp_elo_prev_pre', 'opp_elo_prev_post']:
             if col not in data.columns:
                 data[col] = 0.0
             else:
@@ -481,10 +481,10 @@ class SimpleElo:
                 continue
                 
             # Calculate rolling sums
-            fighter_data['rolling_3_pre'] = fighter_data['elo_diff_pre'].rolling(3, min_periods=1).sum()
-            fighter_data['rolling_5_pre'] = fighter_data['elo_diff_pre'].rolling(5, min_periods=1).sum()
-            fighter_data['rolling_3_post'] = fighter_data['elo_diff_post'].rolling(3, min_periods=1).sum()
-            fighter_data['rolling_5_post'] = fighter_data['elo_diff_post'].rolling(5, min_periods=1).sum()
+            fighter_data['rolling_3_pre'] = fighter_data['elo_prev_pre'].rolling(3, min_periods=1).sum()
+            fighter_data['rolling_5_pre'] = fighter_data['elo_prev_pre'].rolling(5, min_periods=1).sum()
+            fighter_data['rolling_3_post'] = fighter_data['elo_prev_post'].rolling(3, min_periods=1).sum()
+            fighter_data['rolling_5_post'] = fighter_data['elo_prev_post'].rolling(5, min_periods=1).sum()
             
             # Update the original dataframe with proper type conversion
             for idx, row in fighter_data.iterrows():
@@ -500,10 +500,10 @@ class SimpleElo:
                 continue
                 
             # Calculate rolling sums
-            fighter_data['rolling_3_pre'] = fighter_data['opp_elo_diff_pre'].rolling(3, min_periods=1).sum()
-            fighter_data['rolling_5_pre'] = fighter_data['opp_elo_diff_pre'].rolling(5, min_periods=1).sum()
-            fighter_data['rolling_3_post'] = fighter_data['opp_elo_diff_post'].rolling(3, min_periods=1).sum()
-            fighter_data['rolling_5_post'] = fighter_data['opp_elo_diff_post'].rolling(5, min_periods=1).sum()
+            fighter_data['rolling_3_pre'] = fighter_data['opp_elo_prev_pre'].rolling(3, min_periods=1).sum()
+            fighter_data['rolling_5_pre'] = fighter_data['opp_elo_prev_pre'].rolling(5, min_periods=1).sum()
+            fighter_data['rolling_3_post'] = fighter_data['opp_elo_prev_post'].rolling(3, min_periods=1).sum()
+            fighter_data['rolling_5_post'] = fighter_data['opp_elo_prev_post'].rolling(5, min_periods=1).sum()
             
             # Update the original dataframe with proper type conversion
             for idx, row in fighter_data.iterrows():
@@ -518,7 +518,7 @@ class SimpleElo:
         
         # Fill NaN values in elo columns with defaults to avoid errors
         for col in roll_cols + ['precomp_elo', 'opp_precomp_elo', 'postcomp_elo', 'opp_postcomp_elo', 
-                               'elo_diff_pre', 'elo_diff_post', 'opp_elo_diff_pre', 'opp_elo_diff_post']:
+                               'elo_prev_pre', 'elo_prev_post', 'opp_elo_prev_pre', 'opp_elo_prev_post']:
             if col in data.columns:
                 data[col] = data[col].fillna(0)
             

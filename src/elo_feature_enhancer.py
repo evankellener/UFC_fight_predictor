@@ -15,7 +15,7 @@ class EloFeatureEnhancer:
         # Fighter and opponent Elo columns
         fighter_elo_cols = [
             'precomp_elo', 'postcomp_elo',
-            'precomp_elo_diff', 'postcomp_elo_diff',
+            'precomp_elo_prev', 'postcomp_elo_prev',
             'precomp_elo_change_3', 'precomp_elo_change_5',
             'postcomp_elo_change_3', 'postcomp_elo_change_5'
         ]
@@ -191,23 +191,154 @@ class EloFeatureEnhancer:
         result_df[float_cols] = result_df[float_cols].round(2)
 
         result_df['DATE'] = pd.to_datetime(result_df['DATE'], errors='coerce')
-        result_df = result_df[result_df['DATE'].dt.year >= 2009]
 
         return result_df
     
-    def filter_by_fight_count(self, min_fights=2):
-        # Count fights for each fighter
-        fight_counts = self.df['FIGHTER'].value_counts()
-        opp_counts = self.df['opp_FIGHTER'].value_counts()
-
-        # Add count columns
-        self.df['fight_count'] = self.df['FIGHTER'].map(fight_counts)
-        self.df['opp_fight_count'] = self.df['opp_FIGHTER'].map(opp_counts)
-
-        # Apply filter
+    def filter_by_fight_count(self, min_fights=1):
+        """
+        Filter the dataset to only include fights where both fighters have at least min_fights precomp_boutcount.
+        
+        For min_fights=1: excludes fights where precomp_boutcount < 1 (i.e., precomp_boutcount = 0)
+        For min_fights=2: excludes fights where precomp_boutcount < 2 (i.e., precomp_boutcount = 0 or 1)
+        """
+        print(f"Filtering by minimum precomp_boutcount: {min_fights}")
+        original_size = len(self.df)
+        
+        # Apply filter - both fighters must have at least min_fights precomp_boutcount
         self.df = self.df[
-            (self.df['fight_count'] > min_fights) &
-            (self.df['opp_fight_count'] > min_fights)
+            (self.df['precomp_boutcount'] >= min_fights) &
+            (self.df['opp_precomp_boutcount'] >= min_fights)
         ]
-
+        
+        final_size = len(self.df)
+        print(f"Filtering complete: {original_size} -> {final_size} rows ({original_size - final_size} removed)")
+        
         return self.df
+    
+    def differential_and_rolling_stats(self, data):
+        data['precomp_elo_prev'] = data.groupby('FIGHTER')['precomp_elo'].diff().fillna(0).round(2)
+        # if it's the fighter's first fight, the diff is 0 only for precomp_elo_prev, for 
+        # postcomp_elo_prev it should be the differnece between the fighter's precomp_elo and the fighter's postcomp_elo(precomp_elo - postcomp_elo)
+        # do not just do: data['postcomp_elo_prev'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0).round(2)
+        data['postcomp_elo_prev'] = data['postcomp_elo'] - data['precomp_elo']
+        data['opp_precomp_elo_prev'] = data.groupby('opp_FIGHTER')['opp_precomp_elo'].diff().fillna(0).round(2)
+        data['opp_postcomp_elo_prev'] = data['opp_postcomp_elo'] - data['opp_precomp_elo']
+
+        #round to 2 decimal places
+        data['precomp_elo_prev'] = data['precomp_elo_prev'].round(2)
+        data['postcomp_elo_prev'] = data['postcomp_elo_prev'].round(2)
+        data['opp_precomp_elo_prev'] = data['opp_precomp_elo_prev'].round(2)
+        data['opp_postcomp_elo_prev'] = data['opp_postcomp_elo_prev'].round(2)
+
+        # Calculate rolling averages
+        #data['precomp_elo_change_3'] = data.groupby('FIGHTER')['precomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+
+        # Define a helper function for rolling sums excluding the current row
+        data['precomp_elo_change_3'] = (
+            data.groupby('FIGHTER')['precomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['precomp_elo_change_5'] = (
+            data.groupby('FIGHTER')['precomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['postcomp_elo_change_3'] = (
+            data.groupby('FIGHTER')['postcomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['postcomp_elo_change_5'] = (
+            data.groupby('FIGHTER')['postcomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+
+        data['opp_precomp_elo_change_3'] = (
+            data.groupby('opp_FIGHTER')['opp_precomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_precomp_elo_change_5'] = (
+            data.groupby('opp_FIGHTER')['opp_precomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_postcomp_elo_change_3'] = (
+            data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_postcomp_elo_change_5'] = (
+            data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        """
+        data['precomp_elo_change_5'] = data.groupby('FIGHTER')['precomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_3'] = data.groupby('FIGHTER')['postcomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_5'] = data.groupby('FIGHTER')['postcomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        #round to 2 decimal places
+        data['precomp_elo_change_3'] = data['precomp_elo_change_3'].round(2)
+        data['precomp_elo_change_5'] = data['precomp_elo_change_5'].round(2)
+        data['postcomp_elo_change_3'] = data['postcomp_elo_change_3'].round(2)
+        data['postcomp_elo_change_5'] = data['postcomp_elo_change_5'].round(2)
+        data['opp_precomp_elo_change_3'] = data['opp_precomp_elo_change_3'].round(2)
+        data['opp_precomp_elo_change_5'] = data['opp_precomp_elo_change_5'].round(2)
+        data['opp_postcomp_elo_change_3'] = data['opp_postcomp_elo_change_3'].round(2)
+        data['opp_postcomp_elo_change_5'] = data['opp_postcomp_elo_change_5'].round(2)
+
+
+        """
+
+        data['precomp_strike_elo_prev'] = data.groupby('FIGHTER')['precomp_strike_elo'].diff().fillna(0).round(2)
+        # if it's the fighter's first fight, the diff is 0 only for precomp_elo_prev, for 
+        # postcomp_elo_prev it should be the differnece between the fighter's precomp_elo and the fighter's postcomp_elo(precomp_elo - postcomp_elo)
+        # do not just do: data['postcomp_elo_prev'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0).round(2)
+        data['postcomp_strike_elo_prev'] = data['postcomp_strike_elo'] - data['precomp_strike_elo']
+        data['opp_precomp_strike_elo_prev'] = data.groupby('opp_FIGHTER')['opp_precomp_strike_elo'].diff().fillna(0).round(2)
+        data['opp_postcomp_strike_elo_prev'] = data['opp_postcomp_strike_elo'] - data['opp_precomp_strike_elo']
+        #round to 2 decimal places
+        data['precomp_strike_elo_prev'] = data['precomp_strike_elo_prev'].round(2)
+        data['postcomp_strike_elo_prev'] = data['postcomp_strike_elo_prev'].round(2)
+        data['opp_precomp_strike_elo_prev'] = data['opp_precomp_strike_elo_prev'].round(2)
+        data['opp_postcomp_strike_elo_prev'] = data['opp_postcomp_strike_elo_prev'].round(2)
+        # Calculate rolling averages for strike Elo
+        data['precomp_strike_elo_change_3'] = (
+            data.groupby('FIGHTER')['precomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['precomp_strike_elo_change_5'] = (
+            data.groupby('FIGHTER')['precomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['postcomp_strike_elo_change_3'] = (
+            data.groupby('FIGHTER')['postcomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['postcomp_strike_elo_change_5'] = (
+            data.groupby('FIGHTER')['postcomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_precomp_strike_elo_change_3'] = (
+            data.groupby('opp_FIGHTER')['opp_precomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_precomp_strike_elo_change_5'] = (
+            data.groupby('opp_FIGHTER')['opp_precomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_postcomp_strike_elo_change_3'] = (
+            data.groupby('opp_FIGHTER')['opp_postcomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(3, min_periods=1).sum().fillna(0).round(2))
+        )
+        data['opp_postcomp_strike_elo_change_5'] = (
+            data.groupby('opp_FIGHTER')['opp_postcomp_strike_elo_prev']
+            .transform(lambda x: x.shift(0).rolling(5, min_periods=1).sum().fillna(0).round(2))
+        )
+        #round to 2 decimal places
+
+
+
+        #caluculate differences between fighter and opponent precomp and postcomp elo
+        data['precomp_elo_diff'] = (data['precomp_elo'] - data['opp_precomp_elo']).round(2)
+        data['postcomp_elo_diff'] = (data['postcomp_elo'] - data['opp_postcomp_elo']).round(2)
+        
+        return data

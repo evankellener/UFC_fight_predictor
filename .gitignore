@@ -1,19 +1,9 @@
-# Ignore Python virtual environments
-ufc_env/
-ufc_env_old/
-
-# Ignore temporary data files
-data/tmp/
-*.csv
-
-# General Python ignores
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
-env/
-venv/
 build/
 develop-eggs/
 dist/
@@ -25,6 +15,54 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+ufc_env/
+ufc_env_old/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
+
+# Model files (too large for git)
+saved_models/
+*.h5
+*.joblib
+*.pkl
+
+# Data files (too large for git)
+data/tmp/*.csv
+data/sqlite_db/

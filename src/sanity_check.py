@@ -31,12 +31,12 @@ def SanityCheck(csv_path='../data/tmp/final.csv', fighter_name=None):
             postcomp_stats = fighter_df.iloc[i][[
                 'postcomp_sigstr_pm', 'postcomp_sigstr_pm3',
                 'postcomp_tdavg', 'postcomp_tdavg5',
-                'postcomp_sapm', 'postcomp_sapm3'
+                'postcomp_sapm', 'postcomp_sapm3', 'postcomp_elo'
             ]]
             precomp_stats = fighter_df.iloc[i + 1][[
                 'precomp_sigstr_pm', 'precomp_sigstr_pm3',
                 'precomp_tdavg', 'precomp_tdavg5',
-                'precomp_sapm', 'precomp_sapm3'
+                'precomp_sapm', 'precomp_sapm3', 'precomp_elo'
             ]]
             
             for j, stat in enumerate(postcomp_stats.index):

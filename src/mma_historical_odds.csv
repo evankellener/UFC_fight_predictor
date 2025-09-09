@@ -1,0 +1,817 @@
+fight_id,sport_key,sport_title,commence_time,home_team,away_team,bookmaker_key,bookmaker_title,bookmaker_updated,market_key,market_updated,outcome_name,odds
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Kamil Oniszczuk,167
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Norbert Novenyi Jr.,-250
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,lowvig,LowVig.ag,2023-06-16T23:49:40Z,h2h,2023-06-16T23:49:39Z,Kamil Oniszczuk,195
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,lowvig,LowVig.ag,2023-06-16T23:49:40Z,h2h,2023-06-16T23:49:39Z,Norbert Novenyi Jr.,-230
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,unibet_us,Unibet,2023-06-16T23:48:40Z,h2h,2023-06-16T23:48:39Z,Kamil Oniszczuk,155
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,unibet_us,Unibet,2023-06-16T23:48:40Z,h2h,2023-06-16T23:48:39Z,Norbert Novenyi Jr.,-225
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,betmgm,BetMGM,2023-06-16T23:48:37Z,h2h,2023-06-16T23:48:37Z,Kamil Oniszczuk,185
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,betmgm,BetMGM,2023-06-16T23:48:37Z,h2h,2023-06-16T23:48:37Z,Norbert Novenyi Jr.,-225
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,betus,BetUS,2023-06-16T23:50:03Z,h2h,2023-06-16T23:50:02Z,Kamil Oniszczuk,180
+9e84c2ee9dc668befa4fc90f85f7b5e0,mma_mixed_martial_arts,MMA,2023-06-16T23:55:28Z,Norbert Novenyi Jr.,Kamil Oniszczuk,betus,BetUS,2023-06-16T23:50:03Z,h2h,2023-06-16T23:50:02Z,Norbert Novenyi Jr.,-230
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Mike Hamel,-110
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Shamil Nikaev,-110
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Mike Hamel,110
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Shamil Nikaev,-135
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Mike Hamel,100
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Shamil Nikaev,-130
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Mike Hamel,-103
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Shamil Nikaev,-140
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:15Z,Mike Hamel,110
+762b94d13196acc0d711046eeee2a8f3,mma_mixed_martial_arts,MMA,2023-06-17T00:10:28Z,Mike Hamel,Shamil Nikaev,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:15Z,Shamil Nikaev,-152
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gadzhi Rabadanov,-1115
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Pieter Buist,575
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Gadzhi Rabadanov,-1000
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Pieter Buist,600
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Gadzhi Rabadanov,-1493
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Pieter Buist,850
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Gadzhi Rabadanov,-1100
+bde2c401fcc1ba035d2c7d28b5597e0d,mma_mixed_martial_arts,MMA,2023-06-17T00:30:28Z,Pieter Buist,Gadzhi Rabadanov,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Pieter Buist,700
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Bobby Nash,235
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Kyle Crutchmer,-275
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Bobby Nash,200
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Kyle Crutchmer,-250
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Bobby Nash,210
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Kyle Crutchmer,-270
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Bobby Nash,197
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Kyle Crutchmer,-303
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Bobby Nash,170
+5fa4c8bd922372b33b1730690dd22e54,mma_mixed_martial_arts,MMA,2023-06-17T00:45:28Z,Kyle Crutchmer,Bobby Nash,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Kyle Crutchmer,-245
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Gabriel Sayeg,475
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Wladmir Gouvea,-649
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Gabriel Sayeg,350
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Wladmir Gouvea,-500
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Gabriel Sayeg,323
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Wladmir Gouvea,-588
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gabriel Sayeg,335
+5eef9f47d65ab6ad4f04b07837ce7d0e,mma_mixed_martial_arts,MMA,2023-06-17T01:00:28Z,Wladmir Gouvea,Gabriel Sayeg,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Wladmir Gouvea,-530
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Daniel James,-109
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Gokhan Saricam,-129
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Daniel James,-110
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Gokhan Saricam,-110
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Daniel James,-105
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gokhan Saricam,-127
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Daniel James,-110
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Gokhan Saricam,-120
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Daniel James,-110
+022c916424c985cc13e87d97ab6097d9,mma_mixed_martial_arts,MMA,2023-06-17T01:15:28Z,Daniel James,Gokhan Saricam,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Gokhan Saricam,-110
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Corey Anderson,-200
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Phil Davis,136
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Corey Anderson,-175
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Phil Davis,150
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Corey Anderson,-190
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Phil Davis,138
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Corey Anderson,-175
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Phil Davis,145
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Corey Anderson,-175
+72acbbe01c651bbd26add35f9d955f21,mma_mixed_martial_arts,MMA,2023-06-17T01:45:28Z,Corey Anderson,Phil Davis,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Phil Davis,145
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Vadim Nemkov,-550
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Yoel Romero,375
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Vadim Nemkov,-549
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Yoel Romero,400
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Vadim Nemkov,-666
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Yoel Romero,361
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Vadim Nemkov,-500
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Yoel Romero,360
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Vadim Nemkov,-625
+3b48b4c2467fd42821c2f48988aaeda3,mma_mixed_martial_arts,MMA,2023-06-17T02:00:00Z,Vadim Nemkov,Yoel Romero,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Yoel Romero,375
+afde96590e242064c3b6051af1583505,mma_mixed_martial_arts,MMA,2023-06-17T02:15:28Z,Sergio Pettis,Patricio Pitbull,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Patricio Pitbull,-165
+afde96590e242064c3b6051af1583505,mma_mixed_martial_arts,MMA,2023-06-17T02:15:28Z,Sergio Pettis,Patricio Pitbull,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Sergio Pettis,123
+afde96590e242064c3b6051af1583505,mma_mixed_martial_arts,MMA,2023-06-17T02:15:28Z,Sergio Pettis,Patricio Pitbull,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Patricio Pitbull,-165
+afde96590e242064c3b6051af1583505,mma_mixed_martial_arts,MMA,2023-06-17T02:15:28Z,Sergio Pettis,Patricio Pitbull,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Sergio Pettis,135
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,mybookieag,MyBookie.ag,2023-06-16T23:43:07Z,h2h,2023-06-16T23:43:07Z,Alex Polizzi,-153
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,mybookieag,MyBookie.ag,2023-06-16T23:43:07Z,h2h,2023-06-16T23:43:07Z,Karl Moore,106
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Alex Polizzi,-144
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Karl Moore,124
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Alex Polizzi,-148
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Karl Moore,106
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Alex Polizzi,-135
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Karl Moore,110
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Alex Polizzi,-140
+e0742e56884f7169d3bd4415bfd0500b,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Karl Moore,Alex Polizzi,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Karl Moore,110
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,mybookieag,MyBookie.ag,2023-06-16T23:43:07Z,h2h,2023-06-16T23:43:07Z,Richie Smullen,484
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,mybookieag,MyBookie.ag,2023-06-16T23:43:07Z,h2h,2023-06-16T23:43:07Z,Timur Khizriev,-1111
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Richie Smullen,700
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:06Z,Timur Khizriev,-1000
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Richie Smullen,460
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Timur Khizriev,-910
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Richie Smullen,650
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Timur Khizriev,-1100
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Richie Smullen,575
+aaed63fe1d94f20607d8e7d9636f882d,mma_mixed_martial_arts,MMA,2023-06-17T03:15:28Z,Timur Khizriev,Richie Smullen,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:29Z,Timur Khizriev,-950
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Zac Pauga,160
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Zac Pauga,160
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Zac Pauga,160
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Zac Pauga,160
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Modestas Bukauskas,-196
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Zac Pauga,153
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Modestas Bukauskas,-208
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Zac Pauga,180
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Modestas Bukauskas,-210
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Zac Pauga,180
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Zac Pauga,170
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Modestas Bukauskas,-190
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Zac Pauga,160
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Modestas Bukauskas,-210
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Zac Pauga,165
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Modestas Bukauskas,-190
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Zac Pauga,155
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Zac Pauga,170
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Zac Pauga,162
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Modestas Bukauskas,-200
+5d2b689e496d4de0cd321e022597128f,mma_mixed_martial_arts,MMA,2023-06-17T23:15:00Z,Modestas Bukauskas,Zac Pauga,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Zac Pauga,170
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Daniel Argueta,155
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Ronnie Lawrence,-195
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Daniel Argueta,155
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Ronnie Lawrence,-195
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Daniel Argueta,155
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ronnie Lawrence,-195
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Daniel Argueta,155
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Ronnie Lawrence,-195
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Daniel Argueta,149
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Ronnie Lawrence,-192
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Daniel Argueta,165
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ronnie Lawrence,-189
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Daniel Argueta,165
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Daniel Argueta,160
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Daniel Argueta,160
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Daniel Argueta,165
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Ronnie Lawrence,-200
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Daniel Argueta,155
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Daniel Argueta,160
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Daniel Argueta,154
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Ronnie Lawrence,-190
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Daniel Argueta,165
+57e014e5f7614559752dfd63bcba9846,mma_mixed_martial_arts,MMA,2023-06-17T23:45:00Z,Ronnie Lawrence,Daniel Argueta,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Ronnie Lawrence,-195
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Gabriella Fernandes,180
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gabriella Fernandes,180
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gabriella Fernandes,180
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gabriella Fernandes,180
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Gabriella Fernandes,185
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Tereza Bleda,-243
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gabriella Fernandes,195
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tereza Bleda,-227
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Gabriella Fernandes,195
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Gabriella Fernandes,190
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Tereza Bleda,-240
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Gabriella Fernandes,198
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Tereza Bleda,-250
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Gabriella Fernandes,185
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Tereza Bleda,-225
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Gabriella Fernandes,175
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Tereza Bleda,-220
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Gabriella Fernandes,190
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Tereza Bleda,-230
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Gabriella Fernandes,183
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Tereza Bleda,-225
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Gabriella Fernandes,190
+cb93bf8ccd3c51ccfdc460c75f4be94f,mma_mixed_martial_arts,MMA,2023-06-18T00:15:00Z,Tereza Bleda,Gabriella Fernandes,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Tereza Bleda,-225
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Carlos Hernandez,110
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Denys Bondar,-135
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Carlos Hernandez,105
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Denys Bondar,-133
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Carlos Hernandez,110
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Denys Bondar,-130
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Carlos Hernandez,109
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Denys Bondar,-128
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Carlos Hernandez,110
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Denys Bondar,-130
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Carlos Hernandez,109
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Denys Bondar,-129
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Carlos Hernandez,100
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Denys Bondar,-130
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Carlos Hernandez,107
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Denys Bondar,-132
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Carlos Hernandez,107
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Denys Bondar,-132
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Carlos Hernandez,107
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Denys Bondar,-132
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Carlos Hernandez,107
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Denys Bondar,-132
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Carlos Hernandez,100
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Denys Bondar,-122
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Carlos Hernandez,105
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Denys Bondar,-125
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Carlos Hernandez,105
+05e2295f9a339fb4f60c9239693d07f4,mma_mixed_martial_arts,MMA,2023-06-18T00:46:00Z,Denys Bondar,Carlos Hernandez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Denys Bondar,-125
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Cristian Quinonez,-148
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Kyung Ho Kang,118
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Cristian Quinonez,-148
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Kyung Ho Kang,118
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Cristian Quinonez,-148
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Kyung Ho Kang,118
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Cristian Quinonez,-151
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Kyung Ho Kang,118
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Cristian Quinonez,-141
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Kyung Ho Kang,120
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Cristian Quinonez,-140
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Kyung Ho Kang,120
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Cristian Quinonez,-148
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Kyung Ho Kang,118
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Cristian Quinonez,-148
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Kyung Ho Kang,120
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Cristian Quinonez,-140
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Kyung Ho Kang,110
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Cristian Quinonez,-150
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Kyung Ho Kang,125
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Cristian Quinonez,-145
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Kyung Ho Kang,120
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Cristian Quinonez,-135
+bd8675531508b6a3f8a3ee92a06f07c0,mma_mixed_martial_arts,MMA,2023-06-18T01:15:00Z,Kyung Ho Kang,Cristian Quinonez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Kyung Ho Kang,115
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Alessandro Costa,-260
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Jimmy Flick,210
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Alessandro Costa,-270
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Jimmy Flick,205
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Alessandro Costa,-277
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Jimmy Flick,237
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Alessandro Costa,-278
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jimmy Flick,237
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Alessandro Costa,-278
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Alessandro Costa,-278
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Alessandro Costa,-278
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Alessandro Costa,-278
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Alessandro Costa,-290
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jimmy Flick,225
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Alessandro Costa,-275
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Jimmy Flick,220
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Alessandro Costa,-285
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Alessandro Costa,-260
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Jimmy Flick,210
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Alessandro Costa,-275
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Jimmy Flick,215
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Alessandro Costa,-280
+5b28734e9c36e00da32c2bd88d2370ab,mma_mixed_martial_arts,MMA,2023-06-18T01:45:00Z,Jimmy Flick,Alessandro Costa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jimmy Flick,235
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Nicolas Dalby,155
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Nicolas Dalby,155
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Nicolas Dalby,155
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Nicolas Dalby,155
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Muslim Salikhov,-196
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Nicolas Dalby,152
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Muslim Salikhov,-190
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Nicolas Dalby,160
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Muslim Salikhov,-188
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Nicolas Dalby,152
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Muslim Salikhov,-190
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Nicolas Dalby,160
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Muslim Salikhov,-200
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Nicolas Dalby,170
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Muslim Salikhov,-200
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Nicolas Dalby,170
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Muslim Salikhov,-200
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Nicolas Dalby,160
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Muslim Salikhov,-190
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Nicolas Dalby,160
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Nicolas Dalby,163
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Muslim Salikhov,-195
+045bb6e8c10afa17c98b078880e251f8,mma_mixed_martial_arts,MMA,2023-06-18T02:15:00Z,Muslim Salikhov,Nicolas Dalby,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Nicolas Dalby,165
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Manuel Torres,-186
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Nikolas Motta,150
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Manuel Torres,-186
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Nikolas Motta,150
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Manuel Torres,-186
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Nikolas Motta,150
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Manuel Torres,-186
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Nikolas Motta,150
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Manuel Torres,-192
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Nikolas Motta,148
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Manuel Torres,-179
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Nikolas Motta,153
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Manuel Torres,-178
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Nikolas Motta,153
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Manuel Torres,-190
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Nikolas Motta,160
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Manuel Torres,-188
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Nikolas Motta,152
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Manuel Torres,-185
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Nikolas Motta,150
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Manuel Torres,-190
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Nikolas Motta,155
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Manuel Torres,-180
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Nikolas Motta,155
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Manuel Torres,-185
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Nikolas Motta,155
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Manuel Torres,-195
+8112f6f972f79eafe9c5fcf281b8584e,mma_mixed_martial_arts,MMA,2023-06-18T02:45:00Z,Nikolas Motta,Manuel Torres,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Nikolas Motta,165
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Lucas Almeida,155
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Lucas Almeida,155
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Lucas Almeida,155
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Lucas Almeida,155
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Lucas Almeida,160
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Pat Sabatini,-190
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Lucas Almeida,153
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Pat Sabatini,-196
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Lucas Almeida,160
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Lucas Almeida,165
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Lucas Almeida,170
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Lucas Almeida,170
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Pat Sabatini,-200
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Lucas Almeida,165
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Pat Sabatini,-210
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Lucas Almeida,160
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Pat Sabatini,-190
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Lucas Almeida,159
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Pat Sabatini,-197
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Lucas Almeida,170
+bf26023dd11f1268729bc2858af5ff37,mma_mixed_martial_arts,MMA,2023-06-18T03:15:00Z,Pat Sabatini,Lucas Almeida,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Pat Sabatini,-200
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Armen Petrosyan,126
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Chris Duncan,-154
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Armen Petrosyan,120
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Chris Duncan,-141
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Armen Petrosyan,120
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Chris Duncan,-140
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Armen Petrosyan,125
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Chris Duncan,-155
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Armen Petrosyan,125
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Chris Duncan,-150
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Armen Petrosyan,126
+05b5941d9119016647c12c74f4e77335,mma_mixed_martial_arts,MMA,2023-06-18T03:30:00Z,Armen Petrosyan,Chris Duncan,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Chris Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Armen Petrosyan,120
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Christian Leroy Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Armen Petrosyan,120
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Christian Leroy Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Armen Petrosyan,120
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Christian Leroy Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Armen Petrosyan,120
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Christian Leroy Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Armen Petrosyan,120
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Christian Leroy Duncan,-153
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Armen Petrosyan,130
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Christian Leroy Duncan,-150
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Armen Petrosyan,125
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Christian Leroy Duncan,-155
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Armen Petrosyan,135
+8fc9a1bf9abcc2579dadee838185e7cb,mma_mixed_martial_arts,MMA,2023-06-18T03:45:00Z,Christian Leroy Duncan,Armen Petrosyan,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Christian Leroy Duncan,-155
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Arman Tsarukyan,-1115
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Arman Tsarukyan,-1115
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Arman Tsarukyan,-1115
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Arman Tsarukyan,-1115
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Arman Tsarukyan,-1250
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Joaquim Silva,625
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Arman Tsarukyan,-1000
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Joaquim Silva,700
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Arman Tsarukyan,-1000
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Joaquim Silva,700
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Arman Tsarukyan,-1000
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Arman Tsarukyan,-1250
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Joaquim Silva,710
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Arman Tsarukyan,-1100
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Joaquim Silva,675
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Arman Tsarukyan,-1000
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Joaquim Silva,600
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Arman Tsarukyan,-1100
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Joaquim Silva,700
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Arman Tsarukyan,-1200
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,bovada,Bovada,2023-06-16T23:54:56Z,h2h,2023-06-16T23:54:56Z,Joaquim Silva,650
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Arman Tsarukyan,-1050
+fac029212d3d4ed2f33e63b2c02791ed,mma_mixed_martial_arts,MMA,2023-06-18T04:15:00Z,Arman Tsarukyan,Joaquim Silva,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Joaquim Silva,700
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jared Cannonier,104
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Marvin Vettori,-128
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jared Cannonier,105
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Jared Cannonier,-101
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Marvin Vettori,-119
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jared Cannonier,-101
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Marvin Vettori,-119
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Jared Cannonier,105
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Jared Cannonier,100
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,mybookieag,MyBookie.ag,2023-06-16T23:55:13Z,h2h,2023-06-16T23:55:13Z,Marvin Vettori,-126
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Jared Cannonier,102
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jared Cannonier,102
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jared Cannonier,102
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jared Cannonier,102
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Jared Cannonier,105
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Jared Cannonier,105
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Marvin Vettori,-125
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Jared Cannonier,-110
+d4ab364d94585fe36f32cc65e1714f57,mma_mixed_martial_arts,MMA,2023-06-18T04:20:00Z,Marvin Vettori,Jared Cannonier,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Marvin Vettori,-120
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Austen Lane,155
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Justin Tafa,-179
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Austen Lane,150
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Austen Lane,144
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Justin Tafa,-186
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Austen Lane,143
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Austen Lane,143
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Austen Lane,143
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Austen Lane,143
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Austen Lane,155
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Austen Lane,155
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Austen Lane,155
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Justin Tafa,-180
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Austen Lane,150
+f7e45793f6102bd18ab12bbe150a491b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Justin Tafa,Austen Lane,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Justin Tafa,-185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,David Onama,195
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Gabriel Santos,-230
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,David Onama,185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gabriel Santos,-235
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,David Onama,185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gabriel Santos,-235
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,David Onama,185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gabriel Santos,-235
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,David Onama,195
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gabriel Santos,-227
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,David Onama,185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Gabriel Santos,-235
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,David Onama,180
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Gabriel Santos,-230
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,David Onama,190
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Gabriel Santos,-250
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,David Onama,185
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Gabriel Santos,-225
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,David Onama,195
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Gabriel Santos,-230
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,David Onama,180
+0f8b08c4a2dff81bbb2e7b7bd98ec14d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,David Onama,Gabriel Santos,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Gabriel Santos,-225
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Gillian Robertson,105
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Tabatha Ricci,-125
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gillian Robertson,102
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tabatha Ricci,-127
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gillian Robertson,102
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tabatha Ricci,-127
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Gillian Robertson,102
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tabatha Ricci,-127
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Gillian Robertson,105
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tabatha Ricci,-125
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Gillian Robertson,102
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Tabatha Ricci,-127
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Gillian Robertson,100
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Tabatha Ricci,-130
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Gillian Robertson,114
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Tabatha Ricci,-146
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Gillian Robertson,105
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Tabatha Ricci,-125
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Gillian Robertson,110
+807b3fdfe9226dc7683465cdfd5c9f96,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tabatha Ricci,Gillian Robertson,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Tabatha Ricci,-130
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Jack Jenkins,150
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Jamall Emmers,-175
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jack Jenkins,143
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jamall Emmers,-180
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jack Jenkins,143
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jamall Emmers,-180
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jack Jenkins,143
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Jamall Emmers,-180
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jack Jenkins,150
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Jamall Emmers,-175
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Jack Jenkins,143
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Jamall Emmers,-180
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Jack Jenkins,145
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Jamall Emmers,-175
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jack Jenkins,142
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jamall Emmers,-184
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jack Jenkins,150
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jamall Emmers,-175
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Jack Jenkins,150
+e3f38fd4e4ea0386ba8c4d746472a28b,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Jamall Emmers,Jack Jenkins,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Jamall Emmers,-175
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Kleydson Rodrigues,270
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Tatsuro Taira,-330
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Kleydson Rodrigues,275
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tatsuro Taira,-375
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Kleydson Rodrigues,275
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tatsuro Taira,-375
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Kleydson Rodrigues,275
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Tatsuro Taira,-375
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Kleydson Rodrigues,270
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Tatsuro Taira,-333
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Kleydson Rodrigues,275
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Tatsuro Taira,-375
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Kleydson Rodrigues,250
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Tatsuro Taira,-350
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Kleydson Rodrigues,280
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Tatsuro Taira,-390
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Kleydson Rodrigues,280
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Tatsuro Taira,-340
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Kleydson Rodrigues,280
+5c234ab5b6c8625b9b2dd63b066ad247,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Tatsuro Taira,Kleydson Rodrigues,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Tatsuro Taira,-360
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Neil Magny,-148
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Philip Rowe,128
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Philip Rowe,120
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Philip Rowe,120
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Philip Rowe,120
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Neil Magny,-147
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Philip Rowe,128
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Philip Rowe,120
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Philip Rowe,120
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Philip Rowe,118
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Philip Rowe,130
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Philip Rowe,125
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Neil Magny,-150
+0492c91fbe10a188573cdeb372d86dfc,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Neil Magny,Philip Rowe,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Philip Rowe,125
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Randy Brown,-240
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Randy Brown,-265
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Randy Brown,-265
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Randy Brown,-265
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Randy Brown,-238
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Randy Brown,-265
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Randy Brown,-245
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Wellington Turman,195
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Randy Brown,-280
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Wellington Turman,210
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Randy Brown,-245
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Randy Brown,-250
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Wellington Turman,205
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Randy Brown,-250
+09a28e4b164e545ff115e180eb32c83d,mma_mixed_martial_arts,MMA,2023-06-24T16:00:00Z,Randy Brown,Wellington Turman,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Wellington Turman,200
+a4ba9e46dfcf2825879f784cedd78598,mma_mixed_martial_arts,MMA,2023-06-24T16:25:00Z,Trevor Peek,Victor Martinez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Trevor Peek,-265
+a4ba9e46dfcf2825879f784cedd78598,mma_mixed_martial_arts,MMA,2023-06-24T16:25:00Z,Trevor Peek,Victor Martinez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Victor Martinez,200
+a4ba9e46dfcf2825879f784cedd78598,mma_mixed_martial_arts,MMA,2023-06-24T16:25:00Z,Trevor Peek,Victor Martinez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Trevor Peek,-255
+a4ba9e46dfcf2825879f784cedd78598,mma_mixed_martial_arts,MMA,2023-06-24T16:25:00Z,Trevor Peek,Victor Martinez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Victor Martinez,215
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Loik Radzhabov,103
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Mateusz Rebecki,-123
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Loik Radzhabov,100
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Mateusz Rebecki,-130
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Loik Radzhabov,103
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Mateusz Rebecki,-123
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Loik Radzhabov,104
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Mateusz Rebecki,-132
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Loik Radzhabov,105
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Mateusz Rebecki,-125
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Loik Radzhabov,105
+0ea5908415e66a12ee365ab1b468b67a,mma_mixed_martial_arts,MMA,2023-06-24T17:15:00Z,Mateusz Rebecki,Loik Radzhabov,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Mateusz Rebecki,-125
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Amanda Ribas,-185
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Maycee Barber,160
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Amanda Ribas,-180
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Maycee Barber,143
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Amanda Ribas,-180
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Maycee Barber,143
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Amanda Ribas,-180
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Maycee Barber,143
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Amanda Ribas,-185
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Maycee Barber,160
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Amanda Ribas,-180
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Maycee Barber,143
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Amanda Ribas,-190
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Maycee Barber,155
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Amanda Ribas,-180
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Maycee Barber,140
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Amanda Ribas,-175
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Maycee Barber,150
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Amanda Ribas,-175
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Maycee Barber,150
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Amanda Ribas,-185
+c95bde420ead611985bb712fbb9c87c5,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Amanda Ribas,Maycee Barber,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Maycee Barber,150
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Brendan Allen,-156
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Bruno Silva,136
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Brendan Allen,-180
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Bruno Silva,143
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Brendan Allen,-180
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Bruno Silva,143
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Brendan Allen,-180
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Bruno Silva,143
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Brendan Allen,-156
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Bruno Silva,136
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Brendan Allen,-180
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Bruno Silva,143
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Brendan Allen,-160
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Bruno Silva,130
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Brendan Allen,-188
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Bruno Silva,146
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Brendan Allen,-165
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Bruno Silva,140
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Brendan Allen,-165
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Bruno Silva,140
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Brendan Allen,-165
+a1051790499e673cf11a4074ac0b4315,mma_mixed_martial_arts,MMA,2023-06-24T19:00:00Z,Brendan Allen,Bruno Silva,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Bruno Silva,135
+ff5da96ca3373cde54b8701e7f4f1a51,mma_mixed_martial_arts,MMA,2023-06-24T20:05:00Z,Punahele Soriano,Sedriques Dumas,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Punahele Soriano,-235
+ff5da96ca3373cde54b8701e7f4f1a51,mma_mixed_martial_arts,MMA,2023-06-24T20:05:00Z,Punahele Soriano,Sedriques Dumas,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Sedriques Dumas,180
+ff5da96ca3373cde54b8701e7f4f1a51,mma_mixed_martial_arts,MMA,2023-06-24T20:05:00Z,Punahele Soriano,Sedriques Dumas,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Punahele Soriano,-210
+ff5da96ca3373cde54b8701e7f4f1a51,mma_mixed_martial_arts,MMA,2023-06-24T20:05:00Z,Punahele Soriano,Sedriques Dumas,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Sedriques Dumas,180
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Ilia Topuria,-340
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Ilia Topuria,-325
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Josh Emmett,270
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Ilia Topuria,-310
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:07Z,Josh Emmett,260
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ilia Topuria,-312
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Josh Emmett,260
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Ilia Topuria,-320
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Josh Emmett,240
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Ilia Topuria,-320
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Ilia Topuria,-335
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Ilia Topuria,-335
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ilia Topuria,-335
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Ilia Topuria,-335
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Josh Emmett,250
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Ilia Topuria,-300
+bc4c81da449cd357d8ce602a2235f990,mma_mixed_martial_arts,MMA,2023-06-24T21:00:00Z,Ilia Topuria,Josh Emmett,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Josh Emmett,240
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Abdul Razak Alhassan,145
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Brunno Ferreira,-170
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Abdul Razak Alhassan,145
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Brunno Ferreira,-169
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Abdul Razak Alhassan,145
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Brunno Ferreira,-170
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Abdul Razak Alhassan,140
+b5d9b603b7c8e575ce993c7425085978,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abdul Razak Alhassan,Brunno Ferreira,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Brunno Ferreira,-170
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Abusupyian Magomedov,150
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Sean Strickland,-175
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Abusupyian Magomedov,150
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Sean Strickland,-175
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Abusupyian Magomedov,148
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Sean Strickland,-173
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Abusupyian Magomedov,148
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Sean Strickland,-172
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Abusupyian Magomedov,145
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Sean Strickland,-175
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Abusupyian Magomedov,150
+e53ef32449fc4596da16d24ce748d732,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Abusupyian Magomedov,Sean Strickland,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Sean Strickland,-170
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Ariane Lipski,145
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Melissa Gatto,-170
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ariane Lipski,137
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Melissa Gatto,-156
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Ariane Lipski,137
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Melissa Gatto,-157
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Ariane Lipski,145
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,superbook,SuperBook,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Melissa Gatto,-165
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Ariane Lipski,125
+d97cf3d50b5dd006e66d4cf20d961824,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Ariane Lipski,Melissa Gatto,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Melissa Gatto,-155
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Benoit Saint-Denis,205
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Ismael Bonfim,-245
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Benoit Saint-Denis,205
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Ismael Bonfim,-238
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Benoit Saint-Denis,205
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Ismael Bonfim,-240
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Benoit Saint-Denis,190
+a4de95a936a6083a241fc4f6200acc3d,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Benoit Saint-Denis,Ismael Bonfim,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Ismael Bonfim,-240
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Damir Ismagulov,-170
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Grant Dawson,145
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Damir Ismagulov,-156
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Grant Dawson,135
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Damir Ismagulov,-155
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Grant Dawson,135
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Damir Ismagulov,-155
+0542628b097940fa45030f9be619908b,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Grant Dawson,Damir Ismagulov,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Grant Dawson,125
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Max Griffin,175
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Michael Morales,-205
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Max Griffin,175
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Michael Morales,-204
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Max Griffin,175
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Michael Morales,-205
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Max Griffin,165
+f48ea97ebf7752999cf5d61e57d1a05f,mma_mixed_martial_arts,MMA,2023-07-01T23:15:00Z,Max Griffin,Michael Morales,betus,BetUS,2023-06-16T23:55:30Z,h2h,2023-06-16T23:55:30Z,Michael Morales,-210
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Bo Nickal,-1000
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Tresean Gore,560
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Bo Nickal,-900
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Tresean Gore,550
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Bo Nickal,-850
+d5acbb7031d863120007556e6ea6e046,mma_mixed_martial_arts,MMA,2023-07-09T02:15:00Z,Bo Nickal,Tresean Gore,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Tresean Gore,600
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Daniel Hooker,154
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jalin Turner,-200
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Daniel Hooker,160
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jalin Turner,-190
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Daniel Hooker,160
+23a74a066f3d7d5ade2bfd83c5278a7e,mma_mixed_martial_arts,MMA,2023-07-09T02:40:00Z,Jalin Turner,Daniel Hooker,williamhill_us,William Hill (US),2023-06-16T23:55:25Z,h2h,2023-06-16T23:55:25Z,Jalin Turner,-190
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Alexandre Pantoja,144
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Brandon Moreno,-186
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Alexandre Pantoja,145
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Brandon Moreno,-170
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Alexandre Pantoja,150
+31da288a1e849f7eebb8ad2ba93b6fba,mma_mixed_martial_arts,MMA,2023-07-09T03:30:00Z,Brandon Moreno,Alexandre Pantoja,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Brandon Moreno,-185
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Alex Volkanovski,-460
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Yair Rodriguez,320
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Alex Volkanovski,-425
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Yair Rodriguez,340
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Alex Volkanovski,-426
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Yair Rodriguez,325
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Alex Volkanovski,-417
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Yair Rodriguez,325
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Alex Volkanovski,-435
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Yair Rodriguez,330
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Alex Volkanovski,-435
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Yair Rodriguez,330
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Alex Volkanovski,-435
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Yair Rodriguez,330
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Alex Volkanovski,-435
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Yair Rodriguez,330
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Alex Volkanovski,-450
+eaaad4ae54c0a6cf5be5e5ef91d52816,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Alex Volkanovski,Yair Rodriguez,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Yair Rodriguez,340
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Dricus Du Plessis,280
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Robert Whittaker,-390
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Dricus Du Plessis,275
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,barstool,Barstool Sportsbook,2023-06-16T23:55:15Z,h2h,2023-06-16T23:55:15Z,Robert Whittaker,-385
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Dricus Du Plessis,275
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Robert Whittaker,-385
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Dricus Du Plessis,275
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Robert Whittaker,-385
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Dricus Du Plessis,275
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Robert Whittaker,-385
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Dricus Du Plessis,290
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Robert Whittaker,-350
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Dricus Du Plessis,280
+73ef2b327614e7b7c17722457ce1ade8,mma_mixed_martial_arts,MMA,2023-07-09T04:00:00Z,Robert Whittaker,Dricus Du Plessis,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Robert Whittaker,-375
+fcbb357a43760b6cdd7c7a20c3dc2326,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Jan Blachowicz,Alex Pereira,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Alex Pereira,128
+fcbb357a43760b6cdd7c7a20c3dc2326,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Jan Blachowicz,Alex Pereira,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jan Blachowicz,-164
+fcbb357a43760b6cdd7c7a20c3dc2326,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Jan Blachowicz,Alex Pereira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Alex Pereira,130
+fcbb357a43760b6cdd7c7a20c3dc2326,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Jan Blachowicz,Alex Pereira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Jan Blachowicz,-150
+0d14a6c3b95121d8a6928aae1e4110c5,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Derrick Lewis,Marcos Rogerio de Lima,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Derrick Lewis,-128
+0d14a6c3b95121d8a6928aae1e4110c5,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Derrick Lewis,Marcos Rogerio de Lima,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Marcos Rogerio de Lima,100
+0d14a6c3b95121d8a6928aae1e4110c5,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Derrick Lewis,Marcos Rogerio de Lima,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Derrick Lewis,-110
+0d14a6c3b95121d8a6928aae1e4110c5,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Derrick Lewis,Marcos Rogerio de Lima,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Marcos Rogerio de Lima,-110
+32ef2c3e2345f4e9341cb8c5fcc5121a,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Ikram Aliskerov,Paulo Henrique Costa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Ikram Aliskerov,-120
+32ef2c3e2345f4e9341cb8c5fcc5121a,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Ikram Aliskerov,Paulo Henrique Costa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Paulo Henrique Costa,-106
+32ef2c3e2345f4e9341cb8c5fcc5121a,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Ikram Aliskerov,Paulo Henrique Costa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Ikram Aliskerov,-125
+32ef2c3e2345f4e9341cb8c5fcc5121a,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Ikram Aliskerov,Paulo Henrique Costa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Paulo Henrique Costa,105
+e969f6893c92fd92ff32e9c85b833b05,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Kevin Holland,Michael Chiesa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Kevin Holland,-186
+e969f6893c92fd92ff32e9c85b833b05,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Kevin Holland,Michael Chiesa,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Michael Chiesa,144
+e969f6893c92fd92ff32e9c85b833b05,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Kevin Holland,Michael Chiesa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Kevin Holland,-175
+e969f6893c92fd92ff32e9c85b833b05,mma_mixed_martial_arts,MMA,2023-07-30T02:00:00Z,Kevin Holland,Michael Chiesa,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Michael Chiesa,150
+f17b4736f9ca6fe501bea210ba8d708c,mma_mixed_martial_arts,MMA,2023-07-30T04:00:00Z,Stephen Thompson,Michel Pereira,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Michel Pereira,176
+f17b4736f9ca6fe501bea210ba8d708c,mma_mixed_martial_arts,MMA,2023-07-30T04:00:00Z,Stephen Thompson,Michel Pereira,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Stephen Thompson,-230
+f17b4736f9ca6fe501bea210ba8d708c,mma_mixed_martial_arts,MMA,2023-07-30T04:00:00Z,Stephen Thompson,Michel Pereira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Michel Pereira,185
+f17b4736f9ca6fe501bea210ba8d708c,mma_mixed_martial_arts,MMA,2023-07-30T04:00:00Z,Stephen Thompson,Michel Pereira,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Stephen Thompson,-215
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Dustin Poirier,-130
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Justin Gaethje,102
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Dustin Poirier,-125
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,betonlineag,BetOnline.ag,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Justin Gaethje,105
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Dustin Poirier,-130
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Justin Gaethje,110
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Dustin Poirier,-125
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Justin Gaethje,105
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Dustin Poirier,-130
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,unibet_us,Unibet,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Justin Gaethje,106
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Dustin Poirier,-130
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,twinspires,TwinSpires,2023-06-16T23:54:59Z,h2h,2023-06-16T23:54:59Z,Justin Gaethje,106
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Dustin Poirier,-130
+979f54faffc25c1dbfb8942c743706e4,mma_mixed_martial_arts,MMA,2023-07-30T05:00:00Z,Dustin Poirier,Justin Gaethje,betrivers,BetRivers,2023-06-16T23:55:16Z,h2h,2023-06-16T23:55:16Z,Justin Gaethje,106
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Aljamain Sterling,-295
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Sean O'Malley,220
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Aljamain Sterling,-255
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Sean O'Malley,215
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Aljamain Sterling,-270
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,lowvig,LowVig.ag,2023-06-16T23:55:08Z,h2h,2023-06-16T23:55:08Z,Sean O'Malley,230
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Aljamain Sterling,-375
+7c8db77f14678eec266d082b2b6a7baa,mma_mixed_martial_arts,MMA,2023-08-20T03:00:00Z,Aljamain Sterling,Sean O'Malley,betmgm,BetMGM,2023-06-16T23:53:56Z,h2h,2023-06-16T23:53:56Z,Sean O'Malley,220
+3510f8d01a13f0a6a81ef9d1e4358182,mma_mixed_martial_arts,MMA,2023-09-09T05:00:00Z,Jon Jones,Stipe Miocic,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Jon Jones,-310
+3510f8d01a13f0a6a81ef9d1e4358182,mma_mixed_martial_arts,MMA,2023-09-09T05:00:00Z,Jon Jones,Stipe Miocic,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Stipe Miocic,230
+8f5ea7620f1e333e2c273c7629f6e40d,mma_mixed_martial_arts,MMA,2023-09-17T06:00:00Z,Conor McGregor,Michael Chandler,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Conor McGregor,-118
+8f5ea7620f1e333e2c273c7629f6e40d,mma_mixed_martial_arts,MMA,2023-09-17T06:00:00Z,Conor McGregor,Michael Chandler,fanduel,FanDuel,2023-06-16T23:54:58Z,h2h,2023-06-16T23:54:58Z,Michael Chandler,-108
+ae8c68ce0c99be915714591b1d26196a,mma_mixed_martial_arts,MMA,2023-12-31T21:00:00Z,Conor McGregor,Michael Chandler,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Conor McGregor,-110
+ae8c68ce0c99be915714591b1d26196a,mma_mixed_martial_arts,MMA,2023-12-31T21:00:00Z,Conor McGregor,Michael Chandler,draftkings,DraftKings,2023-06-16T23:55:09Z,h2h,2023-06-16T23:55:09Z,Michael Chandler,-110

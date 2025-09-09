@@ -21,7 +21,7 @@ class FighterStatsAnalyzer:
         
         # Extract common metrics - focus on the most important ones
         self.common_metrics = [
-            'elo', 'elo_diff', 'elo_change_3', 'elo_change_5',
+            'elo', 'elo_prev', 'elo_change_3', 'elo_change_5',
             'sigstr_pm', 'tdavg', 'sapm', 'subavg', 'tddef', 
             'sigstr_perc', 'strdef', 'tdacc_perc', 'winsum', 'losssum'
         ]

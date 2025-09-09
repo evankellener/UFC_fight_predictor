@@ -60,9 +60,9 @@ class DNNFightPredictor:
         self.filtered_data = filtered_data
         
         # Store column names for later use
-        '''
+        
         self.main_stats_cols = [
-            'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex',
+            'age', 'HEIGHT', 'WEIGHT', 'REACH', 'weightindex','age_ratio_difference'
             'precomp_sigstr_pm', 'precomp_tdavg', 'precomp_sapm', 'precomp_subavg',
             'precomp_tddef', 'precomp_sigstr_perc', 'precomp_strdef', 'precomp_tdacc_perc',
             'precomp_totalacc_perc', 'precomp_headacc_perc', 'precomp_bodyacc_perc', 'precomp_legacc_perc',
@@ -78,7 +78,7 @@ class DNNFightPredictor:
             'precomp_totalacc_perc3', 'precomp_headacc_perc3', 'precomp_bodyacc_perc3', 'precomp_legacc_perc3',
             'precomp_distacc_perc3','precomp_clinchacc_perc3','precomp_groundacc_perc3',
             'precomp_winsum3', 'precomp_losssum3','precomp_elo_change_3',
-            'opp_age', 'opp_HEIGHT', 'opp_WEIGHT', 'opp_REACH','opp_weightindex', 'opp_weight_of_fight',
+            'opp_age', 'opp_HEIGHT', 'opp_WEIGHT', 'opp_REACH','opp_weightindex', 'opp_weight_of_fight', 'opp_age_ratio_difference',
             'opp_precomp_sigstr_pm', 'opp_precomp_tdavg', 'opp_precomp_sapm', 'opp_precomp_subavg',
             'opp_precomp_tddef', 'opp_precomp_sigstr_perc', 'opp_precomp_strdef', 'opp_precomp_tdacc_perc',
             'opp_precomp_totalacc_perc', 'opp_precomp_headacc_perc','opp_precomp_bodyacc_perc','opp_precomp_legacc_perc',
@@ -95,29 +95,28 @@ class DNNFightPredictor:
             'opp_precomp_distacc_perc3','opp_precomp_clinchacc_perc3','opp_precomp_groundacc_perc3',
             'opp_precomp_winsum3', 'opp_precomp_losssum3','opp_precomp_elo_change_3'
         ]
-        '''
 
-        self.elo_columns = ['precomp_elo','precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo','opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',]
+        self.elo_columns = ['precomp_elo','precomp_elo_prev', 'precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo','opp_precomp_elo_prev', 'opp_precomp_elo_change_3', 'opp_precomp_elo_change_5',]
 
         # Make sure all columns in elo_columns exist, if not create them with default value 0
-        for col in self.elo_columns:
+        for col in self.main_stats_cols:
             if col not in filtered_data.columns:
                 filtered_data[col] = 0
                 
         # Convert all columns to numeric to avoid type issues
-        for col in self.elo_columns:
+        for col in self.main_stats_cols:
             filtered_data[col] = pd.to_numeric(filtered_data[col], errors='coerce')
             
         # Fill NaN values with 0
-        filtered_data[self.elo_columns] = filtered_data[self.elo_columns].fillna(0)
+        filtered_data[self.main_stats_cols] = filtered_data[self.main_stats_cols].fillna(0)
 
         # Extract features from filtered data
-        X = filtered_data[self.elo_columns]
+        X = filtered_data[self.main_stats_cols]
         
         # Convert result column to numeric and ensure it's binary (0 or 1)
         # This is crucial to fix the "Invalid dtype: object" error in TensorFlow
-        filtered_data['result'] = pd.to_numeric(filtered_data['result'], errors='coerce').fillna(0).astype(int)
-        y = filtered_data['result']
+        filtered_data['win'] = pd.to_numeric(filtered_data['win'], errors='coerce').fillna(0).astype(int)
+        y = filtered_data['win']
         
         # Save feature names to a file for later use using absolute paths
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -128,7 +127,7 @@ class DNNFightPredictor:
         os.makedirs(os.path.dirname(feature_names_path), exist_ok=True)
         
         with open(feature_names_path, 'w') as f:
-            for col in self.elo_columns:
+            for col in self.main_stats_cols:
                 f.write(f"{col}\n")
                 
         return X, y
@@ -159,15 +158,15 @@ class DNNFightPredictor:
         print(f"Testing set size: {len(test_data)}")
         
         # Extract features and targets using the stored column names
-        train_X = train_data[self.elo_columns]
-        train_y = train_data['result']
+        train_X = train_data[self.main_stats_cols]
+        train_y = train_data['win']
 
 
         
-        test_X = test_data[self.elo_columns]
+        test_X = test_data[self.main_stats_cols]
         #save the test data to a file
         test_X.to_csv('../data/tmp/test_data.csv', index=False)
-        test_y = test_data['result']
+        test_y = test_data['win']
         
         # Standardize features based on training data
         self.scaler = StandardScaler()
@@ -263,6 +262,7 @@ class DNNFightPredictor:
                     
                     # Also evaluate the model on the test set to check for potential
                     # generalization issues during the optimization process
+
                     test_loss, test_accuracy = model.evaluate(self.X_test, self.y_test, verbose=0)
                     mlflow.log_metric("test_loss", test_loss)
                     mlflow.log_metric("test_accuracy", test_accuracy)
@@ -518,14 +518,14 @@ class DNNFightPredictor:
             fighter2 = row['opp_FIGHTER']
             date = row['DATE']
             # Get the most recent fight for fighter1
-            fighter1_recent_fight = self.data[(self.data['FIGHTER'] == fighter1) | (self.data['opp_FIGHTER'] == fighter1)]
+            fighter1_recent_fight = self.data[(self.data['FIGHTER'] == fighter1)]
             fighter1_recent_fight = fighter1_recent_fight[fighter1_recent_fight['DATE'] < date]
             if len(fighter1_recent_fight) > 0:
                 fighter1_recent_fight = fighter1_recent_fight.iloc[-1]
                 for col in postcomp_cols:
                     self.data.at[index, col] = fighter1_recent_fight[col.replace('postcomp', 'precomp')]
             # Get the most recent fight for fighter2
-            fighter2_recent_fight = self.data[(self.data['FIGHTER'] == fighter2) | (self.data['opp_FIGHTER'] == fighter2)]
+            fighter2_recent_fight = self.data[(self.data['FIGHTER'] == fighter2)]
             fighter2_recent_fight = fighter2_recent_fight[fighter2_recent_fight['DATE'] < date]
             if len(fighter2_recent_fight) > 0:
                 fighter2_recent_fight = fighter2_recent_fight.iloc[-1]
@@ -538,8 +538,8 @@ class DNNFightPredictor:
         # Filter the dataset to include only fights that happened in the last year
         recent_fights = self.data[self.data['DATE'] >= one_year_ago]
         # Extract features and targets
-        X_recent = recent_fights[self.elo_columns]
-        y_recent = recent_fights['result']
+        X_recent = recent_fights[self.main_stats_cols]
+        y_recent = recent_fights['win']
         # Standardize features based on training data
         X_recent_scaled = self.scaler.transform(X_recent)
         # Evaluate the model on this new dataset
@@ -548,6 +548,14 @@ class DNNFightPredictor:
         # Get predictions for the test set
         y_pred_proba = self.model.predict(X_recent_scaled)
         y_pred = (y_pred_proba > 0.5).astype(int).flatten()
+        # Save the predictions to a CSV file along with the true labels and values
+        X_recent['predicted_result'] = y_pred
+        X_recent['predicted_prob'] = y_pred_proba
+        X_recent['true_result'] = y_recent
+        X_recent['DATE'] = recent_fights['DATE']
+        X_recent['BOUT'] = recent_fights['BOUT']
+        X_recent['FIGHTER'] = recent_fights['FIGHTER']
+        X_recent.to_csv('../data/tmp/recent_fights_predictions.csv', index=False)
         # Calculate classification metrics
         from sklearn.metrics import (
             classification_report, precision_score, recall_score,
@@ -946,9 +954,9 @@ class DNNFightPredictor:
             print(f"Feature names file not found, creating from current columns")
             os.makedirs(os.path.dirname(feature_file_path), exist_ok=True)
             with open(feature_file_path, 'w') as f:
-                for col in self.elo_columns:
+                for col in self.main_stats_cols:
                     f.write(f"{col}\n")
-            all_features = self.elo_columns
+            all_features = self.main_stats_cols
         else:
             # Load feature list from file
             with open(feature_file_path, 'r') as f:
@@ -1124,7 +1132,7 @@ class DNNFightPredictor:
             mean_shap_values = np.abs(shap_values.values).mean(axis=0)
             
             # Get the features from elo_columns
-            feature_importance = list(zip(self.elo_columns, mean_shap_values))
+            feature_importance = list(zip(self.main_stats_cols, mean_shap_values))
             feature_importance.sort(key=lambda x: x[1])  # Sort by SHAP value (ascending)
             
             # Get the top 20 features

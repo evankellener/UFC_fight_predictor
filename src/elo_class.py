@@ -266,21 +266,21 @@ class EnhancedElo:
         data['opp_postcomp_elo'] = pd.to_numeric(data['opp_postcomp_elo'], errors='coerce')
         
         # Calculate differences in Elo ratings for consecutive fights
-        data['elo_diff_pre'] = data.groupby('FIGHTER')['precomp_elo'].diff().fillna(0)
-        data['elo_diff_post'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0)
-        data['opp_elo_diff_pre'] = data.groupby('opp_FIGHTER')['opp_precomp_elo'].diff().fillna(0)
-        data['opp_elo_diff_post'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo'].diff().fillna(0)
+        data['elo_prev_pre'] = data.groupby('FIGHTER')['precomp_elo'].diff().fillna(0)
+        data['elo_prev_post'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0)
+        data['opp_elo_prev_pre'] = data.groupby('opp_FIGHTER')['opp_precomp_elo'].diff().fillna(0)
+        data['opp_elo_prev_post'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo'].diff().fillna(0)
 
         # Calculate rolling sums for the last 3 and 5 fights
-        data['precomp_elo_change_3'] = data.groupby('FIGHTER')['elo_diff_pre'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['precomp_elo_change_5'] = data.groupby('FIGHTER')['elo_diff_pre'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
-        data['postcomp_elo_change_3'] = data.groupby('FIGHTER')['elo_diff_post'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['postcomp_elo_change_5'] = data.groupby('FIGHTER')['elo_diff_post'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['precomp_elo_change_3'] = data.groupby('FIGHTER')['elo_prev_pre'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['precomp_elo_change_5'] = data.groupby('FIGHTER')['elo_prev_pre'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_3'] = data.groupby('FIGHTER')['elo_prev_post'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_5'] = data.groupby('FIGHTER')['elo_prev_post'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
 
-        data['opp_precomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_elo_diff_pre'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_precomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_elo_diff_pre'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_postcomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_elo_diff_post'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_postcomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_elo_diff_post'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_elo_prev_pre'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_elo_prev_pre'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_elo_prev_post'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_elo_prev_post'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
         
         # Filter fighters based on the number of fights
         if min_fights > 0 and 'precomp_boutcount' in data.columns and 'opp_precomp_boutcount' in data.columns:

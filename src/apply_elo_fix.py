@@ -131,7 +131,7 @@ def fix_elo_continuity(data_path, output_path=None):
             # Process ELO columns
             elo_keys = [
                 ('postcomp_elo', 'precomp_elo'),
-                ('postcomp_elo_diff', 'precomp_elo_diff'),
+                ('postcomp_elo_prev', 'precomp_elo_prev'),
                 ('postcomp_elo_change_3', 'precomp_elo_change_3'),
                 ('postcomp_elo_change_5', 'precomp_elo_change_5')
             ]

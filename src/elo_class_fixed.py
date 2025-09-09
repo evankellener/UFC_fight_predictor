@@ -137,14 +137,17 @@ class EnhancedElo:
 
         for fighter, history in fighter_elo_history.items():
             history.sort(key=lambda x: x['date'])
+        
+        '''
 
         for fighter, history in fighter_elo_history.items():
-            for i in range(1, len(history)):
-                prev = history[i - 1]
+            for i in range(0, len(history)):
+                if i != 0:
+                    prev = history[i - 1]
                 curr = history[i]
                 data.at[curr['idx'], 'precomp_elo'] = prev['post']
                 curr['pre'] = prev['post']
-
+        '''
         for fighter, history in fighter_elo_history.items():
             for fight in history:
                 idx = fight['idx']
@@ -167,21 +170,21 @@ class EnhancedElo:
         data['opp_postcomp_elo'] = pd.to_numeric(data['opp_postcomp_elo'], errors='coerce')
 
         # Calculate differences in Elo ratings for consecutive fights
-        data['precomp_elo_diff'] = data.groupby('FIGHTER')['precomp_elo'].diff().fillna(0)
-        data['postcomp_elo_diff'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0)
-        data['opp_precomp_elo_diff'] = data.groupby('opp_FIGHTER')['opp_precomp_elo'].diff().fillna(0)
-        data['opp_postcomp_elo_diff'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo'].diff().fillna(0)
+        data['precomp_elo_prev'] = data.groupby('FIGHTER')['precomp_elo'].diff().fillna(0)
+        data['postcomp_elo_prev'] = data.groupby('FIGHTER')['postcomp_elo'].diff().fillna(0)
+        data['opp_precomp_elo_prev'] = data.groupby('opp_FIGHTER')['opp_precomp_elo'].diff().fillna(0)
+        data['opp_postcomp_elo_prev'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo'].diff().fillna(0)
 
         # Calculate rolling sums for the last 3 and 5 fights
-        data['precomp_elo_change_3'] = data.groupby('FIGHTER')['precomp_elo_diff'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['precomp_elo_change_5'] = data.groupby('FIGHTER')['precomp_elo_diff'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
-        data['postcomp_elo_change_3'] = data.groupby('FIGHTER')['postcomp_elo_diff'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['postcomp_elo_change_5'] = data.groupby('FIGHTER')['postcomp_elo_diff'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['precomp_elo_change_3'] = data.groupby('FIGHTER')['precomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['precomp_elo_change_5'] = data.groupby('FIGHTER')['precomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_3'] = data.groupby('FIGHTER')['postcomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['postcomp_elo_change_5'] = data.groupby('FIGHTER')['postcomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
 
-        data['opp_precomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_diff'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_precomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_diff'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_postcomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_diff'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
-        data['opp_postcomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_diff'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_precomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_precomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_3'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev'].rolling(3, min_periods=1).sum().reset_index(0, drop=True)
+        data['opp_postcomp_elo_change_5'] = data.groupby('opp_FIGHTER')['opp_postcomp_elo_prev'].rolling(5, min_periods=1).sum().reset_index(0, drop=True)
 
         return data
 
