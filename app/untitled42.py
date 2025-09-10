@@ -22,7 +22,7 @@ from sklearn.metrics import accuracy_score, log_loss, roc_auc_score
 # -----------------------------
 # Config
 # -----------------------------
-DATA_PATH = '/content/drive/MyDrive/data/final.csv'  # or "final.csv" if you have not saved the strict one
+DATA_PATH = '../data/tmp/final.csv'  # or "final.csv" if you have not saved the strict one
 TEST_START = "2024-01-01"
 TRAIN_START = "2009-01-01"
 TRAIN_END   = "2023-12-31"      # inclusive
