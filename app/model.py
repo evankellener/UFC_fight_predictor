@@ -16,12 +16,18 @@ from sklearn.impute import SimpleImputer
 import warnings
 warnings.filterwarnings('ignore')
 
-# Add the parent directory to the path to import the ensemble model
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add multiple paths to find the ensemble model
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+sys.path.append(os.path.join(parent_dir, 'src'))
+sys.path.append(os.path.join(current_dir, '..', 'src'))
 
 try:
     from src.ensemble_model_best import FightOutcomeModel
-except ImportError:
+    print("Successfully imported FightOutcomeModel")
+except ImportError as e:
+    print(f"Import error: {e}")
     # Fallback if the import fails
     FightOutcomeModel = None
 
@@ -60,15 +66,16 @@ class UFCFightPredictor:
         
         # Initialize the FightOutcomeModel from ensemble_model_best.py
         if FightOutcomeModel is None:
-            raise ImportError("Could not import FightOutcomeModel from ensemble_model_best.py")
-        
-        print("Initializing FightOutcomeModel...")
-        self.fight_model = FightOutcomeModel(self.data_path)
-        
-        # Train the tuned logistic regression model
-        print("Training tuned logistic regression model...")
-        self.model, self.accuracy = self.fight_model.tune_logistic_regression()
-        print(f"Logistic Regression Accuracy: {self.accuracy}")
+            print("FightOutcomeModel not available, using fallback model...")
+            self._initialize_fallback_model()
+        else:
+            print("Initializing FightOutcomeModel...")
+            self.fight_model = FightOutcomeModel(self.data_path)
+            
+            # Train the tuned logistic regression model
+            print("Training tuned logistic regression model...")
+            self.model, self.accuracy = self.fight_model.tune_logistic_regression()
+            print(f"Logistic Regression Accuracy: {self.accuracy}")
         
         # Load the full unfiltered dataset for display purposes
         print("Loading full unfiltered dataset for display...")
@@ -80,14 +87,19 @@ class UFCFightPredictor:
         print(f"Full dataset loaded: {len(self.full_df)} rows (for display purposes)")
         
         # Get the filtered data and features from the fight model (for training)
-        self.df = self.fight_model.df
-        self.X_train = self.fight_model.X_train
-        self.y_train = self.fight_model.y_train
-        self.X_test = self.fight_model.X_test
-        self.y_test = self.fight_model.y_test
-        
-        # Use the importance columns from the fight model
-        self.full_features = self.fight_model.importance_columns
+        if FightOutcomeModel is not None:
+            self.df = self.fight_model.df
+            self.X_train = self.fight_model.X_train
+            self.y_train = self.fight_model.y_train
+            self.X_test = self.fight_model.X_test
+            self.y_test = self.fight_model.y_test
+            
+            # Use the importance columns from the fight model
+            self.full_features = self.fight_model.importance_columns
+        else:
+            # For fallback model, use the full dataset
+            self.df = self.full_df
+            self.full_features = self._get_fallback_features()
         
         # Map of precomp -> postcomp for carry forward
         self.pre_to_post_map = {
@@ -276,3 +288,62 @@ class UFCFightPredictor:
             features.append(value)
         
         return np.array(features)
+    
+    def _initialize_fallback_model(self):
+        """Initialize a simple fallback model when FightOutcomeModel is not available"""
+        print("Initializing fallback logistic regression model...")
+        
+        # Simple feature set for fallback
+        self.full_features = [
+            'precomp_elo', 'opp_precomp_elo', 'age', 'opp_age',
+            'precomp_tdavg', 'opp_precomp_tdavg', 'precomp_tddef', 'opp_precomp_tddef',
+            'precomp_sapm5', 'opp_precomp_sapm5', 'REACH', 'opp_REACH'
+        ]
+        
+        # Prepare data for training
+        train_data = self.full_df[self.full_df['DATE'] < '2024-01-01'].copy()
+        test_data = self.full_df[self.full_df['DATE'] >= '2024-01-01'].copy()
+        
+        # Convert features to numeric and handle missing values
+        for feature in self.full_features:
+            train_data[feature] = pd.to_numeric(train_data[feature], errors='coerce')
+            test_data[feature] = pd.to_numeric(test_data[feature], errors='coerce')
+        
+        # Fill missing values with median
+        for feature in self.full_features:
+            median_val = train_data[feature].median()
+            train_data[feature] = train_data[feature].fillna(median_val)
+            test_data[feature] = test_data[feature].fillna(median_val)
+        
+        # Prepare training data
+        X_train = train_data[self.full_features].values
+        y_train = train_data['win'].values
+        X_test = test_data[self.full_features].values
+        y_test = test_data['win'].values
+        
+        # Train simple logistic regression
+        self.model = Pipeline([
+            ('scaler', StandardScaler()),
+            ('classifier', LogisticRegression(random_state=42, max_iter=1000))
+        ])
+        
+        self.model.fit(X_train, y_train)
+        
+        # Calculate accuracy
+        train_pred = self.model.predict(X_train)
+        test_pred = self.model.predict(X_test)
+        train_acc = (train_pred == y_train).mean()
+        test_acc = (test_pred == y_test).mean()
+        
+        self.accuracy = test_acc
+        print(f"Fallback model - Train accuracy: {train_acc:.3f}, Test accuracy: {test_acc:.3f}")
+        
+        # Store training data for reference
+        self.X_train = X_train
+        self.y_train = y_train
+        self.X_test = X_test
+        self.y_test = y_test
+    
+    def _get_fallback_features(self):
+        """Get the feature names for the fallback model"""
+        return self.full_features
