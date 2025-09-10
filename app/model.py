@@ -64,6 +64,15 @@ class UFCFightPredictor:
             raise FileNotFoundError("Could not find final.csv in any expected location. Tried: " + ", ".join(possible_paths))
         self.target = "win"
         
+        # Load the full unfiltered dataset for display purposes
+        print("Loading full unfiltered dataset for display...")
+        self.full_df = pd.read_csv(self.data_path, low_memory=False)
+        self.full_df['DATE'] = pd.to_datetime(self.full_df['DATE'], errors='coerce')
+        self.full_df = self.full_df[self.full_df['DATE'] >= '2009-01-01']
+        self.full_df = self.full_df[self.full_df['sex'].astype(str) == '2']
+        self.full_df['win'] = self.full_df['win'].astype(int)
+        print(f"Full dataset loaded: {len(self.full_df)} rows (for display purposes)")
+        
         # Initialize the FightOutcomeModel from ensemble_model_best.py
         if FightOutcomeModel is None:
             print("FightOutcomeModel not available, using fallback model...")
@@ -76,15 +85,6 @@ class UFCFightPredictor:
             print("Training tuned logistic regression model...")
             self.model, self.accuracy = self.fight_model.tune_logistic_regression()
             print(f"Logistic Regression Accuracy: {self.accuracy}")
-        
-        # Load the full unfiltered dataset for display purposes
-        print("Loading full unfiltered dataset for display...")
-        self.full_df = pd.read_csv(self.data_path, low_memory=False)
-        self.full_df['DATE'] = pd.to_datetime(self.full_df['DATE'], errors='coerce')
-        self.full_df = self.full_df[self.full_df['DATE'] >= '2009-01-01']
-        self.full_df = self.full_df[self.full_df['sex'].astype(str) == '2']
-        self.full_df['win'] = self.full_df['win'].astype(int)
-        print(f"Full dataset loaded: {len(self.full_df)} rows (for display purposes)")
         
         # Get the filtered data and features from the fight model (for training)
         if FightOutcomeModel is not None:
