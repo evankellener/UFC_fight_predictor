@@ -1,1 +1,1 @@
-web: cd app && python app.py
+web: cd app && gunicorn --bind 0.0.0.0:$PORT app:app
