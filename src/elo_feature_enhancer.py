@@ -196,23 +196,17 @@ class EloFeatureEnhancer:
     
     def filter_by_fight_count(self, min_fights=1):
         """
-        Filter the dataset to only include fights where both fighters have at least min_fights precomp_boutcount.
+        DEPRECATED: This method no longer filters data by default.
+        Filtering should be done during model training, not during data processing.
         
-        For min_fights=1: excludes fights where precomp_boutcount < 1 (i.e., precomp_boutcount = 0)
-        For min_fights=2: excludes fights where precomp_boutcount < 2 (i.e., precomp_boutcount = 0 or 1)
+        This method now returns the full unfiltered dataset to preserve all fighters
+        for display purposes. The model will handle filtering during training.
         """
-        print(f"Filtering by minimum precomp_boutcount: {min_fights}")
-        original_size = len(self.df)
+        print(f"WARNING: filter_by_fight_count is deprecated. Returning full unfiltered dataset.")
+        print(f"Filtering should be done during model training, not data processing.")
+        print(f"Dataset size: {len(self.df)} rows (unfiltered)")
         
-        # Apply filter - both fighters must have at least min_fights precomp_boutcount
-        self.df = self.df[
-            (self.df['precomp_boutcount'] >= min_fights) &
-            (self.df['opp_precomp_boutcount'] >= min_fights)
-        ]
-        
-        final_size = len(self.df)
-        print(f"Filtering complete: {original_size} -> {final_size} rows ({original_size - final_size} removed)")
-        
+        # Return the full unfiltered dataset
         return self.df
     
     def differential_and_rolling_stats(self, data):

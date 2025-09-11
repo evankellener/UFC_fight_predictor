@@ -156,6 +156,13 @@ class FightOutcomeModel:
         """
         
         self.df = pd.read_csv(file_path, low_memory=False)
+        
+        # Save the truly unfiltered dataset first (before any preprocessing)
+        print("Saving truly unfiltered dataset (before any preprocessing)...")
+        truly_unfiltered_path = '../data/tmp/truly_unfiltered_before_preprocessing.csv'
+        self.df.to_csv(truly_unfiltered_path, index=False)
+        print(f"Truly unfiltered dataset saved: {truly_unfiltered_path} ({len(self.df)} rows)")
+        
         self.df['DATE'] = pd.to_datetime(self.df['DATE'], errors='coerce')
         self.df = self.df[self.df['DATE'] >= '2009-01-01']
         # Fix: Convert sex to string for comparison since it's stored as string in the data
@@ -202,6 +209,13 @@ class FightOutcomeModel:
         imp = SimpleImputer(strategy='median')
         self.df[valid_cols] = imp.fit_transform(self.df[valid_cols])
         
+        # Save unfiltered dataset before filtering
+        print("Saving unfiltered dataset...")
+        unfiltered_df = self.df.copy()
+        unfiltered_path = '../data/tmp/unfiltered_before_training.csv'
+        unfiltered_df.to_csv(unfiltered_path, index=False)
+        print(f"Unfiltered dataset saved: {unfiltered_path} ({len(unfiltered_df)} rows)")
+        
         # Apply filtering during training: exclude fights where precomp_boutcount < 1
         # This filters out first fights but keeps the full dataset for display purposes
         print("Applying precomp_boutcount filtering for training (min_fights=1)...")
@@ -212,6 +226,12 @@ class FightOutcomeModel:
         ]
         filtered_size = len(self.df)
         print(f"Filtering complete: {original_size} -> {filtered_size} rows ({original_size - filtered_size} removed)")
+        
+        # Save filtered dataset after filtering
+        print("Saving filtered dataset...")
+        filtered_path = '../data/tmp/filtered_after_training.csv'
+        self.df.to_csv(filtered_path, index=False)
+        print(f"Filtered dataset saved: {filtered_path} ({len(self.df)} rows)")
         
         self.train_df = self.df[self.df['DATE'] < cutoff]
         self.test_df  = self.df[self.df['DATE'] >= cutoff]
