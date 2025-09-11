@@ -202,7 +202,7 @@ class UFCFightPredictor:
         return stats
     
     def predict_fight(self, fighter1_name, fighter2_name, fight_date=None):
-        """Predict the outcome of a fight between two fighters"""
+        """Predict the outcome of a fight between two fighters using bidirectional prediction"""
         try:
             if self.model is None:
                 return {'success': False, 'error': 'Model not trained'}
@@ -226,13 +226,25 @@ class UFCFightPredictor:
             fighter1_latest = fighter1_data.sort_values('DATE', ascending=False).iloc[0]
             fighter2_latest = fighter2_data.sort_values('DATE', ascending=False).iloc[0]
             
-            # Create feature vector for prediction
-            features = self._create_fight_features(fighter1_latest, fighter2_latest, fight_date)
+            # Make two predictions: A vs B and B vs A, then average them
+            # Prediction 1: fighter1 vs fighter2
+            features_1 = self._create_fight_features(fighter1_latest, fighter2_latest, fight_date)
+            prediction_1 = self.model.predict_proba([features_1])[0]
+            fighter1_win_prob_1 = prediction_1[1]  # Probability of fighter1 winning in first prediction
             
-            # Make prediction
-            prediction_proba = self.model.predict_proba([features])[0]
-            fighter1_win_prob = prediction_proba[1]  # Probability of fighter1 winning
-            fighter2_win_prob = prediction_proba[0]  # Probability of fighter2 winning
+            # Prediction 2: fighter2 vs fighter1 (swapped)
+            features_2 = self._create_fight_features(fighter2_latest, fighter1_latest, fight_date)
+            prediction_2 = self.model.predict_proba([features_2])[0]
+            fighter2_win_prob_2 = prediction_2[1]  # Probability of fighter2 winning in second prediction
+            
+            # Average the probabilities (since prediction_2 gives us fighter2's win prob when fighter2 is first)
+            fighter1_win_prob = (fighter1_win_prob_1 + (1 - fighter2_win_prob_2)) / 2
+            fighter2_win_prob = (fighter2_win_prob_2 + (1 - fighter1_win_prob_1)) / 2
+            
+            # Normalize to ensure they sum to 1
+            total_prob = fighter1_win_prob + fighter2_win_prob
+            fighter1_win_prob = fighter1_win_prob / total_prob
+            fighter2_win_prob = fighter2_win_prob / total_prob
             
             predicted_winner = fighter1_name if fighter1_win_prob > 0.5 else fighter2_name
             confidence = max(fighter1_win_prob, fighter2_win_prob)
