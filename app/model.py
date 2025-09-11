@@ -290,9 +290,25 @@ class UFCFightPredictor:
         features = []
         for feature in self.full_features:
             value = feature_values.get(feature, 0)
-            # Handle NaN and infinite values
-            if pd.isna(value) or np.isinf(value):
+            
+            # Convert to numeric and handle various data types
+            try:
+                # Try to convert to float
+                if isinstance(value, str):
+                    value = float(value) if value.replace('.', '').replace('-', '').isdigit() else 0
+                elif pd.isna(value):
+                    value = 0
+                else:
+                    value = float(value)
+                
+                # Check for infinite values after conversion
+                if np.isinf(value) or np.isnan(value):
+                    value = 0
+                    
+            except (ValueError, TypeError, OverflowError):
+                # If conversion fails, use 0
                 value = 0
+                
             features.append(value)
         
         return np.array(features)
