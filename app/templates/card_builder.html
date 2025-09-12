@@ -51,7 +51,7 @@
         
         .fight-row {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             align-items: center;
             margin-bottom: 15px;
             padding: 15px;
@@ -63,19 +63,21 @@
         .fight-number {
             background: #dc3545;
             color: white;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             flex-shrink: 0;
+            font-size: 14px;
         }
         
         .fighter-input {
             flex: 1;
             position: relative;
+            min-width: 0; /* Allow flex item to shrink */
         }
         
         .fighter-input input {
@@ -84,23 +86,28 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
+            box-sizing: border-box;
         }
         
         .vs-text {
             font-weight: bold;
             color: #dc3545;
-            margin: 0 10px;
+            margin: 0 15px;
             flex-shrink: 0;
+            font-size: 16px;
+            white-space: nowrap;
         }
         
         .remove-fight {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
             flex-shrink: 0;
+            font-size: 12px;
+            white-space: nowrap;
         }
         
         .remove-fight:hover {
@@ -275,6 +282,20 @@
             border-radius: 5px;
             margin: 10px 0;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -392,11 +413,16 @@
                 return;
             }
             
-            fetch(`/fighters?search=${encodeURIComponent(query)}`)
+            // First get all fighters, then filter client-side for better performance
+            fetch('/fighters')
                 .then(response => response.json())
                 .then(data => {
                     if (data.fighters) {
-                        showSuggestions(input, data.fighters.slice(0, 5));
+                        // Filter fighters based on query (case-insensitive)
+                        const filteredFighters = data.fighters.filter(fighter => 
+                            fighter.toLowerCase().includes(query.toLowerCase())
+                        );
+                        showSuggestions(input, filteredFighters.slice(0, 5));
                     }
                 })
                 .catch(error => {
@@ -522,6 +548,12 @@
                 return;
             }
             
+            // Disable the predict button and show loading state
+            const predictBtn = document.querySelector('.predict-card');
+            const originalText = predictBtn.textContent;
+            predictBtn.disabled = true;
+            predictBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Predicting...';
+            
             // Collect fight data
             const fights = [];
             const fightRows = document.querySelectorAll('.fight-row');
@@ -602,11 +634,22 @@
         }
         
         function predictFights(cardName, eventDate, fights) {
-            // Show loading
+            // Show loading with better visual feedback
             const resultsDiv = document.getElementById('predictionsResults');
             const predictionsList = document.getElementById('predictionsList');
             resultsDiv.style.display = 'block';
-            predictionsList.innerHTML = '<div class="loading">Predicting fights...</div>';
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            predictionsList.innerHTML = `
+                <div class="loading">
+                    <h4>🥊 Predicting ${fights.length} fights...</h4>
+                    <p>Please wait while we analyze each fight...</p>
+                    <div style="background: #f0f0f0; border-radius: 10px; padding: 10px; margin: 10px 0;">
+                        <div id="progressBar" style="background: #007bff; height: 20px; border-radius: 10px; width: 0%; transition: width 0.3s ease;"></div>
+                    </div>
+                    <p id="progressText">Starting predictions...</p>
+                </div>
+            `;
             
             // Predict each fight
             const predictions = [];
@@ -634,12 +677,23 @@
                     };
                     completed++;
                     
+                    // Update progress
+                    const progress = (completed / fights.length) * 100;
+                    const progressBar = document.getElementById('progressBar');
+                    const progressText = document.getElementById('progressText');
+                    
+                    if (progressBar) progressBar.style.width = progress + '%';
+                    if (progressText) progressText.textContent = `Completed ${completed} of ${fights.length} predictions...`;
+                    
                     if (completed === fights.length) {
-                        displayPredictions({
-                            card_name: cardName,
-                            event_date: eventDate,
-                            predictions: predictions
-                        });
+                        // Small delay to show 100% progress
+                        setTimeout(() => {
+                            displayPredictions({
+                                card_name: cardName,
+                                event_date: eventDate,
+                                predictions: predictions
+                            });
+                        }, 500);
                     }
                 })
                 .catch(error => {
@@ -651,12 +705,23 @@
                     };
                     completed++;
                     
+                    // Update progress even for errors
+                    const progress = (completed / fights.length) * 100;
+                    const progressBar = document.getElementById('progressBar');
+                    const progressText = document.getElementById('progressText');
+                    
+                    if (progressBar) progressBar.style.width = progress + '%';
+                    if (progressText) progressText.textContent = `Completed ${completed} of ${fights.length} predictions...`;
+                    
                     if (completed === fights.length) {
-                        displayPredictions({
-                            card_name: cardName,
-                            event_date: eventDate,
-                            predictions: predictions
-                        });
+                        // Small delay to show 100% progress
+                        setTimeout(() => {
+                            displayPredictions({
+                                card_name: cardName,
+                                event_date: eventDate,
+                                predictions: predictions
+                            });
+                        }, 500);
                     }
                 });
             });
@@ -668,26 +733,50 @@
             
             resultsDiv.style.display = 'block';
             
+            // Add success animation
+            resultsDiv.style.animation = 'fadeIn 0.5s ease-in';
+            
             predictionsList.innerHTML = `
-                <h4>${data.card_name}</h4>
-                <p>${data.event_date || 'No date set'}</p>
+                <div style="text-align: center; margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #28a745, #20c997); color: white; border-radius: 10px;">
+                    <h3>🎯 Predictions Complete!</h3>
+                    <h4>${data.card_name}</h4>
+                    <p>${data.event_date || 'No date set'}</p>
+                </div>
                 ${data.predictions.map(pred => `
-                    <div class="prediction-item">
+                    <div class="prediction-item" style="animation: slideIn 0.3s ease-out;">
                         <div class="prediction-fight">
-                            <h5>Fight ${pred.fight_number}: ${pred.fighter1} vs ${pred.fighter2}</h5>
-                            <p>${pred.prediction ? 'Prediction completed' : 'Error: ' + pred.error}</p>
+                            <h5>🥊 Fight ${pred.fight_number}: ${pred.fighter1} vs ${pred.fighter2}</h5>
+                            <p>${pred.prediction ? '✅ Prediction completed' : '❌ Error: ' + pred.error}</p>
                         </div>
                         <div class="prediction-result">
                             ${pred.prediction && pred.prediction.success ? `
-                                <div class="prediction-winner">${pred.prediction.predicted_winner}</div>
-                                <div class="prediction-confidence">${(pred.prediction.confidence * 100).toFixed(1)}% confidence</div>
+                                <div class="prediction-winner" style="font-size: 18px; font-weight: bold; color: #28a745;">🏆 ${pred.prediction.predicted_winner}</div>
+                                <div class="prediction-confidence" style="font-size: 14px; color: #666;">
+                                    ${(pred.prediction.confidence * 100).toFixed(1)}% confidence
+                                </div>
+                                <div style="font-size: 12px; color: #888; margin-top: 5px;">
+                                    ${pred.fighter1}: ${(pred.prediction.fighter1_win_probability * 100).toFixed(1)}% | 
+                                    ${pred.fighter2}: ${(pred.prediction.fighter2_win_probability * 100).toFixed(1)}%
+                                </div>
                             ` : `
-                                <div class="prediction-winner" style="color: #dc3545;">Error</div>
+                                <div class="prediction-winner" style="color: #dc3545; font-size: 16px;">❌ Error</div>
                             `}
                         </div>
                     </div>
                 `).join('')}
             `;
+            
+            // Auto-scroll to results with smooth animation
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+            
+            // Reset the predict button
+            const predictBtn = document.querySelector('.predict-card');
+            if (predictBtn) {
+                predictBtn.disabled = false;
+                predictBtn.innerHTML = 'Predict This Card';
+            }
         }
         
         function deleteCard(cardId) {
