@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Card Builder - Fight Predictor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .card-builder {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .card-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .fight-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .fight-number {
+            background: #dc3545;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .fighter-input {
+            flex: 1;
+            position: relative;
+        }
+        
+        .fighter-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .vs-text {
+            font-weight: bold;
+            color: #dc3545;
+            margin: 0 10px;
+            flex-shrink: 0;
+        }
+        
+        .remove-fight {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .remove-fight:hover {
+            background: #c82333;
+        }
+        
+        .add-fight {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .add-fight:hover {
+            background: #218838;
+        }
+        
+        .save-card {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        .save-card:hover {
+            background: #0056b3;
+        }
+        
+        .predict-card {
+            background: #ffc107;
+            color: #212529;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .predict-card:hover {
+            background: #e0a800;
+        }
+        
+        .saved-cards {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+        
+        .card-info h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .card-info p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-predict {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .predictions-results {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+        }
+        
+        .prediction-fight {
+            flex: 1;
+        }
+        
+        .prediction-fight h5 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .prediction-fight p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .prediction-result {
+            text-align: right;
+        }
+        
+        .prediction-winner {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .prediction-confidence {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-builder">
+        <div class="card-header">
+            <h1>🥊 UFC Card Builder</h1>
+            <p>Create and predict entire UFC fight cards at once</p>
+            <div style="margin-top: 15px;">
+                <a href="/" style="color: white; text-decoration: none; margin-right: 20px;">
+                    <i class="fas fa-home"></i> Back to Single Fight
+                </a>
+            </div>
+        </div>
+        
+        <!-- Card Creation Form -->
+        <div class="card-form">
+            <h3>Create New Card</h3>
+            <div class="form-group">
+                <label for="cardName">Card Name:</label>
+                <input type="text" id="cardName" placeholder="e.g., UFC 300: Pereira vs. Hill">
+            </div>
+            <div class="form-group">
+                <label for="eventDate">Event Date:</label>
+                <input type="date" id="eventDate">
+            </div>
+            
+            <h4>Fights</h4>
+            <div id="fightsContainer">
+                <!-- Fight rows will be added here -->
+            </div>
+            
+            <button class="add-fight" onclick="addFight()">+ Add Fight</button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="save-card" onclick="saveCard()">Save Card</button>
+                <button class="predict-card" onclick="predictCurrentCard()">Predict This Card</button>
+            </div>
+        </div>
+        
+        <!-- Saved Cards -->
+        <div class="saved-cards">
+            <h3>Saved Cards</h3>
+            <div id="savedCardsList">
+                <div class="loading">Loading saved cards...</div>
+            </div>
+        </div>
+        
+        <!-- Predictions Results -->
+        <div id="predictionsResults" class="predictions-results" style="display: none;">
+            <h3>Prediction Results</h3>
+            <div id="predictionsList">
+                <!-- Predictions will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentFights = [];
+        let savedCards = [];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedCards();
+            addFight(); // Add initial fight row
+        });
+        
+        function addFight() {
+            const container = document.getElementById('fightsContainer');
+            const fightNumber = currentFights.length + 1;
+            
+            const fightRow = document.createElement('div');
+            fightRow.className = 'fight-row';
+            fightRow.innerHTML = `
+                <div class="fight-number">${fightNumber}</div>
+                <div class="fighter-input">
+                    <input type="text" placeholder="Fighter 1" class="fighter1-input" onkeyup="searchFighters(this, 'fighter1')">
+                    <div class="fighter-suggestions" id="suggestions1_${fightNumber}" style="display: none;"></div>
+                </div>
+                <div class="vs-text">VS</div>
+                <div class="fighter-input">
+                    <input type="text" placeholder="Fighter 2" class="fighter2-input" onkeyup="searchFighters(this, 'fighter2')">
+                    <div class="fighter-suggestions" id="suggestions2_${fightNumber}" style="display: none;"></div>
+                </div>
+                <button class="remove-fight" onclick="removeFight(${fightNumber})">Remove</button>
+            `;
+            
+            container.appendChild(fightRow);
+            currentFights.push({
+                fighter1: '',
+                fighter2: ''
+            });
+        }
+        
+        function removeFight(fightNumber) {
+            const container = document.getElementById('fightsContainer');
+            const fightRows = container.querySelectorAll('.fight-row');
+            
+            if (fightRows.length > 1) {
+                fightRows[fightNumber - 1].remove();
+                currentFights.splice(fightNumber - 1, 1);
+                
+                // Renumber remaining fights
+                const remainingRows = container.querySelectorAll('.fight-row');
+                remainingRows.forEach((row, index) => {
+                    const fightNumber = row.querySelector('.fight-number');
+                    fightNumber.textContent = index + 1;
+                });
+            }
+        }
+        
+        function searchFighters(input, fighterType) {
+            const query = input.value.trim();
+            if (query.length < 2) {
+                hideSuggestions(input);
+                return;
+            }
+            
+            fetch(`/fighters?search=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.fighters) {
+                        showSuggestions(input, data.fighters.slice(0, 5));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching fighters:', error);
+                });
+        }
+        
+        function showSuggestions(input, fighters) {
+            const suggestionsId = input.classList.contains('fighter1-input') ? 
+                `suggestions1_${getFightNumber(input)}` : 
+                `suggestions2_${getFightNumber(input)}`;
+            
+            const suggestionsDiv = document.getElementById(suggestionsId);
+            suggestionsDiv.innerHTML = '';
+            
+            fighters.forEach(fighter => {
+                const suggestion = document.createElement('div');
+                suggestion.className = 'suggestion-item';
+                suggestion.style.cssText = 'padding: 8px; cursor: pointer; background: white; border: 1px solid #ddd; border-top: none;';
+                suggestion.textContent = fighter;
+                suggestion.onclick = () => {
+                    input.value = fighter;
+                    suggestionsDiv.style.display = 'none';
+                    updateFightData(input, fighter);
+                };
+                suggestionsDiv.appendChild(suggestion);
+            });
+            
+            suggestionsDiv.style.display = 'block';
+        }
+        
+        function hideSuggestions(input) {
+            const suggestionsId = input.classList.contains('fighter1-input') ? 
+                `suggestions1_${getFightNumber(input)}` : 
+                `suggestions2_${getFightNumber(input)}`;
+            
+            const suggestionsDiv = document.getElementById(suggestionsId);
+            if (suggestionsDiv) {
+                suggestionsDiv.style.display = 'none';
+            }
+        }
+        
+        function getFightNumber(input) {
+            const fightRow = input.closest('.fight-row');
+            const fightNumber = fightRow.querySelector('.fight-number');
+            return fightNumber.textContent;
+        }
+        
+        function updateFightData(input, fighter) {
+            const fightNumber = parseInt(getFightNumber(input)) - 1;
+            const fighterType = input.classList.contains('fighter1-input') ? 'fighter1' : 'fighter2';
+            
+            if (currentFights[fightNumber]) {
+                currentFights[fightNumber][fighterType] = fighter;
+            }
+        }
+        
+        function saveCard() {
+            const cardName = document.getElementById('cardName').value.trim();
+            const eventDate = document.getElementById('eventDate').value;
+            
+            if (!cardName) {
+                alert('Please enter a card name');
+                return;
+            }
+            
+            // Collect fight data
+            const fights = [];
+            const fightRows = document.querySelectorAll('.fight-row');
+            
+            fightRows.forEach((row, index) => {
+                const fighter1Input = row.querySelector('.fighter1-input');
+                const fighter2Input = row.querySelector('.fighter2-input');
+                
+                if (fighter1Input.value.trim() && fighter2Input.value.trim()) {
+                    fights.push({
+                        fighter1: fighter1Input.value.trim(),
+                        fighter2: fighter2Input.value.trim()
+                    });
+                }
+            });
+            
+            if (fights.length === 0) {
+                alert('Please add at least one fight');
+                return;
+            }
+            
+            const cardData = {
+                name: cardName,
+                event_date: eventDate,
+                fights: fights
+            };
+            
+            fetch('/api/cards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cardData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Card saved successfully!');
+                    loadSavedCards();
+                    clearForm();
+                } else {
+                    alert('Error saving card: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving card:', error);
+                alert('Error saving card');
+            });
+        }
+        
+        function predictCurrentCard() {
+            const cardName = document.getElementById('cardName').value.trim();
+            const eventDate = document.getElementById('eventDate').value;
+            
+            if (!cardName) {
+                alert('Please enter a card name');
+                return;
+            }
+            
+            // Collect fight data
+            const fights = [];
+            const fightRows = document.querySelectorAll('.fight-row');
+            
+            fightRows.forEach((row, index) => {
+                const fighter1Input = row.querySelector('.fighter1-input');
+                const fighter2Input = row.querySelector('.fighter2-input');
+                
+                if (fighter1Input.value.trim() && fighter2Input.value.trim()) {
+                    fights.push({
+                        fighter1: fighter1Input.value.trim(),
+                        fighter2: fighter2Input.value.trim()
+                    });
+                }
+            });
+            
+            if (fights.length === 0) {
+                alert('Please add at least one fight');
+                return;
+            }
+            
+            predictFights(cardName, eventDate, fights);
+        }
+        
+        function loadSavedCards() {
+            fetch('/api/cards')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cards) {
+                        savedCards = data.cards;
+                        displaySavedCards();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading cards:', error);
+                    document.getElementById('savedCardsList').innerHTML = '<div class="error">Error loading saved cards</div>';
+                });
+        }
+        
+        function displaySavedCards() {
+            const container = document.getElementById('savedCardsList');
+            
+            if (savedCards.length === 0) {
+                container.innerHTML = '<div class="loading">No saved cards yet</div>';
+                return;
+            }
+            
+            container.innerHTML = savedCards.map(card => `
+                <div class="card-item">
+                    <div class="card-info">
+                        <h4>${card.name}</h4>
+                        <p>${card.fights.length} fights • ${card.event_date || 'No date set'}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-small btn-predict" onclick="predictCard('${card.id}')">Predict</button>
+                        <button class="btn-small btn-delete" onclick="deleteCard('${card.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function predictCard(cardId) {
+            fetch(`/api/cards/${cardId}/predict`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayPredictions(data);
+                } else {
+                    alert('Error predicting card: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error predicting card:', error);
+                alert('Error predicting card');
+            });
+        }
+        
+        function predictFights(cardName, eventDate, fights) {
+            // Show loading
+            const resultsDiv = document.getElementById('predictionsResults');
+            const predictionsList = document.getElementById('predictionsList');
+            resultsDiv.style.display = 'block';
+            predictionsList.innerHTML = '<div class="loading">Predicting fights...</div>';
+            
+            // Predict each fight
+            const predictions = [];
+            let completed = 0;
+            
+            fights.forEach((fight, index) => {
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fighter1: fight.fighter1,
+                        fighter2: fight.fighter2,
+                        fight_date: eventDate
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    predictions[index] = {
+                        fight_number: index + 1,
+                        fighter1: fight.fighter1,
+                        fighter2: fight.fighter2,
+                        prediction: data
+                    };
+                    completed++;
+                    
+                    if (completed === fights.length) {
+                        displayPredictions({
+                            card_name: cardName,
+                            event_date: eventDate,
+                            predictions: predictions
+                        });
+                    }
+                })
+                .catch(error => {
+                    predictions[index] = {
+                        fight_number: index + 1,
+                        fighter1: fight.fighter1,
+                        fighter2: fight.fighter2,
+                        error: 'Prediction failed: ' + error.message
+                    };
+                    completed++;
+                    
+                    if (completed === fights.length) {
+                        displayPredictions({
+                            card_name: cardName,
+                            event_date: eventDate,
+                            predictions: predictions
+                        });
+                    }
+                });
+            });
+        }
+        
+        function displayPredictions(data) {
+            const resultsDiv = document.getElementById('predictionsResults');
+            const predictionsList = document.getElementById('predictionsList');
+            
+            resultsDiv.style.display = 'block';
+            
+            predictionsList.innerHTML = `
+                <h4>${data.card_name}</h4>
+                <p>${data.event_date || 'No date set'}</p>
+                ${data.predictions.map(pred => `
+                    <div class="prediction-item">
+                        <div class="prediction-fight">
+                            <h5>Fight ${pred.fight_number}: ${pred.fighter1} vs ${pred.fighter2}</h5>
+                            <p>${pred.prediction ? 'Prediction completed' : 'Error: ' + pred.error}</p>
+                        </div>
+                        <div class="prediction-result">
+                            ${pred.prediction && pred.prediction.success ? `
+                                <div class="prediction-winner">${pred.prediction.predicted_winner}</div>
+                                <div class="prediction-confidence">${(pred.prediction.confidence * 100).toFixed(1)}% confidence</div>
+                            ` : `
+                                <div class="prediction-winner" style="color: #dc3545;">Error</div>
+                            `}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        function deleteCard(cardId) {
+            if (confirm('Are you sure you want to delete this card?')) {
+                fetch(`/api/cards/${cardId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadSavedCards();
+                    } else {
+                        alert('Error deleting card: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting card:', error);
+                    alert('Error deleting card');
+                });
+            }
+        }
+        
+        function clearForm() {
+            document.getElementById('cardName').value = '';
+            document.getElementById('eventDate').value = '';
+            document.getElementById('fightsContainer').innerHTML = '';
+            currentFights = [];
+            addFight();
+        }
+        
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.fighter-input')) {
+                document.querySelectorAll('.fighter-suggestions').forEach(div => {
+                    div.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

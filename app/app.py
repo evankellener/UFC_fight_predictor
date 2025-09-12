@@ -12,6 +12,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import joblib
 import warnings
+import json
 warnings.filterwarnings('ignore')
 
 # Add the current directory to the path to import our model module
@@ -144,6 +145,168 @@ def get_fighter_stats(fighter_name):
             
     except Exception as e:
         return jsonify({'error': f'Failed to get fighter stats: {str(e)}'}), 500
+
+# Card Builder Routes
+@app.route('/card-builder')
+def card_builder():
+    """Card builder page"""
+    return render_template('card_builder.html')
+
+@app.route('/api/cards', methods=['GET'])
+def get_cards():
+    """Get all saved cards"""
+    try:
+        # For now, we'll use a simple file-based storage
+        # In production, you'd want to use a proper database
+        cards_file = 'saved_cards.json'
+        if os.path.exists(cards_file):
+            with open(cards_file, 'r') as f:
+                cards = json.load(f)
+        else:
+            cards = []
+        return jsonify({'cards': cards})
+    except Exception as e:
+        return jsonify({'error': f'Failed to load cards: {str(e)}'}), 500
+
+@app.route('/api/cards', methods=['POST'])
+def save_card():
+    """Save a new card"""
+    try:
+        data = request.get_json()
+        card_name = data.get('name', '').strip()
+        fights = data.get('fights', [])
+        event_date = data.get('event_date', '')
+        
+        if not card_name:
+            return jsonify({'error': 'Card name is required'}), 400
+        
+        if not fights:
+            return jsonify({'error': 'At least one fight is required'}), 400
+        
+        # Validate fights
+        for fight in fights:
+            if not fight.get('fighter1') or not fight.get('fighter2'):
+                return jsonify({'error': 'Each fight must have both fighters'}), 400
+        
+        # Create card object
+        card = {
+            'id': str(datetime.now().timestamp()),
+            'name': card_name,
+            'event_date': event_date,
+            'fights': fights,
+            'created_at': datetime.now().isoformat()
+        }
+        
+        # Load existing cards
+        cards_file = 'saved_cards.json'
+        if os.path.exists(cards_file):
+            with open(cards_file, 'r') as f:
+                cards = json.load(f)
+        else:
+            cards = []
+        
+        # Add new card
+        cards.append(card)
+        
+        # Save back to file
+        with open(cards_file, 'w') as f:
+            json.dump(cards, f, indent=2)
+        
+        return jsonify({'success': True, 'card': card})
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to save card: {str(e)}'}), 500
+
+@app.route('/api/cards/<card_id>/predict', methods=['POST'])
+def predict_card():
+    """Predict all fights in a card"""
+    global predictor
+    try:
+        if not predictor:
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
+        
+        # Load the card
+        cards_file = 'saved_cards.json'
+        if not os.path.exists(cards_file):
+            return jsonify({'error': 'No cards found'}), 404
+        
+        with open(cards_file, 'r') as f:
+            cards = json.load(f)
+        
+        card = next((c for c in cards if c['id'] == card_id), None)
+        if not card:
+            return jsonify({'error': 'Card not found'}), 404
+        
+        # Predict all fights
+        predictions = []
+        for i, fight in enumerate(card['fights']):
+            try:
+                result = predictor.predict_fight(
+                    fight['fighter1'], 
+                    fight['fighter2'], 
+                    card.get('event_date', '')
+                )
+                
+                if result['success']:
+                    predictions.append({
+                        'fight_number': i + 1,
+                        'fighter1': fight['fighter1'],
+                        'fighter2': fight['fighter2'],
+                        'prediction': result
+                    })
+                else:
+                    predictions.append({
+                        'fight_number': i + 1,
+                        'fighter1': fight['fighter1'],
+                        'fighter2': fight['fighter2'],
+                        'error': result['error']
+                    })
+            except Exception as e:
+                predictions.append({
+                    'fight_number': i + 1,
+                    'fighter1': fight['fighter1'],
+                    'fighter2': fight['fighter2'],
+                    'error': f'Prediction failed: {str(e)}'
+                })
+        
+        return jsonify({
+            'success': True,
+            'card_name': card['name'],
+            'event_date': card.get('event_date', ''),
+            'predictions': predictions
+        })
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to predict card: {str(e)}'}), 500
+
+@app.route('/api/cards/<card_id>', methods=['DELETE'])
+def delete_card():
+    """Delete a card"""
+    try:
+        cards_file = 'saved_cards.json'
+        if not os.path.exists(cards_file):
+            return jsonify({'error': 'No cards found'}), 404
+        
+        with open(cards_file, 'r') as f:
+            cards = json.load(f)
+        
+        # Find and remove the card
+        original_length = len(cards)
+        cards = [c for c in cards if c['id'] != card_id]
+        
+        if len(cards) == original_length:
+            return jsonify({'error': 'Card not found'}), 404
+        
+        # Save back to file
+        with open(cards_file, 'w') as f:
+            json.dump(cards, f, indent=2)
+        
+        return jsonify({'success': True})
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to delete card: {str(e)}'}), 500
 
 if __name__ == '__main__':
     # Initialize the predictor when starting the app
