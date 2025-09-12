@@ -29,6 +29,33 @@ def initialize_predictor():
     global predictor
     try:
         print("Initializing UFC Fight Predictor...")
+        print(f"Current working directory: {os.getcwd()}")
+        print(f"Python path: {sys.path}")
+        
+        # Check if data files exist
+        data_paths = [
+            '../data/final.csv',
+            'data/final.csv',
+            '../data/tmp/final_min_fight1.csv',
+            'data/tmp/final_min_fight1.csv'
+        ]
+        
+        found_data = False
+        for path in data_paths:
+            if os.path.exists(path):
+                print(f"Found data file at: {path}")
+                found_data = True
+                break
+        
+        if not found_data:
+            print("No data file found in any expected location!")
+            print("Available files in current directory:")
+            for root, dirs, files in os.walk('.'):
+                for file in files:
+                    if file.endswith('.csv'):
+                        print(f"  {os.path.join(root, file)}")
+            return False
+        
         predictor = UFCFightPredictor()
         print("UFC Fight Predictor initialized successfully!")
         return True
@@ -55,6 +82,7 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     """Handle fight prediction requests"""
+    global predictor
     try:
         data = request.get_json()
         
@@ -69,7 +97,9 @@ def predict():
             return jsonify({'error': 'Both fighter names are required'}), 400
         
         if not predictor:
-            return jsonify({'error': 'Predictor not initialized'}), 500
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
         
         # Get prediction
         result = predictor.predict_fight(fighter1_name, fighter2_name, fight_date)
@@ -85,14 +115,18 @@ def predict():
 @app.route('/fighters')
 def get_fighters():
     """Get list of available fighters"""
+    global predictor
     try:
         if not predictor:
-            return jsonify({'error': 'Predictor not initialized'}), 500
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
         
         fighters = predictor.get_available_fighters()
         return jsonify({'fighters': fighters})
         
     except Exception as e:
+        print(f"Error in get_fighters: {e}")
         return jsonify({'error': f'Failed to get fighters: {str(e)}'}), 500
 
 @app.route('/fighter/<fighter_name>')
