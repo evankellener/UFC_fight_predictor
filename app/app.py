@@ -281,6 +281,11 @@ def card_builder():
     """Card builder page"""
     return render_template('card_builder.html')
 
+@app.route('/historical-card-builder')
+def historical_card_builder():
+    """Historical card builder page"""
+    return render_template('historical_card_builder.html')
+
 @app.route('/api/cards', methods=['GET'])
 def get_cards():
     """Get all saved cards"""
@@ -436,6 +441,111 @@ def delete_card():
         
     except Exception as e:
         return jsonify({'error': f'Failed to delete card: {str(e)}'}), 500
+
+@app.route('/api/historical-cards/<card_id>/predict', methods=['POST'])
+def predict_historical_card():
+    """Predict all fights in a historical card using historical fight data"""
+    global predictor
+    try:
+        if not predictor:
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
+        
+        # Load the historical card
+        cards_file = 'saved_historical_cards.json'
+        if not os.path.exists(cards_file):
+            return jsonify({'error': 'No historical cards found'}), 404
+        
+        with open(cards_file, 'r') as f:
+            cards = json.load(f)
+        
+        card = next((c for c in cards if c['id'] == card_id), None)
+        if not card:
+            return jsonify({'error': 'Historical card not found'}), 404
+        
+        # Predict all fights using historical data
+        predictions = []
+        for i, fight in enumerate(card['fights']):
+            try:
+                # Get specific fight data for each fighter
+                fighter1_data = predictor.full_df[
+                    (predictor.full_df['FIGHTER'] == fight['fighter1']) & 
+                    (predictor.full_df['DATE'] == fight['fighter1_fight_date'])
+                ]
+                fighter2_data = predictor.full_df[
+                    (predictor.full_df['FIGHTER'] == fight['fighter2']) & 
+                    (predictor.full_df['DATE'] == fight['fighter2_fight_date'])
+                ]
+                
+                if len(fighter1_data) == 0 or len(fighter2_data) == 0:
+                    predictions.append({
+                        'fight_number': i + 1,
+                        'fighter1': fight['fighter1'],
+                        'fighter2': fight['fighter2'],
+                        'error': f'Fight data not found for {fight["fighter1"]} or {fight["fighter2"]}'
+                    })
+                    continue
+                
+                # Use the specific fight data
+                fighter1_fight = fighter1_data.iloc[0]
+                fighter2_fight = fighter2_data.iloc[0]
+                
+                # Set prediction date (use the actual fight date from the card)
+                prediction_date = pd.to_datetime(card.get('event_date', datetime.now().strftime('%Y-%m-%d')))
+                
+                # Create feature vector using historical fight data
+                features = predictor._create_fight_features(fighter1_fight, fighter2_fight, prediction_date)
+                
+                # Make prediction
+                prediction_proba = predictor.model.predict_proba([features])[0]
+                fighter1_win_prob = prediction_proba[1]
+                fighter2_win_prob = prediction_proba[0]
+                
+                predicted_winner = fight['fighter1'] if fighter1_win_prob > 0.5 else fight['fighter2']
+                confidence = max(fighter1_win_prob, fighter2_win_prob)
+                
+                # Get actual result if available
+                actual_result = fight.get('actual_result', 'Unknown')
+                
+                result = {
+                    'success': True,
+                    'fighter1': fight['fighter1'],
+                    'fighter2': fight['fighter2'],
+                    'predicted_winner': predicted_winner,
+                    'fighter1_win_probability': round(fighter1_win_prob, 3),
+                    'fighter2_win_probability': round(fighter2_win_prob, 3),
+                    'confidence': round(confidence, 3),
+                    'actual_result': actual_result,
+                    'correct_prediction': predicted_winner == actual_result if actual_result != 'Unknown' else None,
+                    'fighter1_fight_date': fight['fighter1_fight_date'],
+                    'fighter2_fight_date': fight['fighter2_fight_date']
+                }
+                
+                predictions.append({
+                    'fight_number': i + 1,
+                    'fighter1': fight['fighter1'],
+                    'fighter2': fight['fighter2'],
+                    'prediction': result
+                })
+                
+            except Exception as e:
+                predictions.append({
+                    'fight_number': i + 1,
+                    'fighter1': fight['fighter1'],
+                    'fighter2': fight['fighter2'],
+                    'error': f'Prediction failed: {str(e)}'
+                })
+        
+        return jsonify({
+            'success': True,
+            'card_name': card['name'],
+            'event_date': card.get('event_date', ''),
+            'predictions': predictions
+        })
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to predict historical card: {str(e)}'}), 500
 
 if __name__ == '__main__':
     # Initialize the predictor when starting the app
