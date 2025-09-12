@@ -18,9 +18,12 @@
                 <a href="/" class="btn btn-outline-light me-2">
                     <i class="fas fa-home"></i> Single Fight
                 </a>
-                <a href="/card-builder" class="btn btn-outline-light">
+                <a href="/card-builder" class="btn btn-outline-light me-2">
                     <i class="fas fa-list"></i> Card Builder
                 </a>
+                <button class="btn btn-outline-light" onclick="toggleHistoricalMode()">
+                    <i class="fas fa-history"></i> Historical Mode
+                </button>
             </div>
         </header>
 
@@ -129,7 +132,269 @@
         </div>
     </div>
 
+    <!-- Historical Prediction Interface -->
+    <div id="historicalMode" class="container mt-4" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-info text-white">
+                        <h3><i class="fas fa-history"></i> Historical Fight Prediction</h3>
+                        <p class="mb-0">Predict fights using specific historical fight stats with proper age and Elo calculations</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Fighter 1 Selection -->
+                            <div class="col-md-6">
+                                <h5>Fighter 1</h5>
+                                <div class="mb-3">
+                                    <label for="histFighter1" class="form-label">Fighter Name:</label>
+                                    <input type="text" class="form-control" id="histFighter1" placeholder="Enter fighter name">
+                                    <div id="histFighter1Suggestions" class="suggestions"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="histFighter1Fight" class="form-label">Select Fight:</label>
+                                    <select class="form-select" id="histFighter1Fight" disabled>
+                                        <option value="">Select fighter first</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Fighter 2 Selection -->
+                            <div class="col-md-6">
+                                <h5>Fighter 2</h5>
+                                <div class="mb-3">
+                                    <label for="histFighter2" class="form-label">Fighter Name:</label>
+                                    <input type="text" class="form-control" id="histFighter2" placeholder="Enter fighter name">
+                                    <div id="histFighter2Suggestions" class="suggestions"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="histFighter2Fight" class="form-label">Select Fight:</label>
+                                    <select class="form-select" id="histFighter2Fight" disabled>
+                                        <option value="">Select fighter first</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="histPredictionDate" class="form-label">Prediction Date:</label>
+                                    <input type="date" class="form-control" id="histPredictionDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button class="btn btn-primary btn-lg w-100" onclick="predictHistoricalFight()">
+                                    <i class="fas fa-calculator"></i> Predict Historical Fight
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Historical Prediction Results -->
+                        <div id="historicalResults" class="mt-4" style="display: none;">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        // Historical Mode Functions
+        function toggleHistoricalMode() {
+            const historicalMode = document.getElementById('historicalMode');
+            const normalMode = document.querySelector('.container.mt-4');
+            
+            if (historicalMode.style.display === 'none') {
+                historicalMode.style.display = 'block';
+                normalMode.style.display = 'none';
+            } else {
+                historicalMode.style.display = 'none';
+                normalMode.style.display = 'block';
+            }
+        }
+        
+        // Fighter search for historical mode
+        document.getElementById('histFighter1').addEventListener('input', function() {
+            searchFightersHistorical(this, 'histFighter1');
+        });
+        
+        document.getElementById('histFighter2').addEventListener('input', function() {
+            searchFightersHistorical(this, 'histFighter2');
+        });
+        
+        function searchFightersHistorical(input, fighterId) {
+            const query = input.value.trim();
+            if (query.length < 2) {
+                hideSuggestionsHistorical(fighterId);
+                return;
+            }
+            
+            fetch('/fighters')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.fighters) {
+                        const filteredFighters = data.fighters.filter(fighter => 
+                            fighter.toLowerCase().includes(query.toLowerCase())
+                        );
+                        showSuggestionsHistorical(input, filteredFighters.slice(0, 5), fighterId);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching fighters:', error);
+                });
+        }
+        
+        function showSuggestionsHistorical(input, fighters, fighterId) {
+            const suggestionsDiv = document.getElementById(fighterId + 'Suggestions');
+            suggestionsDiv.innerHTML = '';
+            
+            fighters.forEach(fighter => {
+                const suggestion = document.createElement('div');
+                suggestion.className = 'suggestion-item';
+                suggestion.style.cssText = 'padding: 8px; cursor: pointer; background: white; border: 1px solid #ddd; border-top: none;';
+                suggestion.textContent = fighter;
+                suggestion.onclick = () => {
+                    input.value = fighter;
+                    suggestionsDiv.style.display = 'none';
+                    loadFighterFights(fighter, fighterId);
+                };
+                suggestionsDiv.appendChild(suggestion);
+            });
+            
+            suggestionsDiv.style.display = 'block';
+        }
+        
+        function hideSuggestionsHistorical(fighterId) {
+            const suggestionsDiv = document.getElementById(fighterId + 'Suggestions');
+            if (suggestionsDiv) {
+                suggestionsDiv.style.display = 'none';
+            }
+        }
+        
+        function loadFighterFights(fighterName, fighterId) {
+            const fightSelect = document.getElementById(fighterId + 'Fight');
+            fightSelect.disabled = true;
+            fightSelect.innerHTML = '<option value="">Loading fights...</option>';
+            
+            fetch(`/fighter/${encodeURIComponent(fighterName)}/fights`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.fights) {
+                        fightSelect.innerHTML = '<option value="">Select a fight</option>';
+                        data.fights.forEach(fight => {
+                            const option = document.createElement('option');
+                            option.value = fight.date;
+                            option.textContent = `${fight.date} vs ${fight.opponent} (${fight.result}) - Elo: ${fight.precomp_elo}`;
+                            fightSelect.appendChild(option);
+                        });
+                        fightSelect.disabled = false;
+                    } else {
+                        fightSelect.innerHTML = '<option value="">No fights found</option>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading fights:', error);
+                    fightSelect.innerHTML = '<option value="">Error loading fights</option>';
+                });
+        }
+        
+        function predictHistoricalFight() {
+            const fighter1 = document.getElementById('histFighter1').value.trim();
+            const fighter2 = document.getElementById('histFighter2').value.trim();
+            const fighter1FightDate = document.getElementById('histFighter1Fight').value;
+            const fighter2FightDate = document.getElementById('histFighter2Fight').value;
+            const predictionDate = document.getElementById('histPredictionDate').value;
+            
+            if (!fighter1 || !fighter2 || !fighter1FightDate || !fighter2FightDate) {
+                alert('Please select both fighters and their specific fights');
+                return;
+            }
+            
+            const resultsDiv = document.getElementById('historicalResults');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Predicting...</div>';
+            
+            fetch('/predict-historical', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fighter1: fighter1,
+                    fighter2: fighter2,
+                    fighter1_fight_date: fighter1FightDate,
+                    fighter2_fight_date: fighter2FightDate,
+                    prediction_date: predictionDate
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayHistoricalResults(data);
+                } else {
+                    resultsDiv.innerHTML = `<div class="alert alert-danger">Error: ${data.error}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error predicting historical fight:', error);
+                resultsDiv.innerHTML = '<div class="alert alert-danger">Error predicting fight</div>';
+            });
+        }
+        
+        function displayHistoricalResults(data) {
+            const resultsDiv = document.getElementById('historicalResults');
+            
+            resultsDiv.innerHTML = `
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4><i class="fas fa-trophy"></i> Historical Prediction Results</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Fighter 1: ${data.fighter1}</h5>
+                                <p><strong>Fight Date:</strong> ${data.fighter1_fight_date}</p>
+                                <p><strong>Opponent:</strong> ${data.fighter1_stats.opponent}</p>
+                                <p><strong>Result:</strong> ${data.fighter1_stats.result}</p>
+                                <p><strong>Pre-fight Elo:</strong> ${data.fighter1_stats.precomp_elo}</p>
+                                <p><strong>Post-fight Elo:</strong> ${data.fighter1_stats.postcomp_elo}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Fighter 2: ${data.fighter2}</h5>
+                                <p><strong>Fight Date:</strong> ${data.fighter2_fight_date}</p>
+                                <p><strong>Opponent:</strong> ${data.fighter2_stats.opponent}</p>
+                                <p><strong>Result:</strong> ${data.fighter2_stats.result}</p>
+                                <p><strong>Pre-fight Elo:</strong> ${data.fighter2_stats.precomp_elo}</p>
+                                <p><strong>Post-fight Elo:</strong> ${data.fighter2_stats.postcomp_elo}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <h3>Prediction for ${data.prediction_date}</h3>
+                            <div class="alert alert-info">
+                                <h4><i class="fas fa-crown"></i> Predicted Winner: ${data.predicted_winner}</h4>
+                                <p><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%</p>
+                                <p><strong>${data.fighter1} Win Probability:</strong> ${(data.fighter1_win_probability * 100).toFixed(1)}%</p>
+                                <p><strong>${data.fighter2} Win Probability:</strong> ${(data.fighter2_win_probability * 100).toFixed(1)}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.suggestions')) {
+                document.querySelectorAll('.suggestions').forEach(div => {
+                    div.style.display = 'none';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

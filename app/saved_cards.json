@@ -14,5 +14,49 @@
       }
     ],
     "created_at": "2025-09-11T21:47:26.526446"
+  },
+  {
+    "id": "1757653317.42679",
+    "name": "Fight Night 1",
+    "event_date": "",
+    "fights": [
+      {
+        "fighter1": "Nassourdine Imavov",
+        "fighter2": "Caio Borralho"
+      },
+      {
+        "fighter1": "Mauricio Ruffy",
+        "fighter2": "Benoit Saint Denis"
+      },
+      {
+        "fighter1": "Modestas Bukauskas",
+        "fighter2": "Paul Craig"
+      },
+      {
+        "fighter1": "Mason Jones",
+        "fighter2": "Bolaji Oki"
+      },
+      {
+        "fighter1": "Oumar Sy",
+        "fighter2": "Brendson Ribeiro"
+      },
+      {
+        "fighter1": "Sam Patterson",
+        "fighter2": "Trey Waters"
+      },
+      {
+        "fighter1": "Robert Bryczek",
+        "fighter2": "Brad Tavares"
+      },
+      {
+        "fighter1": "Rinat Fakhretdinov",
+        "fighter2": "Andreas Gustafsson"
+      },
+      {
+        "fighter1": "Sam Hughes",
+        "fighter2": "Shauna"
+      }
+    ],
+    "created_at": "2025-09-11T22:01:57.426887"
   }
 ]

@@ -138,14 +138,22 @@ class UFCFightPredictor:
         truncated = int(x * 10000) / 10000.0
         return round(truncated, 2)
     
-    def _apply_elo_decay(self, x, gap_days, threshold=365, decay=0.978):
+    def _apply_elo_decay(self, elo_value, gap_days, threshold=365, decay=0.978):
         """Apply Elo decay based on time gap"""
-        if pd.isna(x):
-            return np.nan
-        val = float(x)
-        if gap_days is not None and gap_days >= threshold:
-            val = val * decay
-        return self._truncate_round(val)
+        if pd.isna(elo_value) or gap_days <= 0:
+            return elo_value
+        
+        try:
+            elo_val = float(elo_value)
+            if gap_days >= threshold:
+                # Apply decay for gaps >= 365 days
+                decayed_elo = elo_val * (decay ** (gap_days / 365))
+                return self._truncate_round(decayed_elo)
+            else:
+                # No decay for gaps < 365 days
+                return self._truncate_round(elo_val)
+        except (ValueError, TypeError):
+            return elo_value
     
     def _compute_age(self, dob_str, fight_date):
         """Compute age from date of birth and fight date"""
@@ -277,6 +285,14 @@ class UFCFightPredictor:
         age_ratio_diff = self._truncate_round(fighter1_age / fighter2_age - 1.0) if fighter2_age > 0 else 0
         opp_age_ratio_diff = self._truncate_round(fighter2_age / fighter1_age - 1.0) if fighter1_age > 0 else 0
         
+        # Apply Elo decay if there's a time gap between historical fight and prediction date
+        fighter1_fight_date = pd.to_datetime(fighter1_data.get('DATE'), errors='coerce')
+        fighter2_fight_date = pd.to_datetime(fighter2_data.get('DATE'), errors='coerce')
+        
+        # Calculate time gaps in days
+        fighter1_gap_days = (fight_date - fighter1_fight_date).days if pd.notna(fighter1_fight_date) else 0
+        fighter2_gap_days = (fight_date - fighter2_fight_date).days if pd.notna(fighter2_fight_date) else 0
+        
         # Create feature vector using the importance columns from FightOutcomeModel
         feature_values = {}
         
@@ -293,10 +309,22 @@ class UFCFightPredictor:
             elif feature.startswith('opp_'):
                 # For opponent features, get from fighter2_data
                 opp_feature = feature[4:]  # Remove 'opp_' prefix
-                feature_values[feature] = fighter2_data.get(opp_feature, 0)
+                value = fighter2_data.get(opp_feature, 0)
+                
+                # Apply Elo decay for Elo-related features
+                if 'elo' in opp_feature.lower() and fighter2_gap_days > 0:
+                    value = self._apply_elo_decay(value, fighter2_gap_days)
+                
+                feature_values[feature] = value
             else:
                 # For fighter features, get from fighter1_data
-                feature_values[feature] = fighter1_data.get(feature, 0)
+                value = fighter1_data.get(feature, 0)
+                
+                # Apply Elo decay for Elo-related features
+                if 'elo' in feature.lower() and fighter1_gap_days > 0:
+                    value = self._apply_elo_decay(value, fighter1_gap_days)
+                
+                feature_values[feature] = value
         
         # Create feature vector in the correct order
         features = []

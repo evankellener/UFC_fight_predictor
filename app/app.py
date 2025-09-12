@@ -146,6 +146,135 @@ def get_fighter_stats(fighter_name):
     except Exception as e:
         return jsonify({'error': f'Failed to get fighter stats: {str(e)}'}), 500
 
+@app.route('/fighter/<fighter_name>/fights')
+def get_fighter_fights(fighter_name):
+    """Get all fights for a specific fighter with dates and opponents"""
+    try:
+        if not predictor:
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
+        
+        # Get fighter data from full dataset
+        fighter_data = predictor.full_df[predictor.full_df['FIGHTER'] == fighter_name]
+        
+        if len(fighter_data) == 0:
+            return jsonify({'error': 'Fighter not found'}), 404
+        
+        # Sort by date and get fight details
+        fights = []
+        for _, fight in fighter_data.sort_values('DATE').iterrows():
+            fights.append({
+                'date': fight['DATE'].strftime('%Y-%m-%d') if pd.notna(fight['DATE']) else 'Unknown',
+                'opponent': fight['opp_FIGHTER'],
+                'result': 'Win' if fight['win'] == 1 else 'Loss',
+                'event': fight.get('EVENT', 'Unknown Event'),
+                'weight_class': fight.get('weight_of_fight', 'Unknown'),
+                'precomp_elo': float(fight.get('precomp_elo', 0)),
+                'postcomp_elo': float(fight.get('postcomp_elo', 0)),
+                'precomp_boutcount': int(fight.get('precomp_boutcount', 0)),
+                'postcomp_boutcount': int(fight.get('postcomp_boutcount', 0))
+            })
+        
+        return jsonify({'fights': fights})
+        
+    except Exception as e:
+        return jsonify({'error': f'Failed to get fighter fights: {str(e)}'}), 500
+
+@app.route('/predict-historical', methods=['POST'])
+def predict_historical():
+    """Predict a fight using specific historical fight stats"""
+    global predictor
+    try:
+        if not predictor:
+            print("Predictor not initialized, attempting to reinitialize...")
+            if not initialize_predictor():
+                return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
+        
+        data = request.get_json()
+        fighter1_name = data.get('fighter1', '').strip()
+        fighter2_name = data.get('fighter2', '').strip()
+        fighter1_fight_date = data.get('fighter1_fight_date', '')
+        fighter2_fight_date = data.get('fighter2_fight_date', '')
+        prediction_date = data.get('prediction_date', '')
+        
+        if not all([fighter1_name, fighter2_name, fighter1_fight_date, fighter2_fight_date]):
+            return jsonify({'error': 'All fighter names and fight dates are required'}), 400
+        
+        # Get specific fight data for each fighter
+        fighter1_data = predictor.full_df[
+            (predictor.full_df['FIGHTER'] == fighter1_name) & 
+            (predictor.full_df['DATE'] == fighter1_fight_date)
+        ]
+        fighter2_data = predictor.full_df[
+            (predictor.full_df['FIGHTER'] == fighter2_name) & 
+            (predictor.full_df['DATE'] == fighter2_fight_date)
+        ]
+        
+        if len(fighter1_data) == 0:
+            return jsonify({'error': f'Fight not found for {fighter1_name} on {fighter1_fight_date}'}), 404
+        if len(fighter2_data) == 0:
+            return jsonify({'error': f'Fight not found for {fighter2_name} on {fighter2_fight_date}'}), 404
+        
+        # Use the specific fight data
+        fighter1_fight = fighter1_data.iloc[0]
+        fighter2_fight = fighter2_data.iloc[0]
+        
+        # Set prediction date (default to current date if not provided)
+        if not prediction_date:
+            prediction_date = datetime.now().strftime('%Y-%m-%d')
+        
+        prediction_date = pd.to_datetime(prediction_date)
+        
+        # Create feature vector using historical fight data
+        features = predictor._create_fight_features(fighter1_fight, fighter2_fight, prediction_date)
+        
+        # Make prediction
+        prediction_proba = predictor.model.predict_proba([features])[0]
+        fighter1_win_prob = prediction_proba[1]
+        fighter2_win_prob = prediction_proba[0]
+        
+        predicted_winner = fighter1_name if fighter1_win_prob > 0.5 else fighter2_name
+        confidence = max(fighter1_win_prob, fighter2_win_prob)
+        
+        result = {
+            'success': True,
+            'fighter1': fighter1_name,
+            'fighter2': fighter2_name,
+            'fighter1_fight_date': fighter1_fight_date,
+            'fighter2_fight_date': fighter2_fight_date,
+            'prediction_date': prediction_date.strftime('%Y-%m-%d'),
+            'predicted_winner': predicted_winner,
+            'fighter1_win_probability': round(fighter1_win_prob, 3),
+            'fighter2_win_probability': round(fighter2_win_prob, 3),
+            'confidence': round(confidence, 3),
+            'fighter1_stats': {
+                'name': fighter1_name,
+                'fight_date': fighter1_fight_date,
+                'opponent': fighter1_fight.get('opp_FIGHTER', 'Unknown'),
+                'result': 'Win' if fighter1_fight.get('win') == 1 else 'Loss',
+                'precomp_elo': float(fighter1_fight.get('precomp_elo', 0)),
+                'postcomp_elo': float(fighter1_fight.get('postcomp_elo', 0)),
+                'precomp_boutcount': int(fighter1_fight.get('precomp_boutcount', 0)),
+                'postcomp_boutcount': int(fighter1_fight.get('postcomp_boutcount', 0))
+            },
+            'fighter2_stats': {
+                'name': fighter2_name,
+                'fight_date': fighter2_fight_date,
+                'opponent': fighter2_fight.get('opp_FIGHTER', 'Unknown'),
+                'result': 'Win' if fighter2_fight.get('win') == 1 else 'Loss',
+                'precomp_elo': float(fighter2_fight.get('precomp_elo', 0)),
+                'postcomp_elo': float(fighter2_fight.get('postcomp_elo', 0)),
+                'precomp_boutcount': int(fighter2_fight.get('precomp_boutcount', 0)),
+                'postcomp_boutcount': int(fighter2_fight.get('postcomp_boutcount', 0))
+            }
+        }
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        return jsonify({'error': f'Historical prediction failed: {str(e)}'}), 500
+
 # Card Builder Routes
 @app.route('/card-builder')
 def card_builder():
