@@ -1,0 +1,709 @@
+DATE,EVENT,BOUT,FIGHTER,prob_win,odds
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Manuel Torres vs. Ignacio Bahamondes,Manuel Torres,0.5318819604931486,-114
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Manuel Torres vs. Ignacio Bahamondes,Ignacio Bahamondes,0.41415397181130703,141
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Raul Rosas Jr. vs. Aoriqileng,Raul Rosas Jr.,0.7197661819661865,-257
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Raul Rosas Jr. vs. Aoriqileng,Aoriqileng,0.26126744438138017,283
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Ronaldo Rodriguez vs. Ode Osbourne,Ronaldo Rodriguez,0.5741785003469497,-135
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Ronaldo Rodriguez vs. Ode Osbourne,Ode Osbourne,0.41168239314504057,143
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Edgar Chairez vs. Joshua Van,Edgar Chairez,0.328728981052942,204
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Edgar Chairez vs. Joshua Van,Joshua Van,0.6423794341212029,-180
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Sean O'Malley vs. Merab Dvalishvili,Sean O'Malley,0.3826608708882505,161
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Sean O'Malley vs. Merab Dvalishvili,Merab Dvalishvili,0.582609764801346,-140
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Daniel Zellhuber vs. Esteban Ribovics,Daniel Zellhuber,0.5399933562543213,-117
+2024-09-14,UFC 306: Riyadh Season Noche UFC,Daniel Zellhuber vs. Esteban Ribovics,Esteban Ribovics,0.4384757409617984,128
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Taylor Lapilus vs. Vince Morales,Taylor Lapilus,0.6595972535392053,-194
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Taylor Lapilus vs. Vince Morales,Vince Morales,0.32152359711973183,211
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Ludovit Klein vs. Roosevelt Roberts,Ludovit Klein,0.7414846178367884,-287
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Ludovit Klein vs. Roosevelt Roberts,Roosevelt Roberts,0.23919323535481032,318
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Fares Ziam vs. Matt Frevola,Fares Ziam,0.6434340262547528,-180
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Fares Ziam vs. Matt Frevola,Matt Frevola,0.3236786799001454,209
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Daniel Barez vs. Victor Altamirano,Daniel Barez,0.32880986290301123,204
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Daniel Barez vs. Victor Altamirano,Victor Altamirano,0.6419340638372697,-179
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Kevin Jousset vs. Bryan Battle,Kevin Jousset,0.45448918173435215,120
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Kevin Jousset vs. Bryan Battle,Bryan Battle,0.5044630306016061,-102
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Morgan Charriere vs. Gabriel Miranda,Morgan Charriere,0.5869472388980829,-142
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Morgan Charriere vs. Gabriel Miranda,Gabriel Miranda,0.3642458149466505,175
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Nassourdine Imavov vs. Brendan Allen,Nassourdine Imavov,0.43220491569003666,131
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Nassourdine Imavov vs. Brendan Allen,Brendan Allen,0.5384646862639874,-117
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Renato Moicano vs. Benoit Saint Denis,Renato Moicano,0.342041636081321,192
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Renato Moicano vs. Benoit Saint Denis,Benoit Saint Denis,0.6282654246729492,-169
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,William Gomis vs. Joanderson Brito,William Gomis,0.5059372529497833,-102
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,William Gomis vs. Joanderson Brito,Joanderson Brito,0.4664934968581831,114
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Oumar Sy vs. Da Woon Jung,Oumar Sy,0.5884096035748707,-143
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Oumar Sy vs. Da Woon Jung,Da Woon Jung,0.41067060184545606,144
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Bolaji Oki vs. Chris Duncan,Bolaji Oki,0.5619646833802663,-128
+2024-09-28,UFC Fight Night: Moicano vs. Saint Denis,Bolaji Oki vs. Chris Duncan,Chris Duncan,0.44518990461822505,125
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Stephen Thompson vs. Joaquin Buckley,Stephen Thompson,0.2769197086061045,261
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Stephen Thompson vs. Joaquin Buckley,Joaquin Buckley,0.7353535728250669,-278
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Ryan Spann vs. Ovince Saint Preux,Ryan Spann,0.6335718530781006,-173
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Ryan Spann vs. Ovince Saint Preux,Ovince Saint Preux,0.3630060775492227,175
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Court McGee vs. Tim Means,Court McGee,0.4480205669454709,123
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Court McGee vs. Tim Means,Tim Means,0.6099911302937356,-156
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Austin Hubbard vs. Alexander Hernandez,Austin Hubbard,0.4159434064479914,140
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Austin Hubbard vs. Alexander Hernandez,Alexander Hernandez,0.5709993290337212,-133
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Alex Pereira vs. Khalil Rountree Jr.,Alex Pereira,0.6899800477452782,-223
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Alex Pereira vs. Khalil Rountree Jr.,Khalil Rountree Jr.,0.2851285640813869,251
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Cesar Almeida vs. Ihor Potieria,Cesar Almeida,0.46044759304404115,117
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Cesar Almeida vs. Ihor Potieria,Ihor Potieria,0.5477969357491962,-121
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Jose Aldo vs. Mario Bautista,Jose Aldo,0.3550061591104363,182
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Jose Aldo vs. Mario Bautista,Mario Bautista,0.6146591876096653,-160
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Roman Dolidze vs. Kevin Holland,Roman Dolidze,0.32863575905029374,204
+2024-10-05,UFC 307: Pereira vs. Rountree Jr.,Roman Dolidze vs. Kevin Holland,Kevin Holland,0.6646562457039524,-198
+2024-10-12,UFC Fight Night: Royval vs. Taira,Grant Dawson vs. Rafa Garcia,Grant Dawson,0.5399864548564721,-117
+2024-10-12,UFC Fight Night: Royval vs. Taira,Grant Dawson vs. Rafa Garcia,Rafa Garcia,0.4186727764967915,139
+2024-10-12,UFC Fight Night: Royval vs. Taira,Themba Gorimbo vs. Niko Price,Themba Gorimbo,0.701153958353318,-235
+2024-10-12,UFC Fight Night: Royval vs. Taira,Themba Gorimbo vs. Niko Price,Niko Price,0.2888894496107471,246
+2024-10-12,UFC Fight Night: Royval vs. Taira,Daniel Rodriguez vs. Alex Morono,Daniel Rodriguez,0.5067974931546946,-103
+2024-10-12,UFC Fight Night: Royval vs. Taira,Daniel Rodriguez vs. Alex Morono,Alex Morono,0.47706276995301206,110
+2024-10-12,UFC Fight Night: Royval vs. Taira,Jonathan Pearce vs. Pat Sabatini,Jonathan Pearce,0.6034597464065433,-152
+2024-10-12,UFC Fight Night: Royval vs. Taira,Jonathan Pearce vs. Pat Sabatini,Pat Sabatini,0.37837597912809934,164
+2024-10-12,UFC Fight Night: Royval vs. Taira,Brad Tavares vs. JunYong Park,Brad Tavares,0.27225152616503284,267
+2024-10-12,UFC Fight Night: Royval vs. Taira,Brad Tavares vs. JunYong Park,JunYong Park,0.7217162541174528,-259
+2024-10-12,UFC Fight Night: Royval vs. Taira,Chidi Njokuani vs. Jared Gooden,Chidi Njokuani,0.49917527325062505,100
+2024-10-12,UFC Fight Night: Royval vs. Taira,Chidi Njokuani vs. Jared Gooden,Jared Gooden,0.4691672879619648,113
+2024-10-12,UFC Fight Night: Royval vs. Taira,Brandon Royval vs. Tatsuro Taira,Brandon Royval,0.3238969961035362,209
+2024-10-12,UFC Fight Night: Royval vs. Taira,Brandon Royval vs. Tatsuro Taira,Tatsuro Taira,0.6421635157497787,-179
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Rob Font vs. Kyler Phillips,Rob Font,0.3953723848139469,153
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Rob Font vs. Kyler Phillips,Kyler Phillips,0.6110488125845783,-157
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Charles Johnson vs. Sumudaerji,Charles Johnson,0.5191253341906102,-108
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Charles Johnson vs. Sumudaerji,Sumudaerji,0.4531933388134249,121
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Anthony Hernandez vs. Michel Pereira,Anthony Hernandez,0.42930054234916276,133
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Anthony Hernandez vs. Michel Pereira,Michel Pereira,0.5260869930084151,-111
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Austen Lane vs. Robelis Despaigne,Austen Lane,0.4030792026716075,148
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Austen Lane vs. Robelis Despaigne,Robelis Despaigne,0.6159545305681589,-160
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Matheus Nicolau vs. Asu Almabayev,Matheus Nicolau,0.27390194551613173,265
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Matheus Nicolau vs. Asu Almabayev,Asu Almabayev,0.7035988979144668,-237
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Darren Elkins vs. Daniel Pineda,Darren Elkins,0.5918507633020278,-145
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Darren Elkins vs. Daniel Pineda,Daniel Pineda,0.40455225151223684,147
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Brad Katona vs. Jean Matsumoto,Brad Katona,0.24357784111515968,311
+2024-10-19,UFC Fight Night: Hernandez vs. Pereira,Brad Katona vs. Jean Matsumoto,Jean Matsumoto,0.7587480004139273,-315
+2024-10-26,UFC 308: Topuria vs. Holloway,Geoff Neal vs. Rafael Dos Anjos,Geoff Neal,0.5767029202132652,-136
+2024-10-26,UFC 308: Topuria vs. Holloway,Geoff Neal vs. Rafael Dos Anjos,Rafael Dos Anjos,0.4610247903126526,117
+2024-10-26,UFC 308: Topuria vs. Holloway,Kennedy Nzechukwu vs. Chris Barnett,Kennedy Nzechukwu,0.682626423889539,-215
+2024-10-26,UFC 308: Topuria vs. Holloway,Kennedy Nzechukwu vs. Chris Barnett,Chris Barnett,0.27910339792775457,258
+2024-10-26,UFC 308: Topuria vs. Holloway,Abus Magomedov vs. Brunno Ferreira,Abus Magomedov,0.4560466091710312,119
+2024-10-26,UFC 308: Topuria vs. Holloway,Abus Magomedov vs. Brunno Ferreira,Brunno Ferreira,0.5175500383107348,-107
+2024-10-26,UFC 308: Topuria vs. Holloway,Lerone Murphy vs. Dan Ige,Lerone Murphy,0.6509415899657592,-186
+2024-10-26,UFC 308: Topuria vs. Holloway,Lerone Murphy vs. Dan Ige,Dan Ige,0.3286467198200458,204
+2024-10-26,UFC 308: Topuria vs. Holloway,Ismail Naurdiev vs. Bruno Silva,Ismail Naurdiev,0.6892269795144847,-222
+2024-10-26,UFC 308: Topuria vs. Holloway,Ismail Naurdiev vs. Bruno Silva,Bruno Silva,0.29314145651002205,241
+2024-10-26,UFC 308: Topuria vs. Holloway,Robert Whittaker vs. Khamzat Chimaev,Robert Whittaker,0.47106450151301055,112
+2024-10-26,UFC 308: Topuria vs. Holloway,Robert Whittaker vs. Khamzat Chimaev,Khamzat Chimaev,0.5191620933393676,-108
+2024-10-26,UFC 308: Topuria vs. Holloway,Magomed Ankalaev vs. Aleksandar Rakic,Magomed Ankalaev,0.7787051137483546,-352
+2024-10-26,UFC 308: Topuria vs. Holloway,Magomed Ankalaev vs. Aleksandar Rakic,Aleksandar Rakic,0.22854814139838356,338
+2024-10-26,UFC 308: Topuria vs. Holloway,Farid Basharat vs. Victor Hugo,Farid Basharat,0.6633150506168712,-197
+2024-10-26,UFC 308: Topuria vs. Holloway,Farid Basharat vs. Victor Hugo,Victor Hugo,0.3247441124426475,208
+2024-10-26,UFC 308: Topuria vs. Holloway,Shara Magomedov vs. Armen Petrosyan,Shara Magomedov,0.5613220468691336,-128
+2024-10-26,UFC 308: Topuria vs. Holloway,Shara Magomedov vs. Armen Petrosyan,Armen Petrosyan,0.4211287651741515,137
+2024-10-26,UFC 308: Topuria vs. Holloway,Ilia Topuria vs. Max Holloway,Ilia Topuria,0.47113297924460806,112
+2024-10-26,UFC 308: Topuria vs. Holloway,Ilia Topuria vs. Max Holloway,Max Holloway,0.5218365404282037,-109
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Serhiy Sidey vs. Garrett Armfield,Serhiy Sidey,0.4739984703985086,111
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Serhiy Sidey vs. Garrett Armfield,Garrett Armfield,0.5217934926992399,-109
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Mike Malott vs. Trevin Giles,Mike Malott,0.570567258883208,-133
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Mike Malott vs. Trevin Giles,Trevin Giles,0.4284705831601011,133
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Caio Machado vs. Brendson Ribeiro,Caio Machado,0.5758910027998715,-136
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Caio Machado vs. Brendson Ribeiro,Brendson Ribeiro,0.4685306481171315,113
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Charles Jourdain vs. Victor Henry,Charles Jourdain,0.5692170613596449,-132
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Charles Jourdain vs. Victor Henry,Victor Henry,0.3992957418624687,150
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Marc-Andre Barriault vs. Dustin Stoltzfus,Marc-Andre Barriault,0.4751252871901479,110
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Marc-Andre Barriault vs. Dustin Stoltzfus,Dustin Stoltzfus,0.5042863992715599,-102
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Brandon Moreno vs. Amir Albazi,Brandon Moreno,0.5800945970733359,-138
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Brandon Moreno vs. Amir Albazi,Amir Albazi,0.39878836675174306,151
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Jack Shore vs. Youssef Zalal,Jack Shore,0.4034095394186801,148
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Jack Shore vs. Youssef Zalal,Youssef Zalal,0.5926117571509232,-145
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Chad Anheliger vs. Cody Gibson,Chad Anheliger,0.44563995276011203,124
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Chad Anheliger vs. Cody Gibson,Cody Gibson,0.5380094179749361,-116
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Alexandr Romanov vs. Rodrigo Nascimento,Alexandr Romanov,0.6066907526861539,-154
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Alexandr Romanov vs. Rodrigo Nascimento,Rodrigo Nascimento,0.3801589049243731,163
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Aiemann Zahabi vs. Pedro Munhoz,Aiemann Zahabi,0.6463144183545535,-183
+2024-11-02,UFC Fight Night: Moreno vs. Albazi,Aiemann Zahabi vs. Pedro Munhoz,Pedro Munhoz,0.33887827024504513,195
+2024-11-09,UFC Fight Night: Magny vs. Prates,Neil Magny vs. Carlos Prates,Neil Magny,0.40030867199224096,150
+2024-11-09,UFC Fight Night: Magny vs. Prates,Neil Magny vs. Carlos Prates,Carlos Prates,0.5920751684570732,-145
+2024-11-09,UFC Fight Night: Magny vs. Prates,Tresean Gore vs. Antonio Trocoli,Tresean Gore,0.5931259515941408,-146
+2024-11-09,UFC Fight Night: Magny vs. Prates,Tresean Gore vs. Antonio Trocoli,Antonio Trocoli,0.37905347126971395,164
+2024-11-09,UFC Fight Night: Magny vs. Prates,Matthew Semelsberger vs. Charles Radtke,Matthew Semelsberger,0.5005981706802335,-100
+2024-11-09,UFC Fight Night: Magny vs. Prates,Matthew Semelsberger vs. Charles Radtke,Charles Radtke,0.5027422394107269,-101
+2024-11-09,UFC Fight Night: Magny vs. Prates,Cody Stamann vs. Da'Mon Blackshear,Cody Stamann,0.38651317993505,159
+2024-11-09,UFC Fight Night: Magny vs. Prates,Cody Stamann vs. Da'Mon Blackshear,Da'Mon Blackshear,0.5880605218828235,-143
+2024-11-16,UFC 309: Jones vs. Miocic,Jim Miller vs. Damon Jackson,Jim Miller,0.45485470302478126,120
+2024-11-16,UFC 309: Jones vs. Miocic,Jim Miller vs. Damon Jackson,Damon Jackson,0.5495914338701211,-122
+2024-11-16,UFC 309: Jones vs. Miocic,Charles Oliveira vs. Michael Chandler,Charles Oliveira,0.7504182789369606,-301
+2024-11-16,UFC 309: Jones vs. Miocic,Charles Oliveira vs. Michael Chandler,Michael Chandler,0.2661908934169226,276
+2024-11-16,UFC 309: Jones vs. Miocic,Marcin Tybura vs. Jhonata Diniz,Marcin Tybura,0.4770968953040674,110
+2024-11-16,UFC 309: Jones vs. Miocic,Marcin Tybura vs. Jhonata Diniz,Jhonata Diniz,0.5417275034650875,-118
+2024-11-16,UFC 309: Jones vs. Miocic,Jonathan Martinez vs. Marcus McGhee,Jonathan Martinez,0.5424164567083594,-119
+2024-11-16,UFC 309: Jones vs. Miocic,Jonathan Martinez vs. Marcus McGhee,Marcus McGhee,0.436910114971103,129
+2024-11-16,UFC 309: Jones vs. Miocic,Mickey Gall vs. Ramiz Brahimaj,Mickey Gall,0.43223349330870037,131
+2024-11-16,UFC 309: Jones vs. Miocic,Mickey Gall vs. Ramiz Brahimaj,Ramiz Brahimaj,0.5449084999844481,-120
+2024-11-16,UFC 309: Jones vs. Miocic,Jon Jones vs. Stipe Miocic,Jon Jones,0.7922319093141582,-381
+2024-11-16,UFC 309: Jones vs. Miocic,Jon Jones vs. Stipe Miocic,Stipe Miocic,0.2064879860392083,384
+2024-11-16,UFC 309: Jones vs. Miocic,Bassil Hafez vs. Oban Elliott,Bassil Hafez,0.31311128609570693,219
+2024-11-16,UFC 309: Jones vs. Miocic,Bassil Hafez vs. Oban Elliott,Oban Elliott,0.6905161285756027,-223
+2024-11-16,UFC 309: Jones vs. Miocic,Bo Nickal vs. Paul Craig,Bo Nickal,0.8346112885198885,-505
+2024-11-16,UFC 309: Jones vs. Miocic,Bo Nickal vs. Paul Craig,Paul Craig,0.1859429494982577,438
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Song Kenan vs. Muslim Salikhov,Song Kenan,0.4230970644183032,136
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Song Kenan vs. Muslim Salikhov,Muslim Salikhov,0.5515914667403052,-123
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Xiao Long vs. Quang Le,Xiao Long,0.6489908660857407,-185
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Xiao Long vs. Quang Le,Quang Le,0.35410503203997706,182
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Petr Yan vs. Deiveson Figueiredo,Petr Yan,0.6232044062084897,-165
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Petr Yan vs. Deiveson Figueiredo,Deiveson Figueiredo,0.381066324426397,162
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Maheshate vs. Nikolas Motta,Maheshate,0.5174813091922282,-107
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Maheshate vs. Nikolas Motta,Nikolas Motta,0.4232698328722857,136
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Volkan Oezdemir vs. Carlos Ulberg,Volkan Oezdemir,0.34552447580918133,189
+2024-11-23,UFC Fight Night: Yan vs. Figueiredo,Volkan Oezdemir vs. Carlos Ulberg,Carlos Ulberg,0.6498958849802627,-186
+2024-12-07,UFC 310: Pantoja vs. Asakura,Bryce Mitchell vs. Kron Gracie,Bryce Mitchell,0.7650736955307822,-326
+2024-12-07,UFC 310: Pantoja vs. Asakura,Bryce Mitchell vs. Kron Gracie,Kron Gracie,0.2062045473398359,385
+2024-12-07,UFC 310: Pantoja vs. Asakura,Randy Brown vs. Bryan Battle,Randy Brown,0.5627897705056797,-129
+2024-12-07,UFC 310: Pantoja vs. Asakura,Randy Brown vs. Bryan Battle,Bryan Battle,0.4184199933907319,139
+2024-12-07,UFC 310: Pantoja vs. Asakura,Ciryl Gane vs. Alexander Volkov,Ciryl Gane,0.5643004275192333,-130
+2024-12-07,UFC 310: Pantoja vs. Asakura,Ciryl Gane vs. Alexander Volkov,Alexander Volkov,0.46346969163053503,116
+2024-12-07,UFC 310: Pantoja vs. Asakura,Vicente Luque vs. Themba Gorimbo,Vicente Luque,0.4970206018335716,101
+2024-12-07,UFC 310: Pantoja vs. Asakura,Vicente Luque vs. Themba Gorimbo,Themba Gorimbo,0.5067728018477359,-103
+2024-12-07,UFC 310: Pantoja vs. Asakura,Cody Durden vs. Joshua Van,Cody Durden,0.3197362940718174,213
+2024-12-07,UFC 310: Pantoja vs. Asakura,Cody Durden vs. Joshua Van,Joshua Van,0.6259753792954962,-167
+2024-12-07,UFC 310: Pantoja vs. Asakura,Nate Landwehr vs. Dooho Choi,Nate Landwehr,0.5288355356236893,-112
+2024-12-07,UFC 310: Pantoja vs. Asakura,Nate Landwehr vs. Dooho Choi,Dooho Choi,0.43146859626153633,132
+2024-12-07,UFC 310: Pantoja vs. Asakura,Shavkat Rakhmonov vs. Ian Machado Garry,Shavkat Rakhmonov,0.5665863413441115,-131
+2024-12-07,UFC 310: Pantoja vs. Asakura,Shavkat Rakhmonov vs. Ian Machado Garry,Ian Machado Garry,0.4055708330862318,147
+2024-12-07,UFC 310: Pantoja vs. Asakura,Michael Chiesa vs. Max Griffin,Michael Chiesa,0.5618200327472707,-128
+2024-12-07,UFC 310: Pantoja vs. Asakura,Michael Chiesa vs. Max Griffin,Max Griffin,0.4686803387783155,113
+2024-12-07,UFC 310: Pantoja vs. Asakura,Clay Guida vs. Chase Hooper,Clay Guida,0.15985702828598236,526
+2024-12-07,UFC 310: Pantoja vs. Asakura,Clay Guida vs. Chase Hooper,Chase Hooper,0.8447816450941436,-544
+2024-12-07,UFC 310: Pantoja vs. Asakura,Dominick Reyes vs. Anthony Smith,Dominick Reyes,0.5226488663141671,-109
+2024-12-07,UFC 310: Pantoja vs. Asakura,Dominick Reyes vs. Anthony Smith,Anthony Smith,0.4983562581531497,101
+2024-12-07,UFC 310: Pantoja vs. Asakura,Kennedy Nzechukwu vs. Lukasz Brzeski,Kennedy Nzechukwu,0.6329043093943877,-172
+2024-12-07,UFC 310: Pantoja vs. Asakura,Kennedy Nzechukwu vs. Lukasz Brzeski,Lukasz Brzeski,0.3494181935221357,186
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Michael Johnson vs. Ottman Azaitar,Michael Johnson,0.6186639946632971,-162
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Michael Johnson vs. Ottman Azaitar,Ottman Azaitar,0.36982067396050755,170
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Adrian Yanez vs. Daniel Marcos,Adrian Yanez,0.463944795263814,116
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Adrian Yanez vs. Daniel Marcos,Daniel Marcos,0.47863861444079314,109
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Joel Alvarez vs. Drakkar Klose,Joel Alvarez,0.5128505738993444,-105
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Joel Alvarez vs. Drakkar Klose,Drakkar Klose,0.4564513137485222,119
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Vitor Petrino vs. Dustin Jacoby,Vitor Petrino,0.578408557053619,-137
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Vitor Petrino vs. Dustin Jacoby,Dustin Jacoby,0.41043957041951573,144
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Cub Swanson vs. Billy Quarantillo,Cub Swanson,0.4966864024129632,101
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Cub Swanson vs. Billy Quarantillo,Billy Quarantillo,0.4693005844219835,113
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Colby Covington vs. Joaquin Buckley,Colby Covington,0.3862726818609325,159
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Colby Covington vs. Joaquin Buckley,Joaquin Buckley,0.6113029099166728,-157
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Davey Grant vs. Ramon Taveras,Davey Grant,0.4046045973732951,147
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Davey Grant vs. Ramon Taveras,Ramon Taveras,0.5840395347018928,-140
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Miles Johns vs. Felipe Lima,Miles Johns,0.47629027147567127,110
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Miles Johns vs. Felipe Lima,Felipe Lima,0.5036297489402641,-101
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Manel Kape vs. Bruno Silva,Manel Kape,0.7039245658766242,-238
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Manel Kape vs. Bruno Silva,Bruno Silva,0.2836668674409405,253
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Sean Woodson vs. Fernando Padilla,Sean Woodson,0.5257243224678285,-111
+2024-12-14,UFC Fight Night: Covington vs. Buckley,Sean Woodson vs. Fernando Padilla,Fernando Padilla,0.4196024085160406,138
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Santiago Ponzinibbio vs. Carlston Harris,Santiago Ponzinibbio,0.5031961206189725,-101
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Santiago Ponzinibbio vs. Carlston Harris,Carlston Harris,0.49895503988129164,100
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Cesar Almeida vs. Abdul Razak Alhassan,Cesar Almeida,0.6593341867157765,-194
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Cesar Almeida vs. Abdul Razak Alhassan,Abdul Razak Alhassan,0.35195770728039344,184
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Punahele Soriano vs. Uros Medic,Punahele Soriano,0.4066783522561535,146
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Punahele Soriano vs. Uros Medic,Uros Medic,0.5824007166265137,-139
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Chris Curtis vs. Roman Kopylov,Chris Curtis,0.41988397686964785,138
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Chris Curtis vs. Roman Kopylov,Roman Kopylov,0.5304332580498919,-113
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Nurullo Aliev vs. Joe Solecki,Nurullo Aliev,0.6703309492141777,-203
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Nurullo Aliev vs. Joe Solecki,Joe Solecki,0.3550301612661196,182
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Thiago Moises vs. Trey Ogden,Thiago Moises,0.5051901540009546,-102
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Thiago Moises vs. Trey Ogden,Trey Ogden,0.47247064699325064,112
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Jose Johnson vs. Felipe Bunes,Jose Johnson,0.6098116181600519,-156
+2025-01-11,UFC Fight Night: Dern vs. Ribas 2,Jose Johnson vs. Felipe Bunes,Felipe Bunes,0.3688993477740569,171
+2025-01-18,UFC 311: Makhachev vs. Moicano,Jailton Almeida vs. Serghei Spivac,Jailton Almeida,0.5788431827259171,-137
+2025-01-18,UFC 311: Makhachev vs. Moicano,Jailton Almeida vs. Serghei Spivac,Serghei Spivac,0.3957520455739678,153
+2025-01-18,UFC 311: Makhachev vs. Moicano,Jiri Prochazka vs. Jamahal Hill,Jiri Prochazka,0.48575140006035405,106
+2025-01-18,UFC 311: Makhachev vs. Moicano,Jiri Prochazka vs. Jamahal Hill,Jamahal Hill,0.4654400115822277,115
+2025-01-18,UFC 311: Makhachev vs. Moicano,Grant Dawson vs. Diego Ferreira,Grant Dawson,0.6799202968096643,-212
+2025-01-18,UFC 311: Makhachev vs. Moicano,Grant Dawson vs. Diego Ferreira,Diego Ferreira,0.32434062996275476,208
+2025-01-18,UFC 311: Makhachev vs. Moicano,Payton Talbott vs. Raoni Barcelos,Payton Talbott,0.7255015987250507,-264
+2025-01-18,UFC 311: Makhachev vs. Moicano,Payton Talbott vs. Raoni Barcelos,Raoni Barcelos,0.26198044892103717,282
+2025-01-18,UFC 311: Makhachev vs. Moicano,Islam Makhachev vs. Renato Moicano,Islam Makhachev,0.8364245821668639,-511
+2025-01-18,UFC 311: Makhachev vs. Moicano,Islam Makhachev vs. Renato Moicano,Renato Moicano,0.17653147982423076,466
+2025-01-18,UFC 311: Makhachev vs. Moicano,Kevin Holland vs. Reinier de Ridder,Kevin Holland,0.5778695392701979,-137
+2025-01-18,UFC 311: Makhachev vs. Moicano,Kevin Holland vs. Reinier de Ridder,Reinier de Ridder,0.44450520888333306,125
+2025-01-18,UFC 311: Makhachev vs. Moicano,Tagir Ulanbekov vs. Clayton Carpenter,Tagir Ulanbekov,0.35894617866206213,179
+2025-01-18,UFC 311: Makhachev vs. Moicano,Tagir Ulanbekov vs. Clayton Carpenter,Clayton Carpenter,0.6118137107090262,-158
+2025-01-18,UFC 311: Makhachev vs. Moicano,Rinya Nakamura vs. Muin Gafurov,Rinya Nakamura,0.6576003201052928,-192
+2025-01-18,UFC 311: Makhachev vs. Moicano,Rinya Nakamura vs. Muin Gafurov,Muin Gafurov,0.3587357011923056,179
+2025-01-18,UFC 311: Makhachev vs. Moicano,Merab Dvalishvili vs. Umar Nurmagomedov,Merab Dvalishvili,0.5235229636959332,-110
+2025-01-18,UFC 311: Makhachev vs. Moicano,Merab Dvalishvili vs. Umar Nurmagomedov,Umar Nurmagomedov,0.4594658680612616,118
+2025-01-18,UFC 311: Makhachev vs. Moicano,Ricky Turcios vs. Benardo Sopaj,Ricky Turcios,0.3937825880510253,154
+2025-01-18,UFC 311: Makhachev vs. Moicano,Ricky Turcios vs. Benardo Sopaj,Benardo Sopaj,0.5997926551615373,-150
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Muhammad Naimov vs. Kaan Ofli,Muhammad Naimov,0.5541229808389538,-124
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Muhammad Naimov vs. Kaan Ofli,Kaan Ofli,0.42536624497480713,135
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Israel Adesanya vs. Nassourdine Imavov,Israel Adesanya,0.4288457937915032,133
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Israel Adesanya vs. Nassourdine Imavov,Nassourdine Imavov,0.5748993058520965,-135
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Sergei Pavlovich vs. Jairzinho Rozenstruik,Sergei Pavlovich,0.5982936355625359,-149
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Sergei Pavlovich vs. Jairzinho Rozenstruik,Jairzinho Rozenstruik,0.39924579627112633,150
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Terrance McKinney vs. Damir Hadzovic,Terrance McKinney,0.7512183330802603,-302
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Terrance McKinney vs. Damir Hadzovic,Damir Hadzovic,0.23743644046066845,321
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Said Nurmagomedov vs. Vinicius Oliveira,Said Nurmagomedov,0.5361148668628292,-116
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Said Nurmagomedov vs. Vinicius Oliveira,Vinicius Oliveira,0.4537361848925769,120
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Fares Ziam vs. Mike Davis,Fares Ziam,0.6407127973053374,-178
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Fares Ziam vs. Mike Davis,Mike Davis,0.3074227719504406,225
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Shamil Gaziev vs. Thomas Petersen,Shamil Gaziev,0.43191269705195007,132
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Shamil Gaziev vs. Thomas Petersen,Thomas Petersen,0.5705625503770274,-133
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Shara Magomedov vs. Michael Page,Shara Magomedov,0.5444018576392795,-119
+2025-02-01,UFC Fight Night: Adesanya vs. Imavov,Shara Magomedov vs. Michael Page,Michael Page,0.44670921256861623,124
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Tom Nolan vs. Viacheslav Borshchev,Tom Nolan,0.6242850728580297,-166
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Tom Nolan vs. Viacheslav Borshchev,Viacheslav Borshchev,0.3412237152579447,193
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jake Matthews vs. Francisco Prado,Jake Matthews,0.5229159767932673,-110
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jake Matthews vs. Francisco Prado,Francisco Prado,0.4756144285704045,110
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jimmy Crute vs. Rodolfo Bellato,Jimmy Crute,0.49701137859135114,101
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jimmy Crute vs. Rodolfo Bellato,Rodolfo Bellato,0.48034862565572667,108
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jack Jenkins vs. Gabriel Santos,Jack Jenkins,0.5617360416364781,-128
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Jack Jenkins vs. Gabriel Santos,Gabriel Santos,0.41281885993400114,142
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Dricus Du Plessis vs. Sean Strickland,Dricus Du Plessis,0.5411317039757779,-118
+2025-02-08,UFC 312: Du Plessis vs. Strickland 2,Dricus Du Plessis vs. Sean Strickland,Sean Strickland,0.4207239094502662,138
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Rodolfo Vieira vs. Andre Petroski,Rodolfo Vieira,0.3974362609065969,152
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Rodolfo Vieira vs. Andre Petroski,Andre Petroski,0.5751815952681966,-135
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Jared Cannonier vs. Gregory Rodrigues,Jared Cannonier,0.3066692921322793,226
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Jared Cannonier vs. Gregory Rodrigues,Gregory Rodrigues,0.6866417093352863,-219
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Rafael Estevam vs. Jesus Aguilar,Rafael Estevam,0.4058832767983061,146
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Rafael Estevam vs. Jesus Aguilar,Jesus Aguilar,0.5865369755654976,-142
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Don'Tale Mayes vs. Valter Walker,Don'Tale Mayes,0.3593009359690942,178
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Don'Tale Mayes vs. Valter Walker,Valter Walker,0.6413721642946311,-179
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Gabriel Bonfim vs. Khaos Williams,Gabriel Bonfim,0.5662350129640339,-131
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Gabriel Bonfim vs. Khaos Williams,Khaos Williams,0.3725264826623591,168
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Ismael Bonfim vs. Nazim Sadykhov,Ismael Bonfim,0.6357395441956443,-175
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Ismael Bonfim vs. Nazim Sadykhov,Nazim Sadykhov,0.3307792016947482,202
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Edmen Shahbazyan vs. Dylan Budka,Edmen Shahbazyan,0.5881255510969577,-143
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Edmen Shahbazyan vs. Dylan Budka,Dylan Budka,0.42951625418323125,133
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Calvin Kattar vs. Youssef Zalal,Calvin Kattar,0.24142657027867076,314
+2025-02-15,UFC Fight Night: Cannonier vs. Rodrigues,Calvin Kattar vs. Youssef Zalal,Youssef Zalal,0.7507452718806635,-301
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Brendan Allen vs. Anthony Hernandez,Brendan Allen,0.4163036021177935,140
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Brendan Allen vs. Anthony Hernandez,Anthony Hernandez,0.566536697890968,-131
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Ricky Simon vs. Javid Basharat,Ricky Simon,0.4865687223152114,106
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Ricky Simon vs. Javid Basharat,Javid Basharat,0.48738658606447793,105
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Henry Cejudo vs. Song Yadong,Henry Cejudo,0.3756818052622463,166
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Henry Cejudo vs. Song Yadong,Song Yadong,0.621359360975656,-164
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Ion Cutelaba vs. Ibo Aslan,Ion Cutelaba,0.3550189982548496,182
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Ion Cutelaba vs. Ibo Aslan,Ibo Aslan,0.6486262203921094,-185
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Jean Silva vs. Melsik Baghdasaryan,Jean Silva,0.5868590467951917,-142
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Jean Silva vs. Melsik Baghdasaryan,Melsik Baghdasaryan,0.377547157261614,165
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Modestas Bukauskas vs. Rafael Cerqueira,Modestas Bukauskas,0.6687770591511148,-202
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Modestas Bukauskas vs. Rafael Cerqueira,Rafael Cerqueira,0.35480666882433165,182
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Andre Fili vs. Melquizael Costa,Andre Fili,0.32948132023753346,204
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Andre Fili vs. Melquizael Costa,Melquizael Costa,0.6647167034260428,-198
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Rob Font vs. Jean Matsumoto,Rob Font,0.5428690277976262,-119
+2025-02-22,UFC Fight Night: Cejudo vs. Song,Rob Font vs. Jean Matsumoto,Jean Matsumoto,0.44489440557741067,125
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Hyder Amil vs. William Gomis,Hyder Amil,0.37438691361956183,167
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Hyder Amil vs. William Gomis,William Gomis,0.6003004969087182,-150
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Cody Brundage vs. Julian Marquez,Cody Brundage,0.6055067834029109,-153
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Cody Brundage vs. Julian Marquez,Julian Marquez,0.37348315897235956,168
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Danny Barlow vs. Sam Patterson,Danny Barlow,0.4236894825104317,136
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Danny Barlow vs. Sam Patterson,Sam Patterson,0.5531367104143042,-124
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Danny Silva vs. Lucas Almeida,Danny Silva,0.6604385886595181,-194
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Danny Silva vs. Lucas Almeida,Lucas Almeida,0.3100701352781717,223
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Nasrat Haqparast vs. Esteban Ribovics,Nasrat Haqparast,0.4755481591656027,110
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Nasrat Haqparast vs. Esteban Ribovics,Esteban Ribovics,0.4570286065282532,119
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Manel Kape vs. Asu Almabayev,Manel Kape,0.43246705812633274,131
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Manel Kape vs. Asu Almabayev,Asu Almabayev,0.5321235007901658,-114
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Ricardo Ramos vs. Chepe Mariscal,Ricardo Ramos,0.3139431380933449,219
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Ricardo Ramos vs. Chepe Mariscal,Chepe Mariscal,0.6497192380472219,-185
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Charles Johnson vs. Ramazan Temirov,Charles Johnson,0.4879781766602586,105
+2025-03-01,UFC Fight Night: Kape vs. Almabayev,Charles Johnson vs. Ramazan Temirov,Ramazan Temirov,0.513673366809435,-106
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Jalin Turner vs. Ignacio Bahamondes,Jalin Turner,0.4566991746333912,119
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Jalin Turner vs. Ignacio Bahamondes,Ignacio Bahamondes,0.5247171534758454,-110
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Alex Morono vs. Carlos Leal,Alex Morono,0.4909884033743465,104
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Alex Morono vs. Carlos Leal,Carlos Leal,0.49736413975107874,101
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Mairon Santos vs. Francis Marshall,Mairon Santos,0.6406374418263265,-178
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Mairon Santos vs. Francis Marshall,Francis Marshall,0.36613851173194706,173
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Justin Gaethje vs. Rafael Fiziev,Justin Gaethje,0.5137321923027266,-106
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Justin Gaethje vs. Rafael Fiziev,Rafael Fiziev,0.4586204709486761,118
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Brunno Ferreira vs. Armen Petrosyan,Brunno Ferreira,0.5429586668993139,-119
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Brunno Ferreira vs. Armen Petrosyan,Armen Petrosyan,0.44671985176204226,124
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Joshua Van vs. Rei Tsuruya,Joshua Van,0.5303002767269476,-113
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Joshua Van vs. Rei Tsuruya,Rei Tsuruya,0.44851162607925377,123
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Alex Pereira vs. Magomed Ankalaev,Alex Pereira,0.44461878927473814,125
+2025-03-08,UFC 313: Pereira vs. Ankalaev,Alex Pereira vs. Magomed Ankalaev,Magomed Ankalaev,0.5583467505457463,-126
+2025-03-08,UFC 313: Pereira vs. Ankalaev,King Green vs. Mauricio Ruffy,King Green,0.469659657777759,113
+2025-03-08,UFC 313: Pereira vs. Ankalaev,King Green vs. Mauricio Ruffy,Mauricio Ruffy,0.5222663334348744,-109
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Alexander Hernandez vs. Kurt Holobaugh,Alexander Hernandez,0.6612919730083134,-195
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Alexander Hernandez vs. Kurt Holobaugh,Kurt Holobaugh,0.3296279786108357,203
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Da'Mon Blackshear vs. Cody Gibson,Da'Mon Blackshear,0.6234465892964461,-166
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Da'Mon Blackshear vs. Cody Gibson,Cody Gibson,0.3489774186245757,187
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,SuYoung You vs. AJ Cunningham,SuYoung You,0.7578950159754622,-313
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,SuYoung You vs. AJ Cunningham,AJ Cunningham,0.20745774851905174,382
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Marvin Vettori vs. Roman Dolidze,Marvin Vettori,0.5032374314596678,-101
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Marvin Vettori vs. Roman Dolidze,Roman Dolidze,0.48354601773422434,107
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Waldo Cortes-Acosta vs. Ryan Spann,Waldo Cortes-Acosta,0.6052847847951616,-153
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Waldo Cortes-Acosta vs. Ryan Spann,Ryan Spann,0.36941237460796017,171
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Chidi Njokuani vs. Elizeu Zaleski dos Santos,Chidi Njokuani,0.44681120441395183,124
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Chidi Njokuani vs. Elizeu Zaleski dos Santos,Elizeu Zaleski dos Santos,0.5477899690848227,-121
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Daniel Barez vs. Andre Lima,Daniel Barez,0.2776515590092632,260
+2025-03-15,UFC Fight Night: Vettori vs. Dolidze 2,Daniel Barez vs. Andre Lima,Andre Lima,0.6967207073555389,-230
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Gunnar Nelson vs. Kevin Holland,Gunnar Nelson,0.3753326969579823,166
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Gunnar Nelson vs. Kevin Holland,Kevin Holland,0.6606902760631839,-195
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jordan Vucenic vs. Chris Duncan,Jordan Vucenic,0.47955126132949377,109
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jordan Vucenic vs. Chris Duncan,Chris Duncan,0.5250609786950083,-111
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Guram Kutateladze vs. Kaue Fernandes,Guram Kutateladze,0.2911769549378542,243
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Guram Kutateladze vs. Kaue Fernandes,Kaue Fernandes,0.7109845635775345,-246
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jai Herbert vs. Chris Padilla,Jai Herbert,0.2813449736058504,255
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jai Herbert vs. Chris Padilla,Chris Padilla,0.6963390613610295,-229
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Lone'er Kavanagh vs. Felipe dos Santos,Lone'er Kavanagh,0.588030238648257,-143
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Lone'er Kavanagh vs. Felipe dos Santos,Felipe dos Santos,0.41069119009648214,143
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Marcin Tybura vs. Mick Parkin,Marcin Tybura,0.40815988169026507,145
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Marcin Tybura vs. Mick Parkin,Mick Parkin,0.5900612784958731,-144
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jan Blachowicz vs. Carlos Ulberg,Jan Blachowicz,0.3404736970695434,194
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Jan Blachowicz vs. Carlos Ulberg,Carlos Ulberg,0.6664311251170715,-200
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Nathaniel Wood vs. Morgan Charriere,Nathaniel Wood,0.5266146958155926,-111
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Nathaniel Wood vs. Morgan Charriere,Morgan Charriere,0.4471635234186721,124
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Leon Edwards vs. Sean Brady,Leon Edwards,0.5567606016687453,-126
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Leon Edwards vs. Sean Brady,Sean Brady,0.44040384477143113,127
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Nathan Fletcher vs. Caolan Loughran,Nathan Fletcher,0.7101352374781499,-245
+2025-03-22,UFC Fight Night: Edwards vs. Brady,Nathan Fletcher vs. Caolan Loughran,Caolan Loughran,0.2920191903412325,242
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Raul Rosas Jr. vs. Vince Morales,Raul Rosas Jr.,0.8235079141726303,-467
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Raul Rosas Jr. vs. Vince Morales,Vince Morales,0.16343834887816197,512
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Edgar Chairez vs. CJ Vergara,Edgar Chairez,0.5248306440207453,-110
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Edgar Chairez vs. CJ Vergara,CJ Vergara,0.45529627391210675,120
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Ronaldo Rodriguez vs. Kevin Borjas,Ronaldo Rodriguez,0.5567800754937215,-126
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Ronaldo Rodriguez vs. Kevin Borjas,Kevin Borjas,0.41040434794403513,144
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Manuel Torres vs. Drew Dober,Manuel Torres,0.6309481540001168,-171
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Manuel Torres vs. Drew Dober,Drew Dober,0.35155988771462754,184
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Rafa Garcia vs. Vinc Pichel,Rafa Garcia,0.6260545579951348,-167
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Rafa Garcia vs. Vinc Pichel,Vinc Pichel,0.3385859610551156,195
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Christian Rodriguez vs. Melquizael Costa,Christian Rodriguez,0.5011566657083434,-100
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Christian Rodriguez vs. Melquizael Costa,Melquizael Costa,0.4720072077910804,112
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,MarQuel Mederos vs. Austin Hubbard,MarQuel Mederos,0.6274954588127925,-168
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,MarQuel Mederos vs. Austin Hubbard,Austin Hubbard,0.35291717271532597,183
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Jamall Emmers vs. Gabriel Miranda,Jamall Emmers,0.6204316784903463,-163
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Jamall Emmers vs. Gabriel Miranda,Gabriel Miranda,0.3414433179472867,193
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Brandon Moreno vs. Steve Erceg,Brandon Moreno,0.6984189540723943,-232
+2025-03-29,UFC Fight Night: Moreno vs. Erceg,Brandon Moreno vs. Steve Erceg,Steve Erceg,0.28746890020709776,248
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Cortavious Romious vs. ChangHo Lee,Cortavious Romious,0.424400384657654,136
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Cortavious Romious vs. ChangHo Lee,ChangHo Lee,0.5825474362958659,-140
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Brad Tavares vs. Gerald Meerschaert,Brad Tavares,0.4470377613398219,124
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Brad Tavares vs. Gerald Meerschaert,Gerald Meerschaert,0.5874470346676225,-142
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Pat Sabatini vs. Joanderson Brito,Pat Sabatini,0.4180330906150019,139
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Pat Sabatini vs. Joanderson Brito,Joanderson Brito,0.5698913054118959,-132
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Josh Emmett vs. Lerone Murphy,Josh Emmett,0.18543185664137557,439
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Josh Emmett vs. Lerone Murphy,Lerone Murphy,0.7829792233496149,-361
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Victor Henry vs. Pedro Falcao,Victor Henry,0.4854203122216205,106
+2025-04-05,UFC Fight Night: Emmett vs. Murphy,Victor Henry vs. Pedro Falcao,Pedro Falcao,0.48318445568112695,107
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Tresean Gore vs. Marco Tulio,Tresean Gore,0.43965874698123236,127
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Tresean Gore vs. Marco Tulio,Marco Tulio,0.5496831138226118,-122
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Alexander Volkanovski vs. Diego Lopes,Alexander Volkanovski,0.5461383568157142,-120
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Alexander Volkanovski vs. Diego Lopes,Diego Lopes,0.44213852421042427,126
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Nikita Krylov vs. Dominick Reyes,Nikita Krylov,0.6524547638045455,-188
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Nikita Krylov vs. Dominick Reyes,Dominick Reyes,0.3665117693600636,173
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Dan Ige vs. Sean Woodson,Dan Ige,0.31467904474984715,218
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Dan Ige vs. Sean Woodson,Sean Woodson,0.6779817097372658,-211
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Sedriques Dumas vs. Michal Oleksiejczuk,Sedriques Dumas,0.5877527069039379,-143
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Sedriques Dumas vs. Michal Oleksiejczuk,Michal Oleksiejczuk,0.3985206824121207,151
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Sumudaerji vs. Mitch Raposo,Sumudaerji,0.5478881715389123,-121
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Sumudaerji vs. Mitch Raposo,Mitch Raposo,0.44499246038018286,125
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Michael Chandler vs. Paddy Pimblett,Michael Chandler,0.26773248073503847,274
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Michael Chandler vs. Paddy Pimblett,Paddy Pimblett,0.7194849281051126,-256
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Darren Elkins vs. Julian Erosa,Darren Elkins,0.42000708123673675,138
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Darren Elkins vs. Julian Erosa,Julian Erosa,0.5639999165377144,-129
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Bryce Mitchell vs. Jean Silva,Bryce Mitchell,0.4761188624558482,110
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Bryce Mitchell vs. Jean Silva,Jean Silva,0.4937075929343563,103
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Jim Miller vs. Chase Hooper,Jim Miller,0.22677948657508135,341
+2025-04-12,UFC 314: Volkanovski vs. Lopes,Jim Miller vs. Chase Hooper,Chase Hooper,0.7688592822517879,-333
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Michel Pereira vs. Abus Magomedov,Michel Pereira,0.5642178594312862,-129
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Michel Pereira vs. Abus Magomedov,Abus Magomedov,0.39808485136675764,151
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Matt Schnell vs. Jimmy Flick,Matt Schnell,0.4702695843132841,113
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Matt Schnell vs. Jimmy Flick,Jimmy Flick,0.4654998164137304,115
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Ikram Aliskerov vs. Andre Muniz,Ikram Aliskerov,0.3851616106092457,160
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Ikram Aliskerov vs. Andre Muniz,Andre Muniz,0.5670002935190348,-131
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Anthony Smith vs. Zhang Mingyang,Anthony Smith,0.30886914202886784,224
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Anthony Smith vs. Zhang Mingyang,Zhang Mingyang,0.6724575094629635,-205
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Randy Brown vs. Nicolas Dalby,Randy Brown,0.6950702601685212,-228
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Randy Brown vs. Nicolas Dalby,Nicolas Dalby,0.29883953523123186,235
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Ian Machado Garry vs. Carlos Prates,Ian Machado Garry,0.6017398063466852,-151
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Ian Machado Garry vs. Carlos Prates,Carlos Prates,0.3694052376477955,171
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Timmy Cuamba vs. Roberto Romero,Timmy Cuamba,0.5545545921940782,-124
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Timmy Cuamba vs. Roberto Romero,Roberto Romero,0.43594547184291976,129
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Chris Gutierrez vs. John Castaneda,Chris Gutierrez,0.6670390617321172,-200
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Chris Gutierrez vs. John Castaneda,John Castaneda,0.30228617831998505,231
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Giga Chikadze vs. David Onama,Giga Chikadze,0.42877937881348177,133
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Giga Chikadze vs. David Onama,David Onama,0.5222599811706583,-109
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Da'Mon Blackshear vs. Alatengheili,Da'Mon Blackshear,0.5974805742277883,-148
+2025-04-26,UFC Fight Night: Machado Garry vs. Prates,Da'Mon Blackshear vs. Alatengheili,Alatengheili,0.3710549197794619,170
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Gaston Bolanos vs. Quang Le,Gaston Bolanos,0.6008696166640982,-151
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Gaston Bolanos vs. Quang Le,Quang Le,0.3906944234087408,156
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Reinier de Ridder vs. Bo Nickal,Reinier de Ridder,0.39794809489348715,151
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Reinier de Ridder vs. Bo Nickal,Bo Nickal,0.591711864910122,-145
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Ryan Loder vs. Azamat Bekoev,Ryan Loder,0.4710441236279061,112
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Ryan Loder vs. Azamat Bekoev,Azamat Bekoev,0.5635826292185112,-129
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Montel Jackson vs. Daniel Marcos,Montel Jackson,0.7032118862776117,-237
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Montel Jackson vs. Daniel Marcos,Daniel Marcos,0.25829309529077704,287
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Cameron Smotherman vs. Serhiy Sidey,Cameron Smotherman,0.5331205887993096,-114
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Cameron Smotherman vs. Serhiy Sidey,Serhiy Sidey,0.4636278158818795,116
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Thomas Petersen vs. Don'Tale Mayes,Thomas Petersen,0.6143736387766688,-159
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Thomas Petersen vs. Don'Tale Mayes,Don'Tale Mayes,0.38091816393986416,163
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Jeremy Stephens vs. Mason Jones,Jeremy Stephens,0.35548135309913204,181
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Jeremy Stephens vs. Mason Jones,Mason Jones,0.6628681860448048,-197
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Santiago Ponzinibbio vs. Daniel Rodriguez,Santiago Ponzinibbio,0.5064304617488278,-103
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Santiago Ponzinibbio vs. Daniel Rodriguez,Daniel Rodriguez,0.4792681140717525,109
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Cory Sandhagen vs. Deiveson Figueiredo,Cory Sandhagen,0.7492816337817587,-299
+2025-05-03,UFC Fight Night: Sandhagen vs. Figueiredo,Cory Sandhagen vs. Deiveson Figueiredo,Deiveson Figueiredo,0.2644526510953557,278
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Brad Katona vs. Bekzat Almakhan,Brad Katona,0.5205764331779502,-109
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Brad Katona vs. Bekzat Almakhan,Bekzat Almakhan,0.4600392529014496,117
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Benoit Saint Denis vs. Kyle Prepolec,Benoit Saint Denis,0.7700261086199433,-335
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Benoit Saint Denis vs. Kyle Prepolec,Kyle Prepolec,0.2242003943899276,346
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Marc-Andre Barriault vs. Bruno Silva,Marc-Andre Barriault,0.5144790674455848,-106
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Marc-Andre Barriault vs. Bruno Silva,Bruno Silva,0.4473335344071327,124
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Mike Malott vs. Charles Radtke,Mike Malott,0.5812341947537756,-139
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Mike Malott vs. Charles Radtke,Charles Radtke,0.38966045281526973,157
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Modestas Bukauskas vs. Ion Cutelaba,Modestas Bukauskas,0.45256938996432367,121
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Modestas Bukauskas vs. Ion Cutelaba,Ion Cutelaba,0.5357618833517709,-115
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Jose Aldo vs. Aiemann Zahabi,Jose Aldo,0.48275502883914356,107
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Jose Aldo vs. Aiemann Zahabi,Aiemann Zahabi,0.48077246877921725,108
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Belal Muhammad vs. Jack Della Maddalena,Belal Muhammad,0.41869385325037833,139
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Belal Muhammad vs. Jack Della Maddalena,Jack Della Maddalena,0.564126109927167,-129
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Navajo Stirling vs. Ivan Erslan,Navajo Stirling,0.6585472141044645,-193
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Navajo Stirling vs. Ivan Erslan,Ivan Erslan,0.3726536446233893,168
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Daniel Santos vs. JeongYeong Lee,Daniel Santos,0.43186708771339344,132
+2025-05-10,UFC 315: Muhammad vs. Della Maddalena,Daniel Santos vs. JeongYeong Lee,JeongYeong Lee,0.5461028702733742,-120
+2025-05-17,UFC Fight Night: Burns vs. Morales,Dustin Stoltzfus vs. Nursulton Ruziboev,Dustin Stoltzfus,0.3449367777650041,190
+2025-05-17,UFC Fight Night: Burns vs. Morales,Dustin Stoltzfus vs. Nursulton Ruziboev,Nursulton Ruziboev,0.6278359671998659,-169
+2025-05-17,UFC Fight Night: Burns vs. Morales,Sodiq Yusuff vs. Mairon Santos,Sodiq Yusuff,0.3403699255567424,194
+2025-05-17,UFC Fight Night: Burns vs. Morales,Sodiq Yusuff vs. Mairon Santos,Mairon Santos,0.6528385782723957,-188
+2025-05-17,UFC Fight Night: Burns vs. Morales,Jared Gordon vs. Thiago Moises,Jared Gordon,0.5521454853757785,-123
+2025-05-17,UFC Fight Night: Burns vs. Morales,Jared Gordon vs. Thiago Moises,Thiago Moises,0.4456394493034208,124
+2025-05-17,UFC Fight Night: Burns vs. Morales,Julian Erosa vs. Melquizael Costa,Julian Erosa,0.3575354950924166,180
+2025-05-17,UFC Fight Night: Burns vs. Morales,Julian Erosa vs. Melquizael Costa,Melquizael Costa,0.6218520388543568,-164
+2025-05-17,UFC Fight Night: Burns vs. Morales,Gilbert Burns vs. Michael Morales,Gilbert Burns,0.26652559532856546,275
+2025-05-17,UFC Fight Night: Burns vs. Morales,Gilbert Burns vs. Michael Morales,Michael Morales,0.7302082016170081,-271
+2025-05-17,UFC Fight Night: Burns vs. Morales,HyunSung Park vs. Carlos Hernandez,HyunSung Park,0.5661917340844446,-131
+2025-05-17,UFC Fight Night: Burns vs. Morales,HyunSung Park vs. Carlos Hernandez,Carlos Hernandez,0.4212442376152804,137
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Jafel Filho vs. Allan Nascimento,Jafel Filho,0.43681309778062416,129
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Jafel Filho vs. Allan Nascimento,Allan Nascimento,0.5781639966546364,-137
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Dustin Jacoby vs. Bruno Lopes,Dustin Jacoby,0.45319840736598804,121
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Dustin Jacoby vs. Bruno Lopes,Bruno Lopes,0.5769934007544222,-136
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Kurt Holobaugh vs. Jordan Leavitt,Kurt Holobaugh,0.3078338181015993,225
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Kurt Holobaugh vs. Jordan Leavitt,Jordan Leavitt,0.6715627105802395,-204
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Billy Ray Goff vs. Ramiz Brahimaj,Billy Ray Goff,0.6320215329495764,-172
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Billy Ray Goff vs. Ramiz Brahimaj,Ramiz Brahimaj,0.3416210404545697,193
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Zachary Reese vs. Dusko Todorovic,Zachary Reese,0.6266610732509228,-168
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Zachary Reese vs. Dusko Todorovic,Dusko Todorovic,0.35268032690495704,184
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Mateusz Gamrot vs. Ludovit Klein,Mateusz Gamrot,0.3818070655640271,162
+2025-05-31,UFC Fight Night: Blanchfield vs. Barber,Mateusz Gamrot vs. Ludovit Klein,Ludovit Klein,0.6076880052951597,-155
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Vicente Luque vs. Kevin Holland,Vicente Luque,0.5477282962993755,-121
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Vicente Luque vs. Kevin Holland,Kevin Holland,0.5033872901237452,-101
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Azamat Murzakanov vs. Brendson Ribeiro,Azamat Murzakanov,0.505825552300495,-102
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Azamat Murzakanov vs. Brendson Ribeiro,Brendson Ribeiro,0.47706049204460704,110
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Quillan Salkilld vs. Yanal Ashmouz,Quillan Salkilld,0.7510162701741908,-302
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Quillan Salkilld vs. Yanal Ashmouz,Yanal Ashmouz,0.25935034510990745,286
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Merab Dvalishvili vs. Sean O'Malley,Merab Dvalishvili,0.669109892147695,-202
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Merab Dvalishvili vs. Sean O'Malley,Sean O'Malley,0.3166764463126028,216
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Serghei Spivac vs. Waldo Cortes-Acosta,Serghei Spivac,0.5492364135630234,-122
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Serghei Spivac vs. Waldo Cortes-Acosta,Waldo Cortes-Acosta,0.42714683784710883,134
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Bruno Silva vs. Joshua Van,Bruno Silva,0.14857105067413534,573
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Bruno Silva vs. Joshua Van,Joshua Van,0.8338271353487151,-502
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Kelvin Gastelum vs. Joe Pyfer,Kelvin Gastelum,0.42084374518898077,138
+2025-06-07,UFC 316: Dvalishvili vs. O'Malley 2,Kelvin Gastelum vs. Joe Pyfer,Joe Pyfer,0.5763247254999367,-136
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Malcolm Wellmaker vs. Kris Moutinho,Malcolm Wellmaker,0.6450571540320518,-182
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Malcolm Wellmaker vs. Kris Moutinho,Kris Moutinho,0.25352993545175007,294
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Kamaru Usman vs. Joaquin Buckley,Kamaru Usman,0.47052773525213604,113
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Kamaru Usman vs. Joaquin Buckley,Joaquin Buckley,0.5380370132163685,-116
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Michael Chiesa vs. Court McGee,Michael Chiesa,0.6289395216656234,-169
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Michael Chiesa vs. Court McGee,Court McGee,0.4226650529834992,137
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Ricky Simon vs. Cameron Smotherman,Ricky Simon,0.5118734177377599,-105
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Ricky Simon vs. Cameron Smotherman,Cameron Smotherman,0.4805646569165418,108
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Cody Durden vs. Jose Ochoa,Cody Durden,0.43579963374189,129
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Cody Durden vs. Jose Ochoa,Jose Ochoa,0.5499949619063922,-122
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Phil Rowe vs. Ange Loosa,Phil Rowe,0.4417743514365407,126
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Phil Rowe vs. Ange Loosa,Ange Loosa,0.49145442189209576,103
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Edmen Shahbazyan vs. Andre Petroski,Edmen Shahbazyan,0.5962850016394428,-148
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Edmen Shahbazyan vs. Andre Petroski,Andre Petroski,0.4034770914501592,148
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Alonzo Menifield vs. Oumar Sy,Alonzo Menifield,0.26993274376327603,270
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Alonzo Menifield vs. Oumar Sy,Oumar Sy,0.7143301846099294,-250
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Mansur Abdul-Malik vs. Cody Brundage,Mansur Abdul-Malik,0.6423478086744085,-180
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Mansur Abdul-Malik vs. Cody Brundage,Cody Brundage,0.3580536458390001,179
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Cody Garbrandt vs. Raoni Barcelos,Cody Garbrandt,0.4336141314100454,131
+2025-06-14,UFC Fight Night: Usman vs. Buckley,Cody Garbrandt vs. Raoni Barcelos,Raoni Barcelos,0.5639781701321086,-129
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Ismail Naurdiev vs. JunYong Park,Ismail Naurdiev,0.4699608441887372,113
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Ismail Naurdiev vs. JunYong Park,JunYong Park,0.5216316096391072,-109
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Muhammad Naimov vs. Bogdan Grad,Muhammad Naimov,0.42647741792319926,134
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Muhammad Naimov vs. Bogdan Grad,Bogdan Grad,0.5458256886488583,-120
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Nazim Sadykhov vs. Nikolas Motta,Nazim Sadykhov,0.4069462410165592,146
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Nazim Sadykhov vs. Nikolas Motta,Nikolas Motta,0.5296218971923461,-113
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Jamahal Hill vs. Khalil Rountree Jr.,Jamahal Hill,0.4891188764769809,104
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Jamahal Hill vs. Khalil Rountree Jr.,Khalil Rountree Jr.,0.47021601346976855,113
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Hamdy Abdelwahab vs. Mohammed Usman,Hamdy Abdelwahab,0.5269035973153439,-111
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Hamdy Abdelwahab vs. Mohammed Usman,Mohammed Usman,0.45306421348157805,121
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Rafael Fiziev vs. Ignacio Bahamondes,Rafael Fiziev,0.3120319028018634,220
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Rafael Fiziev vs. Ignacio Bahamondes,Ignacio Bahamondes,0.6784321005115441,-211
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Tagir Ulanbekov vs. Azat Maksum,Tagir Ulanbekov,0.5386215518247262,-117
+2025-06-21,UFC Fight Night: Hill vs. Rountree Jr.,Tagir Ulanbekov vs. Azat Maksum,Azat Maksum,0.4080919387159821,145
+2025-06-28,UFC 317: Topuria vs. Oliveira,Brandon Royval vs. Joshua Van,Brandon Royval,0.34701931595152763,188
+2025-06-28,UFC 317: Topuria vs. Oliveira,Brandon Royval vs. Joshua Van,Joshua Van,0.6163415665561965,-161
+2025-06-28,UFC 317: Topuria vs. Oliveira,Beneil Dariush vs. Renato Moicano,Beneil Dariush,0.5133558789752944,-105
+2025-06-28,UFC 317: Topuria vs. Oliveira,Beneil Dariush vs. Renato Moicano,Renato Moicano,0.5089409552148897,-104
+2025-06-28,UFC 317: Topuria vs. Oliveira,Alexandre Pantoja vs. Kai Kara-France,Alexandre Pantoja,0.4929455999370741,103
+2025-06-28,UFC 317: Topuria vs. Oliveira,Alexandre Pantoja vs. Kai Kara-France,Kai Kara-France,0.48256488248361046,107
+2025-06-28,UFC 317: Topuria vs. Oliveira,Ilia Topuria vs. Charles Oliveira,Ilia Topuria,0.5880655598487249,-143
+2025-06-28,UFC 317: Topuria vs. Oliveira,Ilia Topuria vs. Charles Oliveira,Charles Oliveira,0.4302478849361558,132
+2025-06-28,UFC 317: Topuria vs. Oliveira,Niko Price vs. Jacobe Smith,Niko Price,0.33928705420352073,195
+2025-06-28,UFC 317: Topuria vs. Oliveira,Niko Price vs. Jacobe Smith,Jacobe Smith,0.6392200031894371,-177
+2025-06-28,UFC 317: Topuria vs. Oliveira,Payton Talbott vs. Felipe Lima,Payton Talbott,0.4273263727529121,134
+2025-06-28,UFC 317: Topuria vs. Oliveira,Payton Talbott vs. Felipe Lima,Felipe Lima,0.5607047905108138,-128
+2025-06-28,UFC 317: Topuria vs. Oliveira,Terrance McKinney vs. Viacheslav Borshchev,Terrance McKinney,0.7322241244201572,-273
+2025-06-28,UFC 317: Topuria vs. Oliveira,Terrance McKinney vs. Viacheslav Borshchev,Viacheslav Borshchev,0.2563053034401238,290
+2025-06-28,UFC 317: Topuria vs. Oliveira,Hyder Amil vs. Jose Delgado,Hyder Amil,0.3843389295517172,160
+2025-06-28,UFC 317: Topuria vs. Oliveira,Hyder Amil vs. Jose Delgado,Jose Delgado,0.5971642311918419,-148
+2025-06-28,UFC 317: Topuria vs. Oliveira,Jack Hermansson vs. Gregory Rodrigues,Jack Hermansson,0.5163457857546851,-107
+2025-06-28,UFC 317: Topuria vs. Oliveira,Jack Hermansson vs. Gregory Rodrigues,Gregory Rodrigues,0.474900178622778,111
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Max Griffin vs. Chris Curtis,Max Griffin,0.4711981893238182,112
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Max Griffin vs. Chris Curtis,Chris Curtis,0.5205269044522293,-109
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Vitor Petrino vs. Austen Lane,Vitor Petrino,0.659004850808082,-193
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Vitor Petrino vs. Austen Lane,Austen Lane,0.33734628386540516,196
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Junior Tafa vs. Tuco Tokkos,Junior Tafa,0.6483363488748715,-184
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Junior Tafa vs. Tuco Tokkos,Tuco Tokkos,0.357945923639893,179
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Mitch Ramirez vs. Mike Davis,Mitch Ramirez,0.3106273092538828,222
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Mitch Ramirez vs. Mike Davis,Mike Davis,0.6647035146646721,-198
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Calvin Kattar vs. Steve Garcia,Calvin Kattar,0.2922878606317324,242
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Calvin Kattar vs. Steve Garcia,Steve Garcia,0.6990961312995229,-232
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Derrick Lewis vs. Tallison Teixeira,Derrick Lewis,0.18466666939968276,442
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Derrick Lewis vs. Tallison Teixeira,Tallison Teixeira,0.8540436149273497,-585
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Kennedy Nzechukwu vs. Valter Walker,Kennedy Nzechukwu,0.43292412052762846,131
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Kennedy Nzechukwu vs. Valter Walker,Valter Walker,0.5432528877523335,-119
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Stephen Thompson vs. Gabriel Bonfim,Stephen Thompson,0.2782317643738045,259
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Stephen Thompson vs. Gabriel Bonfim,Gabriel Bonfim,0.7242697944530364,-263
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Nate Landwehr vs. Morgan Charriere,Nate Landwehr,0.3658701710316069,173
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Nate Landwehr vs. Morgan Charriere,Morgan Charriere,0.5983732889993649,-149
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Jake Matthews vs. Chidi Njokuani,Jake Matthews,0.5250705662760883,-111
+2025-07-12,UFC Fight Night: Lewis vs. Teixeira,Jake Matthews vs. Chidi Njokuani,Chidi Njokuani,0.47913749359661406,109
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Kyler Phillips vs. Vinicius Oliveira,Kyler Phillips,0.5151866153786605,-106
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Kyler Phillips vs. Vinicius Oliveira,Vinicius Oliveira,0.462584212082966,116
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Ateba Gautier vs. Robert Valentin,Ateba Gautier,0.7012576796281856,-235
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Ateba Gautier vs. Robert Valentin,Robert Valentin,0.3111196945177365,221
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Jimmy Crute vs. Marcin Prachnio,Jimmy Crute,0.5941820515507853,-146
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Jimmy Crute vs. Marcin Prachnio,Marcin Prachnio,0.4184449027831049,139
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Marvin Vettori vs. Brendan Allen,Marvin Vettori,0.42543657672499463,135
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Marvin Vettori vs. Brendan Allen,Brendan Allen,0.5743631059991683,-135
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Paulo Costa vs. Roman Kopylov,Paulo Costa,0.3582763582553714,179
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Paulo Costa vs. Roman Kopylov,Roman Kopylov,0.5989707867607189,-149
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Kevin Holland vs. Daniel Rodriguez,Kevin Holland,0.6378556525423067,-176
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Kevin Holland vs. Daniel Rodriguez,Daniel Rodriguez,0.3818662191384844,162
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Max Holloway vs. Dustin Poirier,Max Holloway,0.7014766432547124,-235
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Max Holloway vs. Dustin Poirier,Dustin Poirier,0.33391514250620175,199
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Ryan Spann vs. Lukasz Brzeski,Ryan Spann,0.5191646338441883,-108
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Ryan Spann vs. Lukasz Brzeski,Lukasz Brzeski,0.4884369346580707,105
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Dan Ige vs. Patricio Freire,Dan Ige,0.6921744986422357,-225
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Dan Ige vs. Patricio Freire,Patricio Freire,0.33289078511920184,200
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Francisco Prado vs. Nikolay Veretennikov,Francisco Prado,0.630680278245796,-171
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Francisco Prado vs. Nikolay Veretennikov,Nikolay Veretennikov,0.37950150015095485,164
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Michael Johnson vs. Daniel Zellhuber,Michael Johnson,0.3973463725224587,152
+2025-07-19,UFC 318: Holloway vs. Poirier 3,Michael Johnson vs. Daniel Zellhuber,Daniel Zellhuber,0.5854548098130741,-141
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Davey Grant vs. Da'Mon Blackshear,Davey Grant,0.3473573982520707,188
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Davey Grant vs. Da'Mon Blackshear,Da'Mon Blackshear,0.6325415383754965,-172
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Robert Whittaker vs. Reinier de Ridder,Robert Whittaker,0.5173211879249937,-107
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Robert Whittaker vs. Reinier de Ridder,Reinier de Ridder,0.49423566738693,102
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Muslim Salikhov vs. Carlos Leal,Muslim Salikhov,0.4408517602469986,127
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Muslim Salikhov vs. Carlos Leal,Carlos Leal,0.5313610191277369,-113
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Petr Yan vs. Marcus McGhee,Petr Yan,0.5833978541977634,-140
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Petr Yan vs. Marcus McGhee,Marcus McGhee,0.4203290739815898,138
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Asu Almabayev vs. Jose Ochoa,Asu Almabayev,0.5149069197476223,-106
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Asu Almabayev vs. Jose Ochoa,Jose Ochoa,0.47813093883590646,109
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Nikita Krylov vs. Bogdan Guskov,Nikita Krylov,0.6441121148929309,-181
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Nikita Krylov vs. Bogdan Guskov,Bogdan Guskov,0.3609042343167742,177
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Shara Magomedov vs. Marc-Andre Barriault,Shara Magomedov,0.6232881470047691,-165
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Shara Magomedov vs. Marc-Andre Barriault,Marc-Andre Barriault,0.3374765467111042,196
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Bryce Mitchell vs. Said Nurmagomedov,Bryce Mitchell,0.567822495106746,-131
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Bryce Mitchell vs. Said Nurmagomedov,Said Nurmagomedov,0.4347684614465154,130
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Mohammad Yahya vs. Steven Nguyen,Mohammad Yahya,0.48620327381267603,106
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Mohammad Yahya vs. Steven Nguyen,Steven Nguyen,0.4936976598393436,103
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Ibo Aslan vs. Billy Elekana,Ibo Aslan,0.579196640641498,-138
+2025-07-26,UFC Fight Night: Whittaker vs. De Ridder,Ibo Aslan vs. Billy Elekana,Billy Elekana,0.40273271289630164,148
+2025-08-02,UFC Fight Night: Taira vs. Park,Nick Klein vs. Andrey Pulyaev,Nick Klein,0.504390884375206,-102
+2025-08-02,UFC Fight Night: Taira vs. Park,Nick Klein vs. Andrey Pulyaev,Andrey Pulyaev,0.5069608150414414,-103
+2025-08-02,UFC Fight Night: Taira vs. Park,Elves Brener vs. Esteban Ribovics,Elves Brener,0.4047218799787414,147
+2025-08-02,UFC Fight Night: Taira vs. Park,Elves Brener vs. Esteban Ribovics,Esteban Ribovics,0.5371629193762907,-116
+2025-08-02,UFC Fight Night: Taira vs. Park,Neil Magny vs. Elizeu Zaleski dos Santos,Neil Magny,0.4550265145223711,120
+2025-08-02,UFC Fight Night: Taira vs. Park,Neil Magny vs. Elizeu Zaleski dos Santos,Elizeu Zaleski dos Santos,0.566822310573501,-131
+2025-08-02,UFC Fight Night: Taira vs. Park,Tatsuro Taira vs. HyunSung Park,Tatsuro Taira,0.579306262348019,-138
+2025-08-02,UFC Fight Night: Taira vs. Park,Tatsuro Taira vs. HyunSung Park,HyunSung Park,0.3849600258881364,160
+2025-08-02,UFC Fight Night: Taira vs. Park,Rafael Estevam vs. Felipe Bunes,Rafael Estevam,0.6189242063077298,-162
+2025-08-02,UFC Fight Night: Taira vs. Park,Rafael Estevam vs. Felipe Bunes,Felipe Bunes,0.33337123237363897,200
+2025-08-02,UFC Fight Night: Taira vs. Park,Mateusz Rebecki vs. Chris Duncan,Mateusz Rebecki,0.4424326666035728,126
+2025-08-02,UFC Fight Night: Taira vs. Park,Mateusz Rebecki vs. Chris Duncan,Chris Duncan,0.49465936218399076,102
+2025-08-02,UFC Fight Night: Taira vs. Park,Rinya Nakamura vs. Nathan Fletcher,Rinya Nakamura,0.4405124601906012,127
+2025-08-02,UFC Fight Night: Taira vs. Park,Rinya Nakamura vs. Nathan Fletcher,Nathan Fletcher,0.5680626309723038,-132
+2025-08-02,UFC Fight Night: Taira vs. Park,Rodolfo Vieira vs. Tresean Gore,Rodolfo Vieira,0.497307460030508,101
+2025-08-02,UFC Fight Night: Taira vs. Park,Rodolfo Vieira vs. Tresean Gore,Tresean Gore,0.43691684171660183,129
+2025-08-02,UFC Fight Night: Taira vs. Park,Danny Silva vs. Kevin Vallejos,Danny Silva,0.4914246197807829,103
+2025-08-02,UFC Fight Night: Taira vs. Park,Danny Silva vs. Kevin Vallejos,Kevin Vallejos,0.4829860583910356,107
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Eryk Anders vs. Christian Leroy Duncan,Eryk Anders,0.24770027856041793,304
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Eryk Anders vs. Christian Leroy Duncan,Christian Leroy Duncan,0.7376433012366097,-281
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Elijah Smith vs. Toshiomi Kazama,Elijah Smith,0.6974294220058374,-231
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Elijah Smith vs. Toshiomi Kazama,Toshiomi Kazama,0.28058306087308704,256
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Julius Walker vs. Rafael Cerqueira,Julius Walker,0.6899468908591774,-223
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Julius Walker vs. Rafael Cerqueira,Rafael Cerqueira,0.2169820043032494,361
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Steve Erceg vs. Ode Osbourne,Steve Erceg,0.6000052421060197,-150
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Steve Erceg vs. Ode Osbourne,Ode Osbourne,0.38096317299468535,162
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Uros Medic vs. Gilbert Urbina,Uros Medic,0.5054844231505456,-102
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Uros Medic vs. Gilbert Urbina,Gilbert Urbina,0.46183594738857786,117
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Miles Johns vs. Jean Matsumoto,Miles Johns,0.4227303535005042,137
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Miles Johns vs. Jean Matsumoto,Jean Matsumoto,0.5534597192974883,-124
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Andre Fili vs. Christian Rodriguez,Andre Fili,0.2640314139897615,279
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Andre Fili vs. Christian Rodriguez,Christian Rodriguez,0.7166139089777419,-253
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Cody Brundage vs. Eric McConico,Cody Brundage,0.6469498681686108,-183
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Cody Brundage vs. Eric McConico,Eric McConico,0.3534971090177506,183
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Roman Dolidze vs. Anthony Hernandez,Roman Dolidze,0.30213778080492537,231
+2025-08-09,UFC Fight Night: Dolidze vs. Hernandez,Roman Dolidze vs. Anthony Hernandez,Anthony Hernandez,0.6939526207830233,-227
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Jared Cannonier vs. Michael Page,Jared Cannonier,0.44550006816169707,124
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Jared Cannonier vs. Michael Page,Michael Page,0.5601973355426325,-127
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Chase Hooper vs. Alexander Hernandez,Chase Hooper,0.7208867724819297,-258
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Chase Hooper vs. Alexander Hernandez,Alexander Hernandez,0.26130110070958196,283
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Edson Barboza vs. Drakkar Klose,Edson Barboza,0.40062666068866737,150
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Edson Barboza vs. Drakkar Klose,Drakkar Klose,0.5912822205703191,-145
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Dricus Du Plessis vs. Khamzat Chimaev,Dricus Du Plessis,0.45543641601019724,120
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Dricus Du Plessis vs. Khamzat Chimaev,Khamzat Chimaev,0.5002820664832799,-100
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Gerald Meerschaert vs. Michal Oleksiejczuk,Gerald Meerschaert,0.4126111131751489,142
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Gerald Meerschaert vs. Michal Oleksiejczuk,Michal Oleksiejczuk,0.5995513301911682,-150
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Geoff Neal vs. Carlos Prates,Geoff Neal,0.46485463351040385,115
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Geoff Neal vs. Carlos Prates,Carlos Prates,0.48631104794733027,106
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Tim Elliott vs. Kai Asakura,Tim Elliott,0.5394408293467572,-117
+2025-08-16,UFC 319: Du Plessis vs. Chimaev,Tim Elliott vs. Kai Asakura,Kai Asakura,0.4676936191576042,114
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Sergei Pavlovich vs. Waldo Cortes-Acosta,Sergei Pavlovich,0.535932493382755,-115
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Sergei Pavlovich vs. Waldo Cortes-Acosta,Waldo Cortes-Acosta,0.4393150852233166,128
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Maheshate vs. Gauge Young,Maheshate,0.44987415655981655,122
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Maheshate vs. Gauge Young,Gauge Young,0.5031555137839838,-101
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Yizha vs. Westin Wilson,Yizha,0.6144192899631186,-159
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Yizha vs. Westin Wilson,Westin Wilson,0.3658578231403383,173
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Johnny Walker vs. Zhang Mingyang,Johnny Walker,0.3799765127756301,163
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Johnny Walker vs. Zhang Mingyang,Zhang Mingyang,0.6038720420896276,-152
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Uran Satybaldiev vs. Diyar Nurgozhay,Uran Satybaldiev,0.4190432460350132,139
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Uran Satybaldiev vs. Diyar Nurgozhay,Diyar Nurgozhay,0.5912256744838356,-145
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Michel Pereira vs. Kyle Daukaus,Michel Pereira,0.647364937988191,-184
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Michel Pereira vs. Kyle Daukaus,Kyle Daukaus,0.32743600152805424,205
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Charles Johnson vs. Lone'er Kavanagh,Charles Johnson,0.38801531510005643,158
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Charles Johnson vs. Lone'er Kavanagh,Lone'er Kavanagh,0.5859980475904485,-142
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Rongzhu vs. Austin Hubbard,Rongzhu,0.6918422718354883,-225
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Rongzhu vs. Austin Hubbard,Austin Hubbard,0.2834674812177408,253
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Xiao Long vs. SuYoung You,Xiao Long,0.3853337567733669,160
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Xiao Long vs. SuYoung You,SuYoung You,0.6149235296809715,-160
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Sumudaerji vs. Kevin Borjas,Sumudaerji,0.5355711597692925,-115
+2025-08-23,UFC Fight Night: Walker vs. Zhang,Sumudaerji vs. Kevin Borjas,Kevin Borjas,0.4251169596139096,135
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Benoit Saint Denis vs. Mauricio Ruffy,Benoit Saint Denis,0.49017743140846914,104
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Benoit Saint Denis vs. Mauricio Ruffy,Mauricio Ruffy,0.4790390266051747,109
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Nassourdine Imavov vs. Caio Borralho,Nassourdine Imavov,0.4918668225186277,103
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Nassourdine Imavov vs. Caio Borralho,Caio Borralho,0.4789407683750869,109
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Andreas Gustafsson vs. Rinat Fakhretdinov,Andreas Gustafsson,0.4047916420692387,147
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Andreas Gustafsson vs. Rinat Fakhretdinov,Rinat Fakhretdinov,0.5778066958848861,-137
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Bolaji Oki vs. Mason Jones,Bolaji Oki,0.5498780467529502,-122
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Bolaji Oki vs. Mason Jones,Mason Jones,0.40501871364272074,147
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Sam Patterson vs. Trey Waters,Sam Patterson,0.5990899652819343,-149
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Sam Patterson vs. Trey Waters,Trey Waters,0.3573360316945917,180
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Brad Tavares vs. Robert Bryczek,Brad Tavares,0.5344727918262924,-115
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Brad Tavares vs. Robert Bryczek,Robert Bryczek,0.4783984630491865,109
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Oumar Sy vs. Brendson Ribeiro,Oumar Sy,0.6710118319248579,-204
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Oumar Sy vs. Brendson Ribeiro,Brendson Ribeiro,0.31607374302729424,216
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Modestas Bukauskas vs. Paul Craig,Modestas Bukauskas,0.6226289486560936,-165
+2025-09-06,UFC Fight Night: Imavov vs. Borralho,Modestas Bukauskas vs. Paul Craig,Paul Craig,0.3847968342487571,160
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Kelvin Gastelum vs. Dustin Stoltzfus,Kelvin Gastelum,0.6349566860497299,-174
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Kelvin Gastelum vs. Dustin Stoltzfus,Dustin Stoltzfus,0.3860882898562438,159
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Claudio Puelles vs. Joaquim Silva,Claudio Puelles,0.6331110206357908,-173
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Claudio Puelles vs. Joaquim Silva,Joaquim Silva,0.33967226246407145,194
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Rafa Garcia vs. Jared Gordon,Rafa Garcia,0.4679354694163843,114
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Rafa Garcia vs. Jared Gordon,Jared Gordon,0.5141540290321203,-106
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Jesus Aguilar vs. Luis Gurule,Jesus Aguilar,0.6159357659255563,-160
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Jesus Aguilar vs. Luis Gurule,Luis Gurule,0.39597847538861364,153
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Alexander Hernandez vs. Diego Ferreira,Alexander Hernandez,0.5488675314851389,-122
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Alexander Hernandez vs. Diego Ferreira,Diego Ferreira,0.46218057791522243,116
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Rob Font vs. David Martinez,Rob Font,0.5457577683702988,-120
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Rob Font vs. David Martinez,David Martinez,0.4846795377649874,106
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Diego Lopes vs. Jean Silva,Diego Lopes,0.4245216315663901,136
+2025-09-13,UFC Fight Night: Lopes vs. Silva,Diego Lopes vs. Jean Silva,Jean Silva,0.5187228231900648,-108

@@ -89,10 +89,10 @@ class UFCFightPredictor:
             print("Initializing FightOutcomeModel...")
             self.fight_model = FightOutcomeModel(self.data_path)
             
-            # Train the tuned logistic regression model
+            # Train the tuned logistic regression model to get the specific accuracy and log loss
             print("Training tuned logistic regression model...")
             self.model, self.accuracy = self.fight_model.tune_logistic_regression()
-            print(f"Logistic Regression Accuracy: {self.accuracy}")
+            print(f"Model Accuracy: {self.accuracy}")
         
         # Get the filtered data and features from the fight model (for training)
         if FightOutcomeModel is not None:

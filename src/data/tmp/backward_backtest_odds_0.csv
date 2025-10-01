@@ -1,0 +1,303 @@
+DATE,EVENT,BOUT,FIGHTER,prob_norm,odds
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Al Iaquinta vs. Dan Hooker,Al Iaquinta,0.47552881088273896,110
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Al Iaquinta vs. Dan Hooker,Dan Hooker,0.5244711891172611,-110
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Alatengheili vs. Ryan Benoit,Alatengheili,0.6112702240241745,-157
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Alatengheili vs. Ryan Benoit,Ryan Benoit,0.3887297759758255,157
+2020-01-18,UFC 246: McGregor vs. Cowboy,Aleksei Oleinik vs. Maurice Greene,Aleksei Oleinik,0.3565432833018407,180
+2020-01-18,UFC 246: McGregor vs. Cowboy,Aleksei Oleinik vs. Maurice Greene,Maurice Greene,0.6434567166981593,-180
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Alen Amedovski vs. John Phillips,Alen Amedovski,0.5225928843151733,-109
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Alen Amedovski vs. John Phillips,John Phillips,0.47740711568482674,109
+2020-03-07,UFC 248: Adesanya vs. Romero,Alex Oliveira vs. Max Griffin,Alex Oliveira,0.6254736576105258,-167
+2020-03-07,UFC 248: Adesanya vs. Romero,Alex Oliveira vs. Max Griffin,Max Griffin,0.37452634238947424,167
+2019-10-26,UFC Fight Night: Maia vs. Askren,Alex White vs. Rafael Fiziev,Alex White,0.6929630409066155,-226
+2019-10-26,UFC Fight Night: Maia vs. Askren,Alex White vs. Rafael Fiziev,Rafael Fiziev,0.3070369590933844,226
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Alexander Volkov vs. Greg Hardy,Alexander Volkov,0.5097445358313308,-104
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Alexander Volkov vs. Greg Hardy,Greg Hardy,0.4902554641686692,104
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Alexander Yakovlev vs. Roosevelt Roberts,Alexander Yakovlev,0.3552339191883069,182
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Alexander Yakovlev vs. Roosevelt Roberts,Roosevelt Roberts,0.6447660808116932,-182
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Alexandre Pantoja vs. Matt Schnell,Alexandre Pantoja,0.46521398870716363,115
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Alexandre Pantoja vs. Matt Schnell,Matt Schnell,0.5347860112928363,-115
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Alistair Overeem vs. Jairzinho Rozenstruik,Alistair Overeem,0.4644930804489373,115
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Alistair Overeem vs. Jairzinho Rozenstruik,Jairzinho Rozenstruik,0.5355069195510627,-115
+2020-02-08,UFC 247: Jones vs. Reyes,Andre Ewell vs. Jonathan Martinez,Andre Ewell,0.39567951143912583,153
+2020-02-08,UFC 247: Jones vs. Reyes,Andre Ewell vs. Jonathan Martinez,Jonathan Martinez,0.6043204885608742,-153
+2020-01-18,UFC 246: McGregor vs. Cowboy,Andre Fili vs. Sodiq Yusuff,Andre Fili,0.4448031793244211,125
+2020-01-18,UFC 246: McGregor vs. Cowboy,Andre Fili vs. Sodiq Yusuff,Sodiq Yusuff,0.5551968206755789,-125
+2019-11-02,UFC 244: Masvidal vs. Diaz,Andrei Arlovski vs. Jairzinho Rozenstruik,Andrei Arlovski,0.43426970449239366,130
+2019-11-02,UFC 244: Masvidal vs. Diaz,Andrei Arlovski vs. Jairzinho Rozenstruik,Jairzinho Rozenstruik,0.5657302955076062,-130
+2020-01-18,UFC 246: McGregor vs. Cowboy,Anthony Pettis vs. Diego Ferreira,Anthony Pettis,0.3192312194857104,213
+2020-01-18,UFC 246: McGregor vs. Cowboy,Anthony Pettis vs. Diego Ferreira,Diego Ferreira,0.6807687805142896,-213
+2020-03-07,UFC 248: Adesanya vs. Romero,Batgerel Danaa vs. Guido Cannetti,Batgerel Danaa,0.5918598757555504,-145
+2020-03-07,UFC 248: Adesanya vs. Romero,Batgerel Danaa vs. Guido Cannetti,Guido Cannetti,0.40814012424444956,145
+2020-03-07,UFC 248: Adesanya vs. Romero,Beneil Dariush vs. Drakkar Klose,Beneil Dariush,0.634254319286131,-173
+2020-03-07,UFC 248: Adesanya vs. Romero,Beneil Dariush vs. Drakkar Klose,Drakkar Klose,0.36574568071386904,173
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Bevon Lewis vs. Dequan Townsend,Bevon Lewis,0.6666963313676655,-200
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Bevon Lewis vs. Dequan Townsend,Dequan Townsend,0.33330366863233446,200
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Brad Riddell vs. Magomed Mustafaev,Brad Riddell,0.6627978827195626,-197
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Brad Riddell vs. Magomed Mustafaev,Magomed Mustafaev,0.33720211728043725,197
+2019-11-02,UFC 244: Masvidal vs. Diaz,Brad Tavares vs. Edmen Shahbazyan,Brad Tavares,0.2431929172709362,311
+2019-11-02,UFC 244: Masvidal vs. Diaz,Brad Tavares vs. Edmen Shahbazyan,Edmen Shahbazyan,0.7568070827290638,-311
+2019-12-14,UFC 245: Usman vs. Covington,Brandon Moreno vs. Kai Kara-France,Brandon Moreno,0.4862508159543555,106
+2019-12-14,UFC 245: Usman vs. Covington,Brandon Moreno vs. Kai Kara-France,Kai Kara-France,0.5137491840456446,-106
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Brendan Allen vs. Tom Breese,Brendan Allen,0.4064863764371591,146
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Brendan Allen vs. Tom Breese,Tom Breese,0.5935136235628408,-146
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Bryce Mitchell vs. Matt Sayles,Bryce Mitchell,0.49081802711670786,104
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Bryce Mitchell vs. Matt Sayles,Matt Sayles,0.5091819728832921,-104
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Callan Potter vs. Song Kenan,Callan Potter,0.4722765644107636,112
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Callan Potter vs. Song Kenan,Song Kenan,0.5277234355892364,-112
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Casey Kenney vs. Merab Dvalishvili,Casey Kenney,0.4079838607123087,145
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Casey Kenney vs. Merab Dvalishvili,Merab Dvalishvili,0.5920161392876913,-145
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Charles Oliveira vs. Jared Gordon,Charles Oliveira,0.5722145395561639,-134
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Charles Oliveira vs. Jared Gordon,Jared Gordon,0.4277854604438361,134
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Charles Rosa vs. Manny Bermudez,Charles Rosa,0.40444258630467383,147
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Charles Rosa vs. Manny Bermudez,Manny Bermudez,0.5955574136953261,-147
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Chas Skelly vs. Jordan Griffin,Chas Skelly,0.41544822354228444,141
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Chas Skelly vs. Jordan Griffin,Jordan Griffin,0.5845517764577156,-141
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Ciryl Gane vs. Tanner Boser,Ciryl Gane,0.6284081881141634,-169
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Ciryl Gane vs. Tanner Boser,Tanner Boser,0.37159181188583656,169
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Claudio Puelles vs. Marcos Mariano,Claudio Puelles,0.5999763257952931,-150
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Claudio Puelles vs. Marcos Mariano,Marcos Mariano,0.40002367420470697,150
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Cody Stamann vs. Song Yadong,Cody Stamann,0.3116260717773019,221
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Cody Stamann vs. Song Yadong,Song Yadong,0.688373928222698,-221
+2020-01-18,UFC 246: McGregor vs. Cowboy,Conor McGregor vs. Donald Cerrone,Conor McGregor,0.556484127566328,-125
+2020-01-18,UFC 246: McGregor vs. Cowboy,Conor McGregor vs. Donald Cerrone,Donald Cerrone,0.44351587243367196,125
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Corey Anderson vs. Jan Blachowicz,Corey Anderson,0.6956036837485209,-229
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Corey Anderson vs. Jan Blachowicz,Jan Blachowicz,0.304396316251479,229
+2019-11-02,UFC 244: Masvidal vs. Diaz,Corey Anderson vs. Johnny Walker,Corey Anderson,0.5593993992648073,-127
+2019-11-02,UFC 244: Masvidal vs. Diaz,Corey Anderson vs. Johnny Walker,Johnny Walker,0.4406006007351927,127
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Cub Swanson vs. Kron Gracie,Cub Swanson,0.48720145206645504,105
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Cub Swanson vs. Kron Gracie,Kron Gracie,0.5127985479335451,-105
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Curtis Blaydes vs. Junior Dos Santos,Curtis Blaydes,0.6203528411690052,-163
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Curtis Blaydes vs. Junior Dos Santos,Junior Dos Santos,0.37964715883099476,163
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Da Woon Jung vs. Mike Rodriguez,Da Woon Jung,0.5565890848353074,-126
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Da Woon Jung vs. Mike Rodriguez,Mike Rodriguez,0.44341091516469255,126
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Deiveson Figueiredo vs. Tim Elliott,Deiveson Figueiredo,0.6197904081399928,-163
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Deiveson Figueiredo vs. Tim Elliott,Tim Elliott,0.3802095918600073,163
+2019-10-26,UFC Fight Night: Maia vs. Askren,Demian Maia vs. Ben Askren,Demian Maia,0.7646429073804988,-325
+2019-10-26,UFC Fight Night: Maia vs. Askren,Demian Maia vs. Ben Askren,Ben Askren,0.2353570926195012,325
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Deron Winn vs. Darren Stewart,Deron Winn,0.40011208274083243,150
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Deron Winn vs. Darren Stewart,Darren Stewart,0.5998879172591676,-150
+2019-11-02,UFC 244: Masvidal vs. Diaz,Derrick Lewis vs. Blagoy Ivanov,Derrick Lewis,0.49751798387884427,101
+2019-11-02,UFC 244: Masvidal vs. Diaz,Derrick Lewis vs. Blagoy Ivanov,Blagoy Ivanov,0.5024820161211556,-101
+2020-02-08,UFC 247: Jones vs. Reyes,Derrick Lewis vs. Ilir Latifi,Derrick Lewis,0.5504543983944828,-122
+2020-02-08,UFC 247: Jones vs. Reyes,Derrick Lewis vs. Ilir Latifi,Ilir Latifi,0.44954560160551726,122
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Devin Clark vs. Dequan Townsend,Devin Clark,0.6465542644148876,-183
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Devin Clark vs. Dequan Townsend,Dequan Townsend,0.35344573558511255,183
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Diego Sanchez vs. Michel Pereira,Diego Sanchez,0.26790281468490235,273
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Diego Sanchez vs. Michel Pereira,Michel Pereira,0.7320971853150977,-273
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Donald Cerrone vs. Justin Gaethje,Donald Cerrone,0.5599225686903693,-127
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Donald Cerrone vs. Justin Gaethje,Justin Gaethje,0.44007743130963073,127
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Dooho Choi vs. Charles Jourdain,Dooho Choi,0.5601770881939536,-127
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Dooho Choi vs. Charles Jourdain,Charles Jourdain,0.4398229118060464,127
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Douglas Silva de Andrade vs. Renan Barao,Douglas Silva de Andrade,0.31867365759368466,214
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Douglas Silva de Andrade vs. Renan Barao,Renan Barao,0.6813263424063154,-214
+2020-01-18,UFC 246: McGregor vs. Cowboy,Drew Dober vs. Nasrat Haqparast,Drew Dober,0.3003510598370216,233
+2020-01-18,UFC 246: McGregor vs. Cowboy,Drew Dober vs. Nasrat Haqparast,Nasrat Haqparast,0.6996489401629784,-233
+2019-10-26,UFC Fight Night: Maia vs. Askren,Enrique Barzola vs. Movsar Evloev,Enrique Barzola,0.44287963302532435,126
+2019-10-26,UFC Fight Night: Maia vs. Askren,Enrique Barzola vs. Movsar Evloev,Movsar Evloev,0.5571203669746757,-126
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Eryk Anders vs. Gerald Meerschaert,Eryk Anders,0.4985909417334672,101
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Eryk Anders vs. Gerald Meerschaert,Gerald Meerschaert,0.5014090582665328,-101
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Francisco Trinaldo vs. King Green,Francisco Trinaldo,0.6099046243371753,-156
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Francisco Trinaldo vs. King Green,King Green,0.39009537566282465,156
+2019-10-26,UFC Fight Night: Maia vs. Askren,Frank Camacho vs. Beneil Dariush,Frank Camacho,0.3213461264345584,211
+2019-10-26,UFC Fight Night: Maia vs. Askren,Frank Camacho vs. Beneil Dariush,Beneil Dariush,0.6786538735654415,-211
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Frankie Edgar vs. Chan Sung Jung,Frankie Edgar,0.5873910774235513,-142
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Frankie Edgar vs. Chan Sung Jung,Chan Sung Jung,0.41260892257644866,142
+2019-12-14,UFC 245: Usman vs. Covington,Geoff Neal vs. Mike Perry,Geoff Neal,0.5666028058444674,-131
+2019-12-14,UFC 245: Usman vs. Covington,Geoff Neal vs. Mike Perry,Mike Perry,0.4333971941555325,131
+2020-03-07,UFC 248: Adesanya vs. Romero,Gerald Meerschaert vs. Deron Winn,Gerald Meerschaert,0.5301827158159623,-113
+2020-03-07,UFC 248: Adesanya vs. Romero,Gerald Meerschaert vs. Deron Winn,Deron Winn,0.46981728418403756,113
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Glover Teixeira vs. Nikita Krylov,Glover Teixeira,0.2753205421559563,263
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Glover Teixeira vs. Nikita Krylov,Nikita Krylov,0.7246794578440438,-263
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Grigory Popov vs. Davey Grant,Grigory Popov,0.34680950221470896,188
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Grigory Popov vs. Davey Grant,Davey Grant,0.653190497785291,-188
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Gunnar Nelson vs. Gilbert Burns,Gunnar Nelson,0.39995652298078005,150
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Gunnar Nelson vs. Gilbert Burns,Gilbert Burns,0.60004347701922,-150
+2019-12-14,UFC 245: Usman vs. Covington,Ian Heinisch vs. Omari Akhmedov,Ian Heinisch,0.41685430619063607,140
+2019-12-14,UFC 245: Usman vs. Covington,Ian Heinisch vs. Omari Akhmedov,Omari Akhmedov,0.583145693809364,-140
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Ion Cutelaba vs. Khalil Rountree Jr.,Ion Cutelaba,0.5816989785570404,-139
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Ion Cutelaba vs. Khalil Rountree Jr.,Khalil Rountree Jr.,0.4183010214429595,139
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Ion Cutelaba vs. Magomed Ankalaev,Ion Cutelaba,0.4449365767718391,125
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Ion Cutelaba vs. Magomed Ankalaev,Magomed Ankalaev,0.5550634232281609,-125
+2020-03-07,UFC 248: Adesanya vs. Romero,Israel Adesanya vs. Yoel Romero,Israel Adesanya,0.7181588660955569,-255
+2020-03-07,UFC 248: Adesanya vs. Romero,Israel Adesanya vs. Yoel Romero,Yoel Romero,0.2818411339044432,255
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Jack Hermansson vs. Jared Cannonier,Jack Hermansson,0.6666831739373988,-200
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Jack Hermansson vs. Jared Cannonier,Jared Cannonier,0.33331682606260116,200
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Jake Matthews vs. Emil Meek,Jake Matthews,0.7717350042630491,-338
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Jake Matthews vs. Emil Meek,Emil Meek,0.22826499573695092,338
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Jake Matthews vs. Rostem Akman,Jake Matthews,0.5836969272844139,-140
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Jake Matthews vs. Rostem Akman,Rostem Akman,0.416303072715586,140
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Jan Blachowicz vs. Jacare Souza,Jan Blachowicz,0.5764114083010177,-136
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Jan Blachowicz vs. Jacare Souza,Jacare Souza,0.4235885916989822,136
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Jim Miller vs. Scott Holtzman,Jim Miller,0.25804650270476426,288
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Jim Miller vs. Scott Holtzman,Scott Holtzman,0.7419534972952357,-288
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Jimmy Crute vs. Michal Oleksiejczuk,Jimmy Crute,0.4829741402940442,107
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Jimmy Crute vs. Michal Oleksiejczuk,Michal Oleksiejczuk,0.5170258597059558,-107
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,John Dodson vs. Nathaniel Wood,John Dodson,0.4124551291180378,142
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,John Dodson vs. Nathaniel Wood,Nathaniel Wood,0.5875448708819622,-142
+2020-02-08,UFC 247: Jones vs. Reyes,Jon Jones vs. Dominick Reyes,Jon Jones,0.7453665286444429,-293
+2020-02-08,UFC 247: Jones vs. Reyes,Jon Jones vs. Dominick Reyes,Dominick Reyes,0.25463347135555714,293
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Jordan Espinosa vs. Alex Perez,Jordan Espinosa,0.4294294142122072,133
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Jordan Espinosa vs. Alex Perez,Alex Perez,0.5705705857877928,-133
+2019-11-02,UFC 244: Masvidal vs. Diaz,Jorge Masvidal vs. Nate Diaz,Jorge Masvidal,0.5803990692132054,-138
+2019-11-02,UFC 244: Masvidal vs. Diaz,Jorge Masvidal vs. Nate Diaz,Nate Diaz,0.4196009307867946,138
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Jose Quinonez vs. Carlos Huachin,Jose Quinonez,0.6032256722678252,-152
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Jose Quinonez vs. Carlos Huachin,Carlos Huachin,0.3967743277321748,152
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Joseph Benavidez vs. Deiveson Figueiredo,Joseph Benavidez,0.5399547941491886,-117
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Joseph Benavidez vs. Deiveson Figueiredo,Deiveson Figueiredo,0.4600452058508114,117
+2020-02-08,UFC 247: Jones vs. Reyes,Juan Adams vs. Justin Tafa,Juan Adams,0.43320537108516904,131
+2020-02-08,UFC 247: Jones vs. Reyes,Juan Adams vs. Justin Tafa,Justin Tafa,0.5667946289148309,-131
+2019-11-02,UFC 244: Masvidal vs. Diaz,Julio Arce vs. Hakeem Dawodu,Julio Arce,0.4647208933451066,115
+2019-11-02,UFC 244: Masvidal vs. Diaz,Julio Arce vs. Hakeem Dawodu,Hakeem Dawodu,0.5352791066548934,-115
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,JunYong Park vs. Marc-Andre Barriault,JunYong Park,0.5008369431993623,-100
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,JunYong Park vs. Marc-Andre Barriault,Marc-Andre Barriault,0.49916305680063766,100
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Kai Kara-France vs. Tyson Nam,Kai Kara-France,0.713318807219161,-249
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Kai Kara-France vs. Tyson Nam,Tyson Nam,0.286681192780839,249
+2019-12-14,UFC 245: Usman vs. Covington,Kamaru Usman vs. Colby Covington,Kamaru Usman,0.581320178485048,-139
+2019-12-14,UFC 245: Usman vs. Covington,Kamaru Usman vs. Colby Covington,Colby Covington,0.418679821514952,139
+2019-11-02,UFC 244: Masvidal vs. Diaz,Kelvin Gastelum vs. Darren Till,Kelvin Gastelum,0.5093008817737645,-104
+2019-11-02,UFC 244: Masvidal vs. Diaz,Kelvin Gastelum vs. Darren Till,Darren Till,0.4906991182262355,104
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Kevin Aguilar vs. Zubaira Tukhugov,Kevin Aguilar,0.4383985831694196,128
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Kevin Aguilar vs. Zubaira Tukhugov,Zubaira Tukhugov,0.5616014168305804,-128
+2019-11-02,UFC 244: Masvidal vs. Diaz,Kevin Lee vs. Gregor Gillespie,Kevin Lee,0.49598248520558325,102
+2019-11-02,UFC 244: Masvidal vs. Diaz,Kevin Lee vs. Gregor Gillespie,Gregor Gillespie,0.5040175147944168,-102
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Khadis Ibragimov vs. Ed Herman,Khadis Ibragimov,0.7751665358845198,-345
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Khadis Ibragimov vs. Ed Herman,Ed Herman,0.22483346411548014,345
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Kyle Prepolec vs. Austin Hubbard,Kyle Prepolec,0.46144449714654673,117
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Kyle Prepolec vs. Austin Hubbard,Austin Hubbard,0.5385555028534532,-117
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Kyung Ho Kang vs. Pingyuan Liu,Kyung Ho Kang,0.5583895687410616,-126
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Kyung Ho Kang vs. Pingyuan Liu,Pingyuan Liu,0.4416104312589384,126
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Lando Vannata vs. Yancy Medeiros,Lando Vannata,0.5902319857267616,-144
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Lando Vannata vs. Yancy Medeiros,Yancy Medeiros,0.4097680142732384,144
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Louis Smolka vs. Ryan MacDonald,Louis Smolka,0.5071624301772203,-103
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Louis Smolka vs. Ryan MacDonald,Ryan MacDonald,0.49283756982277976,103
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Luke Jumeau vs. Dhiego Lima,Luke Jumeau,0.5154199964144183,-106
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Luke Jumeau vs. Dhiego Lima,Dhiego Lima,0.4845800035855817,106
+2019-11-02,UFC 244: Masvidal vs. Diaz,Lyman Good vs. Chance Rencountre,Lyman Good,0.5231751094564282,-110
+2019-11-02,UFC 244: Masvidal vs. Diaz,Lyman Good vs. Chance Rencountre,Chance Rencountre,0.47682489054357174,110
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Magomed Ankalaev vs. Dalcha Lungiambula,Magomed Ankalaev,0.5398813229789421,-117
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Magomed Ankalaev vs. Dalcha Lungiambula,Dalcha Lungiambula,0.4601186770210578,117
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Makhmud Muradov vs. Trevor Smith,Makhmud Muradov,0.6565106749744634,-191
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Makhmud Muradov vs. Trevor Smith,Trevor Smith,0.34348932502553664,191
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Marc Diakiese vs. Lando Vannata,Marc Diakiese,0.5562263317666728,-125
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Marc Diakiese vs. Lando Vannata,Lando Vannata,0.44377366823332726,125
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Marcin Tybura vs. Augusto Sakai,Marcin Tybura,0.5284955324962413,-112
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Marcin Tybura vs. Augusto Sakai,Augusto Sakai,0.47150446750375874,112
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Marcin Tybura vs. Serghei Spivac,Marcin Tybura,0.3089051457669908,224
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Marcin Tybura vs. Serghei Spivac,Serghei Spivac,0.6910948542330092,-224
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Marco Polo Reyes vs. Kyle Nelson,Marco Polo Reyes,0.48925896621004533,104
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Marco Polo Reyes vs. Kyle Nelson,Kyle Nelson,0.5107410337899547,-104
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Mark De La Rosa vs. Raulian Paiva,Mark De La Rosa,0.44619995939498924,124
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Mark De La Rosa vs. Raulian Paiva,Raulian Paiva,0.5538000406050109,-124
+2020-03-07,UFC 248: Adesanya vs. Romero,Mark Madsen vs. Austin Hubbard,Mark Madsen,0.7855291458537558,-366
+2020-03-07,UFC 248: Adesanya vs. Romero,Mark Madsen vs. Austin Hubbard,Austin Hubbard,0.21447085414624423,366
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Markus Perez vs. Wellington Turman,Markus Perez,0.39559417059281854,153
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Markus Perez vs. Wellington Turman,Wellington Turman,0.6044058294071815,-153
+2019-12-14,UFC 245: Usman vs. Covington,Marlon Moraes vs. Jose Aldo,Marlon Moraes,0.48860571536771963,105
+2019-12-14,UFC 245: Usman vs. Covington,Marlon Moraes vs. Jose Aldo,Jose Aldo,0.5113942846322803,-105
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Marlon Vera vs. Andre Ewell,Marlon Vera,0.4802153466913482,108
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Marlon Vera vs. Andre Ewell,Andre Ewell,0.5197846533086519,-108
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Martin Bravo vs. Steven Peterson,Martin Bravo,0.5353903265904028,-115
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Martin Bravo vs. Steven Peterson,Steven Peterson,0.4646096734095972,115
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Marvin Vettori vs. Andrew Sanchez,Marvin Vettori,0.5754153057493776,-136
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Marvin Vettori vs. Andrew Sanchez,Andrew Sanchez,0.42458469425062234,136
+2019-12-14,UFC 245: Usman vs. Covington,Matt Brown vs. Ben Saunders,Matt Brown,0.6522679633758669,-188
+2019-12-14,UFC 245: Usman vs. Covington,Matt Brown vs. Ben Saunders,Ben Saunders,0.34773203662413316,188
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Matt Frevola vs. Luis Pena,Matt Frevola,0.3089127003388815,224
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Matt Frevola vs. Luis Pena,Luis Pena,0.6910872996611185,-224
+2019-10-26,UFC Fight Night: Maia vs. Askren,Maurice Greene vs. Sergei Pavlovich,Maurice Greene,0.5312260062187331,-113
+2019-10-26,UFC Fight Night: Maia vs. Askren,Maurice Greene vs. Sergei Pavlovich,Sergei Pavlovich,0.4687739937812669,113
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Mauricio Rua vs. Paul Craig,Mauricio Rua,0.4941611795306236,102
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Mauricio Rua vs. Paul Craig,Paul Craig,0.5058388204693763,-102
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Max Griffin vs. Alex Morono,Max Griffin,0.3880993748939281,158
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Max Griffin vs. Alex Morono,Alex Morono,0.6119006251060718,-158
+2019-12-14,UFC 245: Usman vs. Covington,Max Holloway vs. Alexander Volkanovski,Max Holloway,0.5799784764395506,-138
+2019-12-14,UFC 245: Usman vs. Covington,Max Holloway vs. Alexander Volkanovski,Alexander Volkanovski,0.4200215235604494,138
+2019-10-26,UFC Fight Night: Maia vs. Askren,Michael Johnson vs. Stevie Ray,Michael Johnson,0.636521557920453,-175
+2019-10-26,UFC Fight Night: Maia vs. Askren,Michael Johnson vs. Stevie Ray,Stevie Ray,0.36347844207954694,175
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Michal Oleksiejczuk vs. Ovince Saint Preux,Michal Oleksiejczuk,0.7411663840116687,-286
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Michal Oleksiejczuk vs. Ovince Saint Preux,Ovince Saint Preux,0.2588336159883314,286
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Mike Davis vs. Thomas Gifford,Mike Davis,0.4774683901393667,109
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Mike Davis vs. Thomas Gifford,Thomas Gifford,0.5225316098606333,-109
+2020-02-08,UFC 247: Jones vs. Reyes,Miles Johns vs. Mario Bautista,Miles Johns,0.6084560193519781,-155
+2020-02-08,UFC 247: Jones vs. Reyes,Miles Johns vs. Mario Bautista,Mario Bautista,0.3915439806480218,155
+2020-02-08,UFC 247: Jones vs. Reyes,Mirsad Bektic vs. Dan Ige,Mirsad Bektic,0.3755098357519065,166
+2020-02-08,UFC 247: Jones vs. Reyes,Mirsad Bektic vs. Dan Ige,Dan Ige,0.6244901642480934,-166
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Misha Cirkunov vs. Jimmy Crute,Misha Cirkunov,0.38336062458805953,161
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Misha Cirkunov vs. Jimmy Crute,Jimmy Crute,0.6166393754119405,-161
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Montel Jackson vs. Felipe Colares,Montel Jackson,0.5940383319797103,-146
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Montel Jackson vs. Felipe Colares,Felipe Colares,0.4059616680202897,146
+2019-10-26,UFC Fight Night: Maia vs. Askren,Muslim Salikhov vs. Laureano Staropoli,Muslim Salikhov,0.442922758631822,126
+2019-10-26,UFC Fight Night: Maia vs. Askren,Muslim Salikhov vs. Laureano Staropoli,Laureano Staropoli,0.5570772413681779,-126
+2020-03-07,UFC 248: Adesanya vs. Romero,Neil Magny vs. Li Jingliang,Neil Magny,0.4635057943833065,116
+2020-03-07,UFC 248: Adesanya vs. Romero,Neil Magny vs. Li Jingliang,Li Jingliang,0.5364942056166935,-116
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Nicolas Dalby vs. Alex Oliveira,Nicolas Dalby,0.321467573515728,211
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Nicolas Dalby vs. Alex Oliveira,Alex Oliveira,0.6785324264842721,-211
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Niko Price vs. James Vick,Niko Price,0.4213816065294009,137
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Niko Price vs. James Vick,James Vick,0.5786183934705991,-137
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Paul Felder vs. Dan Hooker,Paul Felder,0.3868798497401441,158
+2020-02-22,UFC Fight Night: Felder vs. Hooker,Paul Felder vs. Dan Hooker,Dan Hooker,0.6131201502598559,-158
+2019-12-14,UFC 245: Usman vs. Covington,Petr Yan vs. Urijah Faber,Petr Yan,0.6841204300849817,-217
+2019-12-14,UFC 245: Usman vs. Covington,Petr Yan vs. Urijah Faber,Urijah Faber,0.3158795699150184,217
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Rafael Dos Anjos vs. Michael Chiesa,Rafael Dos Anjos,0.5071273454329932,-103
+2020-01-25,UFC Fight Night: Blaydes vs. Dos Santos,Rafael Dos Anjos vs. Michael Chiesa,Michael Chiesa,0.49287265456700685,103
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Ramazan Emeev vs. Anthony Rocco Martin,Ramazan Emeev,0.46816389014808857,114
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Ramazan Emeev vs. Anthony Rocco Martin,Anthony Rocco Martin,0.5318361098519114,-114
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Randy Costa vs. Boston Salmon,Randy Costa,0.7306222945934049,-271
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Randy Costa vs. Boston Salmon,Boston Salmon,0.2693777054065951,271
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Raoni Barcelos vs. Said Nurmagomedov,Raoni Barcelos,0.4455282319720869,124
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Raoni Barcelos vs. Said Nurmagomedov,Said Nurmagomedov,0.5544717680279131,-124
+2019-10-26,UFC Fight Night: Maia vs. Askren,Raphael Pessoa vs. Jeff Hughes,Raphael Pessoa,0.4374135873727702,129
+2019-10-26,UFC Fight Night: Maia vs. Askren,Raphael Pessoa vs. Jeff Hughes,Jeff Hughes,0.5625864126272299,-129
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Ricardo Ramos vs. Eduardo Garagorri,Ricardo Ramos,0.5310620845413031,-113
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Ricardo Ramos vs. Eduardo Garagorri,Eduardo Garagorri,0.4689379154586969,113
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Rob Font vs. Ricky Simon,Rob Font,0.47236086840104324,112
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Rob Font vs. Ricky Simon,Ricky Simon,0.5276391315989567,-112
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Robert Whittaker vs. Israel Adesanya,Robert Whittaker,0.5362134588857219,-116
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Robert Whittaker vs. Israel Adesanya,Israel Adesanya,0.4637865411142781,116
+2020-03-07,UFC 248: Adesanya vs. Romero,Rodolfo Vieira vs. Saparbeg Safarov,Rodolfo Vieira,0.5756348954689184,-136
+2020-03-07,UFC 248: Adesanya vs. Romero,Rodolfo Vieira vs. Saparbeg Safarov,Saparbeg Safarov,0.4243651045310816,136
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Rogerio Bontorin vs. Ray Borg,Rogerio Bontorin,0.43502256053355665,130
+2020-02-15,UFC Fight Night: Anderson vs. Blachowicz,Rogerio Bontorin vs. Ray Borg,Ray Borg,0.5649774394664434,-130
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Rustam Khabilov vs. Sergey Khandozhko,Rustam Khabilov,0.465761024786457,115
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Rustam Khabilov vs. Sergey Khandozhko,Sergey Khandozhko,0.534238975213543,-115
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Ryan Spann vs. Devin Clark,Ryan Spann,0.5676870624012652,-131
+2019-10-12,UFC Fight Night: Joanna vs. Waterson,Ryan Spann vs. Devin Clark,Devin Clark,0.43231293759873474,131
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Sean Brady vs. Ismail Naurdiev,Sean Brady,0.3320800925443322,201
+2020-02-29,UFC Fight Night: Benavidez vs. Figueiredo,Sean Brady vs. Ismail Naurdiev,Ismail Naurdiev,0.6679199074556678,-201
+2020-03-07,UFC 248: Adesanya vs. Romero,Sean O'Malley vs. Jose Quinonez,Sean O'Malley,0.5033595474116672,-101
+2020-03-07,UFC 248: Adesanya vs. Romero,Sean O'Malley vs. Jose Quinonez,Jose Quinonez,0.49664045258833284,101
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Sergio Moraes vs. James Krause,Sergio Moraes,0.32008699007267855,212
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Sergio Moraes vs. James Krause,James Krause,0.6799130099273214,-212
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,SeungWoo Choi vs. Suman Mokhtarian,SeungWoo Choi,0.5873840226904262,-142
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,SeungWoo Choi vs. Suman Mokhtarian,Suman Mokhtarian,0.41261597730957367,142
+2019-11-02,UFC 244: Masvidal vs. Diaz,Shane Burgos vs. Makwan Amirkhani,Shane Burgos,0.537483564985664,-116
+2019-11-02,UFC 244: Masvidal vs. Diaz,Shane Burgos vs. Makwan Amirkhani,Makwan Amirkhani,0.46251643501433604,116
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Siyar Bahadurzada vs. Ismail Naurdiev,Siyar Bahadurzada,0.25867067182328074,287
+2019-09-28,UFC Fight Night: Hermansson vs. Cannonier,Siyar Bahadurzada vs. Ismail Naurdiev,Ismail Naurdiev,0.7413293281767193,-287
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Stefan Struve vs. Ben Rothwell,Stefan Struve,0.5925124215945857,-145
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Stefan Struve vs. Ben Rothwell,Ben Rothwell,0.4074875784054143,145
+2019-11-02,UFC 244: Masvidal vs. Diaz,Stephen Thompson vs. Vicente Luque,Stephen Thompson,0.4447825957224876,125
+2019-11-02,UFC 244: Masvidal vs. Diaz,Stephen Thompson vs. Vicente Luque,Vicente Luque,0.5552174042775124,-125
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Tai Tuivasa vs. Serghei Spivac,Tai Tuivasa,0.578075472909149,-137
+2019-10-05,UFC 243: Whittaker vs. Adesanya,Tai Tuivasa vs. Serghei Spivac,Serghei Spivac,0.42192452709085104,137
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Thiago Alves vs. Tim Means,Thiago Alves,0.3028600246070969,230
+2019-12-07,UFC Fight Night: Overeem vs. Rozenstruik,Thiago Alves vs. Tim Means,Tim Means,0.6971399753929032,-230
+2020-01-18,UFC 246: McGregor vs. Cowboy,Tim Elliott vs. Askar Askarov,Tim Elliott,0.4412161274017837,127
+2020-01-18,UFC 246: McGregor vs. Cowboy,Tim Elliott vs. Askar Askarov,Askar Askarov,0.5587838725982164,-127
+2020-02-08,UFC 247: Jones vs. Reyes,Trevin Giles vs. James Krause,Trevin Giles,0.5801741782586415,-138
+2020-02-08,UFC 247: Jones vs. Reyes,Trevin Giles vs. James Krause,James Krause,0.4198258217413585,138
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Uriah Hall vs. Antonio Carlos Junior,Uriah Hall,0.28091591841321406,256
+2019-09-14,UFC Fight Night: Cowboy vs. Gaethje,Uriah Hall vs. Antonio Carlos Junior,Antonio Carlos Junior,0.7190840815867858,-256
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Vinicius Moreira vs. Paul Craig,Vinicius Moreira,0.3827227500670861,161
+2019-09-21,UFC Fight Night: Rodriguez vs. Stephens,Vinicius Moreira vs. Paul Craig,Paul Craig,0.6172772499329139,-161
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Volkan Oezdemir vs. Aleksandar Rakic,Volkan Oezdemir,0.43428499220546946,130
+2019-12-21,UFC Fight Night: Edgar vs. The Korean Zombie,Volkan Oezdemir vs. Aleksandar Rakic,Aleksandar Rakic,0.5657150077945304,-130
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Warlley Alves vs. Randy Brown,Warlley Alves,0.4678145554655485,114
+2019-11-16,UFC Fight Night: Blachowicz vs. Jacare,Warlley Alves vs. Randy Brown,Randy Brown,0.5321854445344515,-114
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Yair Rodriguez vs. Jeremy Stephens,Yair Rodriguez,0.5810152955173183,-139
+2019-10-18,UFC Fight Night: Reyes vs. Weidman,Yair Rodriguez vs. Jeremy Stephens,Jeremy Stephens,0.4189847044826817,139
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Zabit Magomedsharipov vs. Calvin Kattar,Zabit Magomedsharipov,0.7485399848574075,-298
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Zabit Magomedsharipov vs. Calvin Kattar,Calvin Kattar,0.2514600151425926,298
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Zelim Imadaev vs. Danny Roberts,Zelim Imadaev,0.6552209568475196,-190
+2019-11-09,UFC Fight Night: Zabit vs. Kattar,Zelim Imadaev vs. Danny Roberts,Danny Roberts,0.3447790431524805,190

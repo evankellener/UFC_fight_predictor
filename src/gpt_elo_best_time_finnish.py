@@ -70,10 +70,10 @@ class EnhancedElo:
 
             fight_date = row['DATE']
             if fighter in self.last_fight_dict:
-                if (fight_date - self.last_fight_dict[fighter]).days > 365:
+                if (fight_date - self.last_fight_dict[fighter]).days > 274:
                     fighter_elo *= 0.978
             if opponent in self.last_fight_dict:
-                if (fight_date - self.last_fight_dict[opponent]).days > 365:
+                if (fight_date - self.last_fight_dict[opponent]).days > 274:
                     opponent_elo *= 0.978
 
             if (row.get("ko") == 1 or row.get("ko")):

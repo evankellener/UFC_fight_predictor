@@ -1,7 +1,7 @@
 DROP VIEW IF EXISTS single_full_view;
 
-
 CREATE VIEW single_full_view AS
+WITH base AS (
 SELECT
     date(ed.DATE) AS DATE,
     ms.jbout,
@@ -46,6 +46,30 @@ SELECT
     IFNULL(SUM(fight_time_minutes) OVER w31, 0) AS precomp_tot_time_in_cage_3,
     IFNULL(SUM(fight_time_minutes) OVER w40, 0) AS postcomp_tot_time_in_cage_5,
     IFNULL(SUM(fight_time_minutes) OVER w51, 0) AS precomp_tot_time_in_cage_5,
+    CASE 
+    WHEN IFNULL(SUM(fight_time_minutes) OVER wu0, 0) = 0 THEN 0.0
+    ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER wu0, 0.0) / IFNULL(SUM(fight_time_minutes) OVER wu0, 0.0)
+    END AS postcomp_totalstr_pm,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER wu1, 0) = 0 THEN 0.0
+        ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER wu1, 0.0) / IFNULL(SUM(fight_time_minutes) OVER wu1, 0.0)
+    END AS precomp_totalstr_pm,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w20, 0) = 0 THEN 0.0
+        ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER w20, 0.0) / IFNULL(SUM(fight_time_minutes) OVER w20, 0.0)
+    END AS postcomp_totalstr_pm3,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w31, 0) = 0 THEN 0.0
+        ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER w31, 0.0) / IFNULL(SUM(fight_time_minutes) OVER w31, 0.0)
+    END AS precomp_totalstr_pm3,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w40, 0) = 0 THEN 0.0
+        ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER w40, 0.0) / IFNULL(SUM(fight_time_minutes) OVER w40, 0.0)
+    END AS postcomp_totalstr_pm5,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w51, 0) = 0 THEN 0.0
+        ELSE IFNULL(SUM(CAST(totalacc AS FLOAT)) OVER w51, 0.0) / IFNULL(SUM(fight_time_minutes) OVER w51, 0.0)
+    END AS precomp_totalstr_pm5,
     -- SLpM: Significant Strikes Landed per Minute over 3 and 5 fights
     CASE 
         WHEN IFNULL(SUM(fight_time_minutes) OVER wu0, 0.0) = 0.0 THEN 0.0
@@ -477,6 +501,93 @@ SELECT
         WHEN IFNULL(SUM(groundatt) OVER w51, 0) = 0 THEN 0
         ELSE IFNULL(SUM(CAST(groundacc AS FLOAT)) OVER w51, 0) / IFNULL(SUM(groundatt) OVER w51, 0)
     END AS precomp_groundacc_perc5,
+    -- Control time per minute and control ratio
+    -- ctrl is summed seconds of control in ufc_fighter_match_stats:contentReference[oaicite:3]{index=3}.
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER wu0, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER wu0, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER wu0, 0.0)
+    END AS postcomp_ctrl_per_min,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER wu1, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER wu1, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER wu1, 0.0)
+    END AS precomp_ctrl_per_min,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w20, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER w20, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER w20, 0.0)
+    END AS postcomp_ctrl_per_min3,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w31, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER w31, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER w31, 0.0)
+    END AS precomp_ctrl_per_min3,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w40, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER w40, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER w40, 0.0)
+    END AS postcomp_ctrl_per_min5,
+    CASE 
+        WHEN IFNULL(SUM(fight_time_minutes) OVER w51, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(ctrl AS FLOAT)) OVER w51, 0.0) / 60.0) / IFNULL(SUM(fight_time_minutes) OVER w51, 0.0)
+    END AS precomp_ctrl_per_min5,
+    -- Mix of grappling to striking: (TD attempts + Sub attempts) per Total Strikes Attempted
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER wu0, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER wu0, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER wu0, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER wu0, 0.0)
+    END AS postcomp_grapple_strike_mix,
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER wu1, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER wu1, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER wu1, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER wu1, 0.0)
+    END AS precomp_grapple_strike_mix,
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER w20, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER w20, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER w20, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER w20, 0.0)
+    END AS postcomp_grapple_strike_mix3,
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER w31, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER w31, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER w31, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER w31, 0.0)
+    END AS precomp_grapple_strike_mix3,
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER w40, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER w40, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER w40, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER w40, 0.0)
+    END AS postcomp_grapple_strike_mix5,
+    CASE 
+        WHEN IFNULL(SUM(totalatt) OVER w51, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(CAST(tdatt AS FLOAT)) OVER w51, 0.0) + IFNULL(SUM(CAST(subatt AS FLOAT)) OVER w51, 0.0)) 
+            / IFNULL(SUM(totalatt) OVER w51, 0.0)
+    END AS precomp_grapple_strike_mix5,
+    -- Finishing rate = (KOs + Subs) / Wins over different windows
+    CASE 
+        WHEN IFNULL(SUM(win) OVER wu0, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER wu0, 0.0) + IFNULL(SUM(subw) OVER wu0, 0.0)) / IFNULL(SUM(win) OVER wu0, 0.0)
+    END AS postcomp_finish_rate,
+    CASE 
+        WHEN IFNULL(SUM(win) OVER wu1, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER wu1, 0.0) + IFNULL(SUM(subw) OVER wu1, 0.0)) / IFNULL(SUM(win) OVER wu1, 0.0)
+    END AS precomp_finish_rate,
+    CASE 
+        WHEN IFNULL(SUM(win) OVER w20, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER w20, 0.0) + IFNULL(SUM(subw) OVER w20, 0.0)) / IFNULL(SUM(win) OVER w20, 0.0)
+    END AS postcomp_finish_rate3,
+    CASE 
+        WHEN IFNULL(SUM(win) OVER w31, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER w31, 0.0) + IFNULL(SUM(subw) OVER w31, 0.0)) / IFNULL(SUM(win) OVER w31, 0.0)
+    END AS precomp_finish_rate3,
+    CASE 
+        WHEN IFNULL(SUM(win) OVER w40, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER w40, 0.0) + IFNULL(SUM(subw) OVER w40, 0.0)) / IFNULL(SUM(win) OVER w40, 0.0)
+    END AS postcomp_finish_rate5,
+    CASE 
+        WHEN IFNULL(SUM(win) OVER w51, 0) = 0 THEN 0.0
+        ELSE (IFNULL(SUM(ko) OVER w51, 0.0) + IFNULL(SUM(subw) OVER w51, 0.0)) / IFNULL(SUM(win) OVER w51, 0.0)
+    END AS precomp_finish_rate5,
+    -- Physical profile feature
+    CASE 
+        WHEN IFNULL(HEIGHT, 0) = 0 THEN NULL
+        ELSE CAST(REACH AS FLOAT) / CAST(HEIGHT AS FLOAT)
+    END AS reach_to_height_ratio,
     -- win/loss/ko/kdo over 3 and 5 fights
     IFNULL(SUM(win) OVER wu0, 0) AS postcomp_winsum,
     IFNULL(SUM(win) OVER wu1, 0) AS precomp_winsum,
@@ -692,8 +803,17 @@ WINDOW
     w51 AS (PARTITION BY ms.jfighter ORDER BY date(ed.DATE) ROWS BETWEEN 5 PRECEDING AND 1 PRECEDING),
     wu AS (PARTITION BY ms.jfighter ORDER BY date(ed.DATE) ROWS UNBOUNDED PRECEDING),
     wu0 AS (PARTITION BY ms.jfighter ORDER BY date(ed.DATE) ROWS BETWEEN UNBOUNDED PRECEDING AND 0 PRECEDING),
-    wu1 AS (PARTITION BY ms.jfighter ORDER BY date(ed.DATE) ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING);
-
+    wu1 AS (PARTITION BY ms.jfighter ORDER BY date(ed.DATE) ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING)
+)
+SELECT
+  b.*,
+  (b.postcomp_sigstr_pm  - b.postcomp_sapm )  AS postcomp_str_eff_diff,
+  (b.precomp_sigstr_pm   - b.precomp_sapm )   AS precomp_str_eff_diff,
+  (b.postcomp_sigstr_pm3 - b.postcomp_sapm3)  AS postcomp_str_eff_diff3,
+  (b.precomp_sigstr_pm3  - b.precomp_sapm3)   AS precomp_str_eff_diff3,
+  (b.postcomp_sigstr_pm5 - b.postcomp_sapm5)  AS postcomp_str_eff_diff5,
+  (b.precomp_sigstr_pm5  - b.precomp_sapm5)   AS precomp_str_eff_diff5
+FROM base b;
 
 /* JOIN and pull over Weigth Reach,reach from ufc_fighter_tott. */
 DROP VIEW IF EXISTS single_fighter_view;
@@ -752,6 +872,12 @@ SELECT
 'precomp_tot_time_in_cage_3',
 'postcomp_tot_time_in_cage_5',
 'precomp_tot_time_in_cage_5',
+'postcomp_totalstr_pm',
+'precomp_totalstr_pm',
+'postcomp_totalstr_pm3',
+'precomp_totalstr_pm3',
+'postcomp_totalstr_pm5',
+'precomp_totalstr_pm5',
 'postcomp_sigstr_pm',
 'precomp_sigstr_pm',
 'postcomp_sigstr_pm3',
@@ -868,6 +994,31 @@ SELECT
 'precomp_groundacc_perc3',
 'postcomp_groundacc_perc5',
 'precomp_groundacc_perc5',
+'postcomp_str_eff_diff',
+'precomp_str_eff_diff',
+'postcomp_str_eff_diff3',
+'precomp_str_eff_diff3',
+'postcomp_str_eff_diff5',
+'precomp_str_eff_diff5',
+'postcomp_ctrl_per_min',
+'precomp_ctrl_per_min',
+'postcomp_ctrl_per_min3',
+'precomp_ctrl_per_min3',
+'postcomp_ctrl_per_min5',
+'precomp_ctrl_per_min5',
+'postcomp_grapple_strike_mix',
+'precomp_grapple_strike_mix',
+'postcomp_grapple_strike_mix3',
+'precomp_grapple_strike_mix3',
+'postcomp_grapple_strike_mix5',
+'precomp_grapple_strike_mix5',
+'postcomp_finish_rate',
+'precomp_finish_rate',
+'postcomp_finish_rate3',
+'precomp_finish_rate3',
+'postcomp_finish_rate5',
+'precomp_finish_rate5',
+'reach_to_height_ratio',
 'postcomp_winsum',
 'precomp_winsum',
 'postcomp_boutcount',
@@ -1068,6 +1219,12 @@ SELECT
 'opp_precomp_tot_time_in_cage_3',
 'opp_postcomp_tot_time_in_cage_5',
 'opp_precomp_tot_time_in_cage_5',
+'opp_postcomp_totalstr_pm',
+'opp_precomp_totalstr_pm',
+'opp_postcomp_totalstr_pm3',
+'opp_precomp_totalstr_pm3',
+'opp_postcomp_totalstr_pm5',
+'opp_precomp_totalstr_pm5',
 'opp_postcomp_sigstr_pm',
 'opp_precomp_sigstr_pm',
 'opp_postcomp_sigstr_pm3',
@@ -1184,6 +1341,31 @@ SELECT
 'opp_precomp_groundacc_perc3',
 'opp_postcomp_groundacc_perc5',
 'opp_precomp_groundacc_perc5',
+'opp_postcomp_str_eff_diff',
+'opp_precomp_str_eff_diff',
+'opp_postcomp_str_eff_diff3',
+'opp_precomp_str_eff_diff3',
+'opp_postcomp_str_eff_diff5',
+'opp_precomp_str_eff_diff5',
+'opp_postcomp_ctrl_per_min',
+'opp_precomp_ctrl_per_min',
+'opp_postcomp_ctrl_per_min3',
+'opp_precomp_ctrl_per_min3',
+'opp_postcomp_ctrl_per_min5',
+'opp_precomp_ctrl_per_min5',
+'opp_postcomp_grapple_strike_mix',
+'opp_precomp_grapple_strike_mix',
+'opp_postcomp_grapple_strike_mix3',
+'opp_precomp_grapple_strike_mix3',
+'opp_postcomp_grapple_strike_mix5',
+'opp_precomp_grapple_strike_mix5',
+'opp_postcomp_finish_rate',
+'opp_precomp_finish_rate',
+'opp_postcomp_finish_rate3',
+'opp_precomp_finish_rate3',
+'opp_postcomp_finish_rate5',
+'opp_precomp_finish_rate5',
+'opp_reach_to_height_ratio',
 'opp_postcomp_winsum',
 'opp_precomp_winsum',
 'opp_postcomp_boutcount',
@@ -1388,6 +1570,12 @@ single_fighter_view.DATE,
     single_fighter_view.precomp_tot_time_in_cage_3,
     single_fighter_view.postcomp_tot_time_in_cage_5,
     single_fighter_view.precomp_tot_time_in_cage_5,
+    single_fighter_view.postcomp_totalstr_pm,
+    single_fighter_view.precomp_totalstr_pm,
+    single_fighter_view.postcomp_totalstr_pm3,
+    single_fighter_view.precomp_totalstr_pm3,
+    single_fighter_view.postcomp_totalstr_pm5,
+    single_fighter_view.precomp_totalstr_pm5,
     single_fighter_view.postcomp_sigstr_pm,
     single_fighter_view.precomp_sigstr_pm,
     single_fighter_view.postcomp_sigstr_pm3,
@@ -1504,6 +1692,31 @@ single_fighter_view.DATE,
     single_fighter_view.precomp_groundacc_perc3,
     single_fighter_view.postcomp_groundacc_perc5,
     single_fighter_view.precomp_groundacc_perc5,
+    single_fighter_view.postcomp_str_eff_diff,
+    single_fighter_view.precomp_str_eff_diff,
+    single_fighter_view.postcomp_str_eff_diff3,
+    single_fighter_view.precomp_str_eff_diff3,
+    single_fighter_view.postcomp_str_eff_diff5,
+    single_fighter_view.precomp_str_eff_diff5,
+    single_fighter_view.postcomp_ctrl_per_min,
+    single_fighter_view.precomp_ctrl_per_min,
+    single_fighter_view.postcomp_ctrl_per_min3,
+    single_fighter_view.precomp_ctrl_per_min3,
+    single_fighter_view.postcomp_ctrl_per_min5,
+    single_fighter_view.precomp_ctrl_per_min5,
+    single_fighter_view.postcomp_grapple_strike_mix,
+    single_fighter_view.precomp_grapple_strike_mix,
+    single_fighter_view.postcomp_grapple_strike_mix3,
+    single_fighter_view.precomp_grapple_strike_mix3,
+    single_fighter_view.postcomp_grapple_strike_mix5,
+    single_fighter_view.precomp_grapple_strike_mix5,
+    single_fighter_view.reach_to_height_ratio,
+    single_fighter_view.postcomp_finish_rate,
+    single_fighter_view.precomp_finish_rate,
+    single_fighter_view.postcomp_finish_rate3,
+    single_fighter_view.precomp_finish_rate3,
+    single_fighter_view.postcomp_finish_rate5,
+    single_fighter_view.precomp_finish_rate5,
     single_fighter_view.postcomp_winsum,
     single_fighter_view.precomp_winsum,
     single_fighter_view.postcomp_boutcount,
@@ -1704,6 +1917,12 @@ single_fighter_view.DATE,
     single_opponent_view.precomp_tot_time_in_cage_3 as opp_precomp_tot_time_in_cage_3,
     single_opponent_view.postcomp_tot_time_in_cage_5 as opp_postcomp_tot_time_in_cage_5,
     single_opponent_view.precomp_tot_time_in_cage_5 as opp_precomp_tot_time_in_cage_5,
+    single_opponent_view.postcomp_totalstr_pm as opp_postcomp_totalstr_pm,
+    single_opponent_view.precomp_totalstr_pm as opp_precomp_totalstr_pm,
+    single_opponent_view.postcomp_totalstr_pm3 as opp_postcomp_totalstr_pm3,
+    single_opponent_view.precomp_totalstr_pm3 as opp_precomp_totalstr_pm3,
+    single_opponent_view.postcomp_totalstr_pm5 as opp_postcomp_totalstr_pm5,
+    single_opponent_view.precomp_totalstr_pm5 as opp_precomp_totalstr_pm5,
     single_opponent_view.postcomp_sigstr_pm as opp_postcomp_sigstr_pm,
     single_opponent_view.precomp_sigstr_pm as opp_precomp_sigstr_pm,
     single_opponent_view.postcomp_sigstr_pm3 as opp_postcomp_sigstr_pm3,
@@ -1820,6 +2039,31 @@ single_fighter_view.DATE,
     single_opponent_view.precomp_groundacc_perc3 as opp_precomp_groundacc_perc3,
     single_opponent_view.postcomp_groundacc_perc5 as opp_postcomp_groundacc_perc5,
     single_opponent_view.precomp_groundacc_perc5 as opp_precomp_groundacc_perc5,
+    single_opponent_view.postcomp_str_eff_diff as opp_postcomp_str_eff_diff,
+    single_opponent_view.precomp_str_eff_diff as opp_precomp_str_eff_diff,
+    single_opponent_view.postcomp_str_eff_diff3 as opp_postcomp_str_eff_diff3,
+    single_opponent_view.precomp_str_eff_diff3 as opp_precomp_str_eff_diff3,
+    single_opponent_view.postcomp_str_eff_diff5 as opp_postcomp_str_eff_diff5,
+    single_opponent_view.precomp_str_eff_diff5 as opp_precomp_str_eff_diff5,
+    single_opponent_view.postcomp_ctrl_per_min as opp_postcomp_ctrl_per_min,
+    single_opponent_view.precomp_ctrl_per_min as opp_precomp_ctrl_per_min,
+    single_opponent_view.postcomp_ctrl_per_min3 as opp_postcomp_ctrl_per_min3,
+    single_opponent_view.precomp_ctrl_per_min3 as opp_precomp_ctrl_per_min3,
+    single_opponent_view.postcomp_ctrl_per_min5 as opp_postcomp_ctrl_per_min5,
+    single_opponent_view.precomp_ctrl_per_min5 as opp_precomp_ctrl_per_min5,
+    single_opponent_view.postcomp_grapple_strike_mix as opp_postcomp_grapple_strike_mix,
+    single_opponent_view.precomp_grapple_strike_mix as opp_precomp_grapple_strike_mix,
+    single_opponent_view.postcomp_grapple_strike_mix3 as opp_postcomp_grapple_strike_mix3,
+    single_opponent_view.precomp_grapple_strike_mix3 as opp_precomp_grapple_strike_mix3,
+    single_opponent_view.postcomp_grapple_strike_mix5 as opp_postcomp_grapple_strike_mix5,
+    single_opponent_view.precomp_grapple_strike_mix5 as opp_precomp_grapple_strike_mix5,
+    single_opponent_view.postcomp_finish_rate as opp_postcomp_finish_rate,
+    single_opponent_view.precomp_finish_rate as opp_precomp_finish_rate,
+    single_opponent_view.postcomp_finish_rate3 as opp_postcomp_finish_rate3,
+    single_opponent_view.precomp_finish_rate3 as opp_precomp_finish_rate3,
+    single_opponent_view.postcomp_finish_rate5 as opp_postcomp_finish_rate5,
+    single_opponent_view.precomp_finish_rate5 as opp_precomp_finish_rate5,
+    single_opponent_view.reach_to_height_ratio as opp_reach_to_height_ratio,
     single_opponent_view.postcomp_winsum as opp_postcomp_winsum,
     single_opponent_view.precomp_winsum as opp_precomp_winsum,
     single_opponent_view.postcomp_boutcount as opp_postcomp_boutcount,
