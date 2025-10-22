@@ -102,7 +102,15 @@ def make_consistent_odds_table(test_df, probs):
 
 
 class FightOutcomeModel:
-    def __init__(self, file_path, scaler_path=None):
+    def __init__(self, file_path, scaler_path=None, random_seed=42):
+        import numpy as np
+        import random
+        
+        # Set global random seeds for reproducibility at initialization
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        self.random_seed = random_seed
+        
         self.elo_columns = [
             'precomp_elo', 'precomp_elo_prev', 'precomp_elo_change_3', 'precomp_elo_change_5',
             'opp_precomp_elo', 'opp_precomp_elo_prev', 'opp_precomp_elo_change_3', 'opp_precomp_elo_change_5'
@@ -153,25 +161,31 @@ class FightOutcomeModel:
             'precomp_strike_elo_change_3', 'opp_precomp_strike_elo_change_3','precomp_strike_elo_change_5', 'opp_precomp_strike_elo_change_5'
         ]
 
+        # Test with multiple elo systems (no age - it adds noise)
+        # Hypothesis: Different elo systems capture different fight aspects
+        '''   📌  1. precomp_elo_diff
+   📌  2. precomp_strike_elo_diff
+   📌  3. precomp_grapple_elo_diff
+   🆕  4. opp_age_ratio_difference
+   🆕  5. precomp_tdavg
+   🆕  6. opp_precomp_tdavg
+   🆕  7. precomp_tdavg5
+   '''
+        # XGBoost GA Champion features (28 total - 1.37% better than LogReg GA)
+        # Combined fitness: 0.062610 | Accuracy: 68.22% | Log Loss: 0.6196
+        # Training: 55 mins | 100 generations | 6,307 evaluations
         self.importance_columns = [
-            #'age_ratio_difference', 'opp_age_ratio_difference', 'opp_precomp_elo', 'opp_precomp_sigstr_perc5', 'opp_precomp_strdef5', 'opp_precomp_strike_elo', 'opp_precomp_tdavg', 'precomp_elo', 'precomp_strdef5', 'precomp_strike_elo', 'precomp_tdavg',   
-            'age_ratio_difference','opp_age_ratio_difference','precomp_elo','opp_precomp_elo', 'precomp_losssum3', 'opp_precomp_losssum3', 'opp_precomp_strike_elo', 'precomp_strike_elo', 'precomp_strdef5', 'opp_precomp_strdef5', 'precomp_sapm5', 'opp_precomp_headacc_perc', 'precomp_headacc_perc', 'opp_precomp_tdavg3', 'precomp_tdavg3', 'precomp_tdavg',
-            'weightindex', 'opp_weight_of_fight', 'REACH', 'opp_REACH', 'opp_precomp_tdavg', 'precomp_groundacc_perc3', 'opp_precomp_winsum5', 'opp_precomp_bodyacc_perc', 'opp_precomp_bodyacc_perc5', 'opp_precomp_sigstr_perc', 'precomp_subavg3', 'opp_precomp_headacc_perc3', 'opp_precomp_distacc_perc', 'opp_precomp_totalacc_perc', 'opp_precomp_tddef3', 
-            'opp_precomp_sigstr_perc5', 'opp_precomp_subavg3', 'precomp_legacc_perc3', 'opp_age', 'opp_precomp_losssum', 
-            #
-            'precomp_groundacc_perc5', 'opp_precomp_strike_elo_change_3', 'opp_precomp_ctrl_per_min5', 'opp_precomp_strdef3', 'opp_precomp_tddef5', 'opp_precomp_str_eff_diff3', 'opp_precomp_str_eff_diff5', 'precomp_ctrl_per_min3'
+            'precomp_elo_diff', 'precomp_strike_elo_diff', 'precomp_grapple_elo_diff',
+            'precomp_legacc_perc5', 'opp_precomp_sigstr_pm5', 'opp_precomp_grapple_strike_mix',
+            'opp_precomp_clinchacc_perc', 'opp_age_ratio_difference', 'opp_precomp_elo',
+            'age_ratio_difference', 'precomp_distacc_perc', 'opp_precomp_winsum',
+            'precomp_tdavg3', 'opp_precomp_legacc_perc3', 'opp_precomp_str_eff_diff3',
+            'precomp_winsum', 'opp_precomp_sapm3', 'precomp_groundacc_perc',
+            'opp_precomp_ctrl_per_min', 'opp_REACH', 'precomp_winsum5',
+            'opp_precomp_strdef5', 'precomp_ctrl_per_min', 'opp_precomp_tdavg5',
+            'opp_precomp_headacc_perc5', 'precomp_elo_change_5', 'opp_precomp_winsum3',
+            'opp_precomp_groundacc_perc5'
         ]
-
-        # best log loss:
-        """
-                    'precomp_elo','opp_precomp_elo', 'precomp_elo_change_3', 'opp_precomp_elo_change_3', 'precomp_elo_change_5', 'opp_precomp_elo_change_5', 
-            'precomp_tdavg3', 'opp_precomp_tdavg3', 'precomp_tdavg5', 'opp_precomp_tdavg5', 'precomp_tddef3', 'opp_precomp_tddef3', 'precomp_tddef5', 'opp_precomp_tddef5',
-            'precomp_totalacc_perc' , 'opp_precomp_totalacc_perc', 'precomp_totalacc_perc3', 'opp_precomp_totalacc_perc3', 'precomp_totalacc_perc5', 'opp_precomp_totalacc_perc5',
-            'precomp_strdef', 'opp_precomp_strdef', 'precomp_strdef3', 'opp_precomp_strdef3', 'precomp_strdef5', 'opp_precomp_strdef5',
-            'age_ratio_difference', 'opp_age_ratio_difference', 'precomp_strike_elo', 'opp_precomp_strike_elo', 'precomp_strike_elo_change_3', 'opp_precomp_strike_elo_change_3', 'precomp_strike_elo_change_5', 'opp_precomp_strike_elo_change_5',
-            'opp_precomp_tdavg', 'precomp_tdavg','opp_precomp_tdacc_perc5', 'precomp_tdacc_perc5', 'REACH', 'opp_REACH', 'precomp_winsum3', 'opp_precomp_winsum3', 'weightindex', 'opp_weightindex', 'weight_of_fight', 'opp_weight_of_fight',
-            'precomp_distacc_perc', 'opp_precomp_distacc_perc', 'precomp_tdacc_perc3', 'opp_precomp_tdacc_perc3', 'precomp_legacc_perc3', 'opp_precomp_legacc_perc3', 'precomp_distacc_perc5', 'opp_precomp_headacc_perc3'
-        """
         
         self.df = pd.read_csv(file_path, low_memory=False)
         
@@ -216,16 +230,59 @@ class FightOutcomeModel:
         self.debug_data_split()
 
     def _prepare_data(self):
+        print(f"DEBUG: Starting _prepare_data with {len(self.df)} rows")
         latest = self.df['DATE'].max()
         cutoff = latest - timedelta(days=365)
+        
+        # Create differential elo features BEFORE filtering
+        # These capture the difference between fighter and opponent elo ratings
+        if 'precomp_elo_diff' in self.df.columns:
+            self.df['elo_advantage'] = (self.df['precomp_elo_diff'] > 0).astype(int)
+            print(f"DEBUG: Created 'elo_advantage' feature (hardcoded threshold at 0)")
+        
+        # Create strike_elo_diff if it doesn't exist
+        if 'precomp_strike_elo' in self.df.columns and 'opp_precomp_strike_elo' in self.df.columns:
+            if 'precomp_strike_elo_diff' not in self.df.columns:
+                self.df['precomp_strike_elo_diff'] = self.df['precomp_strike_elo'] - self.df['opp_precomp_strike_elo']
+                print(f"DEBUG: Created 'precomp_strike_elo_diff' feature")
+            self.df['strike_elo_advantage'] = (self.df['precomp_strike_elo_diff'] > 0).astype(int)
+            print(f"DEBUG: Created 'strike_elo_advantage' feature")
+            
+        # Create grapple_elo_diff if it doesn't exist
+        if 'precomp_grapple_elo' in self.df.columns and 'opp_precomp_grapple_elo' in self.df.columns:
+            if 'precomp_grapple_elo_diff' not in self.df.columns:
+                self.df['precomp_grapple_elo_diff'] = self.df['precomp_grapple_elo'] - self.df['opp_precomp_grapple_elo']
+                print(f"DEBUG: Created 'precomp_grapple_elo_diff' feature")
+            self.df['grapple_elo_advantage'] = (self.df['precomp_grapple_elo_diff'] > 0).astype(int)
+            print(f"DEBUG: Created 'grapple_elo_advantage' feature")
+        
         valid_cols = [c for c in getattr(self, 'importance_columns', []) if c in self.df.columns]
+        print(f"DEBUG: valid_cols = {valid_cols}")
+        print(f"DEBUG: Columns in valid_cols that exist: {[c for c in valid_cols if c in self.df.columns]}")
+        print(f"DEBUG: After finding valid_cols, df has {len(self.df)} rows")
+        
         self.df = self.df.dropna(subset=['win'])
+        print(f"DEBUG: After dropna(win), df has {len(self.df)} rows")
+        
         # Fix: Convert win column to integer since it's stored as string
         self.df['win'] = self.df['win'].astype(int)
+        
         thresh = int(0.7 * len(valid_cols))
-        self.df = self.df[self.df[valid_cols].isnull().sum(axis=1) < thresh]
+        print(f"DEBUG: thresh = {thresh}, will keep rows with <= {thresh} nulls in {len(valid_cols)} columns")
+        
+        if len(valid_cols) > 0:
+            null_counts = self.df[valid_cols].isnull().sum(axis=1)
+            print(f"DEBUG: Null counts range: min={null_counts.min()}, max={null_counts.max()}, mean={null_counts.mean():.2f}")
+            self.df = self.df[null_counts <= thresh]  # Changed < to <= to handle thresh=0 case
+            print(f"DEBUG: After null filtering, df has {len(self.df)} rows")
+        else:
+            print("DEBUG: WARNING - valid_cols is empty!")
+        
         imp = SimpleImputer(strategy='median')
-        self.df[valid_cols] = imp.fit_transform(self.df[valid_cols])
+        if len(self.df) > 0 and len(valid_cols) > 0:
+            self.df[valid_cols] = imp.fit_transform(self.df[valid_cols])
+        else:
+            print(f"DEBUG: ERROR - Cannot impute with {len(self.df)} rows and {len(valid_cols)} columns")
         
         # Save unfiltered dataset before filtering
         print("Saving unfiltered dataset...")
@@ -253,8 +310,15 @@ class FightOutcomeModel:
         self.df.to_csv(filtered_path, index=False)
         print(f"Filtered dataset saved: {filtered_path} ({len(self.df)} rows)")
         
+        print(f"DEBUG: Date range in data: {self.df['DATE'].min()} to {self.df['DATE'].max()}")
+        print(f"DEBUG: Cutoff date for train/test split: {cutoff}")
+        print(f"DEBUG: Will use dates < {cutoff} for train, >= {cutoff} for test")
+        
         self.train_df = self.df[self.df['DATE'] < cutoff]
         self.test_df  = self.df[self.df['DATE'] >= cutoff]
+        
+        print(f"DEBUG: Train df size: {len(self.train_df)}, Test df size: {len(self.test_df)}")
+        
         self.X_train  = self.train_df[valid_cols]
         self.y_train  = self.train_df['win']
         self.X_test   = self.test_df[valid_cols]
@@ -263,6 +327,90 @@ class FightOutcomeModel:
         print(f"Test set size: {len(self.X_test)}")
         print(f"Feature count: {len(valid_cols)}")
         return self.X_train, self.y_train, self.X_test, self.y_test
+
+    def add_rolling_ema(self, span=200, min_periods=20):
+        """
+        Add rolling_ema temporal features to the dataset.
+        
+        This adds both precomp and postcomp versions of rolling_ema,
+        which tracks the meta-game trend (are favorites or underdogs winning lately).
+        
+        Args:
+            span: EMA span (default 200 fights)
+            min_periods: Minimum periods before calculating (default 20)
+        
+        Returns:
+            self (for method chaining)
+        
+        Usage:
+            fight_model = FightOutcomeModel('final.csv', random_seed=42)
+            fight_model.add_rolling_ema()
+            fight_model.importance_columns.append('precomp_rolling_ema')
+            # Now train models with the new feature
+        """
+        print("\n" + "="*80)
+        print("ADDING ROLLING_EMA TEMPORAL FEATURE")
+        print("="*80)
+        print(f"Parameters: span={span}, min_periods={min_periods}")
+        print()
+        
+        # Work with the full dataframe before train/test split
+        df = self.df.copy()
+        
+        # Sort by date to calculate rolling statistics
+        print("Sorting data by date...")
+        df = df.sort_values('DATE').reset_index(drop=True)
+        
+        # Convert win to numeric if needed
+        print("Converting win column to numeric...")
+        df['win_numeric'] = pd.to_numeric(df['win'], errors='coerce')
+        
+        # Calculate rolling EMA (shifted to prevent data leakage)
+        print(f"Calculating rolling EMA with span={span}...")
+        rolling_ema_full = df['win_numeric'].ewm(span=span, min_periods=min_periods).mean()
+        
+        # Create precomp version (shifted by 1 to exclude current fight)
+        df['precomp_rolling_ema'] = rolling_ema_full.shift(1)
+        
+        # Create postcomp version (includes current fight)
+        df['postcomp_rolling_ema'] = rolling_ema_full
+        
+        # For the opponent versions, since rolling_ema is global (not fighter-specific),
+        # both fighters see the same value. We create opp_ versions for consistency.
+        df['opp_precomp_rolling_ema'] = df['precomp_rolling_ema']
+        df['opp_postcomp_rolling_ema'] = df['postcomp_rolling_ema']
+        
+        # Drop rows where rolling_ema couldn't be calculated
+        rows_before = len(df)
+        df = df.dropna(subset=['precomp_rolling_ema'])
+        rows_after = len(df)
+        
+        print(f"Rows removed due to insufficient history: {rows_before - rows_after}")
+        print(f"Rows remaining: {rows_after}")
+        
+        # Update the main dataframe
+        self.df = df
+        
+        # Show statistics
+        print()
+        print("Rolling EMA Statistics:")
+        print(f"  Min: {df['precomp_rolling_ema'].min():.4f}")
+        print(f"  25th percentile: {df['precomp_rolling_ema'].quantile(0.25):.4f}")
+        print(f"  Median: {df['precomp_rolling_ema'].median():.4f}")
+        print(f"  75th percentile: {df['precomp_rolling_ema'].quantile(0.75):.4f}")
+        print(f"  Max: {df['precomp_rolling_ema'].max():.4f}")
+        print()
+        
+        print("✅ Rolling EMA features added successfully!")
+        print("   New columns: precomp_rolling_ema, postcomp_rolling_ema")
+        print("                opp_precomp_rolling_ema, opp_postcomp_rolling_ema")
+        print()
+        print("To use in training, add to importance_columns:")
+        print("  fight_model.importance_columns.append('precomp_rolling_ema')")
+        print("="*80)
+        print()
+        
+        return self
 
     def covariance_feature_analysis(self, top_n=20):
         import seaborn as sns
@@ -354,11 +502,57 @@ class FightOutcomeModel:
         print("Train feature summaries:\n", self.X_train.describe().transpose())
         print("Test  feature summaries:\n", self.X_test.describe().transpose())
 
-    def tune_logistic_regression(self):
+    def tune_logistic_regression(self, random_seed=None, use_rolling_ema=False):
+        import numpy as np
+        import random
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility (same as greedy search)
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        # Handle rolling_ema feature
+        if use_rolling_ema:
+            # Check if rolling_ema already exists
+            if 'precomp_rolling_ema' not in self.df.columns:
+                print("\nAdding rolling_ema feature...")
+                self.add_rolling_ema(span=200, min_periods=20)
+            
+            # Load champion features and add rolling_ema
+            import json
+            import os
+            config_path = None
+            possible_paths = [
+                'xgboost_ga_results_1760303427.json',
+                '../xgboost_ga_results_1760303427.json',
+                '/Users/evankellener/Desktop/UFC_fight_predictor/xgboost_ga_results_1760303427.json'
+            ]
+            for path in possible_paths:
+                if os.path.exists(path):
+                    config_path = path
+                    break
+            
+            if config_path:
+                with open(config_path) as f:
+                    config = json.load(f)
+                champion_features = config['features']
+                
+                # Replace importance_columns with champion features + rolling_ema
+                print(f"\nReplacing features with {len(champion_features)} champion features + rolling_ema...")
+                self.importance_columns = champion_features + ['precomp_rolling_ema']
+                print(f"Total features: {len(self.importance_columns)}")
+                
+                # Rebuild train/test with new features
+                print("Rebuilding train/test split...")
+                self._prepare_data()
+        
         pipeline = Pipeline([
             ('imputer', SimpleImputer(strategy='median')),
             ('scaler', RobustScaler()),
-            ('clf', LogisticRegression(max_iter=10000, random_state=42))
+            ('clf', LogisticRegression(max_iter=10000, random_state=random_seed))
         ])
         params = {
             'clf__C': [0.01, 0.1, 1, 10],
@@ -402,13 +596,601 @@ class FightOutcomeModel:
         self.best_model = best
         return best, acc
     
+    def tune_logistic_regression_minimal_regularization(self, random_seed=None):
+        """
+        Logistic regression with minimal regularization to match simple elo rule.
+        Tests if regularization is preventing the model from learning the true elo weight.
+        """
+        import numpy as np
+        import random
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        pipeline = Pipeline([
+            ('imputer', SimpleImputer(strategy='median')),
+            ('scaler', RobustScaler()),
+            ('clf', LogisticRegression(max_iter=10000, random_state=random_seed))
+        ])
+        params = {
+            'clf__C': [100, 1000, 10000],  # Very high C = minimal regularization
+            'clf__penalty': ['l2', 'none'],  # Also try no regularization
+            'clf__solver': ['lbfgs', 'saga'],
+            'clf__class_weight': [None, 'balanced']
+        }
+        tscv = TimeSeriesSplit(n_splits=5)
+        grid = GridSearchCV(pipeline, params, cv=tscv, scoring='accuracy', n_jobs=-1)
+        grid.fit(self.X_train, self.y_train)
+        best = grid.best_estimator_
+        self.probs = best.predict_proba(self.X_test)[:, 1]
+        self.ml_odds = [prob_to_american_odds(p) for p in self.probs]
+        ll = log_loss(self.y_test, self.probs)
+        preds = best.predict(self.X_test)
+        acc = accuracy_score(self.y_test, preds)
+        
+        print("\n" + "="*60)
+        print("MINIMAL REGULARIZATION LOGISTIC REGRESSION")
+        print("="*60)
+        print("Best params:", grid.best_params_)
+        print(f"Train accuracy: {best.score(self.X_train, self.y_train):.3f}")
+        print(f"Log loss: {ll:.3f}")
+        print(f"Test accuracy: {acc:.3f}")
+        
+        # Show learned coefficients
+        clf = best.named_steps['clf']
+        print("\nLearned coefficients:")
+        for feat, coef in zip(self.X_train.columns, clf.coef_[0]):
+            print(f"  {feat}: {coef:.4f}")
+        print(f"  Intercept: {clf.intercept_[0]:.4f}")
+        
+        # Compare to simple elo rule
+        elo_acc = self.basic_elo_pred()
+        print(f"\nComparison:")
+        print(f"  Logistic Regression: {acc:.4f} ({acc*100:.2f}%)")
+        print(f"  Simple Elo Rule:     {elo_acc:.4f} ({elo_acc*100:.2f}%)")
+        print(f"  Difference:          {(acc - elo_acc)*100:.2f}%")
+        print("="*60)
+        
+        self.best_model = best
+        return best, acc
+    
+    def tune_mlp(self, random_seed=None, use_rolling_ema=False):
+        """
+        Train and tune MLP (Multi-Layer Perceptron) neural network.
+        Similar interface to tune_logistic_regression().
+        Sets self.probs and self.ml_odds for use with generate_odds_table().
+        
+        Args:
+            random_seed: Random seed for reproducibility
+            use_rolling_ema: If True, add rolling_ema feature to champion config
+                            (replaces features with 28 champion + rolling_ema)
+        """
+        import numpy as np
+        import random
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        # Handle rolling_ema feature
+        if use_rolling_ema:
+            # Check if rolling_ema already exists
+            if 'precomp_rolling_ema' not in self.df.columns:
+                print("\nAdding rolling_ema feature...")
+                self.add_rolling_ema(span=200, min_periods=20)
+            
+            # Load champion features and add rolling_ema
+            import json
+            import os
+            config_path = None
+            possible_paths = [
+                'xgboost_ga_results_1760303427.json',
+                '../xgboost_ga_results_1760303427.json',
+                '/Users/evankellener/Desktop/UFC_fight_predictor/xgboost_ga_results_1760303427.json'
+            ]
+            for path in possible_paths:
+                if os.path.exists(path):
+                    config_path = path
+                    break
+            
+            if config_path:
+                with open(config_path) as f:
+                    config = json.load(f)
+                champion_features = config['features']
+                
+                # Replace importance_columns with champion features + rolling_ema
+                print(f"\nReplacing features with {len(champion_features)} champion features + rolling_ema...")
+                self.importance_columns = champion_features + ['precomp_rolling_ema']
+                print(f"Total features: {len(self.importance_columns)}")
+                
+                # Rebuild train/test with new features
+                print("Rebuilding train/test split...")
+                self._prepare_data()
+        
+        print("\n" + "="*80)
+        print("TRAINING MLP (MULTI-LAYER PERCEPTRON)")
+        print("="*80)
+        
+        pipeline = Pipeline([
+            ('imputer', SimpleImputer(strategy='median')),
+            ('scaler', RobustScaler()),
+            ('clf', MLPClassifier(max_iter=1000, random_state=random_seed, early_stopping=True))
+        ])
+        
+        params = {
+            'clf__hidden_layer_sizes': [
+                (64, 32, 16),
+                (32, 16, 8),
+                (128, 64),
+                (64, 32),
+                (32, 16)
+            ],
+            'clf__alpha': [0.0001, 0.001, 0.01],
+            'clf__activation': ['relu', 'tanh'],
+            'clf__learning_rate': ['adaptive', 'constant']
+        }
+        
+        tscv = TimeSeriesSplit(n_splits=5)
+        print("Running GridSearchCV with TimeSeriesSplit (5 splits)...")
+        grid = GridSearchCV(pipeline, params, cv=tscv, scoring='neg_log_loss', n_jobs=-1, verbose=1)
+        grid.fit(self.X_train, self.y_train)
+        
+        best = grid.best_estimator_
+        self.probs = best.predict_proba(self.X_test)[:, 1]
+        self.ml_odds = [prob_to_american_odds(p) for p in self.probs]
+        
+        ll = log_loss(self.y_test, self.probs)
+        preds = best.predict(self.X_test)
+        acc = accuracy_score(self.y_test, preds)
+        
+        print("\n" + "="*80)
+        print("MLP RESULTS")
+        print("="*80)
+        print("Best params:", grid.best_params_)
+        print(f"Train accuracy: {best.score(self.X_train, self.y_train):.4f}")
+        print(f"Test accuracy: {acc:.4f} ({acc*100:.2f}%)")
+        print(f"Log loss: {ll:.4f}")
+        
+        # 95% confidence interval for test accuracy
+        count = int(acc * len(self.y_test))
+        lower, upper = proportion_confint(count=count, nobs=len(self.y_test), method='wilson')
+        print(f"95% CI for test accuracy: {lower:.3f} - {upper:.3f}")
+        print("="*80 + "\n")
+        
+        # Show sample predictions
+        display_df = self.test_df[['DATE', 'EVENT', 'BOUT', 'FIGHTER']].copy()
+        display_df['prob_win'] = np.round(self.probs, 3)
+        display_df['odds'] = self.ml_odds
+        print("\nSample Predictions:")
+        print(display_df.head(10).to_string(index=False))
+        
+        self.best_model = best
+        return best, acc
+    
+    def tune_xgboost_full(self, random_seed=None, use_champion_config=False, use_rolling_ema=False):
+        """
+        Train and tune XGBoost with comprehensive GridSearch or use champion config.
+        Similar interface to tune_logistic_regression().
+        Sets self.probs and self.ml_odds for use with generate_odds_table().
+        
+        Args:
+            random_seed: Random seed for reproducibility
+            use_champion_config: If True, use the champion XGBoost configuration
+                                 from xgboost_ga_results_1760303427.json
+            use_rolling_ema: If True, add rolling_ema feature to champion config
+                            (only works with use_champion_config=True)
+                            Expected result: 71.05% accuracy, 0.5582 log loss
+        """
+        import numpy as np
+        import random
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        if not xgboost_available:
+            raise ImportError("XGBoost not available. Install with: pip install xgboost")
+        
+        # Handle rolling_ema feature
+        if use_rolling_ema:
+            if not use_champion_config:
+                print("Warning: use_rolling_ema=True requires use_champion_config=True")
+                print("Setting use_champion_config=True")
+                use_champion_config = True
+            
+            # Check if rolling_ema already exists
+            if 'precomp_rolling_ema' not in self.df.columns:
+                print("\nAdding rolling_ema feature...")
+                self.add_rolling_ema(span=200, min_periods=20)
+            
+            # Load champion features and add rolling_ema
+            import json
+            import os
+            config_path = None
+            possible_paths = [
+                'xgboost_ga_results_1760303427.json',
+                '../xgboost_ga_results_1760303427.json',
+                '/Users/evankellener/Desktop/UFC_fight_predictor/xgboost_ga_results_1760303427.json'
+            ]
+            for path in possible_paths:
+                if os.path.exists(path):
+                    config_path = path
+                    break
+            
+            if config_path:
+                with open(config_path) as f:
+                    config = json.load(f)
+                champion_features = config['features']
+                
+                # Replace importance_columns with champion features + rolling_ema
+                print(f"\nReplacing features with {len(champion_features)} champion features + rolling_ema...")
+                self.importance_columns = champion_features + ['precomp_rolling_ema']
+                print(f"Total features: {len(self.importance_columns)}")
+                
+                # Rebuild train/test with new features
+                print("Rebuilding train/test split...")
+                self._prepare_data()
+        
+        print("\n" + "="*80)
+        print("TRAINING XGBOOST")
+        print("="*80)
+        
+        # Prepare data
+        imputer = SimpleImputer(strategy='median')
+        scaler = RobustScaler()
+        
+        X_train_imp = imputer.fit_transform(self.X_train)
+        X_test_imp = imputer.transform(self.X_test)
+        
+        X_train_scaled = scaler.fit_transform(X_train_imp)
+        X_test_scaled = scaler.transform(X_test_imp)
+        
+        if use_champion_config:
+            # Load champion configuration
+            import json
+            import os
+            try:
+                # Try multiple paths to find the config file
+                possible_paths = [
+                    'xgboost_ga_results_1760303427.json',  # Current directory
+                    '../xgboost_ga_results_1760303427.json',  # Parent directory (for notebooks)
+                    '/Users/evankellener/Desktop/UFC_fight_predictor/xgboost_ga_results_1760303427.json'  # Absolute path
+                ]
+                
+                config_path = None
+                for path in possible_paths:
+                    if os.path.exists(path):
+                        config_path = path
+                        break
+                
+                if config_path is None:
+                    raise FileNotFoundError("Champion config file not found in any expected location")
+                
+                with open(config_path) as f:
+                    champion_config = json.load(f)
+                
+                champion_features = champion_config['features']
+                champion_metrics = champion_config.get('metrics', {})
+                
+                print("Using champion XGBoost configuration")
+                print(f"Champion features: {len(champion_features)}")
+                print(f"Champion baseline accuracy: {champion_metrics.get('accuracy', 'N/A')}")
+                print(f"Champion baseline log loss: {champion_metrics.get('log_loss', 'N/A')}")
+                
+                # If use_rolling_ema=True, use all features (champion + rolling_ema)
+                # Otherwise, filter to only champion features
+                if use_rolling_ema:
+                    print(f"\nUsing all {X_train_scaled.shape[1]} features (champion + rolling_ema)...")
+                    X_train_champion = X_train_scaled
+                    X_test_champion = X_test_scaled
+                    print(f"Features: {list(self.X_train.columns)}")
+                else:
+                    print(f"\nFiltering from {X_train_scaled.shape[1]} features to {len(champion_features)} champion features...")
+                    
+                    # Get feature indices that match champion features
+                    feature_cols = self.X_train.columns.tolist()
+                    champion_indices = []
+                    missing_features = []
+                    
+                    for feat in champion_features:
+                        if feat in feature_cols:
+                            champion_indices.append(feature_cols.index(feat))
+                        else:
+                            missing_features.append(feat)
+                    
+                    if missing_features:
+                        print(f"WARNING: Missing {len(missing_features)} champion features: {missing_features[:5]}")
+                        raise ValueError(f"Cannot use champion config - missing features: {missing_features}")
+                    
+                    # Select only champion features
+                    X_train_champion = X_train_scaled[:, champion_indices]
+                    X_test_champion = X_test_scaled[:, champion_indices]
+                    
+                    print(f"Using {X_train_champion.shape[1]} champion features")
+                
+                model = XGBClassifier(
+                    random_state=random_seed,
+                    n_jobs=-1,
+                    eval_metric='logloss',
+                    early_stopping_rounds=20,
+                    **champion_config['hyperparams']
+                )
+                
+                print("\nTraining champion model...")
+                model.fit(
+                    X_train_champion, self.y_train,
+                    eval_set=[(X_test_champion, self.y_test)],
+                    verbose=False
+                )
+                best = model
+                
+                # Update scaled data to use champion features for predictions
+                X_train_scaled = X_train_champion
+                X_test_scaled = X_test_champion
+                
+            except FileNotFoundError:
+                print("Warning: Champion config file not found, using default parameters")
+                use_champion_config = False
+        
+        if not use_champion_config:
+            # Grid search for best parameters
+            params = {
+                'n_estimators': [100, 200, 300],
+                'max_depth': [3, 5, 7],
+                'learning_rate': [0.01, 0.05, 0.1],
+                'subsample': [0.8, 1.0],
+                'colsample_bytree': [0.8, 1.0],
+                'min_child_weight': [1, 3, 5]
+            }
+            
+            model = XGBClassifier(
+                random_state=random_seed,
+                n_jobs=-1,
+                eval_metric='logloss',
+                use_label_encoder=False
+            )
+            
+            tscv = TimeSeriesSplit(n_splits=3)
+            print("Running GridSearchCV with TimeSeriesSplit (3 splits)...")
+            grid = GridSearchCV(model, params, cv=tscv, scoring='neg_log_loss', n_jobs=-1, verbose=1)
+            grid.fit(X_train_scaled, self.y_train)
+            
+            best = grid.best_estimator_
+            print("\nBest params:", grid.best_params_)
+        
+        # Generate predictions
+        self.probs = best.predict_proba(X_test_scaled)[:, 1]
+        self.ml_odds = [prob_to_american_odds(p) for p in self.probs]
+        
+        ll = log_loss(self.y_test, self.probs)
+        preds = best.predict(X_test_scaled)
+        acc = accuracy_score(self.y_test, preds)
+        
+        print("\n" + "="*80)
+        print("XGBOOST RESULTS")
+        print("="*80)
+        print(f"Train accuracy: {best.score(X_train_scaled, self.y_train):.4f}")
+        print(f"Test accuracy: {acc:.4f} ({acc*100:.2f}%)")
+        print(f"Log loss: {ll:.4f}")
+        
+        # 95% confidence interval for test accuracy
+        count = int(acc * len(self.y_test))
+        lower, upper = proportion_confint(count=count, nobs=len(self.y_test), method='wilson')
+        print(f"95% CI for test accuracy: {lower:.3f} - {upper:.3f}")
+        print("="*80 + "\n")
+        
+        # Show sample predictions
+        display_df = self.test_df[['DATE', 'EVENT', 'BOUT', 'FIGHTER']].copy()
+        display_df['prob_win'] = np.round(self.probs, 3)
+        display_df['odds'] = self.ml_odds
+        print("\nSample Predictions:")
+        print(display_df.head(10).to_string(index=False))
+        
+        # Feature importance
+        if hasattr(best, 'feature_importances_'):
+            print("\n" + "="*80)
+            print("TOP 10 MOST IMPORTANT FEATURES")
+            print("="*80)
+            
+            # Determine which features were actually used
+            if use_champion_config and 'champion_features' in locals():
+                if use_rolling_ema:
+                    # Using champion features + rolling_ema
+                    actual_features = list(self.X_train.columns)
+                else:
+                    # Using only champion features
+                    actual_features = champion_features
+            else:
+                actual_features = list(self.X_train.columns)
+            
+            feature_importance = pd.DataFrame({
+                'feature': actual_features,
+                'importance': best.feature_importances_
+            }).sort_values('importance', ascending=False)
+            
+            print(feature_importance.head(10).to_string(index=False))
+            print("="*80 + "\n")
+        
+        self.best_model = best
+        self.imputer = imputer
+        self.scaler = scaler
+        return best, acc
+    
+    def tune_xgboost_with_rolling_ema(self, random_seed=None):
+        """
+        Train XGBoost model with rolling_ema feature.
+        Uses champion configuration and rolling_ema temporal feature.
+        
+        Returns:
+            Tuple of (model, accuracy)
+        """
+        import numpy as np
+        import random
+        import json
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        if not xgboost_available:
+            raise ImportError("XGBoost not available. Install with: pip install xgboost")
+        
+        print("\n" + "="*80)
+        print("TRAINING XGBOOST WITH ROLLING_EMA")
+        print("="*80)
+        
+        # Check if rolling_ema exists in the data
+        if 'rolling_ema' not in self.df.columns:
+            print("ERROR: rolling_ema feature not found in dataset!")
+            print("Please load data with rolling_ema feature first.")
+            print("Use: data/tmp/final_with_rolling_ema.csv")
+            raise ValueError("rolling_ema feature not found")
+        
+        # Load champion configuration
+        try:
+            with open('xgboost_ga_results_1760303427.json') as f:
+                champion_config = json.load(f)
+            
+            baseline_features = champion_config['features']
+            print(f"Champion baseline features: {len(baseline_features)}")
+            
+        except FileNotFoundError:
+            print("Warning: Champion config not found, using importance_columns")
+            baseline_features = self.importance_columns
+        
+        # Add rolling_ema to features
+        all_features = baseline_features + ['rolling_ema']
+        print(f"Total features (with rolling_ema): {len(all_features)}")
+        
+        # Check if all features are available
+        missing_features = [f for f in all_features if f not in self.X_train.columns]
+        if missing_features:
+            print(f"Warning: {len(missing_features)} features not available in training data")
+            all_features = [f for f in all_features if f in self.X_train.columns]
+            print(f"Using {len(all_features)} available features")
+        
+        # Prepare data with rolling_ema
+        X_train_ema = self.X_train[all_features]
+        X_test_ema = self.X_test[all_features]
+        
+        imputer = SimpleImputer(strategy='median')
+        scaler = RobustScaler()
+        
+        X_train_scaled = scaler.fit_transform(imputer.fit_transform(X_train_ema))
+        X_test_scaled = scaler.transform(imputer.transform(X_test_ema))
+        
+        # Use champion hyperparameters
+        model = XGBClassifier(
+            random_state=random_seed,
+            n_jobs=-1,
+            eval_metric='logloss',
+            early_stopping_rounds=20,
+            **champion_config.get('hyperparams', {})
+        )
+        
+        print("\nTraining XGBoost with rolling_ema...")
+        model.fit(
+            X_train_scaled, self.y_train,
+            eval_set=[(X_test_scaled, self.y_test)],
+            verbose=False
+        )
+        
+        # Generate predictions
+        self.probs = model.predict_proba(X_test_scaled)[:, 1]
+        self.ml_odds = [prob_to_american_odds(p) for p in self.probs]
+        
+        ll = log_loss(self.y_test, self.probs)
+        preds = model.predict(X_test_scaled)
+        acc = accuracy_score(self.y_test, preds)
+        
+        print("\n" + "="*80)
+        print("XGBOOST + ROLLING_EMA RESULTS")
+        print("="*80)
+        print(f"Features: {len(all_features)} (28 baseline + rolling_ema)")
+        print(f"Train accuracy: {model.score(X_train_scaled, self.y_train):.4f}")
+        print(f"Test accuracy: {acc:.4f} ({acc*100:.2f}%)")
+        print(f"Log loss: {ll:.4f}")
+        
+        # 95% confidence interval
+        count = int(acc * len(self.y_test))
+        lower, upper = proportion_confint(count=count, nobs=len(self.y_test), method='wilson')
+        print(f"95% CI for test accuracy: {lower:.3f} - {upper:.3f}")
+        print("="*80 + "\n")
+        
+        # Show sample predictions
+        display_df = self.test_df[['DATE', 'EVENT', 'BOUT', 'FIGHTER']].copy()
+        display_df['prob_win'] = np.round(self.probs, 3)
+        display_df['odds'] = self.ml_odds
+        print("\nSample Predictions:")
+        print(display_df.head(10).to_string(index=False))
+        
+        # Feature importance
+        print("\n" + "="*80)
+        print("TOP 10 MOST IMPORTANT FEATURES")
+        print("="*80)
+        feature_importance = pd.DataFrame({
+            'feature': all_features,
+            'importance': model.feature_importances_
+        }).sort_values('importance', ascending=False)
+        
+        print(feature_importance.head(10).to_string(index=False))
+        
+        # Highlight rolling_ema ranking
+        ema_rank = feature_importance[feature_importance['feature'] == 'rolling_ema'].index[0] + 1
+        ema_importance = feature_importance[feature_importance['feature'] == 'rolling_ema']['importance'].values[0]
+        print(f"\nrolling_ema rank: {ema_rank}/{len(all_features)}")
+        print(f"rolling_ema importance: {ema_importance:.4f}")
+        print("="*80 + "\n")
+        
+        self.best_model = model
+        self.imputer = imputer
+        self.scaler = scaler
+        return model, acc
+    
     def generate_odds_table(self):
         """
         Generate odds table from model predictions.
-        Returns a DataFrame with DATE, EVENT, BOUT, FIGHTER, prob_norm, odds columns.
+        Works with any model that sets self.probs (Logistic Regression, MLP, or XGBoost).
+        
+        Returns:
+            DataFrame with DATE, EVENT, BOUT, FIGHTER, prob_norm, odds columns.
+            
+        Usage:
+            # For Logistic Regression
+            model.tune_logistic_regression()
+            odds_df = model.generate_odds_table()
+            
+            # For MLP
+            model.tune_mlp()
+            odds_df = model.generate_odds_table()
+            
+            # For XGBoost
+            model.tune_xgboost_full()
+            odds_df = model.generate_odds_table()
+            
+            # For XGBoost with rolling_ema
+            model.tune_xgboost_with_rolling_ema()
+            odds_df = model.generate_odds_table()
         """
         if not hasattr(self, 'probs'):
-            raise RuntimeError("Run tune_logistic_regression() first.")
+            raise RuntimeError("Run a tune method first (tune_logistic_regression, tune_mlp, tune_xgboost_full, or tune_xgboost_with_rolling_ema).")
         
         # Use ALL test data (including 2025)
         # No date filtering - use all test data that has outcomes
@@ -447,7 +1229,7 @@ class FightOutcomeModel:
         from difflib import SequenceMatcher
         
         # API configuration
-        API_KEY = 'a8506b7492befca11590b71ba388575f'
+        API_KEY = os.getenv('ODDS_API_KEY')
         SPORT = 'mma_mixed_martial_arts'
         REGIONS = 'us'
         MARKETS = 'h2h'
@@ -1008,6 +1790,60 @@ class FightOutcomeModel:
         accuracy = correct / total if total > 0 else 0
         return accuracy
     
+    def basic_elo_pred_last_year(self):
+        """
+        Test the basic_elo_pred method on just the last year's worth of fights.
+        Returns accuracy for the last 365 days of fight data in test_df.
+        """
+        # Ensure DATE column is in datetime format
+        test_df_copy = self.test_df.copy()
+        test_df_copy['DATE'] = pd.to_datetime(test_df_copy['DATE'], errors='coerce')
+        
+        # Filter for last year
+        max_date = test_df_copy['DATE'].max()
+        one_year_ago = max_date - pd.Timedelta(days=365)
+        last_year_df = test_df_copy[test_df_copy['DATE'] >= one_year_ago]
+        
+        # Calculate accuracy for last year only
+        correct = 0
+        total = 0
+
+        for _, row in last_year_df.iterrows():
+            fighter_elo = row['precomp_elo']
+            opponent_elo = row['opp_precomp_elo']
+            win = row['win']
+
+            if fighter_elo > opponent_elo and win == 1:
+                correct += 1
+            elif fighter_elo < opponent_elo and win == 0:
+                correct += 1
+            # if equal or wrong prediction, don't count as correct
+            total += 1
+
+        accuracy = correct / total if total > 0 else 0
+        
+        # Print detailed stats
+        print(f"\n🎯 Basic Elo Prediction - Last Year Performance:")
+        print(f"Date Range: {one_year_ago.strftime('%Y-%m-%d')} to {max_date.strftime('%Y-%m-%d')}")
+        print(f"Total Fights: {total}")
+        print(f"Correct Predictions: {correct}")
+        print(f"Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
+        
+        # Compare to overall accuracy
+        overall_accuracy = self.basic_elo_pred()
+        print(f"\nComparison:")
+        print(f"Last Year Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
+        print(f"Overall Test Set Accuracy: {overall_accuracy:.4f} ({overall_accuracy*100:.2f}%)")
+        diff = accuracy - overall_accuracy
+        if diff > 0:
+            print(f"Last year is {abs(diff)*100:.2f}% better than overall")
+        elif diff < 0:
+            print(f"Last year is {abs(diff)*100:.2f}% worse than overall")
+        else:
+            print(f"Last year performance matches overall")
+        
+        return accuracy
+    
     def analyze_elo_accuracy_by_event(self):
         """
         Analyze Elo prediction accuracy broken down by individual UFC events/nights.
@@ -1145,24 +1981,69 @@ class FightOutcomeModel:
             'results_df': results_df
         }
     
-    def find_best_feature_to_add(self, base_features=None):
+    def find_best_feature_to_add(self, base_features=None, candidate_features=None):
         from sklearn.linear_model import LogisticRegression
         from sklearn.pipeline import Pipeline
         from sklearn.impute import SimpleImputer
         from sklearn.preprocessing import RobustScaler
         from sklearn.metrics import accuracy_score, log_loss
         from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
+        
+        # Import tqdm with fallback
+        try:
+            from tqdm import tqdm
+        except ImportError:
+            # Create a simple fallback progress indicator
+            class SimpleProgress:
+                def __init__(self, iterable, desc="", total=None, unit="", **kwargs):
+                    self.iterable = iterable
+                    self.desc = desc
+                    self.total = total or len(iterable)
+                    self.current = 0
+                def __iter__(self):
+                    for item in self.iterable:
+                        self.current += 1
+                        print(f"\r{self.desc} {self.current}/{self.total}", end="", flush=True)
+                        yield item
+                    print()  # New line when done
+                def set_description(self, desc): self.desc = desc
+                def set_postfix(self, **kwargs): pass
+                def update(self, n=1): pass
+                def close(self): pass
+            tqdm = SimpleProgress
 
         if base_features is None:
             base_features = self.importance_columns
 
         base_set = set(base_features)
-        all_candidates = [f for f in self.main_stats_cols if f not in base_set]
+        
+        # Get available columns in the actual dataframe
+        available_cols = set(self.train_df.columns)
+        
+        # Use provided candidate features or default to all available features
+        if candidate_features is not None:
+            # Filter to only features that exist in the dataframe
+            all_candidates = [f for f in candidate_features if f not in base_set and f in available_cols]
+        else:
+            # Filter to only features that exist in the dataframe
+            all_candidates = [f for f in self.main_stats_cols if f not in base_set and f in available_cols]
+        
         results = []
 
-        print(f"Evaluating {len(all_candidates)} features not in importance_columns...\n")
+        # Create progress bar for feature evaluation
+        feature_progress = tqdm(
+            all_candidates,
+            desc="🔍 Evaluating features",
+            unit="feature",
+            leave=False,
+            bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]"
+        )
 
-        for candidate in all_candidates:
+        for candidate in feature_progress:
+            # Update progress bar description
+            feature_progress.set_description(f"🔍 Evaluating {candidate[:20]}...")
+            feature_progress.set_postfix({'current': candidate[:15] + '...' if len(candidate) > 15 else candidate})
+            
             current_features = base_features + [candidate]
 
             # Use the same data preprocessing as _prepare_data method
@@ -1215,36 +2096,34 @@ class FightOutcomeModel:
                     'log_loss': loss,
                     'best_params': grid.best_params_
                 })
+                
+                # Update progress bar with current metrics
+                feature_progress.set_postfix({
+                    'accuracy': f"{acc:.4f}",
+                    'log_loss': f"{loss:.4f}"
+                })
+                
             except Exception as e:
-                print(f"⚠️ Skipping {candidate} due to error: {e}")
+                feature_progress.set_postfix({'error': 'Skipped'})
+                # Don't print error messages to avoid cluttering the progress bar
 
+        # Close the feature evaluation progress bar
+        feature_progress.close()
+        
         results_df = pd.DataFrame(results)
         
-        # Sort by log loss (ascending) for best log loss
-        results_df_log_loss = results_df.sort_values(by=['log_loss', 'accuracy'], ascending=[True, True])
-        
-        # Sort by accuracy (descending) for best accuracy
-        results_df_accuracy = results_df.sort_values(by=['accuracy', 'log_loss'], ascending=[False, True])
-
-        print("\n🏆 Top 5 candidates by LOWEST log loss:")
-        print(results_df_log_loss.head(5))
-
-        print("\n🎯 Top 5 candidates by HIGHEST accuracy:")
-        print(results_df_accuracy.head(5))
-
         if not results_df.empty:
+            # Sort by log loss (ascending) for best log loss
+            results_df_log_loss = results_df.sort_values(by=['log_loss', 'accuracy'], ascending=[True, True])
+            
+            # Sort by accuracy (descending) for best accuracy
+            results_df_accuracy = results_df.sort_values(by=['accuracy', 'log_loss'], ascending=[False, True])
+
             # Return the best feature by log loss (primary metric)
             best_feature = results_df_log_loss.iloc[0]['feature_added']
-            print(f"\n✅ Best feature to add (by log loss): {best_feature}")
-            
-            # Also show the best feature by accuracy
-            best_accuracy_feature = results_df_accuracy.iloc[0]['feature_added']
-            if best_accuracy_feature != best_feature:
-                print(f"🎯 Best feature by accuracy: {best_accuracy_feature}")
             
             return best_feature, results_df
         else:
-            print("\n❌ No valid features found to add")
             return None, pd.DataFrame()
 
     def roi_optimized_features(self, base_features=None, vegas_data_path=None, odds_table_path=None,
@@ -1581,6 +2460,610 @@ class FightOutcomeModel:
             raise ValueError("Metric must be 'log_loss' or 'accuracy'")
         
         return best_feature, results_df
+
+    def greedy_forward_search(self, initial_features=None, convergence_threshold=0.001, max_iterations=50, 
+                            metric='log_loss', min_improvement=0.0001, test_feature_subset=None, random_seed=None, patience=3):
+        """
+        Greedy forward search algorithm for automatic feature selection with patience-based stopping.
+        
+        This method iteratively adds the best feature from test_features to best_features.
+        Unlike traditional greedy search, it continues even when features temporarily decrease
+        performance, allowing exploration through local minima. It stops only after N consecutive
+        iterations (controlled by 'patience' parameter) fail to improve the best metric ever seen.
+        
+        Args:
+            initial_features: Starting set of features (defaults to importance_columns)
+            convergence_threshold: [DEPRECATED] No longer used with patience-based stopping
+            max_iterations: Maximum number of iterations to prevent infinite loops (default: 50)
+            metric: 'log_loss', 'accuracy', 'combined', or 'f1_weighted' - which metric to optimize
+            min_improvement: [DEPRECATED] No longer used with patience-based stopping
+            test_feature_subset: Optional subset of test features to use (for faster testing)
+            random_seed: Random seed for reproducibility (default: use model's seed)
+            patience: Number of consecutive iterations without improvement before stopping (default: 3)
+            
+        Returns:
+            dict: {
+                'best_features': final list of selected features,
+                'test_features': remaining unused features,
+                'iteration_history': list of results for each iteration,
+                'convergence_reason': why the algorithm stopped,
+                'final_metrics': final accuracy and log loss,
+                'best_metric_ever': best metric value achieved during search,
+                'total_iterations': number of iterations completed
+            }
+        """
+        import pandas as pd
+        import numpy as np
+        import random
+        from sklearn.metrics import accuracy_score, log_loss
+        
+        # Use model's random seed if not specified
+        if random_seed is None:
+            random_seed = self.random_seed
+        
+        # Reset random seeds for reproducibility
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+        
+        # Import tqdm with fallback
+        try:
+            from tqdm import tqdm
+        except ImportError:
+            print("⚠️  tqdm not available - install with: pip install tqdm")
+            # Create a simple fallback progress indicator
+            class SimpleProgress:
+                def __init__(self, iterable, desc="", total=None, unit="", **kwargs):
+                    self.iterable = iterable
+                    self.desc = desc
+                    self.total = total or len(iterable)
+                    self.current = 0
+                def __iter__(self):
+                    for item in self.iterable:
+                        self.current += 1
+                        print(f"\r{self.desc} {self.current}/{self.total}", end="", flush=True)
+                        yield item
+                    print()  # New line when done
+                def set_description(self, desc): self.desc = desc
+                def set_postfix(self, **kwargs): pass
+                def update(self, n=1): pass
+                def close(self): pass
+            tqdm = SimpleProgress
+        
+        print("🚀 Starting Greedy Forward Search Algorithm")
+        print("=" * 60)
+        print(f"🎲 Random seed: {random_seed} (for reproducibility)")
+        
+        # Initialize feature sets
+        if initial_features is None:
+            best_features = list(self.importance_columns)
+        else:
+            best_features = list(initial_features)
+            
+        # Get features that actually exist in the dataframe
+        available_cols = set(self.train_df.columns)
+        all_features = set(self.main_stats_cols)
+        
+        # Only use features that exist in both main_stats_cols AND the actual dataframe
+        valid_features = [f for f in all_features if f in available_cols]
+        test_features = [f for f in valid_features if f not in set(best_features)]
+        
+        # Use subset of test features if specified
+        if test_feature_subset is not None:
+            test_features = [f for f in test_features if f in test_feature_subset]
+            print(f"🔍 Using subset of {len(test_features)} test features (from {len(test_feature_subset)} specified)")
+        
+        print(f"📊 Initial setup:")
+        print(f"   - Best features: {len(best_features)} features")
+        print(f"   - Test features: {len(test_features)} features")
+        print(f"   - Optimizing for: {metric}")
+        print(f"   - Patience: {patience} iterations (stops after {patience} consecutive non-improvements)")
+        print(f"   - Max iterations: {max_iterations}")
+        print()
+        print(f"💡 Algorithm behavior:")
+        print(f"   - Always adds the best feature from each iteration")
+        print(f"   - Allows temporary decreases in performance (explores local minima)")
+        print(f"   - Tracks the best {metric} score ever achieved")
+        print(f"   - Stops after {patience} consecutive iterations without improvement")
+        print()
+        print(f"🛑 Algorithm will stop when:")
+        print(f"   - {patience} consecutive iterations fail to improve best score")
+        print(f"   - Maximum {max_iterations} iterations reached")
+        print(f"   - All {len(test_features)} test features have been evaluated")
+        print()
+        
+        # Show initial feature combination
+        print(f"🔧 Starting Feature Combination ({len(best_features)} features):")
+        for idx, feat in enumerate(best_features, 1):
+            print(f"      {idx:2d}. {feat}")
+        print()
+        
+        print(f"🧪 Available Test Features ({len(test_features)} features):")
+        for idx, feat in enumerate(test_features[:10], 1):  # Show first 10
+            print(f"      {idx:2d}. {feat}")
+        if len(test_features) > 10:
+            print(f"      ... and {len(test_features) - 10} more features")
+        print()
+        
+        # Calculate BASELINE metrics with initial features only
+        print("📊 BASELINE EVALUATION (Initial Features Only):")
+        print("=" * 80)
+        print(f"   🔍 Features being used: {best_features}")
+        print(f"   📊 Number of features: {len(best_features)}")
+        baseline_metrics = self._calculate_final_metrics(best_features, show_details=True)
+        print(f"   📈 Baseline Accuracy: {baseline_metrics['accuracy']:.4f}")
+        print(f"   📉 Baseline Log Loss: {baseline_metrics['log_loss']:.4f}")
+        print(f"   🎯 This is the performance BEFORE adding any features")
+        print(f"\n   💡 Compare with tune_logistic_regression() - should use same features:")
+        print(f"      self.X_train.columns = {best_features}")
+        print()
+        
+        # Track iteration history
+        iteration_history = []
+        iteration = 0
+        
+        # Initialize best_metric_value based on metric type
+        if metric == 'log_loss':
+            best_metric_value = float('inf')
+        elif metric == 'accuracy':
+            best_metric_value = 0.0
+        elif metric in ['combined', 'f1_weighted']:
+            # For combined metrics, calculate initial baseline
+            baseline_metrics = self._calculate_final_metrics(best_features, show_details=False)
+            if metric == 'combined':
+                best_metric_value = baseline_metrics['accuracy'] - baseline_metrics['log_loss']
+            else:  # f1_weighted
+                best_metric_value = (2 * baseline_metrics['accuracy']) - baseline_metrics['log_loss']
+        else:
+            best_metric_value = 0.0
+        
+        # Track the best metric value ever seen (for patience-based stopping)
+        best_metric_ever = best_metric_value
+        consecutive_no_improvement = 0
+            
+        convergence_reason = "Maximum iterations reached"
+        
+        # Create progress bar
+        progress_bar = tqdm(
+            total=min(max_iterations, len(test_features)),
+            desc="🔍 Greedy Forward Search",
+            unit="iteration",
+            bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]"
+        )
+        
+        while iteration < max_iterations and test_features:
+            iteration += 1
+            progress_bar.set_description(f"🔄 Iteration {iteration}")
+            progress_bar.set_postfix({
+                'best_features': len(best_features),
+                'test_features': len(test_features),
+                'metric': f"{best_metric_value:.4f}"
+            })
+            
+            # Find the best feature to add (pass test_features as candidates)
+            best_feature, results_df = self.find_best_feature_to_add(best_features, candidate_features=test_features)
+            
+            if best_feature is None or results_df.empty:
+                convergence_reason = "No valid features found to add"
+                progress_bar.set_description("❌ No valid features found")
+                break
+                
+            # Get metrics for the best feature
+            best_row = results_df[results_df['feature_added'] == best_feature].iloc[0]
+            new_accuracy = best_row['accuracy']
+            new_log_loss = best_row['log_loss']
+            
+            # Calculate improvement based on metric
+            if metric == 'log_loss':
+                improvement = best_metric_value - new_log_loss
+                metric_value = new_log_loss
+            elif metric == 'accuracy':
+                improvement = new_accuracy - best_metric_value
+                metric_value = new_accuracy
+            elif metric == 'combined':
+                # Combined score: higher accuracy, lower log loss
+                # Normalize: accuracy in [0,1], log_loss typically in [0.4, 0.7]
+                # Weight them equally: accuracy - log_loss
+                combined_score = new_accuracy - new_log_loss
+                improvement = combined_score - best_metric_value
+                metric_value = combined_score
+            elif metric == 'f1_weighted':
+                # F1 score weighted with log loss
+                # Higher F1, lower log loss is better
+                f1_score = 2 * new_accuracy  # Simplified for binary
+                weighted_score = f1_score - new_log_loss
+                improvement = weighted_score - best_metric_value
+                metric_value = weighted_score
+            else:
+                raise ValueError("Metric must be 'log_loss', 'accuracy', 'combined', or 'f1_weighted'")
+                
+            # Update progress bar with current metrics
+            progress_bar.set_postfix({
+                'candidate': best_feature[:15] + '...' if len(best_feature) > 15 else best_feature,
+                'accuracy': f"{new_accuracy:.4f}",
+                'log_loss': f"{new_log_loss:.4f}",
+                'improvement': f"{improvement:.6f}"
+            })
+            
+            # Add the feature and update sets (with duplicate check)
+            if best_feature in best_features:
+                print(f"⚠️  Warning: Feature {best_feature} already in best_features, skipping...")
+                convergence_reason = "Duplicate feature detected"
+                break
+            else:
+                best_features.append(best_feature)
+                test_features.remove(best_feature)
+                best_metric_value = metric_value
+            
+            # Check if this iteration improved the best metric ever seen
+            # For log_loss, lower is better; for others, higher is better
+            if metric == 'log_loss':
+                improved = metric_value < best_metric_ever
+            else:
+                improved = metric_value > best_metric_ever
+            
+            if improved:
+                best_metric_ever = metric_value
+                consecutive_no_improvement = 0
+                improvement_status = "✅ NEW BEST!"
+            else:
+                consecutive_no_improvement += 1
+                improvement_status = f"⚠️  No improvement ({consecutive_no_improvement}/{patience})"
+            
+            # Check patience-based early stopping
+            if consecutive_no_improvement >= patience:
+                convergence_reason = f"No improvement for {patience} consecutive iterations"
+                progress_bar.set_description(f"🛑 Patience reached ({patience} iterations)")
+                # Note: We keep the last feature added, as it might contribute to future improvements
+                break
+            
+            # Record iteration results
+            iteration_data = {
+                'iteration': iteration,
+                'feature_added': best_feature,
+                'accuracy': new_accuracy,
+                'log_loss': new_log_loss,
+                'improvement': improvement,
+                'best_features_count': len(best_features),
+                'test_features_count': len(test_features)
+            }
+            iteration_history.append(iteration_data)
+            
+            # Update progress bar
+            progress_bar.update(1)
+            progress_bar.set_postfix({
+                'added': best_feature[:15] + '...' if len(best_feature) > 15 else best_feature,
+                'best_features': len(best_features),
+                'test_features': len(test_features),
+                'metric': f"{best_metric_value:.4f}"
+            })
+            
+            # Print detailed iteration statistics
+            print(f"\n📊 ITERATION {iteration} RESULTS:")
+            print("=" * 80)
+            print(f"✅ Added feature: {best_feature}")
+            # Calculate accuracy improvement
+            if iteration == 1:
+                accuracy_improvement = "N/A (first iteration)"
+            else:
+                prev_accuracy = iteration_history[-1]['accuracy'] if iteration_history else new_accuracy
+                accuracy_improvement = f"{new_accuracy - prev_accuracy:.6f}"
+            
+            print(f"📈 Accuracy: {new_accuracy:.4f} (improvement: {accuracy_improvement})")
+            print(f"📉 Log Loss: {new_log_loss:.4f} (improvement: {improvement if metric == 'log_loss' else 'N/A'})")
+            print(f"🎯 Current {metric}: {best_metric_value:.4f}")
+            print(f"🏆 Best {metric} ever: {best_metric_ever:.4f} {improvement_status}")
+            print(f"📊 Feature counts: {len(best_features)} best, {len(test_features)} remaining")
+            
+            # Display current feature combination
+            print(f"\n🔧 Current Feature Combination ({len(best_features)} features):")
+            for idx, feat in enumerate(best_features, 1):
+                marker = "🆕" if feat == best_feature else "  "
+                print(f"   {marker} {idx:2d}. {feat}")
+            print()
+            
+            # Calculate and show feature importance
+            try:
+                print(f"\n🔍 Feature Importance (SHAP values):")
+                importance_scores = self.calculate_feature_importance(best_features)
+                sorted_importance = sorted(importance_scores.items(), key=lambda x: x[1], reverse=True)
+                for idx, (feature, score) in enumerate(sorted_importance[:10], 1):  # Top 10
+                    print(f"   {idx:2d}. {feature}: {score:.4f}")
+                if len(sorted_importance) > 10:
+                    print(f"   ... and {len(sorted_importance) - 10} more features")
+            except Exception as e:
+                print(f"⚠️  Could not calculate feature importance: {e}")
+            
+            # Show top 5 candidates from this iteration
+            if not results_df.empty:
+                print(f"\n🏆 Top 5 candidates from this iteration:")
+                top_5 = results_df.sort_values(by=['log_loss', 'accuracy'], ascending=[True, True]).head(5)
+                for idx, (_, row) in enumerate(top_5.iterrows(), 1):
+                    print(f"   {idx}. {row['feature_added']}: Acc={row['accuracy']:.4f}, LogLoss={row['log_loss']:.4f}")
+            
+            print(f"\n⏱️  Time elapsed: {progress_bar.format_dict.get('elapsed', 'N/A')}")
+            print("-" * 50)
+                
+        # Close progress bar
+        progress_bar.close()
+        
+        # Calculate final metrics
+        final_metrics = self._calculate_final_metrics(best_features)
+        
+        print("\n🏁 Greedy Forward Search Complete")
+        print("=" * 80)
+        print(f"📊 Final Results:")
+        print(f"   - Best features: {len(best_features)} features")
+        print(f"   - Test features remaining: {len(test_features)} features")
+        print(f"   - Iterations completed: {iteration}")
+        print(f"   - Convergence reason: {convergence_reason}")
+        print(f"   - Final accuracy: {final_metrics['accuracy']:.4f}")
+        print(f"   - Final log loss: {final_metrics['log_loss']:.4f}")
+        if metric in ['combined', 'f1_weighted']:
+            final_combined = final_metrics['accuracy'] - final_metrics['log_loss']
+            print(f"   - Final combined score: {final_combined:.4f}")
+            print(f"   - Best combined score ever: {best_metric_ever:.4f}")
+        print()
+        
+        # Display ALL final features
+        print(f"🎯 FINAL FEATURE COMBINATION ({len(best_features)} features):")
+        print("=" * 80)
+        
+        # Separate initial features from added features
+        initial_feature_set = set(initial_features) if initial_features else set(self.importance_columns)
+        
+        print(f"\n📌 Initial Features ({len(initial_feature_set)}):")
+        for idx, feat in enumerate([f for f in best_features if f in initial_feature_set], 1):
+            print(f"   {idx:2d}. {feat}")
+        
+        added_features = [f for f in best_features if f not in initial_feature_set]
+        if added_features:
+            print(f"\n🆕 Added Features ({len(added_features)}):")
+            for idx, feat in enumerate(added_features, 1):
+                # Find when this feature was added
+                for hist in iteration_history:
+                    if hist['feature_added'] == feat:
+                        print(f"   {idx:2d}. {feat} (Iter {hist['iteration']}: Acc={hist['accuracy']:.4f}, LogLoss={hist['log_loss']:.4f})")
+                        break
+        
+        print(f"\n📋 ALL Final Features (in order):")
+        for idx, feat in enumerate(best_features, 1):
+            marker = "🆕" if feat not in initial_feature_set else "📌"
+            print(f"   {marker} {idx:2d}. {feat}")
+        print()
+        
+        return {
+            'best_features': best_features,
+            'test_features': test_features,
+            'iteration_history': iteration_history,
+            'convergence_reason': convergence_reason,
+            'final_metrics': final_metrics,
+            'best_metric_ever': best_metric_ever,
+            'total_iterations': iteration
+        }
+    
+    def _calculate_final_metrics(self, features, show_details=False):
+        """Calculate final accuracy and log loss for a feature set."""
+        from sklearn.pipeline import Pipeline
+        from sklearn.impute import SimpleImputer
+        from sklearn.preprocessing import RobustScaler
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
+        from sklearn.metrics import accuracy_score, log_loss
+        
+        # Prepare data
+        sub_train = self.train_df.copy()
+        sub_test = self.test_df.copy()
+        
+        imp = SimpleImputer(strategy='median')
+        sub_train[features] = imp.fit_transform(sub_train[features])
+        sub_test[features] = imp.transform(sub_test[features])
+        
+        X_train = sub_train[features]
+        y_train = sub_train['win']
+        X_test = sub_test[features]
+        y_test = sub_test['win']
+        
+        # Train model
+        pipeline = Pipeline([
+            ('imputer', SimpleImputer(strategy='median')),
+            ('scaler', RobustScaler()),
+            ('clf', LogisticRegression(max_iter=10000, random_state=42))
+        ])
+        
+        params = {
+            'clf__C': [0.01, 0.1, 1, 10],
+            'clf__penalty': ['l2'],
+            'clf__solver': ['liblinear', 'saga'],
+            'clf__class_weight': [None, 'balanced']
+        }
+        
+        tscv = TimeSeriesSplit(n_splits=5)
+        grid = GridSearchCV(pipeline, params, cv=tscv, scoring='accuracy', n_jobs=-1)
+        grid.fit(X_train, y_train)
+        
+        # Get predictions
+        preds = grid.best_estimator_.predict(X_test)
+        probs = grid.best_estimator_.predict_proba(X_test)[:, 1]
+        
+        if show_details:
+            print(f"   🔧 Model Pipeline:")
+            print(f"      - Imputer: SimpleImputer(strategy='median')")
+            print(f"      - Scaler: RobustScaler()")
+            print(f"      - Classifier: LogisticRegression(max_iter=10000, random_state=42)")
+            print(f"   🔍 Grid Search:")
+            print(f"      - CV: TimeSeriesSplit(n_splits=5)")
+            print(f"      - Params: C=[0.01, 0.1, 1, 10], penalty=['l2'], solver=['liblinear', 'saga']")
+            print(f"   ✅ Best Params: {grid.best_params_}")
+            print(f"   📊 Data:")
+            print(f"      - Train samples: {len(X_train)}")
+            print(f"      - Test samples: {len(X_test)}")
+            print(f"      - Features: {len(features)}")
+        
+        return {
+            'accuracy': accuracy_score(y_test, preds),
+            'log_loss': log_loss(y_test, probs),
+            'best_params': grid.best_params_
+        }
+    
+    def calculate_feature_importance(self, features):
+        """Calculate feature importance using SHAP values if available, otherwise use model coefficients."""
+        try:
+            import shap
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.pipeline import Pipeline
+            from sklearn.impute import SimpleImputer
+            from sklearn.preprocessing import RobustScaler
+            
+            # Prepare data
+            sub_train = self.train_df.copy()
+            sub_test = self.test_df.copy()
+            
+            imp = SimpleImputer(strategy='median')
+            sub_train[features] = imp.fit_transform(sub_train[features])
+            sub_test[features] = imp.transform(sub_test[features])
+            
+            X_train = sub_train[features]
+            y_train = sub_train['win']
+            X_test = sub_test[features]
+            y_test = sub_test['win']
+            
+            # Train model
+            pipeline = Pipeline([
+                ('imputer', SimpleImputer(strategy='median')),
+                ('scaler', RobustScaler()),
+                ('clf', LogisticRegression(max_iter=10000, random_state=42))
+            ])
+            pipeline.fit(X_train, y_train)
+            
+            # Calculate SHAP values
+            explainer = shap.LinearExplainer(pipeline.named_steps['clf'], X_train)
+            shap_values = explainer.shap_values(X_test)
+            
+            # Get mean absolute SHAP values
+            if len(shap_values) == 2:  # Binary classification
+                shap_values = shap_values[1]  # Use positive class
+            
+            import numpy as np
+            importance_scores = np.abs(shap_values).mean(axis=0)
+            feature_importance = dict(zip(features, importance_scores))
+            
+            return feature_importance
+            
+        except ImportError:
+            print("⚠️  SHAP not available - using model coefficients instead")
+            return self._calculate_coefficient_importance(features)
+        except Exception as e:
+            print(f"⚠️  SHAP calculation failed: {e} - using model coefficients instead")
+            return self._calculate_coefficient_importance(features)
+    
+    def _calculate_coefficient_importance(self, features):
+        """Calculate feature importance using model coefficients."""
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.pipeline import Pipeline
+        from sklearn.impute import SimpleImputer
+        from sklearn.preprocessing import RobustScaler
+        
+        # Prepare data
+        sub_train = self.train_df.copy()
+        sub_test = self.test_df.copy()
+        
+        imp = SimpleImputer(strategy='median')
+        sub_train[features] = imp.fit_transform(sub_train[features])
+        sub_test[features] = imp.transform(sub_test[features])
+        
+        X_train = sub_train[features]
+        y_train = sub_train['win']
+        
+        # Train model
+        pipeline = Pipeline([
+            ('imputer', SimpleImputer(strategy='median')),
+            ('scaler', RobustScaler()),
+            ('clf', LogisticRegression(max_iter=10000, random_state=42))
+        ])
+        pipeline.fit(X_train, y_train)
+        
+        # Get coefficients
+        coefficients = pipeline.named_steps['clf'].coef_[0]
+        feature_importance = dict(zip(features, np.abs(coefficients)))
+        
+        return feature_importance
+    
+    def visualize_greedy_search_results(self, search_results, save_plot=True):
+        """
+        Visualize the results of the greedy forward search algorithm.
+        
+        Args:
+            search_results: Results dictionary from greedy_forward_search
+            save_plot: Whether to save the plot to file
+        """
+        import matplotlib.pyplot as plt
+        import pandas as pd
+        
+        if not search_results['iteration_history']:
+            print("No iteration history to visualize")
+            return
+            
+        # Convert to DataFrame for easier plotting
+        history_df = pd.DataFrame(search_results['iteration_history'])
+        
+        # Create subplots
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
+        fig.suptitle('Greedy Forward Search Results', fontsize=16, fontweight='bold')
+        
+        # Plot 1: Accuracy over iterations
+        ax1.plot(history_df['iteration'], history_df['accuracy'], 'b-o', linewidth=2, markersize=6)
+        ax1.set_title('Accuracy vs Iterations')
+        ax1.set_xlabel('Iteration')
+        ax1.set_ylabel('Accuracy')
+        ax1.grid(True, alpha=0.3)
+        ax1.set_ylim(0, 1)
+        
+        # Plot 2: Log Loss over iterations
+        ax2.plot(history_df['iteration'], history_df['log_loss'], 'r-o', linewidth=2, markersize=6)
+        ax2.set_title('Log Loss vs Iterations')
+        ax2.set_xlabel('Iteration')
+        ax2.set_ylabel('Log Loss')
+        ax2.grid(True, alpha=0.3)
+        
+        # Plot 3: Improvement over iterations
+        ax3.plot(history_df['iteration'], history_df['improvement'], 'g-o', linewidth=2, markersize=6)
+        ax3.set_title('Improvement vs Iterations')
+        ax3.set_xlabel('Iteration')
+        ax3.set_ylabel('Improvement')
+        ax3.grid(True, alpha=0.3)
+        
+        # Plot 4: Feature count over iterations
+        ax4.plot(history_df['iteration'], history_df['best_features_count'], 'purple', marker='o', linewidth=2, markersize=6, label='Best Features')
+        ax4.plot(history_df['iteration'], history_df['test_features_count'], 'orange', marker='s', linewidth=2, markersize=6, label='Test Features')
+        ax4.set_title('Feature Count vs Iterations')
+        ax4.set_xlabel('Iteration')
+        ax4.set_ylabel('Number of Features')
+        ax4.legend()
+        ax4.grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        
+        if save_plot:
+            plt.savefig('greedy_forward_search_results.png', dpi=300, bbox_inches='tight')
+            print("📊 Plot saved as 'greedy_forward_search_results.png'")
+        
+        plt.show()
+        
+        # Print summary table
+        print("\n📋 Iteration Summary:")
+        print("=" * 80)
+        print(f"{'Iter':<4} {'Feature Added':<20} {'Accuracy':<8} {'Log Loss':<8} {'Improvement':<12}")
+        print("-" * 80)
+        for _, row in history_df.iterrows():
+            print(f"{row['iteration']:<4} {row['feature_added']:<20} {row['accuracy']:<8.4f} {row['log_loss']:<8.4f} {row['improvement']:<12.6f}")
+        
+        print(f"\n🎯 Final Results:")
+        print(f"   - Total iterations: {search_results['total_iterations']}")
+        print(f"   - Final best features: {len(search_results['best_features'])}")
+        print(f"   - Remaining test features: {len(search_results['test_features'])}")
+        print(f"   - Convergence reason: {search_results['convergence_reason']}")
+        print(f"   - Final accuracy: {search_results['final_metrics']['accuracy']:.4f}")
+        print(f"   - Final log loss: {search_results['final_metrics']['log_loss']:.4f}")
 
     def compare_top_features(self, base_features=None, top_n=10):
         """

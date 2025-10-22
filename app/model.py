@@ -13,6 +13,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+import xgboost as xgb
+import json
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -37,12 +39,12 @@ class UFCFightPredictor:
         # Use absolute path for production deployment
         current_dir = os.path.dirname(os.path.abspath(__file__))
         
-        # Try multiple possible locations for the data file
+        # Try multiple possible locations for the data file (prefer full dataset)
         possible_paths = [
-            '../data/tmp/final_min_fight1.csv',
-            'data/tmp/final_min_fight1.csv',
-            '../data/tmp/final.csv',
-            'data/tmp/final.csv',
+            'data/tmp/final.csv',             # FULL dataset with all features (PREFERRED)
+            '../data/tmp/final.csv',          # FULL dataset
+            '../data/tmp/final_min_fight1.csv',  # Fallback
+            'data/tmp/final_min_fight1.csv',  # Fallback
             '../data/final.csv',
             'data/final.csv',
             '../data/final_with_swapped.csv',
@@ -81,7 +83,7 @@ class UFCFightPredictor:
         self.full_df['win'] = self.full_df['win'].astype(int)
         print(f"Full dataset loaded: {len(self.full_df)} rows (for display purposes)")
         
-        # Initialize the FightOutcomeModel from ensemble_model_best.py
+            # Initialize the FightOutcomeModel from ensemble_model_best.py
         if FightOutcomeModel is None:
             print("FightOutcomeModel not available, using fallback model...")
             self._initialize_fallback_model()
@@ -89,10 +91,10 @@ class UFCFightPredictor:
             print("Initializing FightOutcomeModel...")
             self.fight_model = FightOutcomeModel(self.data_path)
             
-            # Train the tuned logistic regression model to get the specific accuracy and log loss
-            print("Training tuned logistic regression model...")
-            self.model, self.accuracy = self.fight_model.tune_logistic_regression()
-            print(f"Model Accuracy: {self.accuracy}")
+            # Train the XGBoost champion model (GA-optimized)
+            print("Training XGBoost champion model (GA-optimized)...")
+            self.model, self.accuracy = self._train_xgboost_champion()
+            print(f"XGBoost Model Accuracy: {self.accuracy:.4f}")
         
         # Get the filtered data and features from the fight model (for training)
         if FightOutcomeModel is not None:
@@ -102,8 +104,8 @@ class UFCFightPredictor:
             self.X_test = self.fight_model.X_test
             self.y_test = self.fight_model.y_test
             
-            # Use the importance columns from the fight model
-            self.full_features = self.fight_model.importance_columns
+            # Use XGBoost champion features
+            self.full_features = self.xgb_features
         else:
             # For fallback model, use the full dataset
             self.df = self.full_df
@@ -172,6 +174,77 @@ class UFCFightPredictor:
                 out[c] = np.nan
         return out
     
+    def _train_xgboost_champion(self):
+        """Train XGBoost model with GA-optimized features and hyperparameters"""
+        # Load champion configuration
+        config_path = os.path.join(os.path.dirname(__file__), 'xgboost_champion.json')
+        
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        
+        all_features = config['features']
+        hyperparams = config['hyperparams']
+        
+        print(f"   Loading XGBoost champion config:")
+        print(f"   - Total features in champion: {len(all_features)}")
+        print(f"   - Champion accuracy: {config['metrics']['accuracy']:.4f}")
+        print(f"   - Champion log loss: {config['metrics']['log_loss']:.4f}")
+        
+        # Prepare data
+        train_df = self.fight_model.train_df.copy()
+        test_df = self.fight_model.test_df.copy()
+        
+        # Filter features to only those available in current dataset
+        available_cols = set(train_df.columns)
+        features = [f for f in all_features if f in available_cols]
+        
+        print(f"   - Features available in app dataset: {len(features)}/{len(all_features)}")
+        
+        if len(features) < 10:
+            print(f"   ⚠️  Warning: Only {len(features)} features available, using fallback LogReg...")
+            return self.fight_model.tune_logistic_regression()
+        
+        # Impute and scale
+        imp = SimpleImputer(strategy='median')
+        X_train = imp.fit_transform(train_df[features])
+        X_test = imp.transform(test_df[features])
+        
+        scaler = RobustScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        
+        y_train = train_df['win']
+        y_test = test_df['win']
+        
+        # Build XGBoost model
+        model = xgb.XGBClassifier(
+            objective='binary:logistic',
+            eval_metric='logloss',
+            early_stopping_rounds=20,
+            random_state=42,
+            n_jobs=-1,
+            **hyperparams
+        )
+        
+        # Train
+        model.fit(
+            X_train_scaled, y_train,
+            eval_set=[(X_test_scaled, y_test)],
+            verbose=False
+        )
+        
+        # Calculate accuracy
+        from sklearn.metrics import accuracy_score
+        predictions = model.predict(X_test_scaled)
+        accuracy = accuracy_score(y_test, predictions)
+        
+        # Store for prediction use
+        self.xgb_features = features
+        self.xgb_imputer = imp
+        self.xgb_scaler = scaler
+        
+        return model, accuracy
+    
     def get_available_fighters(self):
         """Get list of all available fighters"""
         if self.full_df is None:
@@ -237,12 +310,24 @@ class UFCFightPredictor:
             # Make two predictions: A vs B and B vs A, then average them
             # Prediction 1: fighter1 vs fighter2
             features_1 = self._create_fight_features(fighter1_latest, fighter2_latest, fight_date)
-            prediction_1 = self.model.predict_proba([features_1])[0]
+            
+            # Apply XGBoost preprocessing
+            features_1_array = np.array([features_1])
+            features_1_imputed = self.xgb_imputer.transform(features_1_array)
+            features_1_scaled = self.xgb_scaler.transform(features_1_imputed)
+            
+            prediction_1 = self.model.predict_proba(features_1_scaled)[0]
             fighter1_win_prob_1 = prediction_1[1]  # Probability of fighter1 winning in first prediction
             
             # Prediction 2: fighter2 vs fighter1 (swapped)
             features_2 = self._create_fight_features(fighter2_latest, fighter1_latest, fight_date)
-            prediction_2 = self.model.predict_proba([features_2])[0]
+            
+            # Apply XGBoost preprocessing
+            features_2_array = np.array([features_2])
+            features_2_imputed = self.xgb_imputer.transform(features_2_array)
+            features_2_scaled = self.xgb_scaler.transform(features_2_imputed)
+            
+            prediction_2 = self.model.predict_proba(features_2_scaled)[0]
             fighter2_win_prob_2 = prediction_2[1]  # Probability of fighter2 winning in second prediction
             
             # Average the probabilities (since prediction_2 gives us fighter2's win prob when fighter2 is first)

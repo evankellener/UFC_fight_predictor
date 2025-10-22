@@ -5,6 +5,7 @@ Integrates odds API fetching with improved filtering and clamping
 """
 
 import re
+import os
 import requests
 import pandas as pd
 import numpy as np
@@ -19,7 +20,9 @@ class CombinedOddsScraper:
     A comprehensive odds scraper that fetches odds from API and applies data quality fixes
     """
     
-    def __init__(self, api_key: str = 'a8506b7492befca11590b71ba388575f'):
+    def __init__(self, api_key: str = None):
+        if api_key is None:
+            api_key = os.getenv('ODDS_API_KEY')
         self.api_key = api_key
         self.sport = 'mma_mixed_martial_arts'
         self.regions = 'us'

@@ -1,0 +1,35 @@
+[
+  {
+    "fighter_a": "Alexander Hernandez",
+    "fighter_b": "Diego Ferreira",
+    "winner": "Alexander Hernandez",
+    "a_elo": 1514.34,
+    "b_elo": 1487.15,
+    "a_strike_elo": 1489.24,
+    "b_strike_elo": 1562.32,
+    "rolling_ema": 0.4984022036653306,
+    "bout": "Alexander Hernandez vs. Diego Ferreira"
+  },
+  {
+    "fighter_a": "Joaquim Silva",
+    "fighter_b": "Claudio Puelles",
+    "winner": "Joaquim Silva",
+    "a_elo": 1362.45,
+    "b_elo": 1408.55,
+    "a_strike_elo": 1464.53,
+    "b_strike_elo": 1444.63,
+    "rolling_ema": 0.4984196182092751,
+    "bout": "Claudio Puelles vs. Joaquim Silva"
+  },
+  {
+    "fighter_a": "Jean Silva",
+    "fighter_b": "Diego Lopes",
+    "winner": "Diego Lopes",
+    "a_elo": 1595.96,
+    "b_elo": 1548.49,
+    "a_strike_elo": 1518.75,
+    "b_strike_elo": 1535.33,
+    "rolling_ema": 0.4983578231357946,
+    "bout": "Diego Lopes vs. Jean Silva"
+  }
+]

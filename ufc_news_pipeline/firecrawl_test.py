@@ -1,8 +1,9 @@
+import os
 from firecrawl import Firecrawl
 
-firecrawl = Firecrawl(api_key="fc-2497518e738344388a2c77da41c64fdd")
+firecrawl = Firecrawl(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
-docs = firecrawl.crawl(url="https://mmajunkie.usatoday.com/story/sports/ufc/2025/09/26/ufc-perth-dominick-reyes-vs-carlos-ulberg-weigh-in-results/86366809007/", limit=10)
+docs = firecrawl.crawl(url="https://www.ufc.com/events", limit=10)
 
 with open("firecrawl_output.txt", "w", encoding="utf-8") as f:
     for doc in docs:

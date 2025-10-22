@@ -8,7 +8,8 @@ import pandas as pd
 import numpy as np
 
 # ------------------ Config ------------------
-API_KEY ="a8506b7492befca11590b71ba388575f"
+import os
+API_KEY = os.getenv('ODDS_API_KEY')
 SPORT = "mma_mixed_martial_arts"
 REGIONS = "us,uk,eu"          # widen to improve hit rate
 MARKETS = "h2h" # add more later if you want

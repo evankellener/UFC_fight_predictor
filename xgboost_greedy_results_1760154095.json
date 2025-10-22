@@ -1,0 +1,20 @@
+{
+  "method": "XGBoost Greedy Forward",
+  "features": [
+    "precomp_elo_diff",
+    "precomp_strike_elo_diff",
+    "precomp_grapple_elo_diff",
+    "opp_precomp_elo_change_5"
+  ],
+  "metrics": {
+    "accuracy": 0.6610169491525424,
+    "log_loss": 0.6413988227166488,
+    "combined": 0.019618126435893557
+  },
+  "baseline_metrics": {
+    "accuracy": 0.632768361581921,
+    "log_loss": 0.6473355641537835,
+    "combined": -0.014567202571862503
+  },
+  "time_minutes": 10.602269252141317
+}

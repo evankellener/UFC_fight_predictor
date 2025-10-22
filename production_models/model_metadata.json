@@ -1,0 +1,39 @@
+{
+  "trained_date": "2025-10-21T13:49:50.271815",
+  "accuracy": 0.6492957746478873,
+  "features": [
+    "precomp_elo_diff",
+    "precomp_strike_elo_diff",
+    "precomp_grapple_elo_diff",
+    "precomp_legacc_perc5",
+    "opp_precomp_sigstr_pm5",
+    "opp_precomp_grapple_strike_mix",
+    "opp_precomp_clinchacc_perc",
+    "opp_age_ratio_difference",
+    "opp_precomp_elo",
+    "age_ratio_difference",
+    "precomp_distacc_perc",
+    "opp_precomp_winsum",
+    "precomp_tdavg3",
+    "opp_precomp_legacc_perc3",
+    "opp_precomp_str_eff_diff3",
+    "precomp_winsum",
+    "opp_precomp_sapm3",
+    "precomp_groundacc_perc",
+    "opp_precomp_ctrl_per_min",
+    "opp_REACH",
+    "precomp_winsum5",
+    "opp_precomp_strdef5",
+    "precomp_ctrl_per_min",
+    "opp_precomp_tdavg5",
+    "opp_precomp_headacc_perc5",
+    "precomp_elo_change_5",
+    "opp_precomp_winsum3",
+    "opp_precomp_groundacc_perc5"
+  ],
+  "data_range": {
+    "start": "1995-04-07 00:00:00",
+    "end": "2025-10-11 00:00:00"
+  },
+  "num_fights": 16048
+}

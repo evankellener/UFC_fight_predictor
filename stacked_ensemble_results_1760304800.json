@@ -1,0 +1,80 @@
+{
+  "method": "Stacked Ensemble",
+  "meta_learner": "LogReg (strong L2)",
+  "base_models": {
+    "logreg": {
+      "features": [
+        "precomp_elo_diff",
+        "precomp_strike_elo_diff",
+        "precomp_grapple_elo_diff",
+        "precomp_strike_elo_change_5",
+        "opp_precomp_bodyacc_perc",
+        "opp_precomp_headacc_perc5",
+        "precomp_headacc_perc5",
+        "opp_precomp_bodyacc_perc3",
+        "opp_precomp_distacc_perc3",
+        "opp_precomp_tdacc_perc5",
+        "precomp_totalstr_pm",
+        "opp_precomp_str_eff_diff",
+        "precomp_tdavg",
+        "opp_precomp_tdavg",
+        "precomp_bodyacc_perc5",
+        "age_ratio_difference",
+        "precomp_strike_elo_change_3",
+        "precomp_sapm3",
+        "precomp_totalacc_perc5",
+        "precomp_sigstr_pm3",
+        "opp_precomp_str_eff_diff3",
+        "precomp_headacc_perc",
+        "opp_precomp_headacc_perc",
+        "opp_precomp_strike_elo",
+        "opp_precomp_groundacc_perc3",
+        "precomp_sapm",
+        "opp_precomp_bodyacc_perc5",
+        "precomp_sigstr_perc5"
+      ],
+      "accuracy": 0.6850282485875706,
+      "log_loss": 0.6232657198105163
+    },
+    "xgboost": {
+      "features": [
+        "precomp_elo_diff",
+        "precomp_strike_elo_diff",
+        "precomp_grapple_elo_diff",
+        "precomp_legacc_perc5",
+        "opp_precomp_sigstr_pm5",
+        "opp_precomp_grapple_strike_mix",
+        "opp_precomp_clinchacc_perc",
+        "opp_age_ratio_difference",
+        "opp_precomp_elo",
+        "age_ratio_difference",
+        "precomp_distacc_perc",
+        "opp_precomp_winsum",
+        "precomp_tdavg3",
+        "opp_precomp_legacc_perc3",
+        "opp_precomp_str_eff_diff3",
+        "precomp_winsum",
+        "opp_precomp_sapm3",
+        "precomp_groundacc_perc",
+        "opp_precomp_ctrl_per_min",
+        "opp_REACH",
+        "precomp_winsum5",
+        "opp_precomp_strdef5",
+        "precomp_ctrl_per_min",
+        "opp_precomp_tdavg5",
+        "opp_precomp_headacc_perc5",
+        "precomp_elo_change_5",
+        "opp_precomp_winsum3",
+        "opp_precomp_groundacc_perc5"
+      ],
+      "accuracy": 0.6822033898305084,
+      "log_loss": 0.6195931588511874
+    }
+  },
+  "ensemble_metrics": {
+    "accuracy": 0.6779661016949152,
+    "log_loss": 0.635053792456269,
+    "combined": 0.042912309238646196,
+    "improvement_vs_xgboost": 0.0
+  }
+}

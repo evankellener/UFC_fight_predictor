@@ -5,7 +5,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 from difflib import SequenceMatcher
 
-API_KEY       = 'a8506b7492befca11590b71ba388575f'  # ← your Odds API key here
+import os
+API_KEY = os.getenv('ODDS_API_KEY')  # ← your Odds API key here
 SPORT         = 'mma_mixed_martial_arts'
 REGIONS       = 'us'
 MARKETS       = 'h2h'

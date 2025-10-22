@@ -445,7 +445,7 @@ class FightOutcomeModel:
         from difflib import SequenceMatcher
         
         # API configuration
-        API_KEY = 'a8506b7492befca11590b71ba388575f'
+        API_KEY = os.getenv('ODDS_API_KEY')
         SPORT = 'mma_mixed_martial_arts'
         REGIONS = 'us'
         MARKETS = 'h2h'
