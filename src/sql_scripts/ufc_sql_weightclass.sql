@@ -64,8 +64,10 @@ CREATE INDEX idx_ufc_fighter_tott_sex ON ufc_fighter_tott(sex);
 UPDATE ufc_fight_results
 SET sex = (SELECT sex FROM ufc_weightclass_stats WHERE ufc_fight_results.WEIGHTCLASS = ufc_weightclass_stats.WEIGHTCLASS);
 UPDATE ufc_fighter_tott
-SET sex = (SELECT sex FROM ufc_fight_results 
-           WHERE TRIM(ufc_fight_results.BOUT) LIKE '%' || TRIM(ufc_fighter_tott.FIGHTER) || '%');
+SET sex = (SELECT sex FROM ufc_fight_results
+           WHERE TRIM(ufc_fight_results.BOUT) LIKE '%' || TRIM(ufc_fighter_tott.FIGHTER) || '%'
+           AND sex IS NOT NULL
+           LIMIT 1);
 
 -- Cleanup and remove any tott where the sex is unkown
 DELETE FROM ufc_fighter_tott WHERE sex IS NULL;

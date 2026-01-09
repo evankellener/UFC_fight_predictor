@@ -1235,7 +1235,7 @@ class FightOutcomeModel:
         MARKETS = 'h2h'
         ODDS_FORMAT = 'american'
         DATE_FMT = 'iso'
-        LOOKBACK_DAYS = 3000
+        LOOKBACK_DAYS =  365*6
         HIST_URL = f'https://api.the-odds-api.com/v4/historical/sports/{SPORT}/odds'
         MAIN_BOOKMAKERS = ['draftkings', 'fanduel', 'betmgm', 'bet365', 'bovada']
         FUZZY_THRESHOLD = 0.8
@@ -1284,7 +1284,7 @@ class FightOutcomeModel:
             return None
         
         def clamp_odds_to_realistic_ranges(df):
-            """Clamp extreme odds values to realistic ranges"""
+            """Clamp odds values to ensure minimum absolute value of 100"""
             odds_columns = [col for col in df.columns if col.endswith('_odds')]
             
             print("=== APPLYING ODDS CLAMPING ===")
@@ -1294,23 +1294,20 @@ class FightOutcomeModel:
                     # Convert to numeric, errors become NaN
                     df[col] = pd.to_numeric(df[col], errors='coerce')
                     
-                    # Apply clamping logic (LESS AGGRESSIVE: Only clamp extreme values)
-                    # Only clamp odds that are clearly unrealistic (> 200 or < -200)
-                    mask_positive = (df[col] > 0) & (df[col] > 200)
-                    mask_negative = (df[col] < 0) & (df[col] < -200)
+                    # American odds should have absolute value >= 100
+                    # Clamp any odds with absolute value < 100
+                    mask_too_small = (df[col].notna()) & (df[col].abs() < 100)
                     
-                    # Clamp positive odds > 200 to 200 (less aggressive)
-                    df.loc[mask_positive, col] = 200
-                    
-                    # Clamp negative odds < -200 to -200 (less aggressive)
-                    df.loc[mask_negative, col] = -200
+                    # For values between -100 and 100, push them to ±100 based on sign
+                    df.loc[mask_too_small & (df[col] > 0), col] = 100
+                    df.loc[mask_too_small & (df[col] < 0), col] = -100
+                    df.loc[mask_too_small & (df[col] == 0), col] = 100  # Edge case: exactly 0
                     
                     # Count changes
-                    clamped_positive = mask_positive.sum()
-                    clamped_negative = mask_negative.sum()
+                    clamped_count = mask_too_small.sum()
                     
-                    if clamped_positive + clamped_negative > 0:
-                        print(f"  {col}: Clamped {clamped_positive + clamped_negative} values")
+                    if clamped_count > 0:
+                        print(f"  {col}: Clamped {clamped_count} values to minimum |100|")
             
             return df
         
@@ -1380,6 +1377,8 @@ class FightOutcomeModel:
         df['f_norm'] = df['FIGHTER'].apply(normalize)
         df['o_norm'] = df['opp_FIGHTER'].apply(normalize)
         df['date_str'] = df['DATE'].dt.strftime('%Y-%m-%d')
+
+        odds_cols = [col for col in df.columns if col.endswith('_odds')]
         
         # 1) Fetch and build ev_list
         print("\n=== FETCHING ODDS DATA ===")
@@ -1402,6 +1401,8 @@ class FightOutcomeModel:
                 'commence_dt': ct,
                 'home': normalize(e['home_team']),
                 'away': normalize(e['away_team']),
+                'home_original': e['home_team'],
+                'away_original': e['away_team'],
                 'bookmakers': e.get('bookmakers', []),
             })
         
@@ -1414,6 +1415,7 @@ class FightOutcomeModel:
         # 3) Row-by-row match with fuzzy fallback
         print("\n=== MATCHING FIGHTS TO ODDS ===")
         matches = 0
+        fuzzy_name_mappings = 0
         for idx, row in df.iterrows():
             fn, on = row['f_norm'], row['o_norm']
             row_date = row['DATE'].date()
@@ -1422,6 +1424,25 @@ class FightOutcomeModel:
                 continue
             
             matches += 1
+            
+            # Map CSV fighter name to API fighter name using fuzzy matching
+            # This handles cases like "Abus Magomedov" vs "Abusupyian Magomedov"
+            home_fighter = normalize(ev.get('home_original', ''))
+            away_fighter = normalize(ev.get('away_original', ''))
+            
+            # Determine which API fighter corresponds to this row's fighter
+            home_sim = similar(fn, home_fighter)
+            away_sim = similar(fn, away_fighter)
+            
+            if home_sim > away_sim:
+                api_fighter_norm = home_fighter
+            else:
+                api_fighter_norm = away_fighter
+            
+            # Track if we needed fuzzy mapping (name mismatch)
+            if api_fighter_norm != fn:
+                fuzzy_name_mappings += 1
+            
             for bm in ev['bookmakers']:
                 key = bm.get('key')
                 if key not in MAIN_BOOKMAKERS:
@@ -1429,21 +1450,76 @@ class FightOutcomeModel:
                 h2h = next((m for m in bm['markets'] if m['key'] == 'h2h'), None)
                 if not h2h:
                     continue
-                # pull this row's fighter price
+                # pull this row's fighter price using the API fighter name
                 price = next((o['price'] for o in h2h['outcomes'] 
-                              if normalize(o['name']) == fn), None)
+                              if normalize(o['name']) == api_fighter_norm), None)
                 df.at[idx, f"{key}_odds"] = price
         
         print(f"Matched {matches} fights to odds data")
+        print(f"Used fuzzy name mapping for {fuzzy_name_mappings} fighters")
         
         # Clean up temporary columns
         df.drop(columns=['f_norm', 'o_norm', 'date_str'], inplace=True)
         
         # 4) Apply data quality fixes
         print("\n=== APPLYING DATA QUALITY FIXES ===")
+
+        #output data before clamping
+        before_clamping_path = '../data/tmp/before_clamping.csv'
+        os.makedirs(os.path.dirname(before_clamping_path), exist_ok=True)
+        df.to_csv(before_clamping_path, index=False)
+        print(f"Data before clamping saved to: {before_clamping_path}")
         
         # Apply odds clamping
         df = clamp_odds_to_realistic_ranges(df)
+
+        #average odds by converting to implied probability first, then back to odds
+        # Redefine odds_cols to ensure we have the correct columns after scraping
+        odds_cols = ['draftkings_odds', 'fanduel_odds', 'betmgm_odds', 'bovada_odds']
+        
+        def american_to_prob(odds):
+            """Convert American odds to implied probability"""
+            if pd.isna(odds):
+                return np.nan
+            if odds > 0:
+                return 100 / (odds + 100)
+            else:
+                return (-odds) / (-odds + 100)
+        
+        def prob_to_american(prob):
+            """Convert implied probability to American odds"""
+            if pd.isna(prob) or prob <= 0 or prob >= 1:
+                return np.nan
+            if prob >= 0.5:
+                return -100 * prob / (1 - prob)
+            else:
+                return 100 * (1 - prob) / prob
+        
+        # Convert each odds column to probability
+        for col in odds_cols:
+            if col in df.columns:
+                df[f'{col}_prob'] = df[col].apply(american_to_prob)
+        
+        # Average the probabilities
+        prob_cols = [f'{col}_prob' for col in odds_cols]
+        df['avg_prob'] = df[prob_cols].mean(axis=1, skipna=True)
+        
+        # Convert average probability back to American odds
+        df['avg_odds'] = df['avg_prob'].apply(prob_to_american)
+        
+        # Round to nearest whole number (American odds are typically integers)
+        df['avg_odds'] = df['avg_odds'].round().astype('Int64')
+        
+        # Clean up temporary probability columns
+        df.drop(columns=prob_cols + ['avg_prob'], inplace=True)
+        
+        print(f"Average odds: {df['avg_odds'].mean()}")
+
+        #output data after averaging
+        after_averaging_path = '../data/tmp/after_averaging.csv'
+        os.makedirs(os.path.dirname(after_averaging_path), exist_ok=True)
+        df.to_csv(after_averaging_path, index=False)
+        print(f"Data after averaging saved to: {after_averaging_path}")
         
         # Apply improved filtering
         df = improved_filter_sportsbook_odds(df, handle_missing_odds="average_available")
@@ -5036,3 +5112,210 @@ class FightOutcomeModel:
             constant_window=constant_window,
             test_period=test_period
         )
+    
+    def elo_roi(self, data_path: str, elo_column: str = 'precomp_elo', stake: float = 100) -> pd.DataFrame:
+        """
+        Calculate ROI by betting on the ELO favorite.
+        
+        Simple strategy:
+        - Bet on the fighter with higher ELO
+        - Use Vegas odds to calculate profit/loss
+        - Return summary of betting performance
+        
+        Args:
+            data_path: Path to CSV with fight data, ELO ratings, and odds
+            elo_column: Name of the ELO column to use (default: 'postcomp_elo')
+            stake: Amount to bet per fight (default: $100)
+            
+        Returns:
+            DataFrame with bet results and ROI metrics
+        """
+        print("="*80)
+        print("ELO-BASED ROI CALCULATOR")
+        print("="*80)
+        
+        # Load data
+        df = pd.read_csv(data_path, parse_dates=['DATE'])
+        print(f"\nLoaded {len(df)} fights")
+        
+        # Check if required columns exist
+        required_cols = [elo_column, f'opp_{elo_column}', 'win', 'avg_odds']
+        missing = [col for col in required_cols if col not in df.columns]
+        if missing:
+            print(f"❌ ERROR: Missing columns: {missing}")
+            return pd.DataFrame()
+        
+        # Filter to fights with odds
+        df = df[df['avg_odds'].notna()].copy()
+        print(f"Total rows with odds: {len(df)}")
+        
+        # Each fight has 2 rows (one per fighter)
+        # We need to bet only once per fight, on the ELO favorite
+        
+        # Group by BOUT to get unique fights
+        if 'BOUT' not in df.columns:
+            print("❌ ERROR: BOUT column not found")
+            return pd.DataFrame()
+        
+        results = []
+        
+        for bout_id, bout_df in df.groupby('BOUT'):
+            if len(bout_df) != 2:
+                continue  # Skip incomplete bouts
+            
+            # Get both fighters' data
+            fighter1 = bout_df.iloc[0]
+            fighter2 = bout_df.iloc[1]
+            
+            # Check if elo_diff column exists (precomputed)
+            if f'{elo_column}_diff' in df.columns:
+                # Use precomputed elo_diff from first fighter's row
+                elo_diff = abs(fighter1[f'{elo_column}_diff'])
+                
+                # Determine who has higher ELO based on the sign
+                if fighter1[f'{elo_column}_diff'] > 0:
+                    bet_on = fighter1
+                    other_fighter = fighter2
+                else:
+                    bet_on = fighter2
+                    other_fighter = fighter1
+            else:
+                # Calculate ELO difference manually
+                elo1 = fighter1[elo_column]
+                elo2 = fighter2[elo_column]
+                
+                if pd.isna(elo1) or pd.isna(elo2):
+                    continue  # Skip if ELO missing
+                
+                # Pick the fighter with higher ELO
+                if elo1 > elo2:
+                    bet_on = fighter1
+                    other_fighter = fighter2
+                    elo_diff = elo1 - elo2
+                else:
+                    bet_on = fighter2
+                    other_fighter = fighter1
+                    elo_diff = elo2 - elo1
+            
+            # Check if our pick won
+            pick_won = bet_on['win'] == 1
+            
+            # Calculate profit/loss
+            if pick_won:
+                odds = bet_on['avg_odds']
+                if odds > 0:
+                    # Underdog won: profit = stake * (odds / 100)
+                    profit = stake * (odds / 100)
+                else:
+                    # Favorite won: profit = stake * (100 / abs(odds))
+                    profit = stake * (100 / abs(odds))
+            else:
+                profit = -stake  # Lost the bet
+            
+            # Store result
+            results.append({
+                'DATE': bet_on['DATE'],
+                'EVENT': bet_on['EVENT'],
+                'BOUT': bout_id,
+                'FIGHTER_PICKED': bet_on['FIGHTER'],
+                'OPPONENT': bet_on['opp_FIGHTER'],
+                'FIGHTER_ELO': bet_on[elo_column],
+                'OPPONENT_ELO': other_fighter[elo_column],
+                'ELO_DIFF': elo_diff,
+                'ODDS': bet_on['avg_odds'],
+                'PICK_WON': pick_won,
+                'PROFIT': profit
+            })
+        
+        # Convert to DataFrame
+        df_results = pd.DataFrame(results)
+        df_results['cumulative_profit'] = df_results['PROFIT'].cumsum()
+        
+        # Calculate ROI
+        total_bets = len(df_results)
+        total_risked = total_bets * stake
+        total_profit = df_results['PROFIT'].sum()
+        roi_pct = (total_profit / total_risked) * 100
+        
+        # Summary statistics
+        wins = df_results['PICK_WON'].sum()
+        losses = (~df_results['PICK_WON']).sum()
+        win_rate = (wins / total_bets) * 100
+        
+        print(f"\n{'='*80}")
+        print("RESULTS")
+        print('='*80)
+        print(f"Total bets: {total_bets}")
+        print(f"Wins: {wins}")
+        print(f"Losses: {losses}")
+        print(f"Win rate: {win_rate:.1f}%")
+        print(f"\nTotal risked: ${total_risked:,.2f}")
+        print(f"Total profit: ${total_profit:,.2f}")
+        print(f"ROI: {roi_pct:+.2f}%")
+        
+        # Create visualization
+        self._plot_elo_roi_trends(df_results, stake)
+        
+        return df_results
+    
+    def _plot_elo_roi_trends(self, results_df: pd.DataFrame, stake: float):
+        """Plot ROI, win rate, and odds trends over time"""
+        import matplotlib.pyplot as plt
+        
+        # Sort by date
+        df = results_df.sort_values('DATE').copy()
+        
+        # Calculate rolling metrics (50-bet window)
+        window = min(50, len(df) // 4)  # Use 50 or 25% of data, whichever is smaller
+        
+        df['rolling_win_rate'] = df['PICK_WON'].rolling(window=window, min_periods=1).mean() * 100
+        df['rolling_profit'] = df['PROFIT'].rolling(window=window, min_periods=1).sum()
+        df['rolling_roi'] = (df['rolling_profit'] / (window * stake)) * 100
+        
+        # Calculate rolling average odds
+        df['rolling_avg_odds'] = df['ODDS'].rolling(window=window, min_periods=1).mean()
+        
+        # Create figure with subplots
+        fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+        fig.suptitle('ELO-Based Betting Performance Over Time', fontsize=16, fontweight='bold')
+        
+        # Plot 1: Cumulative Profit
+        axes[0].plot(df['DATE'], df['cumulative_profit'], linewidth=2, color='green')
+        axes[0].axhline(y=0, color='red', linestyle='--', alpha=0.5)
+        axes[0].set_ylabel('Cumulative Profit ($)', fontsize=12)
+        axes[0].set_title(f'Total Profit: ${df["cumulative_profit"].iloc[-1]:,.2f}', fontsize=12)
+        axes[0].grid(True, alpha=0.3)
+        
+        # Plot 2: Rolling Win Rate
+        axes[1].plot(df['DATE'], df['rolling_win_rate'], linewidth=2, color='blue')
+        axes[1].axhline(y=50, color='red', linestyle='--', alpha=0.5, label='Break-even (50%)')
+        axes[1].set_ylabel('Win Rate (%)', fontsize=12)
+        axes[1].set_title(f'{window}-Bet Rolling Win Rate', fontsize=12)
+        axes[1].legend()
+        axes[1].grid(True, alpha=0.3)
+        axes[1].set_ylim([0, 100])
+        
+        # Plot 3: Rolling Average Odds
+        axes[2].plot(df['DATE'], df['rolling_avg_odds'], linewidth=2, color='purple')
+        axes[2].axhline(y=0, color='black', linestyle='-', alpha=0.3)
+        axes[2].axhline(y=-150, color='red', linestyle='--', alpha=0.5, label='Typical favorite')
+        axes[2].axhline(y=150, color='green', linestyle='--', alpha=0.5, label='Typical underdog')
+        axes[2].set_ylabel('Average Odds', fontsize=12)
+        axes[2].set_xlabel('Date', fontsize=12)
+        axes[2].set_title(f'{window}-Bet Rolling Average Odds', fontsize=12)
+        axes[2].legend()
+        axes[2].grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        
+        # Save the plot
+        plot_path = '../data/tmp/elo_roi_performance.png'
+        plt.savefig(plot_path, dpi=150, bbox_inches='tight')
+        print(f"\n📊 Performance chart saved to: {plot_path}")
+        plt.close()
+        
+        print("\nChart shows:")
+        print("  • Top: Cumulative profit over time")
+        print("  • Middle: Rolling win rate (50-bet window)")
+        print(f"  • Bottom: Average odds of ELO favorites")
+    

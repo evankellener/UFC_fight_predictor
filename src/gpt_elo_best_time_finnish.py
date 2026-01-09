@@ -1,6 +1,7 @@
 import pandas as pd
 from collections import defaultdict
-
+import datetime
+from datetime import timedelta
 
 class EnhancedElo:
     def __init__(self, k_factor=40, base_elo=1500):
@@ -15,7 +16,7 @@ class EnhancedElo:
         return self.elo_dict.get(fighter, self.base_elo)
 
     def expected_score(self, rating_a, rating_b):
-        return 1 / (1 + 10 ** ((rating_b - rating_a) / 220))
+        return 1 / (1 + 10 ** ((rating_b - rating_a) / 420.9422))
 
     def update_elo_custom_k(self, rating_a, rating_b, score_a, custom_k):
         expected_a = self.expected_score(rating_a, rating_b)
@@ -30,7 +31,7 @@ class EnhancedElo:
             relative_diff = delta_f - delta_o
             if abs(relative_diff) >= 1:
                 self.relative_weight_delta_affected += 1
-                return max(0.75, 1 - 0.08 * abs(relative_diff))
+                return max(0.75, 1 - 0.0664 * abs(relative_diff))
             return 1.0
         except:
             return 1.0
@@ -50,7 +51,22 @@ class EnhancedElo:
         except:
             return 1.0
 
-    def process_fights(self, df):
+    def get_experience_modifier(self, fighter_bouts, opponent_bouts):
+        """Adjust K-factor based on experience differential."""
+        if pd.isna(fighter_bouts) or pd.isna(opponent_bouts):
+            return 1.0
+        try:
+            f_bouts = int(fighter_bouts)
+            o_bouts = int(opponent_bouts)
+            exp_diff = f_bouts - o_bouts
+            if abs(exp_diff) < 5:
+                return 1.0
+            modifier = 1.0 - (exp_diff * 0.0297/ 10)
+            return max(0.85, min(1.15, modifier))
+        except:
+            return 1.0
+
+    def process_fights(self, df, decay_rate=0.9753):
         df = df.copy()
         df = df.sort_values(by='DATE').reset_index(drop=True)
 
@@ -71,26 +87,26 @@ class EnhancedElo:
             fight_date = row['DATE']
             if fighter in self.last_fight_dict:
                 if (fight_date - self.last_fight_dict[fighter]).days > 274:
-                    fighter_elo *= 0.978
+                    fighter_elo *= decay_rate
             if opponent in self.last_fight_dict:
                 if (fight_date - self.last_fight_dict[opponent]).days > 274:
-                    opponent_elo *= 0.978
+                    opponent_elo *= decay_rate
 
             if (row.get("ko") == 1 or row.get("ko")):
-                method_weight = 1.3
+                method_weight = 0.8000
             elif (row.get("subw") == 1 or row.get("subwd")):
-                method_weight = 1.6
+                method_weight = 1.2881
             elif (row.get("udec") == 1 or row.get("udecd")):
-                method_weight = 1.0
+                method_weight = 1.500
             elif (row.get("sdec") == 1 or row.get("sdecd")):
-                method_weight = 0.6
+                method_weight = 0.5185
             elif (row.get("mdec") == 1 or row.get("mdecd")):
-                method_weight = 0.8
+                method_weight = 0.6155
             else:
                 method_weight = 1.0
 
-            streak_bonus_fighter = 1 + 0.15 * self.streak_dict[fighter]
-            streak_bonus_opponent = 1 + 0.15 * self.streak_dict[opponent]
+            streak_bonus_fighter = 1 + 0.2037 * self.streak_dict[fighter]
+            streak_bonus_opponent = 1 + 0.2037 * self.streak_dict[opponent]
 
             weight_mod = self.relative_weight_modifier(
                 row.get('precomp_weight_avg3'),
@@ -100,15 +116,19 @@ class EnhancedElo:
 
             #first round fighter bonus
             if row.get("round") == 1:
-                method_weight *= 1.15
+                method_weight *= 0.1675
             #first round opponent bonus
             if row.get("opp_round") == 1:
-                method_weight *= 1.15
+                method_weight *= 0.1675
 
             round_mod = self.round_modifier(row.get("round"), row.get("time_format"))
 
-            k_fighter = self.k * method_weight * streak_bonus_fighter * weight_mod * round_mod
-            k_opponent = self.k * method_weight * streak_bonus_opponent * weight_mod * round_mod
+            # Experience differential modifier
+            exp_mod_fighter = self.get_experience_modifier(row.get('precomp_boutcount'), row.get('opp_precomp_boutcount'))
+            exp_mod_opponent = self.get_experience_modifier(row.get('opp_precomp_boutcount'), row.get('precomp_boutcount'))
+
+            k_fighter = self.k * method_weight * streak_bonus_fighter * weight_mod * round_mod * exp_mod_fighter
+            k_opponent = self.k * method_weight * streak_bonus_opponent * weight_mod * round_mod * exp_mod_opponent
 
             df.at[i, "precomp_elo"] = fighter_elo
             df.at[i, "opp_precomp_elo"] = opponent_elo
@@ -140,3 +160,22 @@ class EnhancedElo:
         for fighter, elo in sorted_fighters[:n]:
             print(f"{fighter}: {elo:.2f}")
         return sorted_fighters[:n]
+
+    def test_accuracy(self, df):
+        df = df.copy()
+        df = df.sort_values(by='DATE').reset_index(drop=True)
+        #filter to data to only contain the last 365 days]
+        df = df[df['DATE'] >= (pd.Timestamp.now() - timedelta(days=365))]
+
+        #for only fights where precomp_boutcount and opp_precomp_boutcount are > 1
+        #calculate the accuracy of elo testing how mnay time precomp_elo is greater than opp_precomp_elo where 'win' is 1
+        # additionally if opp_precomp_elo is greater than precomp_elo and win is 0, then it is correct
+        df = df[(df['precomp_boutcount'] > 1) & (df['opp_precomp_boutcount'] > 1)]
+        correct = 0
+        total = 0
+        for _, row in df.iterrows():
+            if (row['precomp_elo'] > row['opp_precomp_elo'] and row['win'] == 1) or (row['opp_precomp_elo'] > row['precomp_elo'] and row['win'] == 0):
+                correct += 1
+            total += 1
+
+        return correct / total
