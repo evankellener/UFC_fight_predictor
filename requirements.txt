@@ -1,12 +1,5 @@
-Flask==2.3.3
-pandas>=1.5.0,<2.1.0
-numpy>=1.26.0
-scikit-learn>=1.1.0,<1.4.0
-joblib>=1.2.0,<1.4.0
-Werkzeug>=2.2.0,<2.4.0
-gunicorn>=20.1.0
-python-dateutil>=2.8.0
-spacy>=3.8.0
-feedparser>=6.0.0
-beautifulsoup4>=4.11.0
-requests>=2.25.0
+Flask>=3.0
+pandas>=2.0
+numpy>=1.26
+scikit-learn>=1.5
+gunicorn>=21.0

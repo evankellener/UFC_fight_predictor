@@ -1,1 +1,1 @@
-web: python test_data_loading.py && cd app && gunicorn --bind 0.0.0.0:$PORT app:app
+web: cd src && gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1

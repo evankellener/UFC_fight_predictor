@@ -50,7 +50,6 @@ Thumbs.db
 *.log
 
 # Database
-*.db
 *.sqlite
 
 # Temporary files
@@ -65,4 +64,5 @@ saved_models/
 
 # Data files (too large for git)
 data/tmp/*.csv
-data/sqlite_db/
+# Full DB is too large for git; app.db (88MB slim version) is committed instead
+data/sqlite_db/sqlite_scrapper.db
