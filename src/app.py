@@ -229,7 +229,7 @@ def fighter_full_profile(name):
            FROM ufc_winlossko w
            LEFT JOIN ufc_fight_results fr ON fr.jevent = w.jevent AND fr.jbout = w.jbout
            WHERE w.jfighter = ?
-           ORDER BY w.DATE DESC LIMIT 8""",
+           ORDER BY w.DATE DESC LIMIT 20""",
         conn, params=(name,),
     )
     fights = []
