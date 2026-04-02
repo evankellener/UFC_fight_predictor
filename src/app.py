@@ -10,7 +10,7 @@ import os
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 # Ensure src/ is on path for local imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -202,6 +202,114 @@ def fighter_detail(name):
     details["jfighter"] = name
     details["display_name"] = _format_fighter_name(name)
     return jsonify(details)
+
+
+@app.route("/fighter/<name>")
+def fighter_profile_page(name):
+    """Serve the fighter profile page."""
+    return render_template("fighter.html", jfighter=name)
+
+
+@app.route("/api/fighter/<name>/profile")
+def fighter_full_profile(name):
+    """Full fighter profile: details + recent fights + radar stats + Elo history."""
+    details = _get_fighter_details(name)
+    if not details:
+        return jsonify({"error": f"Fighter not found: {name}"}), 404
+    details["jfighter"] = name
+    details["display_name"] = _format_fighter_name(name)
+
+    conn = sqlite3.connect(DB_PATH)
+
+    # Recent fights (last 8)
+    recent = pd.read_sql_query(
+        """SELECT w.DATE, w.jevent, w.jbout, w.win, w.ko, w.subw,
+                  w.jfighter,
+                  fr.METHOD, fr.ROUND, fr.TIME
+           FROM ufc_winlossko w
+           LEFT JOIN ufc_fight_results fr ON fr.jevent = w.jevent AND fr.jbout = w.jbout
+           WHERE w.jfighter = ?
+           ORDER BY w.DATE DESC LIMIT 8""",
+        conn, params=(name,),
+    )
+    fights = []
+    for _, r in recent.iterrows():
+        # Extract opponent from jbout (format: "FighterAvs.FighterB")
+        parts = r["jbout"].replace("vs.", "|").split("|")
+        opp = parts[1] if parts[0] == name else parts[0]
+        fights.append({
+            "date": r["DATE"],
+            "opponent": opp,
+            "opponent_display": _format_fighter_name(opp),
+            "result": "W" if r["win"] else "L",
+            "method": r.get("METHOD") or "",
+            "round": int(r["ROUND"]) if pd.notna(r.get("ROUND")) else None,
+            "ko": bool(r["ko"]),
+            "sub": bool(r["subw"]),
+        })
+
+    # Radar stats from AdjPerf z-scores (most recent fight in final_features_fast)
+    radar = {}
+    try:
+        adjperf = pd.read_sql_query(
+            """SELECT adjperf_sigstr_pm_dec_avg, adjperf_kd_pm_dec_avg,
+                      adjperf_td_per15_dec_avg, adjperf_ctrl_per_min_dec_avg,
+                      adjperf_ko_eff_dec_avg, adjperf_td_att_pm_dec_avg
+               FROM final_features_fast
+               WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1""",
+            conn, params=(name,),
+        )
+        if not adjperf.empty:
+            row = adjperf.iloc[0]
+            radar_map = {
+                "Striking": "adjperf_sigstr_pm_dec_avg",
+                "Power": "adjperf_kd_pm_dec_avg",
+                "KO Eff.": "adjperf_ko_eff_dec_avg",
+                "Wrestling": "adjperf_td_per15_dec_avg",
+                "Grappling": "adjperf_ctrl_per_min_dec_avg",
+                "TD Press.": "adjperf_td_att_pm_dec_avg",
+            }
+            for label, col in radar_map.items():
+                val = row.get(col)
+                if val is not None and pd.notna(val):
+                    clipped = max(-3, min(3, float(val)))
+                    radar[label] = round((clipped + 3) / 6 * 100, 1)
+                else:
+                    radar[label] = 50.0
+    except Exception:
+        pass
+
+    # Elo history (all fights)
+    elo_history = []
+    if model_state.get("elo_extra"):
+        elo_3ago = model_state["elo_extra"].get("elo_history", {}).get(name, [])
+        # elo_history might not be stored; build from elo_df instead
+    # Build from elo_df in model training data
+    try:
+        elo_df_full = model_state.get("df_trained")
+        if elo_df_full is not None:
+            fighter_rows = elo_df_full[
+                (elo_df_full["jfighter"] == name)
+            ][["DATE", "precomp_elo_diff"]].sort_values("DATE")
+            # precomp_elo_diff is f1-f2; we need absolute Elo
+            # Use the ratings dict for current, and approximate history
+            if name in model_state.get("elo_ratings", {}):
+                current_elo = model_state["elo_ratings"][name]
+                elo_history.append({
+                    "date": "current",
+                    "elo": round(current_elo, 1),
+                })
+    except Exception:
+        pass
+
+    conn.close()
+
+    return jsonify({
+        **details,
+        "recent_fights": fights,
+        "radar": radar,
+        "elo_history": elo_history,
+    })
 
 
 @app.route("/api/predict", methods=["POST"])

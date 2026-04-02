@@ -17,6 +17,15 @@
     --green: #2ecc71;
     --hover: #1a1a28;
   }
+  html.light {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --border: #e0e0e6;
+    --text: #1a1a2e;
+    --muted: #6b6b80;
+    --accent: #b8941f;
+    --hover: #eeeef2;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -27,6 +36,9 @@
     min-height: 100vh;
   }
 
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
   header {
     background: var(--card);
     border-bottom: 1px solid var(--border);
@@ -36,13 +48,10 @@
     justify-content: space-between;
   }
 
-  header h1 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.05em; }
   header h1 span { color: var(--accent); }
+
+  .header-right { display: flex; align-items: center; gap: 1rem; }
 
   .status-badge {
     font-size: 0.75rem;
@@ -51,17 +60,27 @@
     background: #1a3a1a;
     color: var(--green);
   }
+  .status-badge.loading { background: #3a3a1a; color: var(--accent); }
+  html.light .status-badge { background: #e8f5e9; }
+  html.light .status-badge.loading { background: #fff8e1; }
 
-  .status-badge.loading {
-    background: #3a3a1a;
-    color: var(--accent);
+  .theme-toggle {
+    background: var(--border);
+    border: none;
+    color: var(--text);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
   }
+  .theme-toggle:hover { background: var(--hover); }
 
-  main {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
+  main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
 
   .section-title {
     font-size: 0.8rem;
@@ -79,13 +98,7 @@
     margin-bottom: 2rem;
   }
 
-  .event-info {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.2rem;
-    flex-wrap: wrap;
-  }
-
+  .event-info { display: flex; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
   .event-info input { flex: 1; min-width: 180px; }
 
   .fight-row {
@@ -94,31 +107,13 @@
     gap: 0.75rem;
     margin-bottom: 0.75rem;
   }
-
-  .fight-row .bout-num {
-    color: var(--muted);
-    font-size: 0.8rem;
-    min-width: 24px;
-    text-align: right;
-  }
-
+  .fight-row .bout-num { color: var(--muted); font-size: 0.8rem; min-width: 24px; text-align: right; }
   .fight-row input { flex: 1; }
-
-  .fight-row .vs {
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
+  .fight-row .vs { color: var(--muted); font-size: 0.75rem; font-weight: 600; }
   .fight-row .remove-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0 0.3rem;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.2rem; cursor: pointer; padding: 0 0.3rem;
   }
-
   .fight-row .remove-btn:hover { color: var(--red); }
 
   input, select {
@@ -131,195 +126,152 @@
     outline: none;
     transition: border 0.2s;
   }
-
   input:focus { border-color: var(--accent); }
 
   .autocomplete-wrapper { position: relative; flex: 1; }
   .autocomplete-wrapper input { width: 100%; }
-
   .autocomplete-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 100;
-    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; max-height: 200px; overflow-y: auto;
+    z-index: 100; display: none;
   }
-
   .autocomplete-list.show { display: block; }
-
-  .autocomplete-item {
-    padding: 0.5rem 0.8rem;
-    cursor: pointer;
-    font-size: 0.85rem;
-  }
-
+  .autocomplete-item { padding: 0.5rem 0.8rem; cursor: pointer; font-size: 0.85rem; }
   .autocomplete-item:hover, .autocomplete-item.active { background: var(--hover); }
-
-  .autocomplete-item .date {
-    color: var(--muted);
-    font-size: 0.75rem;
-    margin-left: 0.5rem;
-  }
+  .autocomplete-item .date { color: var(--muted); font-size: 0.75rem; margin-left: 0.5rem; }
 
   .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
 
   button {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
+    padding: 0.6rem 1.2rem; border: none; border-radius: 6px;
+    font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: all 0.2s;
   }
-
   .btn-primary { background: var(--accent); color: #000; }
   .btn-primary:hover { filter: brightness(1.15); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
   .btn-secondary { background: var(--border); color: var(--text); }
-  .btn-secondary:hover { background: #2a2a3a; }
+  .btn-secondary:hover { background: var(--hover); }
+  .btn-small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    background: var(--border);
+    color: var(--text);
+    border-radius: 4px;
+  }
+  .btn-small:hover { background: var(--hover); }
 
   .results { margin-top: 1.5rem; }
 
   .result-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    overflow: hidden;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 1rem; overflow: hidden;
   }
-
   .result-header {
-    display: flex;
-    align-items: center;
-    padding: 1rem 1.2rem;
-    cursor: pointer;
-    transition: background 0.2s;
+    display: flex; align-items: center; padding: 1rem 1.2rem;
+    cursor: pointer; transition: background 0.2s;
   }
-
   .result-header:hover { background: var(--hover); }
-
-  .result-header .bout-label {
-    color: var(--muted);
-    font-size: 0.75rem;
-    min-width: 44px;
-  }
+  .result-header .bout-label { color: var(--muted); font-size: 0.75rem; min-width: 44px; }
 
   .matchup { flex: 1; display: flex; align-items: center; gap: 0.6rem; }
-
   .fighter-name { font-weight: 600; font-size: 0.95rem; }
   .fighter-name.winner { color: var(--accent); }
   .fighter-name.loser { color: var(--muted); }
-
+  .fighter-name.clickable { cursor: pointer; }
+  .fighter-name.clickable:hover { text-decoration: underline; }
   .matchup .vs { color: var(--muted); font-size: 0.7rem; }
 
-  .confidence-badge {
-    font-size: 0.85rem;
-    font-weight: 700;
-    min-width: 50px;
-    text-align: right;
-  }
+  .result-actions { display: flex; align-items: center; gap: 0.5rem; }
+  .confidence-badge { font-size: 0.85rem; font-weight: 700; min-width: 50px; text-align: right; }
 
   .prob-bar-container { display: flex; height: 4px; background: var(--border); }
   .prob-bar-a { background: var(--red); transition: width 0.5s; }
   .prob-bar-b { background: var(--blue); transition: width 0.5s; }
 
   .result-detail {
-    display: none;
-    padding: 0 1.2rem 1.2rem;
+    display: none; padding: 0 1.2rem 1.2rem;
     border-top: 1px solid var(--border);
   }
-
   .result-detail.show { display: block; }
 
-  .detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
 
   .detail-section h4 {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    margin-bottom: 0.6rem;
+    font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem;
   }
-
   .prob-comparison {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
   }
-
   .prob-comparison:last-child { border-bottom: none; }
-
   .prob-label { font-size: 0.8rem; color: var(--muted); min-width: 80px; }
-
   .prob-values { display: flex; gap: 2rem; font-size: 0.9rem; }
   .prob-values .a { color: var(--red); }
   .prob-values .b { color: var(--blue); }
 
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.3rem 0;
-    font-size: 0.85rem;
-  }
-
+  .stat-row { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.85rem; }
   .stat-row .label { color: var(--muted); }
 
   .driver-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.4rem 0;
-    font-size: 0.85rem;
-    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.4rem 0; font-size: 0.85rem; border-bottom: 1px solid var(--border);
   }
-
   .driver-row:last-child { border-bottom: none; }
   .driver-feat { color: var(--muted); flex: 1; }
-
-  .driver-favors {
-    font-weight: 600;
-    font-size: 0.8rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-  }
-
+  .driver-favors { font-weight: 600; font-size: 0.8rem; padding: 0.15rem 0.5rem; border-radius: 4px; }
   .driver-favors.a { background: rgba(231,76,60,0.15); color: var(--red); }
   .driver-favors.b { background: rgba(52,152,219,0.15); color: var(--blue); }
 
   .error-msg { color: var(--red); font-size: 0.85rem; padding: 0.5rem 0; }
 
   .loading-spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-    margin-right: 0.5rem;
-    vertical-align: middle;
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid var(--border); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.6s linear infinite;
+    margin-right: 0.5rem; vertical-align: middle;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .event-title { text-align: center; margin-bottom: 1rem; }
   .event-title h2 { font-size: 1.2rem; color: var(--accent); }
   .event-title .date { font-size: 0.8rem; color: var(--muted); }
+
+  /* Share modal */
+  .share-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .share-overlay.hidden { display: none; }
+  .share-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; max-width: 440px; width: 90%;
+  }
+  .share-card h3 {
+    font-size: 1rem; margin-bottom: 1rem; color: var(--accent);
+  }
+  .share-preview {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem;
+    text-align: center;
+  }
+  .share-preview .matchup-text {
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .share-preview .pick-text { font-size: 0.9rem; color: var(--accent); }
+  .share-preview .prob-text { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+  .share-preview .branding {
+    font-size: 0.65rem; color: var(--muted); margin-top: 0.8rem;
+    border-top: 1px solid var(--border); padding-top: 0.5rem;
+  }
+  .share-btns { display: flex; gap: 0.5rem; }
+  .share-btns button { flex: 1; }
+  .copied-msg {
+    font-size: 0.8rem; color: var(--green); text-align: center;
+    margin-top: 0.5rem; min-height: 1.2em;
+  }
 
   @media (max-width: 600px) {
     .fight-row { flex-wrap: wrap; }
@@ -332,7 +284,10 @@
 
 <header>
   <h1><span>UFC</span> Fight Predictor</h1>
-  <div id="statusBadge" class="status-badge loading">Loading model...</div>
+  <div class="header-right">
+    <div id="statusBadge" class="status-badge loading">Loading model...</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">L</button>
+  </div>
 </header>
 
 <main>
@@ -351,11 +306,45 @@
   <div id="results" class="results"></div>
 </main>
 
+<!-- Share Modal -->
+<div class="share-overlay hidden" id="shareOverlay" onclick="if(event.target===this)closeShare()">
+  <div class="share-card">
+    <h3>Share Prediction</h3>
+    <div class="share-preview" id="sharePreview"></div>
+    <div class="share-btns">
+      <button class="btn-secondary" onclick="copyShareText()">Copy Text</button>
+      <button class="btn-primary" onclick="copyShareImage()">Copy as Image</button>
+      <button class="btn-secondary" onclick="closeShare()">Close</button>
+    </div>
+    <div class="copied-msg" id="copiedMsg"></div>
+  </div>
+</div>
+
 <script>
 const API = '';
 let allFighters = [];
 let fightCount = 0;
+let currentShareData = null;
 
+// ── Theme ──────────────────────────────────────────────────────────────
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.documentElement.classList.add('light');
+  updateThemeBtn();
+}
+function toggleTheme() {
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  const isLight = document.documentElement.classList.contains('light');
+  document.getElementById('themeBtn').textContent = isLight ? 'D' : 'L';
+  document.getElementById('themeBtn').title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+}
+initTheme();
+
+// ── Init ───────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
   try {
@@ -376,6 +365,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (let i = 0; i < 5; i++) addFightRow();
 });
 
+// ── Fight Card Builder ─────────────────────────────────────────────────
 function addFightRow() {
   fightCount++;
   const container = document.getElementById('fightRows');
@@ -440,6 +430,7 @@ document.addEventListener('click', (e) => {
     document.querySelectorAll('.autocomplete-list').forEach(el => el.classList.remove('show'));
 });
 
+// ── Helpers ────────────────────────────────────────────────────────────
 function formatName(jfighter) {
   return jfighter.replace(/([a-z])([A-Z])/g, '$1 $2');
 }
@@ -449,6 +440,7 @@ function formatFeature(feat) {
     .replace(/adjperf /i, 'Adj ').replace(/\b\w/g, l => l.toUpperCase());
 }
 
+// ── Predictions ────────────────────────────────────────────────────────
 async function predictCard() {
   const btn = document.getElementById('predictBtn');
   btn.disabled = true;
@@ -524,16 +516,26 @@ function renderResults(data) {
           </div>
         </div>`;
     }
+    const shareData = JSON.stringify({
+      a: p.display_a, b: p.display_b, pctA, pctB, conf,
+      winner: p.winner_display, fa: p.fighter_a, fb: p.fighter_b
+    }).replace(/'/g, "\\'");
+
     html += `
       <div class="result-card">
         <div class="result-header" onclick="toggleDetail(${idx})">
           <span class="bout-label">#${p.bout_num}</span>
           <div class="matchup">
-            <span class="fighter-name ${aClass}">${p.display_a}</span>
+            <span class="fighter-name ${aClass} clickable"
+                  onclick="event.stopPropagation(); window.location='/fighter/${p.fighter_a}'">${p.display_a}</span>
             <span class="vs">VS</span>
-            <span class="fighter-name ${bClass}">${p.display_b}</span>
+            <span class="fighter-name ${bClass} clickable"
+                  onclick="event.stopPropagation(); window.location='/fighter/${p.fighter_b}'">${p.display_b}</span>
           </div>
-          <span class="confidence-badge">${conf}%</span>
+          <div class="result-actions">
+            <button class="btn-small" onclick="event.stopPropagation(); openShare(${shareData.replace(/"/g, '&quot;')})" title="Share">Share</button>
+            <span class="confidence-badge">${conf}%</span>
+          </div>
         </div>
         <div class="prob-bar-container">
           <div class="prob-bar-a" style="width: ${pctA}%"></div>
@@ -618,6 +620,122 @@ async function fetchFightDetail(fighterA, fighterB, eventDate, idx) {
 function toggleDetail(idx) {
   const detail = document.getElementById(`detail-${idx}`);
   if (detail) detail.classList.toggle('show');
+}
+
+// ── Share ───────────────────────────────────────────────────────────────
+function openShare(data) {
+  currentShareData = typeof data === 'string' ? JSON.parse(data) : data;
+  const d = currentShareData;
+  document.getElementById('sharePreview').innerHTML = `
+    <div class="matchup-text">${d.a} vs ${d.b}</div>
+    <div class="pick-text">Pick: ${d.winner} (${d.conf}%)</div>
+    <div class="prob-text">${d.a}: ${d.pctA}% | ${d.b}: ${d.pctB}%</div>
+    <div class="branding">UFC Fight Predictor | ML-powered predictions</div>
+  `;
+  document.getElementById('copiedMsg').textContent = '';
+  document.getElementById('shareOverlay').classList.remove('hidden');
+}
+
+function closeShare() {
+  document.getElementById('shareOverlay').classList.add('hidden');
+}
+
+function copyShareText() {
+  const d = currentShareData;
+  const text = `${d.a} vs ${d.b}\nPick: ${d.winner} (${d.conf}% confidence)\n${d.a}: ${d.pctA}% | ${d.b}: ${d.pctB}%\n\nUFC Fight Predictor`;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copiedMsg').textContent = 'Copied to clipboard!';
+  });
+}
+
+function copyShareImage() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 600;
+  canvas.height = 320;
+  const ctx = canvas.getContext('2d');
+  const d = currentShareData;
+
+  // Background
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0, 0, 600, 320);
+
+  // Border
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(10, 10, 580, 300);
+
+  // Title
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 14px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('UFC FIGHT PREDICTOR', 300, 45);
+
+  // Matchup
+  ctx.fillStyle = '#e0e0e8';
+  ctx.font = 'bold 24px -apple-system, sans-serif';
+  ctx.fillText(`${d.a}  vs  ${d.b}`, 300, 95);
+
+  // Probability bar
+  const barY = 125;
+  const barW = 400;
+  const barX = 100;
+  const barH = 30;
+  const splitX = barX + (parseFloat(d.pctA) / 100) * barW;
+
+  ctx.fillStyle = '#e74c3c';
+  ctx.fillRect(barX, barY, splitX - barX, barH);
+  ctx.fillStyle = '#3498db';
+  ctx.fillRect(splitX, barY, barX + barW - splitX, barH);
+
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 13px -apple-system, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText(`${d.pctA}%`, barX + 8, barY + 20);
+  ctx.textAlign = 'right';
+  ctx.fillText(`${d.pctB}%`, barX + barW - 8, barY + 20);
+
+  // Labels under bar
+  ctx.font = '12px -apple-system, sans-serif';
+  ctx.fillStyle = '#8888a0';
+  ctx.textAlign = 'left';
+  ctx.fillText(d.a, barX, barY + 50);
+  ctx.textAlign = 'right';
+  ctx.fillText(d.b, barX + barW, barY + 50);
+
+  // Pick
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#d4af37';
+  ctx.font = 'bold 20px -apple-system, sans-serif';
+  ctx.fillText(`Pick: ${d.winner}`, 300, 230);
+  ctx.fillStyle = '#e0e0e8';
+  ctx.font = '16px -apple-system, sans-serif';
+  ctx.fillText(`${d.conf}% confidence`, 300, 255);
+
+  // Branding
+  ctx.fillStyle = '#555';
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.fillText('UFC Fight Predictor | ML-powered predictions', 300, 295);
+
+  canvas.toBlob(blob => {
+    if (navigator.clipboard && window.ClipboardItem) {
+      navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(() => {
+        document.getElementById('copiedMsg').textContent = 'Image copied to clipboard!';
+      }).catch(() => {
+        // Fallback: download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `prediction_${d.fa}_vs_${d.fb}.png`;
+        a.click(); URL.revokeObjectURL(url);
+        document.getElementById('copiedMsg').textContent = 'Image downloaded!';
+      });
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `prediction_${d.fa}_vs_${d.fb}.png`;
+      a.click(); URL.revokeObjectURL(url);
+      document.getElementById('copiedMsg').textContent = 'Image downloaded!';
+    }
+  });
 }
 </script>
 </body>
