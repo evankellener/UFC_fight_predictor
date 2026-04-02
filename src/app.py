@@ -22,7 +22,7 @@ from predict_event import (
     ELO_DECAY_MAX, ELO_DECAY_MIDPOINT, ELO_DECAY_STEEPNESS,
     ELO_LOGISTIC_SCALE, BASE_ELO,
 )
-from elo_feature import get_fighter_elo
+from elo_feature import get_fighter_elo, load_bouts, compute_elo
 
 DB_PATH = Path(__file__).parent.parent / "data/sqlite_db/app.db"
 
@@ -45,6 +45,18 @@ def init_model():
     model_state["elo_last_date"] = elo_last_date
     model_state["elo_extra"] = elo_extra
     model_state["fighter_list"] = _load_fighter_list()
+    # Store full Elo DataFrame for history charts
+    print("Building Elo history...")
+    bouts = load_bouts()
+    elo_full_df, _, _, _ = compute_elo(
+        bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
+        decay_lambda=ELO_DECAY, wc_change_penalty=0.457,
+        streak_bonus=0.40, streak_cap=5, r1_finish_mult=1.25,
+        logistic_scale=ELO_LOGISTIC_SCALE,
+        decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
+        decay_steepness=ELO_DECAY_STEEPNESS,
+    )
+    model_state["elo_full_df"] = elo_full_df
     print("Model ready.")
 
 
@@ -191,6 +203,67 @@ def fighters():
         fighters = [f for f in fighters if q in f["jfighter"].lower()]
     # Limit to 50 for performance
     return jsonify(fighters[:50])
+
+
+@app.route("/api/fighter/<name>/elo_history")
+def fighter_elo_history(name):
+    """Return full Elo history for a fighter: each fight with before/after Elo."""
+    elo_df = model_state.get("elo_full_df")
+    if elo_df is None:
+        return jsonify({"error": "Elo data not loaded"}), 503
+
+    # Fighter appears as f1 or f2 in bouts (alphabetically ordered)
+    as_f1 = elo_df[elo_df["f1"] == name].copy()
+    as_f2 = elo_df[elo_df["f2"] == name].copy()
+
+    points = []
+    for _, r in as_f1.iterrows():
+        pre_elo = float(r["precomp_elo_f1"])
+        # Post-fight Elo: pre + delta (estimate from next fight's precomp or use ratings)
+        won = (r.get("f1_win", r.get("winner", "") == name) == 1)
+        opp = r["f2"]
+        opp_elo = float(r["precomp_elo_f2"])
+        points.append({
+            "date": str(r["DATE"])[:10] if hasattr(r["DATE"], "strftime") else str(r["DATE"])[:10],
+            "elo": round(pre_elo, 1),
+            "opponent": opp,
+            "opponent_display": _format_fighter_name(opp),
+            "result": "W" if won else "L",
+            "method": r.get("method", ""),
+            "opp_elo": round(opp_elo, 1),
+        })
+
+    for _, r in as_f2.iterrows():
+        pre_elo = float(r["precomp_elo_f2"])
+        won = (r.get("f1_win", 0) == 0)  # f2 wins when f1_win=0
+        opp = r["f1"]
+        opp_elo = float(r["precomp_elo_f1"])
+        points.append({
+            "date": str(r["DATE"])[:10] if hasattr(r["DATE"], "strftime") else str(r["DATE"])[:10],
+            "elo": round(pre_elo, 1),
+            "opponent": opp,
+            "opponent_display": _format_fighter_name(opp),
+            "result": "W" if won else "L",
+            "method": r.get("method", ""),
+            "opp_elo": round(opp_elo, 1),
+        })
+
+    points.sort(key=lambda x: x["date"])
+
+    # Add current Elo as final point
+    current = model_state.get("elo_ratings", {}).get(name)
+    if current is not None and points:
+        points.append({
+            "date": "Current",
+            "elo": round(current, 1),
+            "opponent": "",
+            "opponent_display": "",
+            "result": "",
+            "method": "",
+            "opp_elo": 0,
+        })
+
+    return jsonify({"jfighter": name, "history": points})
 
 
 @app.route("/api/fighter/<name>")

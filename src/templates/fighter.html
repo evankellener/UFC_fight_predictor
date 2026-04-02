@@ -122,6 +122,14 @@
     padding: 1.2rem 1.5rem;
     text-align: center;
     min-width: 140px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .elo-badge:hover { border-color: var(--accent); }
+  .elo-badge .click-hint {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
   }
   .elo-badge .elo-val {
     font-size: 2rem;
@@ -196,6 +204,39 @@
     color: var(--muted);
   }
 
+  /* Elo Chart Modal */
+  .chart-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7); z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chart-overlay.hidden { display: none; }
+  .chart-modal {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; width: 95%; max-width: 800px;
+    max-height: 90vh; overflow: auto;
+  }
+  .chart-modal h3 { font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; }
+  .chart-modal .close-btn {
+    float: right; background: none; border: none; color: var(--muted);
+    font-size: 1.4rem; cursor: pointer; padding: 0; line-height: 1;
+  }
+  .chart-modal .close-btn:hover { color: var(--text); }
+  .chart-container { position: relative; }
+  .chart-tooltip {
+    position: absolute; display: none;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.8rem; font-size: 0.8rem;
+    pointer-events: none; z-index: 10; min-width: 180px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .chart-tooltip .tt-date { color: var(--muted); font-size: 0.7rem; }
+  .chart-tooltip .tt-elo { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+  .chart-tooltip .tt-opp { margin-top: 0.3rem; }
+  .chart-tooltip .tt-result { font-weight: 600; }
+  .chart-tooltip .tt-result.W { color: var(--green); }
+  .chart-tooltip .tt-result.L { color: var(--red); }
+
   @media (max-width: 600px) {
     .profile-header { flex-direction: column; }
     .elo-badge { align-self: stretch; }
@@ -223,10 +264,11 @@
         <div class="record-row" id="recordRow"></div>
         <div class="stats-grid" id="statsGrid"></div>
       </div>
-      <div class="elo-badge" id="eloBadge" style="display:none;">
+      <div class="elo-badge" id="eloBadge" style="display:none;" onclick="openEloChart()">
         <div class="elo-val" id="eloVal"></div>
         <div class="elo-lbl">Elo Rating</div>
         <div class="peak" id="eloPeak"></div>
+        <div class="click-hint">Click for history</div>
       </div>
     </div>
 
@@ -244,6 +286,18 @@
 
   </div>
 </main>
+
+<!-- Elo Chart Modal -->
+<div class="chart-overlay hidden" id="chartOverlay" onclick="if(event.target===this)closeEloChart()">
+  <div class="chart-modal">
+    <button class="close-btn" onclick="closeEloChart()">&times;</button>
+    <h3>Elo Rating History</h3>
+    <div class="chart-container">
+      <canvas id="eloChart" width="750" height="350"></canvas>
+      <div class="chart-tooltip" id="chartTooltip"></div>
+    </div>
+  </div>
+</div>
 
 <script>
 const JFIGHTER = '{{ jfighter }}';
@@ -424,6 +478,198 @@ function drawRadar(data) {
     ctx.fillText(labels[i], lx, ly);
   }
 }
+
+// ── Elo Chart ────────────────────────────────────────────────────────
+let eloHistoryData = null;
+
+async function openEloChart() {
+  document.getElementById('chartOverlay').classList.remove('hidden');
+  if (eloHistoryData) {
+    drawEloChart(eloHistoryData);
+    return;
+  }
+  try {
+    const res = await fetch(`/api/fighter/${JFIGHTER}/elo_history`);
+    const data = await res.json();
+    eloHistoryData = data.history || [];
+    drawEloChart(eloHistoryData);
+  } catch (e) {
+    console.error('Failed to load Elo history:', e);
+  }
+}
+
+function closeEloChart() {
+  document.getElementById('chartOverlay').classList.add('hidden');
+  document.getElementById('chartTooltip').style.display = 'none';
+}
+
+function drawEloChart(points) {
+  const canvas = document.getElementById('eloChart');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+
+  const isLight = document.documentElement.classList.contains('light');
+  const gridColor = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)';
+  const textColor = isLight ? '#6b6b80' : '#8888a0';
+  const lineColor = isLight ? '#b8941f' : '#d4af37';
+  const bgColor = isLight ? '#ffffff' : '#12121a';
+
+  if (points.length < 2) return;
+
+  // Filter out "Current" for axis calculation, but include for drawing
+  const fightPoints = points.filter(p => p.date !== 'Current');
+  const allElos = points.map(p => p.elo);
+  const minElo = Math.floor(Math.min(...allElos) / 50) * 50 - 50;
+  const maxElo = Math.ceil(Math.max(...allElos) / 50) * 50 + 50;
+
+  const xScale = (i) => pad.left + (i / (points.length - 1)) * cw;
+  const yScale = (elo) => pad.top + ch - ((elo - minElo) / (maxElo - minElo)) * ch;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, W, H);
+
+  // Y-axis grid + labels
+  ctx.font = '11px -apple-system, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  const steps = 6;
+  for (let i = 0; i <= steps; i++) {
+    const elo = minElo + (maxElo - minElo) * (i / steps);
+    const y = yScale(elo);
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(W - pad.right, y);
+    ctx.stroke();
+    ctx.fillStyle = textColor;
+    ctx.fillText(Math.round(elo), pad.left - 8, y);
+  }
+
+  // Base line at 1500
+  const baseY = yScale(1500);
+  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.moveTo(pad.left, baseY);
+  ctx.lineTo(W - pad.right, baseY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Line
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    const x = xScale(i), y = yScale(p.elo);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Gradient fill under line
+  const gradient = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+  gradient.addColorStop(0, isLight ? 'rgba(184,148,31,0.15)' : 'rgba(212,175,55,0.15)');
+  gradient.addColorStop(1, isLight ? 'rgba(184,148,31,0)' : 'rgba(212,175,55,0)');
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    const x = xScale(i), y = yScale(p.elo);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.lineTo(xScale(points.length - 1), H - pad.bottom);
+  ctx.lineTo(pad.left, H - pad.bottom);
+  ctx.closePath();
+  ctx.fill();
+
+  // Dots (colored by result)
+  points.forEach((p, i) => {
+    const x = xScale(i), y = yScale(p.elo);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    if (p.result === 'W') ctx.fillStyle = isLight ? '#27ae60' : '#2ecc71';
+    else if (p.result === 'L') ctx.fillStyle = isLight ? '#c0392b' : '#e74c3c';
+    else ctx.fillStyle = lineColor;
+    ctx.fill();
+    ctx.strokeStyle = bgColor;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  });
+
+  // X-axis labels (show ~6 dates)
+  ctx.fillStyle = textColor;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  const labelStep = Math.max(1, Math.floor(points.length / 6));
+  points.forEach((p, i) => {
+    if (i % labelStep === 0 || i === points.length - 1) {
+      const x = xScale(i);
+      const label = p.date === 'Current' ? 'Now' : p.date.substring(0, 7);
+      ctx.fillText(label, x, H - pad.bottom + 8);
+    }
+  });
+
+  // Store point positions for hover
+  canvas._chartPoints = points.map((p, i) => ({
+    x: xScale(i), y: yScale(p.elo), data: p
+  }));
+}
+
+// Hover tooltip
+document.getElementById('eloChart').addEventListener('mousemove', function(e) {
+  const rect = this.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (this.width / rect.width);
+  const my = (e.clientY - rect.top) * (this.height / rect.height);
+  const pts = this._chartPoints;
+  if (!pts) return;
+
+  const tooltip = document.getElementById('chartTooltip');
+  let closest = null, minDist = 30;
+  pts.forEach(p => {
+    const d = Math.sqrt((mx - p.x) ** 2 + (my - p.y) ** 2);
+    if (d < minDist) { minDist = d; closest = p; }
+  });
+
+  if (closest && closest.data.date !== 'Current') {
+    const d = closest.data;
+    tooltip.innerHTML = `
+      <div class="tt-date">${d.date}</div>
+      <div class="tt-elo">Elo: ${d.elo}</div>
+      <div class="tt-opp">
+        <span class="tt-result ${d.result}">${d.result}</span>
+        vs ${d.opponent_display}
+      </div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">
+        ${d.method ? d.method : ''} | Opp Elo: ${d.opp_elo}
+      </div>
+    `;
+    // Position tooltip
+    const tx = Math.min(closest.x + 15, 750 - 200);
+    const ty = Math.max(closest.y - 80, 5);
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+    tooltip.style.display = 'block';
+  } else if (closest && closest.data.date === 'Current') {
+    tooltip.innerHTML = `
+      <div class="tt-date">Current</div>
+      <div class="tt-elo">Elo: ${closest.data.elo}</div>
+    `;
+    tooltip.style.left = (closest.x - 80) + 'px';
+    tooltip.style.top = (closest.y - 60) + 'px';
+    tooltip.style.display = 'block';
+  } else {
+    tooltip.style.display = 'none';
+  }
+});
+
+document.getElementById('eloChart').addEventListener('mouseleave', function() {
+  document.getElementById('chartTooltip').style.display = 'none';
+});
 
 loadProfile();
 </script>
