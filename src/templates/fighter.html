@@ -516,16 +516,20 @@ function drawEloChart(points) {
   const textColor = isLight ? '#6b6b80' : '#8888a0';
   const lineColor = isLight ? '#b8941f' : '#d4af37';
   const bgColor = isLight ? '#ffffff' : '#12121a';
+  const winColor = isLight ? '#27ae60' : '#2ecc71';
+  const lossColor = isLight ? '#c0392b' : '#e74c3c';
+  const preColor = isLight ? '#6b6b80' : '#8888a0';
 
-  if (points.length < 2) return;
+  if (points.length < 1) return;
 
-  // Filter out "Current" for axis calculation, but include for drawing
-  const fightPoints = points.filter(p => p.date !== 'Current');
-  const allElos = points.map(p => p.elo);
+  // Collect all Elo values for scale
+  const allElos = [];
+  points.forEach(p => { allElos.push(p.pre_elo); allElos.push(p.post_elo); });
   const minElo = Math.floor(Math.min(...allElos) / 50) * 50 - 50;
   const maxElo = Math.ceil(Math.max(...allElos) / 50) * 50 + 50;
 
-  const xScale = (i) => pad.left + (i / (points.length - 1)) * cw;
+  const n = points.length;
+  const xScale = (i) => pad.left + (i / Math.max(n - 1, 1)) * cw;
   const yScale = (elo) => pad.top + ch - ((elo - minElo) / (maxElo - minElo)) * ch;
 
   ctx.clearRect(0, 0, W, H);
@@ -551,116 +555,147 @@ function drawEloChart(points) {
   }
 
   // Base line at 1500
-  const baseY = yScale(1500);
   ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)';
   ctx.lineWidth = 1;
   ctx.setLineDash([4, 4]);
   ctx.beginPath();
-  ctx.moveTo(pad.left, baseY);
-  ctx.lineTo(W - pad.right, baseY);
+  ctx.moveTo(pad.left, yScale(1500));
+  ctx.lineTo(W - pad.right, yScale(1500));
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Line
+  // Draw connecting line through post-fight Elos (the "trajectory")
   ctx.strokeStyle = lineColor;
-  ctx.lineWidth = 2.5;
+  ctx.lineWidth = 2;
   ctx.lineJoin = 'round';
   ctx.beginPath();
   points.forEach((p, i) => {
-    const x = xScale(i), y = yScale(p.elo);
+    const x = xScale(i), y = yScale(p.post_elo);
     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
   ctx.stroke();
 
-  // Gradient fill under line
+  // Gradient fill under post-fight line
   const gradient = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
-  gradient.addColorStop(0, isLight ? 'rgba(184,148,31,0.15)' : 'rgba(212,175,55,0.15)');
+  gradient.addColorStop(0, isLight ? 'rgba(184,148,31,0.12)' : 'rgba(212,175,55,0.12)');
   gradient.addColorStop(1, isLight ? 'rgba(184,148,31,0)' : 'rgba(212,175,55,0)');
   ctx.fillStyle = gradient;
   ctx.beginPath();
   points.forEach((p, i) => {
-    const x = xScale(i), y = yScale(p.elo);
+    const x = xScale(i), y = yScale(p.post_elo);
     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
-  ctx.lineTo(xScale(points.length - 1), H - pad.bottom);
+  ctx.lineTo(xScale(n - 1), H - pad.bottom);
   ctx.lineTo(pad.left, H - pad.bottom);
   ctx.closePath();
   ctx.fill();
 
-  // Dots (colored by result)
+  // For each fight: vertical line from pre to post, two dots
+  const hoverTargets = [];
   points.forEach((p, i) => {
-    const x = xScale(i), y = yScale(p.elo);
+    const x = xScale(i);
+    const yPre = yScale(p.pre_elo);
+    const yPost = yScale(p.post_elo);
+
+    // Vertical connector line
+    ctx.strokeStyle = p.result === 'W' ? winColor : lossColor;
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.5;
     ctx.beginPath();
-    ctx.arc(x, y, 4, 0, Math.PI * 2);
-    if (p.result === 'W') ctx.fillStyle = isLight ? '#27ae60' : '#2ecc71';
-    else if (p.result === 'L') ctx.fillStyle = isLight ? '#c0392b' : '#e74c3c';
-    else ctx.fillStyle = lineColor;
+    ctx.moveTo(x, yPre);
+    ctx.lineTo(x, yPost);
+    ctx.stroke();
+    ctx.globalAlpha = 1.0;
+
+    // Pre-fight dot (hollow circle)
+    ctx.beginPath();
+    ctx.arc(x, yPre, 4, 0, Math.PI * 2);
+    ctx.fillStyle = bgColor;
+    ctx.fill();
+    ctx.strokeStyle = preColor;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Post-fight dot (filled, colored by result)
+    ctx.beginPath();
+    ctx.arc(x, yPost, 5, 0, Math.PI * 2);
+    ctx.fillStyle = p.result === 'W' ? winColor : lossColor;
     ctx.fill();
     ctx.strokeStyle = bgColor;
     ctx.lineWidth = 1.5;
     ctx.stroke();
+
+    hoverTargets.push({ x, yPre, yPost, data: p });
   });
 
-  // X-axis labels (show ~6 dates)
+  // X-axis labels
   ctx.fillStyle = textColor;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  const labelStep = Math.max(1, Math.floor(points.length / 6));
+  const labelStep = Math.max(1, Math.floor(n / 6));
   points.forEach((p, i) => {
-    if (i % labelStep === 0 || i === points.length - 1) {
-      const x = xScale(i);
-      const label = p.date === 'Current' ? 'Now' : p.date.substring(0, 7);
-      ctx.fillText(label, x, H - pad.bottom + 8);
+    if (i % labelStep === 0 || i === n - 1) {
+      ctx.fillText(p.date.substring(0, 7), xScale(i), H - pad.bottom + 8);
     }
   });
 
-  // Store point positions for hover
-  canvas._chartPoints = points.map((p, i) => ({
-    x: xScale(i), y: yScale(p.elo), data: p
-  }));
+  // Legend
+  ctx.font = '10px -apple-system, sans-serif';
+  ctx.textAlign = 'left';
+  const lx = pad.left + 5, ly = pad.top + 5;
+  // Pre dot
+  ctx.beginPath(); ctx.arc(lx, ly, 3, 0, Math.PI*2);
+  ctx.fillStyle = bgColor; ctx.fill();
+  ctx.strokeStyle = preColor; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.fillStyle = textColor; ctx.fillText('Pre-fight', lx + 8, ly + 3);
+  // Post dot
+  ctx.beginPath(); ctx.arc(lx + 70, ly, 3.5, 0, Math.PI*2);
+  ctx.fillStyle = winColor; ctx.fill();
+  ctx.fillStyle = textColor; ctx.fillText('Post-fight', lx + 78, ly + 3);
+
+  canvas._hoverTargets = hoverTargets;
 }
 
 // Hover tooltip
 document.getElementById('eloChart').addEventListener('mousemove', function(e) {
   const rect = this.getBoundingClientRect();
   const mx = (e.clientX - rect.left) * (this.width / rect.width);
-  const my = (e.clientY - rect.top) * (this.height / rect.height);
-  const pts = this._chartPoints;
-  if (!pts) return;
+  const targets = this._hoverTargets;
+  if (!targets) return;
 
   const tooltip = document.getElementById('chartTooltip');
-  let closest = null, minDist = 30;
-  pts.forEach(p => {
-    const d = Math.sqrt((mx - p.x) ** 2 + (my - p.y) ** 2);
-    if (d < minDist) { minDist = d; closest = p; }
+  // Find closest by x-distance only (more intuitive for vertical pairs)
+  let closest = null, minDist = 25;
+  targets.forEach(t => {
+    const d = Math.abs(mx - t.x);
+    if (d < minDist) { minDist = d; closest = t; }
   });
 
-  if (closest && closest.data.date !== 'Current') {
+  if (closest) {
     const d = closest.data;
+    const change = d.post_elo - d.pre_elo;
+    const changeStr = change >= 0 ? `+${change.toFixed(1)}` : change.toFixed(1);
+    const changeColor = change >= 0 ? 'var(--green)' : 'var(--red)';
     tooltip.innerHTML = `
       <div class="tt-date">${d.date}</div>
-      <div class="tt-elo">Elo: ${d.elo}</div>
+      <div style="margin:0.3rem 0;">
+        <span style="color:var(--muted)">Pre:</span> <strong>${d.pre_elo}</strong>
+        &rarr;
+        <span style="color:var(--muted)">Post:</span> <strong>${d.post_elo}</strong>
+        <span style="color:${changeColor};font-weight:700;margin-left:0.3rem;">${changeStr}</span>
+      </div>
       <div class="tt-opp">
         <span class="tt-result ${d.result}">${d.result}</span>
         vs ${d.opponent_display}
       </div>
       <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">
-        ${d.method ? d.method : ''} | Opp Elo: ${d.opp_elo}
+        ${d.method || 'Decision'} | Opp Elo: ${d.opp_elo}
       </div>
     `;
-    // Position tooltip
-    const tx = Math.min(closest.x + 15, 750 - 200);
-    const ty = Math.max(closest.y - 80, 5);
+    const tx = Math.min(closest.x + 15, 750 - 210);
+    const ty = Math.max(Math.min(closest.yPre, closest.yPost) - 100, 5);
     tooltip.style.left = tx + 'px';
     tooltip.style.top = ty + 'px';
-    tooltip.style.display = 'block';
-  } else if (closest && closest.data.date === 'Current') {
-    tooltip.innerHTML = `
-      <div class="tt-date">Current</div>
-      <div class="tt-elo">Elo: ${closest.data.elo}</div>
-    `;
-    tooltip.style.left = (closest.x - 80) + 'px';
-    tooltip.style.top = (closest.y - 60) + 'px';
     tooltip.style.display = 'block';
   } else {
     tooltip.style.display = 'none';
