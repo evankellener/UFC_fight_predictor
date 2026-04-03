@@ -34,9 +34,9 @@ ELO_R1_MULT      = 1.25      # was 0.800 — R1 finishes now rewarded (dominance
 ELO_LOGISTIC_SCALE = 449.205
 
 # Sigmoid decay params (set to None to use legacy exponential ELO_DECAY)
-ELO_DECAY_MAX       = 0.80    # max fraction of Elo deviation lost at long inactivity
-ELO_DECAY_MIDPOINT  = 365.0   # days where decay is steepest (~1 year)
-ELO_DECAY_STEEPNESS = 40.0    # transition sharpness (lower = sharper)
+ELO_DECAY_MAX       = 0.25    # max fraction of Elo deviation lost at long inactivity
+ELO_DECAY_MIDPOINT  = 730.0   # days where decay is steepest (~2 years)
+ELO_DECAY_STEEPNESS = 80.0    # transition sharpness (lower = sharper)
 
 # ── Feature groups (identical to ml_pipeline_v2.py) ────────────────────────
 DECAY_DIFF = [
