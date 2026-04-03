@@ -27,9 +27,9 @@ ELO_K            = 48.0       # was 59.507 — recalibrated for higher finish mu
 ELO_KO_MULT      = 1.80      # was 0.937 — KO/TKO wins now heavily rewarded
 ELO_SUB_MULT     = 1.20      # was 1.481 — slight sub reward (less than KO)
 ELO_DECAY        = 0.923
-ELO_WC_PENALTY   = 0.457
-ELO_STREAK_BONUS = 0.40      # was 0.254 — stronger momentum signal
-ELO_STREAK_CAP   = 5         # was 9 — concentrated on achievable 3-5 fight streaks
+ELO_WC_PENALTY   = None       # disabled — was causing spurious resets from weightindex noise
+ELO_STREAK_BONUS = 0.0       # disabled — opp-quality K-factor handles this better
+ELO_STREAK_CAP   = 5
 ELO_R1_MULT      = 1.25      # was 0.800 — R1 finishes now rewarded (dominance signal)
 ELO_LOGISTIC_SCALE = 449.205
 

@@ -239,7 +239,8 @@ def compute_elo(bouts: pd.DataFrame,
                 logistic_scale: float = 400.0,
                 decay_max: float = None,
                 decay_midpoint: float = None,
-                decay_steepness: float = None) -> tuple:
+                decay_steepness: float = None,
+                opp_quality_k: bool = True) -> tuple:
     """
     Compute precomp ELO for each bout (rating BEFORE the fight).
 
@@ -260,6 +261,8 @@ def compute_elo(bouts: pd.DataFrame,
     decay_max         : sigmoid decay — maximum fraction of Elo deviation lost (0-1)
     decay_midpoint    : sigmoid decay — days of inactivity where decay is steepest
     decay_steepness   : sigmoid decay — controls transition sharpness (higher = sharper)
+    opp_quality_k     : scale K by opponent rating / BASE_ELO (clipped 0.6–1.5)
+                        so beating elite opponents moves Elo more than beating cans
     """
     from collections import deque
 
@@ -292,7 +295,8 @@ def compute_elo(bouts: pd.DataFrame,
             # Legacy exponential decay
             years = days_inactive / 365.25
             r = BASE_ELO + (r - BASE_ELO) * np.exp(-decay_lambda * years)
-        if wc != 0 and last_wc[fighter] != 0 and wc != last_wc[fighter]:
+        if (wc_change_penalty is not None and wc != 0
+                and last_wc[fighter] != 0 and wc != last_wc[fighter]):
             avg3 = float(np.mean(elo_hist[fighter])) if elo_hist[fighter] else BASE_ELO
             r = BASE_ELO + (avg3 - BASE_ELO) * wc_change_penalty
         return r
@@ -339,6 +343,12 @@ def compute_elo(bouts: pd.DataFrame,
         sk1, sk2 = streaks.get(f1, 0), streaks.get(f2, 0)
         k_win  = K * mult * (1 + streak_bonus * min(sk1 if s1_win else sk2, streak_cap))
         k_lose = K * mult * (1 + streak_bonus * min(sk2 if s1_win else sk1, streak_cap))
+        # Opponent quality scaling: K increases when opponent is strong
+        if opp_quality_k:
+            opp_rat = r2 if s1_win else r1
+            oq = max(0.6, min(1.5, opp_rat / BASE_ELO))
+            k_win  *= oq
+            k_lose *= oq
         s1 = 1.0 if s1_win else 0.0
         new_r1 = r1 + (k_win  if s1_win else k_lose) * (s1 - exp1)
         new_r2 = r2 + (k_lose if s1_win else k_win)  * ((1-s1) - (1-exp1))
