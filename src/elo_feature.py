@@ -240,7 +240,10 @@ def compute_elo(bouts: pd.DataFrame,
                 decay_max: float = None,
                 decay_midpoint: float = None,
                 decay_steepness: float = None,
-                opp_quality_k: bool = True) -> tuple:
+                opp_quality_k: bool = True,
+                sliding_k: bool = True,
+                upset_momentum: bool = True,
+                champ_mult: float = 1.2) -> tuple:
     """
     Compute precomp ELO for each bout (rating BEFORE the fight).
 
@@ -263,6 +266,11 @@ def compute_elo(bouts: pd.DataFrame,
     decay_steepness   : sigmoid decay — controls transition sharpness (higher = sharper)
     opp_quality_k     : scale K by opponent rating / BASE_ELO (clipped 0.6–1.5)
                         so beating elite opponents moves Elo more than beating cans
+    sliding_k         : K starts 1.5x for first 5 fights, decreases to 0.8x after 15
+                        (new fighters converge faster, established fighters are stable)
+    upset_momentum    : when winner was <30% expected, K gets bonus multiplier
+                        (big upsets indicate the model was wrong about true skill)
+    champ_mult        : K multiplier for 5-round (championship/main event) bouts
     """
     from collections import deque
 
@@ -274,6 +282,7 @@ def compute_elo(bouts: pd.DataFrame,
     elo_hist   = {}  # last 3 precomp for wc-change blend
     elo_3ago   = {}  # deque(maxlen=4): position [0] = 3 fights ago
     peak_elo   = {}; opp_elos   = {}; elo_deltas = {}
+    fight_counts = {}  # number of fights completed per fighter (for sliding_k)
 
     def get_rating(fighter, fight_date, wc):
         if fighter not in ratings:
@@ -282,6 +291,7 @@ def compute_elo(bouts: pd.DataFrame,
             elo_hist[fighter]   = [];       elo_3ago[fighter]   = deque(maxlen=4)
             peak_elo[fighter]   = BASE_ELO; opp_elos[fighter]   = []
             elo_deltas[fighter] = deque(maxlen=5)
+            fight_counts[fighter] = 0
             return BASE_ELO
         r = ratings[fighter]
         days_inactive = max((fight_date - last_date[fighter]).days, 0)
@@ -349,6 +359,29 @@ def compute_elo(bouts: pd.DataFrame,
             oq = max(0.6, min(1.5, opp_rat / BASE_ELO))
             k_win  *= oq
             k_lose *= oq
+        # Sliding K: new fighters' Elo moves faster, established fighters are stable
+        if sliding_k:
+            def _k_scale(n):
+                if n < 5: return 1.5
+                elif n < 15: return 1.5 - 0.7 * (n - 5) / 10
+                else: return 0.8
+            sk_mult = 0.5 * (_k_scale(fight_counts.get(f1, 0)) +
+                             _k_scale(fight_counts.get(f2, 0)))
+            k_win  *= sk_mult
+            k_lose *= sk_mult
+        # Upset momentum: big upsets move Elo more
+        if upset_momentum:
+            winner_exp = exp1 if s1_win else (1 - exp1)
+            if winner_exp < 0.30:
+                upset_mult = 1.0 + (0.30 - winner_exp)
+                k_win  *= upset_mult
+                k_lose *= upset_mult
+        # Championship bout multiplier: 5-round fights carry more weight
+        if champ_mult is not None and champ_mult != 1.0:
+            scheduled = int(bout.get("scheduled_rounds", 3) or 3)
+            if scheduled == 5:
+                k_win  *= champ_mult
+                k_lose *= champ_mult
         s1 = 1.0 if s1_win else 0.0
         new_r1 = r1 + (k_win  if s1_win else k_lose) * (s1 - exp1)
         new_r2 = r2 + (k_lose if s1_win else k_win)  * ((1-s1) - (1-exp1))
@@ -357,6 +390,8 @@ def compute_elo(bouts: pd.DataFrame,
         ratings[f1] = new_r1; ratings[f2] = new_r2
         last_date[f1] = date; last_date[f2] = date
         last_wc[f1]   = wc;   last_wc[f2]   = wc
+        fight_counts[f1] = fight_counts.get(f1, 0) + 1
+        fight_counts[f2] = fight_counts.get(f2, 0) + 1
         peak_elo[f1]  = max(peak_elo.get(f1, BASE_ELO), new_r1)
         peak_elo[f2]  = max(peak_elo.get(f2, BASE_ELO), new_r2)
         streaks[f1]   = (streaks.get(f1, 0) + 1) if s1_win  else 0

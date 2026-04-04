@@ -50,11 +50,12 @@ def init_model():
     bouts = load_bouts()
     elo_full_df, _, _, _ = compute_elo(
         bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
-        decay_lambda=ELO_DECAY, wc_change_penalty=0.457,
-        streak_bonus=0.40, streak_cap=5, r1_finish_mult=1.25,
-        logistic_scale=ELO_LOGISTIC_SCALE,
+        decay_lambda=ELO_DECAY, wc_change_penalty=ELO_WC_PENALTY,
+        streak_bonus=ELO_STREAK_BONUS, streak_cap=ELO_STREAK_CAP,
+        r1_finish_mult=ELO_R1_MULT, logistic_scale=ELO_LOGISTIC_SCALE,
         decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
         decay_steepness=ELO_DECAY_STEEPNESS,
+        opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
     )
     model_state["elo_full_df"] = elo_full_df
     print("Model ready.")
