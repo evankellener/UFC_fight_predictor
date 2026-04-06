@@ -15,14 +15,63 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 # Ensure src/ is on path for local imports
 sys.path.insert(0, str(Path(__file__).parent))
 
+import math
+
 from predict_event import (
     load_all_data, train_on_all, predict_fight, get_current_event_ema,
     ALL_FEATURES, ALL_ADJPERF_DIFF, ELO_FEATURES,
     ELO_K, ELO_KO_MULT, ELO_SUB_MULT, ELO_DECAY,
     ELO_DECAY_MAX, ELO_DECAY_MIDPOINT, ELO_DECAY_STEEPNESS,
     ELO_LOGISTIC_SCALE, BASE_ELO,
+    ELO_WC_PENALTY, ELO_STREAK_BONUS, ELO_STREAK_CAP, ELO_R1_MULT,
 )
 from elo_feature import get_fighter_elo, load_bouts, compute_elo
+
+# ── Z-Score stat configuration ─────────────────────────────────────────────
+# Maps category → list of stats for the fighter profile z-score display.
+# Each stat: col (DB column), name (display), table (source), inverted (lower=better).
+ZSCORE_STAT_CONFIG = {
+    "Striking": [
+        {"col": "sig_str_land_per_min_dec_avg", "name": "Sig. Strikes/Min", "table": "final_features_fast", "inverted": False},
+        {"col": "sig_str_acc_dec_avg", "name": "Sig. Strike Accuracy", "table": "final_features_fast", "inverted": False},
+        {"col": "sig_str_def_dec_avg", "name": "Sig. Strike Defense", "table": "final_features_fast", "inverted": False},
+        {"col": "head_acc_dec_avg", "name": "Head Accuracy", "table": "final_features_fast", "inverted": False},
+        {"col": "body_acc_dec_avg", "name": "Body Accuracy", "table": "final_features_fast", "inverted": False},
+        {"col": "leg_acc_dec_avg", "name": "Leg Accuracy", "table": "final_features_fast", "inverted": False},
+        {"col": "distance_acc_dec_avg", "name": "Distance Accuracy", "table": "final_features_fast", "inverted": False},
+        {"col": "kd_per_min_dec_avg", "name": "Knockdowns/Min", "table": "final_features_fast", "inverted": False},
+    ],
+    "Power & Finishing": [
+        {"col": "ko_eff_dec_avg", "name": "KO Efficiency", "table": "final_features_fast", "inverted": False},
+        {"col": "ko_in_r1_rate_dec_avg", "name": "R1 KO Rate", "table": "new_features4_dec_avg", "inverted": False},
+        {"col": "finish_rate_dec_avg", "name": "Finish Rate", "table": "final_features_fast", "inverted": False},
+        {"col": "damage_efficiency_dec_avg", "name": "Damage Efficiency", "table": "new_features4_dec_avg", "inverted": False},
+        {"col": "output_per_damage_dec_avg", "name": "Output per Damage", "table": "new_features4_dec_avg", "inverted": False},
+    ],
+    "Grappling": [
+        {"col": "td_land_per_min_dec_avg", "name": "Takedowns/Min", "table": "final_features_fast", "inverted": False},
+        {"col": "td_def_dec_avg", "name": "TD Defense", "table": "final_features_fast", "inverted": False},
+        {"col": "sub_att_per_min_dec_avg", "name": "Sub Attempts/Min", "table": "final_features_fast", "inverted": False},
+        {"col": "ctrl_per_min_dec_avg", "name": "Control Time/Min", "table": "final_features_fast", "inverted": False},
+        {"col": "grappling_dominance_pm_dec_avg", "name": "Grappling Dominance", "table": "new_features5_dec_avg", "inverted": False},
+        {"col": "top_position_output_dec_avg", "name": "Top Position Output", "table": "new_features5_dec_avg", "inverted": False},
+        {"col": "td_to_ctrl_conversion_dec_avg", "name": "TD\u2192Control Conv.", "table": "new_features5_dec_avg", "inverted": False},
+    ],
+    "Cardio & Durability": [
+        {"col": "r3_vs_r1_sigstr_ratio_dec_avg", "name": "Late Round Output", "table": "cardio_features_dec_avg", "inverted": False},
+        {"col": "sigstr_absorbed_pm_dec_avg", "name": "Strikes Absorbed/Min", "table": "new_features4_dec_avg", "inverted": True},
+        {"col": "kod_rate_dec_avg", "name": "KO'd Rate", "table": "new_features4_dec_avg", "inverted": True},
+        {"col": "avg_fight_duration_dec_avg", "name": "Avg Fight Duration", "table": "new_features4_dec_avg", "inverted": False},
+        {"col": "r1_output_share_dec_avg", "name": "R1 Output Share", "table": "cardio_features_dec_avg", "inverted": False},
+    ],
+    "Activity & Record": [
+        {"col": "win_streak", "name": "Win Streak", "table": "streak_features", "inverted": False},
+        {"col": "opp_avg_win_ratio", "name": "Opposition Quality", "table": "opp_quality_features", "inverted": False},
+        {"col": "recent_ko_rate_3", "name": "Recent KO Rate", "table": "streak_features", "inverted": False},
+        {"col": "ufc_fight_count", "name": "UFC Experience", "table": "new_features_dec_avg", "inverted": False},
+        {"col": "days_since_last_fight_dec_avg", "name": "Days Since Last Fight", "table": "final_features_fast", "inverted": True},
+    ],
+}
 
 DB_PATH = Path(__file__).parent.parent / "data/sqlite_db/app.db"
 
@@ -58,6 +107,8 @@ def init_model():
         opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
     )
     model_state["elo_full_df"] = elo_full_df
+    print("Computing z-score baselines...")
+    _compute_wc_baselines()
     print("Model ready.")
 
 
@@ -597,6 +648,183 @@ def _get_top_drivers(result, pipe, n=5):
             "favors_display": _format_fighter_name(favors),
         })
     return drivers
+
+
+# ── Z-Score baselines + endpoint ─────────────────────────────────────────────
+
+def _norm_cdf(z):
+    """Approximate normal CDF for z-score → percentile conversion."""
+    return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+
+
+def _compute_wc_baselines():
+    """Compute weight-class mean/std for all z-score stats. Called once at startup."""
+    conn = sqlite3.connect(DB_PATH)
+
+    # Collect all unique (table, col) pairs we need
+    table_cols = {}
+    for stats in ZSCORE_STAT_CONFIG.values():
+        for s in stats:
+            table_cols.setdefault(s["table"], []).append(s["col"])
+
+    # For each table, get each fighter's LATEST row + weightindex
+    all_data = {}
+    for table, cols in table_cols.items():
+        cols_str = ", ".join(f"t.{c}" for c in cols)
+        if table == "final_features_fast":
+            # final_features_fast already has weightindex
+            q = f"""
+                SELECT t.jfighter, t.weightindex, {cols_str}
+                FROM (
+                    SELECT *, ROW_NUMBER() OVER (PARTITION BY jfighter ORDER BY DATE DESC) AS _rn
+                    FROM {table}
+                ) t WHERE t._rn = 1
+            """
+        else:
+            # Join to final_features_fast for weightindex
+            q = f"""
+                SELECT t.jfighter, f.weightindex, {cols_str}
+                FROM (
+                    SELECT *, ROW_NUMBER() OVER (PARTITION BY jfighter ORDER BY DATE DESC) AS _rn
+                    FROM {table}
+                ) t
+                JOIN (
+                    SELECT jfighter, weightindex, ROW_NUMBER() OVER (PARTITION BY jfighter ORDER BY DATE DESC) AS _rn
+                    FROM final_features_fast
+                ) f ON f.jfighter = t.jfighter AND f._rn = 1
+                WHERE t._rn = 1
+            """
+        try:
+            df = pd.read_sql_query(q, conn)
+            for col in cols:
+                for _, row in df.iterrows():
+                    wi = row.get("weightindex")
+                    val = row.get(col)
+                    if wi is not None and val is not None and pd.notna(val):
+                        all_data.setdefault(col, []).append((int(wi), float(val)))
+        except Exception as e:
+            print(f"  Warning: could not load {table} for baselines: {e}")
+
+    conn.close()
+
+    # Compute per-weightclass mean/std
+    baselines = {}
+    for col, entries in all_data.items():
+        df_col = pd.DataFrame(entries, columns=["weightindex", "value"])
+        for wi, grp in df_col.groupby("weightindex"):
+            wi = int(wi)
+            if len(grp) < 15:
+                # Small weight class — use global baselines
+                mean_val = df_col["value"].mean()
+                std_val = df_col["value"].std()
+            else:
+                mean_val = grp["value"].mean()
+                std_val = grp["value"].std()
+            if std_val == 0 or pd.isna(std_val):
+                std_val = 1.0
+            baselines.setdefault(wi, {})[col] = {
+                "mean": float(mean_val),
+                "std": float(std_val),
+            }
+
+    model_state["wc_baselines"] = baselines
+    total_wc = len(baselines)
+    total_stats = sum(len(v) for v in baselines.values())
+    print(f"  Z-score baselines: {total_stats} stat×WC entries across {total_wc} weight classes")
+
+
+@app.route("/api/fighter/<name>/zscores")
+def fighter_zscores(name):
+    """Return weight-class z-scores for a fighter, grouped by category."""
+    baselines = model_state.get("wc_baselines")
+    if not baselines:
+        return jsonify({"error": "Baselines not computed"}), 503
+
+    conn = sqlite3.connect(DB_PATH)
+
+    # Get fighter's weightindex
+    wi_row = pd.read_sql_query(
+        "SELECT weightindex FROM final_features_fast WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+        conn, params=(name,),
+    )
+    if wi_row.empty:
+        conn.close()
+        return jsonify({"error": f"Fighter not found: {name}"}), 404
+    wi = int(wi_row.iloc[0]["weightindex"])
+
+    wc_bl = baselines.get(wi, {})
+
+    # Collect all unique tables we need
+    table_cols = {}
+    for stats in ZSCORE_STAT_CONFIG.values():
+        for s in stats:
+            table_cols.setdefault(s["table"], []).append(s["col"])
+
+    # Query fighter's latest row from each table
+    fighter_vals = {}
+    for table, cols in table_cols.items():
+        cols_str = ", ".join(cols)
+        try:
+            row = pd.read_sql_query(
+                f"SELECT {cols_str} FROM {table} WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+                conn, params=(name,),
+            )
+            if not row.empty:
+                for col in cols:
+                    val = row.iloc[0].get(col)
+                    if val is not None and pd.notna(val):
+                        fighter_vals[col] = float(val)
+        except Exception:
+            pass
+
+    conn.close()
+
+    # Build response by category
+    categories = {}
+    for cat_name, stats in ZSCORE_STAT_CONFIG.items():
+        cat_stats = []
+        z_sum, z_count = 0.0, 0
+        for s in stats:
+            col = s["col"]
+            raw = fighter_vals.get(col)
+            bl = wc_bl.get(col)
+            if raw is not None and bl:
+                z = (raw - bl["mean"]) / bl["std"]
+                if s["inverted"]:
+                    z = -z
+                z = max(-3.0, min(3.0, z))
+                pct = round(_norm_cdf(z) * 100, 1)
+                z_sum += z
+                z_count += 1
+                cat_stats.append({
+                    "key": col,
+                    "display_name": s["name"],
+                    "z_score": round(z, 2),
+                    "raw_value": round(raw, 4),
+                    "wc_mean": round(bl["mean"], 4),
+                    "percentile": pct,
+                    "inverted": s["inverted"],
+                })
+            else:
+                cat_stats.append({
+                    "key": col,
+                    "display_name": s["name"],
+                    "z_score": None,
+                    "raw_value": round(raw, 4) if raw is not None else None,
+                    "wc_mean": round(bl["mean"], 4) if bl else None,
+                    "percentile": None,
+                    "inverted": s["inverted"],
+                })
+        categories[cat_name] = {
+            "avg_z": round(z_sum / z_count, 2) if z_count > 0 else None,
+            "stats": cat_stats,
+        }
+
+    return jsonify({
+        "jfighter": name,
+        "weightindex": wi,
+        "categories": categories,
+    })
 
 
 # ── Startup ──────────────────────────────────────────────────────────────────
