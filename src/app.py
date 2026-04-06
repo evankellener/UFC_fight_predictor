@@ -827,6 +827,192 @@ def fighter_zscores(name):
     })
 
 
+# ── Feature importance display names ─────────────────────────────────────────
+_FEAT_DISPLAY = {
+    "sig_str_land_per_min_dec_avg_diff": "Sig. Strikes Landed/Min",
+    "total_str_land_per_min_dec_avg_diff": "Total Strikes Landed/Min",
+    "td_land_per_min_dec_avg_diff": "Takedowns Landed/Min",
+    "sub_att_per_min_dec_avg_diff": "Submission Attempts/Min",
+    "ctrl_per_min_dec_avg_diff": "Control Time/Min",
+    "sig_str_acc_dec_avg_diff": "Sig. Strike Accuracy",
+    "total_str_acc_dec_avg_diff": "Total Strike Accuracy",
+    "head_acc_dec_avg_diff": "Head Strike Accuracy",
+    "body_acc_dec_avg_diff": "Body Strike Accuracy",
+    "leg_acc_dec_avg_diff": "Leg Strike Accuracy",
+    "distance_acc_dec_avg_diff": "Distance Strike Accuracy",
+    "clinch_acc_dec_avg_diff": "Clinch Strike Accuracy",
+    "ground_acc_dec_avg_diff": "Ground Strike Accuracy",
+    "sig_str_def_dec_avg_diff": "Sig. Strike Defense",
+    "td_def_dec_avg_diff": "Takedown Defense",
+    "ko_dec_avg_diff": "KO Rate",
+    "ko5_dec_avg_diff": "KO Rate (R1-5)",
+    "win_dec_avg_diff": "Win Rate",
+    "loss_dec_avg_diff": "Loss Rate",
+    "finish_rate_dec_avg_diff": "Finish Rate",
+    "kd_per_min_dec_avg_diff": "Knockdowns/Min",
+    "ko_eff_dec_avg_diff": "KO Efficiency",
+    "td_att_per_min_dec_avg_diff": "TD Attempts/Min",
+    "age_dec_avg_diff": "Age",
+    "days_since_last_fight_dec_avg_diff": "Days Since Last Fight",
+    "age_ratio_diff": "Age Ratio",
+    "reach_ratio_dec_avg_diff": "Reach Ratio",
+    "grapple_strike_mix_dec_avg_diff": "Grapple/Strike Mix",
+    "str_eff_diff_dec_avg_diff": "Striking Efficiency",
+    "adjperf_sigstr_pm_dec_avg_diff": "Adj. Sig Strikes/Min",
+    "adjperf_totalstr_pm_dec_avg_diff": "Adj. Total Strikes/Min",
+    "adjperf_td_per15_dec_avg_diff": "Adj. Takedowns/15Min",
+    "adjperf_sub_per15_dec_avg_diff": "Adj. Sub Attempts/15Min",
+    "adjperf_ctrl_per_min_dec_avg_diff": "Adj. Control/Min",
+    "adjperf_kd_pm_dec_avg_diff": "Adj. Knockdowns/Min",
+    "adjperf_ko_eff_dec_avg_diff": "Adj. KO Efficiency",
+    "adjperf_td_att_pm_dec_avg_diff": "Adj. TD Attempts/Min",
+    "peak_elo_diff": "Peak Elo Rating",
+    "elo_win_prob": "Elo Win Probability",
+    "precomp_elo_diff": "Elo Rating Diff",
+    "elo_momentum_diff": "Elo Momentum",
+    "avg_opp_elo_diff": "Avg Opponent Elo",
+    "elo_consist_diff": "Elo Consistency",
+    "elo_predictability": "Match Predictability",
+    "height_ratio_diff": "Height Ratio",
+    "weight_diff": "Weight Diff",
+    "stance_southpaw_diff": "Southpaw Stance",
+    "age_squared_diff": "Age Squared",
+    "scheduled_rounds": "Scheduled Rounds",
+    "age_prime_diff": "Age Prime",
+    "ufc_age_diff": "UFC Career Age",
+    "ufc_fight_count_diff": "UFC Fight Count",
+    "win_streak_diff": "Win Streak",
+    "loss_streak_diff": "Loss Streak",
+    "finish_streak_diff": "Finish Streak",
+    "recent_ko_rate_3_diff": "Recent KO Rate (3 fights)",
+    "recent_finish_rate_3_diff": "Recent Finish Rate (3 fights)",
+    "ko_in_r1_rate_dec_avg_diff": "R1 KO Rate",
+    "kod_rate_dec_avg_diff": "KO'd Rate",
+    "damage_efficiency_dec_avg_diff": "Damage Efficiency",
+    "output_per_damage_dec_avg_diff": "Output per Damage",
+    "sigstr_absorbed_pm_dec_avg_diff": "Strikes Absorbed/Min",
+    "grappling_dominance_pm_dec_avg_diff": "Grappling Dominance",
+    "td_to_ctrl_conversion_dec_avg_diff": "TD-to-Control Conv.",
+    "r3_vs_r1_sigstr_ratio_dec_avg_diff": "Late Round Output",
+    "opp_avg_win_ratio_diff": "Opposition Quality",
+    "event_rolling_ema": "Event Win Rate Trend",
+    "weightindex": "Weight Class",
+}
+
+
+def _feat_display_name(feat):
+    return _FEAT_DISPLAY.get(feat, feat.replace("_dec_avg_diff", "").replace("_diff", "").replace("_", " ").title())
+
+
+@app.route("/api/model/feature_importance")
+def feature_importance():
+    """Return top features by absolute LR coefficient weight."""
+    pipe = model_state.get("pipe")
+    if pipe is None:
+        return jsonify({"error": "Model not loaded"}), 503
+
+    coef = pipe.named_steps["clf"].coef_[0]
+    features = ALL_FEATURES
+
+    items = []
+    for i, feat in enumerate(features):
+        c = float(coef[i])
+        items.append({
+            "feature": feat,
+            "display_name": _feat_display_name(feat),
+            "coefficient": round(c, 5),
+            "abs_weight": round(abs(c), 5),
+            "direction": "positive" if c > 0 else "negative",
+        })
+    items.sort(key=lambda x: x["abs_weight"], reverse=True)
+    return jsonify({"features": items[:25], "total_features": len(features)})
+
+
+@app.route("/api/fighters/compare_zscores", methods=["POST"])
+def compare_zscores():
+    """Return z-scores for two fighters side by side."""
+    data = request.get_json()
+    if not data or "fighter_a" not in data or "fighter_b" not in data:
+        return jsonify({"error": "Provide fighter_a and fighter_b"}), 400
+
+    baselines = model_state.get("wc_baselines")
+    if not baselines:
+        return jsonify({"error": "Baselines not computed"}), 503
+
+    conn = sqlite3.connect(DB_PATH)
+    result = {}
+
+    for key in ["fighter_a", "fighter_b"]:
+        name = data[key]
+        # Get weightindex
+        wi_row = pd.read_sql_query(
+            "SELECT weightindex FROM final_features_fast WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+            conn, params=(name,),
+        )
+        if wi_row.empty:
+            result[key] = {"error": f"Not found: {name}", "categories": {}}
+            continue
+        wi = int(wi_row.iloc[0]["weightindex"])
+        wc_bl = baselines.get(wi, {})
+
+        # Collect stats from all tables
+        table_cols = {}
+        for stats in ZSCORE_STAT_CONFIG.values():
+            for s in stats:
+                table_cols.setdefault(s["table"], []).append(s["col"])
+
+        fighter_vals = {}
+        for table, cols in table_cols.items():
+            cols_str = ", ".join(cols)
+            try:
+                row = pd.read_sql_query(
+                    f"SELECT {cols_str} FROM {table} WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+                    conn, params=(name,),
+                )
+                if not row.empty:
+                    for col in cols:
+                        val = row.iloc[0].get(col)
+                        if val is not None and pd.notna(val):
+                            fighter_vals[col] = float(val)
+            except Exception:
+                pass
+
+        # Build categories
+        categories = {}
+        for cat_name, stats in ZSCORE_STAT_CONFIG.items():
+            cat_stats = []
+            z_sum, z_count = 0.0, 0
+            for s in stats:
+                col = s["col"]
+                raw = fighter_vals.get(col)
+                bl = wc_bl.get(col)
+                if raw is not None and bl:
+                    z = (raw - bl["mean"]) / bl["std"]
+                    if s["inverted"]:
+                        z = -z
+                    z = max(-3.0, min(3.0, z))
+                    pct = round(_norm_cdf(z) * 100, 1)
+                    z_sum += z
+                    z_count += 1
+                    cat_stats.append({
+                        "key": col, "display_name": s["name"],
+                        "z_score": round(z, 2), "percentile": pct,
+                    })
+                else:
+                    cat_stats.append({
+                        "key": col, "display_name": s["name"],
+                        "z_score": None, "percentile": None,
+                    })
+            categories[cat_name] = {
+                "avg_z": round(z_sum / z_count, 2) if z_count > 0 else None,
+                "stats": cat_stats,
+            }
+        result[key] = {"jfighter": name, "weightindex": wi, "categories": categories}
+
+    conn.close()
+    return jsonify(result)
+
+
 # ── Startup ──────────────────────────────────────────────────────────────────
 # Train model on import so gunicorn workers have it ready
 init_model()

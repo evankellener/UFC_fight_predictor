@@ -336,10 +336,61 @@
     margin-top: 0.5rem; min-height: 1.2em;
   }
 
+  /* Feature importance chart */
+  .fi-chart { padding: 0.5rem 0; }
+  .fi-row {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.35rem 0; font-size: 0.8rem;
+  }
+  .fi-label { flex: 0 0 180px; text-align: right; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fi-bar-wrap { flex: 1; height: 14px; background: rgba(136,136,160,0.06); border-radius: 3px; overflow: hidden; }
+  .fi-bar { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .fi-bar.positive { background: var(--green); }
+  .fi-bar.negative { background: var(--red); }
+  .fi-val { flex: 0 0 55px; font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fi-subtitle { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+
+  /* Head-to-head z-score bars */
+  .h2h-section { margin-top: 1rem; }
+  .h2h-cat { margin-bottom: 0.6rem; }
+  .h2h-cat-header {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); padding: 0.3rem 0; border-bottom: 1px solid var(--border);
+    cursor: pointer; display: flex; justify-content: space-between;
+  }
+  .h2h-cat-header .h2h-arrow { transition: transform 0.2s; font-size: 0.6rem; }
+  .h2h-cat.expanded .h2h-arrow { transform: rotate(180deg); }
+  .h2h-cat-body { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+  .h2h-cat.expanded .h2h-cat-body { max-height: 500px; }
+  .h2h-row {
+    display: flex; align-items: center; gap: 0.3rem;
+    padding: 0.3rem 0; font-size: 0.78rem;
+  }
+  .h2h-bar-a, .h2h-bar-b {
+    flex: 1; height: 12px; position: relative;
+    background: rgba(136,136,160,0.06); border-radius: 2px; overflow: hidden;
+  }
+  .h2h-bar-a { direction: rtl; }
+  .h2h-fill {
+    height: 100%; border-radius: 2px;
+    display: inline-block; transition: width 0.4s;
+  }
+  .h2h-bar-a .h2h-fill { background: var(--red); }
+  .h2h-bar-b .h2h-fill { background: var(--blue); }
+  .h2h-stat-name {
+    flex: 0 0 100px; text-align: center; font-size: 0.7rem; color: var(--muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .h2h-z { flex: 0 0 35px; font-size: 0.7rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .h2h-z.a { text-align: right; color: var(--red); }
+  .h2h-z.b { text-align: left; color: var(--blue); }
+
   @media (max-width: 600px) {
     .fight-row { flex-wrap: wrap; }
     .detail-grid { grid-template-columns: 1fr; }
     .event-info { flex-direction: column; }
+    .fi-label { flex: 0 0 120px; font-size: 0.7rem; }
+    .h2h-stat-name { flex: 0 0 70px; }
   }
 </style>
 </head>
@@ -357,6 +408,7 @@
   <div class="tabs">
     <button class="tab active" onclick="switchTab('predictions')">Predictions</button>
     <button class="tab" onclick="switchTab('fighters')">Fighter Profiles</button>
+    <button class="tab" onclick="switchTab('insights')">Model Insights</button>
   </div>
 
   <!-- Predictions Tab -->
@@ -383,6 +435,21 @@
       <input type="text" id="fighterSearch" placeholder="Type a fighter name..." oninput="onFighterSearch(this.value)" autocomplete="off">
     </div>
     <div class="fighter-grid" id="fighterGrid"></div>
+  </div>
+
+  <!-- Model Insights Tab -->
+  <div class="tab-content" id="tab-insights">
+    <div class="section-title">What the Model Looks At</div>
+    <p class="fi-subtitle">
+      The model uses <strong>194 features</strong> to predict fights.
+      These are the top 25 by weight in the logistic regression.
+      Positive (green) means a higher value favors the first fighter alphabetically;
+      negative (red) favors the second.
+      Features are differences between the two fighters' career stats.
+    </p>
+    <div class="fi-chart" id="fiChart">
+      <div style="color:var(--muted);padding:2rem 0;text-align:center;">Loading feature importance...</div>
+    </div>
   </div>
 </main>
 
@@ -429,12 +496,11 @@ function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelector(`.tab-content#tab-${name}`).classList.add('active');
-  // Find matching tab button
+  const tabMap = { predictions: 'Predictions', fighters: 'Fighter Profiles', insights: 'Model Insights' };
   document.querySelectorAll('.tab').forEach(t => {
-    if ((name === 'predictions' && t.textContent === 'Predictions') ||
-        (name === 'fighters' && t.textContent === 'Fighter Profiles'))
-      t.classList.add('active');
+    if (t.textContent === tabMap[name]) t.classList.add('active');
   });
+  if (name === 'insights' && !window._fiLoaded) loadFeatureImportance();
 }
 
 // ── Fighter Search ─────────────────────────────────────────────────────
@@ -737,6 +803,8 @@ async function fetchFightDetail(fighterA, fighterB, eventDate, idx) {
         </div>`;
     }
     detail.insertAdjacentHTML('beforeend', driversHtml + compareHtml);
+    // Load head-to-head z-score comparison
+    loadH2HZScores(fighterA, fighterB, idx);
   } catch (e) { console.error('Failed to fetch fight detail:', e); }
 }
 
@@ -859,6 +927,77 @@ function copyShareImage() {
       document.getElementById('copiedMsg').textContent = 'Image downloaded!';
     }
   });
+}
+
+// ── Feature Importance ────────────────────────────────────────────────
+async function loadFeatureImportance() {
+  try {
+    const res = await fetch(`${API}/api/model/feature_importance`);
+    const data = await res.json();
+    if (!data.features) return;
+    window._fiLoaded = true;
+
+    const maxW = Math.max(...data.features.map(f => f.abs_weight));
+    const chart = document.getElementById('fiChart');
+    chart.innerHTML = data.features.map(f => {
+      const pct = (f.abs_weight / maxW * 100).toFixed(1);
+      return `<div class="fi-row">
+        <span class="fi-label" title="${f.feature}">${f.display_name}</span>
+        <div class="fi-bar-wrap">
+          <div class="fi-bar ${f.direction}" style="width:${pct}%"></div>
+        </div>
+        <span class="fi-val">${f.coefficient > 0 ? '+' : ''}${f.coefficient.toFixed(4)}</span>
+      </div>`;
+    }).join('');
+  } catch (e) { console.error('Feature importance load failed:', e); }
+}
+
+// ── Head-to-Head Z-Score Comparison ──────────────────────────────────
+async function loadH2HZScores(fighterA, fighterB, idx) {
+  try {
+    const res = await fetch(`${API}/api/fighters/compare_zscores`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fighter_a: fighterA, fighter_b: fighterB }),
+    });
+    const data = await res.json();
+    const zA = data.fighter_a, zB = data.fighter_b;
+    if (!zA || !zB || zA.error || zB.error) return;
+
+    let html = '<div class="h2h-section"><h4>Weight Class Comparison</h4>';
+
+    for (const [catName, catA] of Object.entries(zA.categories)) {
+      const catB = zB.categories[catName];
+      if (!catB) continue;
+      html += `<div class="h2h-cat" onclick="this.classList.toggle('expanded')">
+        <div class="h2h-cat-header"><span>${catName}</span><span class="h2h-arrow">\u25bc</span></div>
+        <div class="h2h-cat-body">`;
+
+      for (let i = 0; i < catA.stats.length; i++) {
+        const sa = catA.stats[i], sb = catB.stats[i];
+        const za = sa.z_score !== null ? sa.z_score : 0;
+        const zb = sb.z_score !== null ? sb.z_score : 0;
+        const wA = Math.min(Math.abs(za) / 3 * 100, 100);
+        const wB = Math.min(Math.abs(zb) / 3 * 100, 100);
+        const colA = za >= 0 ? 'var(--green)' : 'var(--red)';
+        const colB = zb >= 0 ? 'var(--green)' : 'var(--red)';
+        const naA = sa.z_score === null, naB = sb.z_score === null;
+
+        html += `<div class="h2h-row">
+          <span class="h2h-z a">${naA ? '-' : (za > 0 ? '+' : '') + za.toFixed(1)}</span>
+          <div class="h2h-bar-a"><div class="h2h-fill" style="width:${naA ? 0 : wA}%;background:${colA}"></div></div>
+          <span class="h2h-stat-name" title="${sa.display_name}">${sa.display_name}</span>
+          <div class="h2h-bar-b"><div class="h2h-fill" style="width:${naB ? 0 : wB}%;background:${colB}"></div></div>
+          <span class="h2h-z b">${naB ? '-' : (zb > 0 ? '+' : '') + zb.toFixed(1)}</span>
+        </div>`;
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+
+    const detail = document.getElementById(`detail-${idx}`);
+    if (detail) detail.insertAdjacentHTML('beforeend', html);
+  } catch (e) { console.error('H2H z-scores failed:', e); }
 }
 </script>
 </body>
