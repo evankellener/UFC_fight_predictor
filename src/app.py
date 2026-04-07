@@ -1,6 +1,6 @@
 """
 UFC Fight Predictor — Web App
-Flask app wrapping predict_event.py pipeline.
+Flask app wrapping the MMA-AI pipeline with LR+CB ensemble.
 Model trains once at startup, then serves predictions via API.
 """
 
@@ -17,15 +17,15 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import math
 
-from predict_event import (
-    load_all_data, train_on_all, predict_fight, get_current_event_ema,
-    ALL_FEATURES, ALL_ADJPERF_DIFF, ELO_FEATURES,
+from predict_mmaai import (
+    build_training_data, train_ensemble,
+    predict_fight as predict_fight_mmaai,
     ELO_K, ELO_KO_MULT, ELO_SUB_MULT, ELO_DECAY,
     ELO_DECAY_MAX, ELO_DECAY_MIDPOINT, ELO_DECAY_STEEPNESS,
-    ELO_LOGISTIC_SCALE, BASE_ELO,
-    ELO_WC_PENALTY, ELO_STREAK_BONUS, ELO_STREAK_CAP, ELO_R1_MULT,
+    ELO_LOGISTIC_SCALE, ALL_ELO_FEATURES as ELO_FEATURES,
+    SELECTED_ELO_FEATURES,
 )
-from elo_feature import get_fighter_elo, load_bouts, compute_elo
+from elo_feature import get_fighter_elo, load_bouts, compute_elo, BASE_ELO
 
 # ── Z-Score stat configuration ─────────────────────────────────────────────
 # Maps category → list of stats for the fighter profile z-score display.
@@ -82,31 +82,40 @@ model_state = {}
 
 
 def init_model():
-    """Train the model on all available data. Called once at startup."""
-    print("Loading training data...")
-    df = load_all_data(min_prior_fights=1)
-    print("Training model (this takes ~30s)...")
-    pipe, imputer, df_trained, elo_ratings, elo_last_date, elo_extra = train_on_all(df)
-    model_state["pipe"] = pipe
-    model_state["imputer"] = imputer
-    model_state["df_trained"] = df_trained
-    model_state["elo_ratings"] = elo_ratings
-    model_state["elo_last_date"] = elo_last_date
-    model_state["elo_extra"] = elo_extra
-    model_state["fighter_list"] = _load_fighter_list()
-    # Store full Elo DataFrame for history charts
+    """Train the MMA-AI pipeline model on all available data. Called once at startup."""
+    print("Building MMA-AI features (this takes ~60s)...")
+    data = build_training_data()
+    print("Training LR+CB ensemble...")
+    models = train_ensemble(data)
+
+    model_state["models"] = models
+    model_state["fighter_stats"] = data["fighter_stats"]
+    model_state["feature_cols"] = data["feature_cols"]
+    model_state["feat_cols"] = data["feat_cols"]
+    model_state["df_trained"] = data["df"]
+
+    # Build Elo ratings for live predictions
     print("Building Elo history...")
     bouts = load_bouts()
-    elo_full_df, _, _, _ = compute_elo(
+    elo_full_df, ratings, last_date, extra = compute_elo(
         bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
-        decay_lambda=ELO_DECAY, wc_change_penalty=ELO_WC_PENALTY,
-        streak_bonus=ELO_STREAK_BONUS, streak_cap=ELO_STREAK_CAP,
-        r1_finish_mult=ELO_R1_MULT, logistic_scale=ELO_LOGISTIC_SCALE,
+        decay_lambda=ELO_DECAY,
         decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
         decay_steepness=ELO_DECAY_STEEPNESS,
+        logistic_scale=ELO_LOGISTIC_SCALE,
         opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
     )
+    model_state["elo_ratings"] = ratings
+    model_state["elo_last_date"] = last_date
+    model_state["elo_extra"] = extra
     model_state["elo_full_df"] = elo_full_df
+
+    # Fighter list from MMA-AI pipeline stats
+    model_state["fighter_list"] = [
+        {"jfighter": name, "last_fight": str(stats.get("DATE", ""))}
+        for name, stats in data["fighter_stats"].items()
+    ]
+
     print("Computing z-score baselines...")
     _compute_wc_baselines()
     print("Model ready.")
@@ -450,25 +459,25 @@ def predict():
     fighter_b = data["fighter_b"]
     event_date = data.get("event_date", pd.Timestamp.now().strftime("%Y-%m-%d"))
 
-    pipe = model_state.get("pipe")
-    if pipe is None:
+    models = model_state.get("models")
+    if models is None:
         return jsonify({"error": "Model not loaded yet"}), 503
 
     try:
-        event_ema = get_current_event_ema(model_state["df_trained"], event_date)
-
-        result = predict_fight(
-            fighter_a, fighter_b, pipe,
-            verbose=False,
-            event_ema=event_ema,
+        result = predict_fight_mmaai(
+            fighter_a, fighter_b,
+            models=models,
+            fighter_stats=model_state["fighter_stats"],
+            feature_cols=model_state["feature_cols"],
             elo_ratings=model_state["elo_ratings"],
             elo_last_date=model_state["elo_last_date"],
             elo_extra=model_state["elo_extra"],
             event_date=event_date,
+            verbose=False,
         )
 
         # Get top feature drivers
-        drivers = _get_top_drivers(result, pipe)
+        drivers = _get_top_drivers(result, models)
 
         # Get fighter details
         details_a = _get_fighter_details(fighter_a)
@@ -525,11 +534,10 @@ def predict_card():
     event_date = data.get("event_date", pd.Timestamp.now().strftime("%Y-%m-%d"))
     event_name = data.get("event_name", "UFC Event")
 
-    pipe = model_state.get("pipe")
-    if pipe is None:
+    models = model_state.get("models")
+    if models is None:
         return jsonify({"error": "Model not loaded yet"}), 503
 
-    event_ema = get_current_event_ema(model_state["df_trained"], event_date)
     results = []
 
     for i, fight in enumerate(data["fights"]):
@@ -540,13 +548,16 @@ def predict_card():
             continue
 
         try:
-            r = predict_fight(
-                fa, fb, pipe, verbose=False,
-                event_ema=event_ema,
+            r = predict_fight_mmaai(
+                fa, fb,
+                models=models,
+                fighter_stats=model_state["fighter_stats"],
+                feature_cols=model_state["feature_cols"],
                 elo_ratings=model_state["elo_ratings"],
                 elo_last_date=model_state["elo_last_date"],
                 elo_extra=model_state["elo_extra"],
                 event_date=event_date,
+                verbose=False,
             )
             odds = _get_odds(fa, fb)
             vegas = {}
@@ -584,57 +595,45 @@ def predict_card():
     })
 
 
-def _get_top_drivers(result, pipe, n=5):
-    """Extract top N feature drivers from prediction."""
-    if not hasattr(pipe, "named_steps"):
+def _get_top_drivers(result, models, n=5):
+    """Extract top N feature drivers from LR model."""
+    lr = models.get("lr")
+    if lr is None:
         return []
 
-    # Rebuild the feature row to get values
-    conn = sqlite3.connect(DB_PATH)
-    from predict_event import _get_fighter_stats, compute_age_prime, AGE_PEAK_AGE, AGE_PEAK_WIDTH
-    sa = _get_fighter_stats(conn, result["name_a"])
-    sb = _get_fighter_stats(conn, result["name_b"])
-    conn.close()
+    feat_cols = models["feat_cols"]
+    scaler = models["scaler"]
+    fighter_stats = model_state["fighter_stats"]
 
     f1, f2 = result["f1"], result["f2"]
-    sf1 = sa if result["name_a"] == f1 else sb
-    sf2 = sb if result["name_b"] == f2 else sa
+    sf1 = fighter_stats.get(result["name_a"] if result["name_a"] == f1 else result["name_b"], {})
+    sf2 = fighter_stats.get(result["name_b"] if result["name_b"] == f2 else result["name_a"], {})
 
-    coef = pipe.named_steps["clf"].coef_[0]
-    scaler = pipe.named_steps["sc"]
+    coef = lr.coef_[0]
 
-    # We need the scaled feature values × coefficients
-    # Rebuild feature row (same logic as predict_fight)
+    # Rebuild feature row
     row = {}
-    for feat in ALL_FEATURES:
-        if feat == "weightindex":
-            row[feat] = sf1.get("weightindex") or 0
-        elif feat == "event_rolling_ema":
-            row[feat] = 0.5
-        elif feat in ("precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
-                       "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff",
-                       "elo_predictability"):
+    for feat in feat_cols:
+        if feat in SELECTED_ELO_FEATURES:
             row[feat] = 0.0
+        elif feat == "weightclass_encoded":
+            row[feat] = sf1.get("weightindex", 0)
         elif feat == "scheduled_rounds":
             row[feat] = 3.0
-        elif feat == "age_prime_diff":
-            a1 = sf1.get("age_dec_avg") or 0
-            a2 = sf2.get("age_dec_avg") or 0
-            row[feat] = compute_age_prime(a1) - compute_age_prime(a2)
-        elif feat == "ufc_fight_count_diff":
-            row[feat] = (sf1.get("ufc_fight_count") or 0) - (sf2.get("ufc_fight_count") or 0)
+        elif feat == "days_since_last_fight_f1":
+            row[feat] = sf1.get("days_since_last_fight", 0)
+        elif feat.endswith("_diff"):
+            col = feat[:-5]
+            row[feat] = sf1.get(col, 0) - sf2.get(col, 0)
         else:
-            col = feat[:-5] if feat.endswith("_diff") else feat
-            v1 = sf1.get(col) or 0
-            v2 = sf2.get(col) or 0
-            row[feat] = v1 - v2
+            row[feat] = 0.0
 
-    vals = [row.get(f, 0) for f in ALL_FEATURES]
+    vals = [row.get(f, 0) for f in feat_cols]
     X_arr = np.array(vals).reshape(1, -1)
     X_scaled = scaler.transform(X_arr)[0]
 
-    contributions = [(ALL_FEATURES[i], float(vals[i]), float(X_scaled[i] * coef[i]))
-                     for i in range(len(ALL_FEATURES))]
+    contributions = [(feat_cols[i], float(vals[i]), float(X_scaled[i] * coef[i]))
+                     for i in range(len(feat_cols))]
     contributions.sort(key=lambda x: abs(x[2]), reverse=True)
 
     drivers = []
@@ -907,12 +906,12 @@ def _feat_display_name(feat):
 @app.route("/api/model/feature_importance")
 def feature_importance():
     """Return top features by absolute LR coefficient weight."""
-    pipe = model_state.get("pipe")
-    if pipe is None:
+    models = model_state.get("models")
+    if models is None:
         return jsonify({"error": "Model not loaded"}), 503
 
-    coef = pipe.named_steps["clf"].coef_[0]
-    features = ALL_FEATURES
+    coef = models["lr"].coef_[0]
+    features = models["feat_cols"]
 
     items = []
     for i, feat in enumerate(features):
