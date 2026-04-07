@@ -73,7 +73,9 @@ ZSCORE_STAT_CONFIG = {
     ],
 }
 
-DB_PATH = Path(__file__).parent.parent / "data/sqlite_db/app.db"
+_app_db = Path(__file__).parent.parent / "data/sqlite_db/app.db"
+_full_db = Path(__file__).parent.parent / "data/sqlite_db/sqlite_scrapper.db"
+DB_PATH = _app_db if _app_db.exists() else _full_db
 
 app = Flask(__name__)
 
@@ -94,9 +96,11 @@ def init_model():
     model_state["feat_cols"] = data["feat_cols"]
     model_state["df_trained"] = data["df"]
 
-    # Build Elo ratings for live predictions
+    # Build Elo ratings for live predictions (from pre-saved CSV, no DB needed)
     print("Building Elo history...")
-    bouts = load_bouts()
+    from predict_mmaai import ELO_BOUTS_CSV
+    bouts = pd.read_csv(ELO_BOUTS_CSV)
+    bouts["DATE"] = pd.to_datetime(bouts["DATE"])
     elo_full_df, ratings, last_date, extra = compute_elo(
         bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
         decay_lambda=ELO_DECAY,
@@ -117,7 +121,10 @@ def init_model():
     ]
 
     print("Computing z-score baselines...")
-    _compute_wc_baselines()
+    try:
+        _compute_wc_baselines()
+    except Exception as e:
+        print(f"  Z-score baselines skipped (DB tables missing): {e}")
     print("Model ready.")
 
 
@@ -136,29 +143,41 @@ def _load_fighter_list():
 
 
 def _get_fighter_details(jfighter):
-    """Get fighter physical stats + record from DB."""
-    conn = sqlite3.connect(DB_PATH)
-    # Physical stats
-    tott = pd.read_sql_query(
-        "SELECT * FROM ufc_fighter_tott WHERE jfighter = ?",
-        conn, params=(jfighter,),
-    )
-    # Record
-    record = pd.read_sql_query(
-        """SELECT
-             COUNT(*) as total_fights,
-             SUM(win) as wins,
-             SUM(CASE WHEN win=0 THEN 1 ELSE 0 END) as losses,
-             SUM(ko) as ko_wins,
-             SUM(subw) as sub_wins
-           FROM ufc_winlossko WHERE jfighter = ?""",
-        conn, params=(jfighter,),
-    )
-    # Nationality
-    nat = pd.read_sql_query(
-        "SELECT country FROM ufc_fighter_nationality WHERE jfighter = ?",
-        conn, params=(jfighter,),
-    )
+    """Get fighter physical stats + record from DB. Gracefully degrades if tables missing."""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+    except Exception:
+        return {}
+
+    try:
+        tott = pd.read_sql_query(
+            "SELECT * FROM ufc_fighter_tott WHERE jfighter = ?",
+            conn, params=(jfighter,),
+        )
+    except Exception:
+        tott = pd.DataFrame()
+
+    try:
+        record = pd.read_sql_query(
+            """SELECT
+                 COUNT(*) as total_fights,
+                 SUM(win) as wins,
+                 SUM(CASE WHEN win=0 THEN 1 ELSE 0 END) as losses,
+                 SUM(ko) as ko_wins,
+                 SUM(subw) as sub_wins
+               FROM ufc_winlossko WHERE jfighter = ?""",
+            conn, params=(jfighter,),
+        )
+    except Exception:
+        record = pd.DataFrame()
+
+    try:
+        nat = pd.read_sql_query(
+            "SELECT country FROM ufc_fighter_nationality WHERE jfighter = ?",
+            conn, params=(jfighter,),
+        )
+    except Exception:
+        nat = pd.DataFrame()
     # Elo
     elo = None
     if model_state.get("elo_ratings") and jfighter in model_state["elo_ratings"]:

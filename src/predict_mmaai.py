@@ -18,13 +18,15 @@ from sklearn.pipeline import Pipeline
 from catboost import CatBoostClassifier
 
 from elo_feature import load_bouts, compute_elo, get_fighter_elo, BASE_ELO
-from mma_ai_pipeline import get_fighter_stats_lookup
-from mma_ai_config import PG_TAU_GLOBAL, BB_TAU_GLOBAL
-from combined_features import add_elo_features, ELO_DIFF_COLS, ELO_NODIFF_COLS
 
 warnings.filterwarnings("ignore")
 
-TAU_PATH = Path(__file__).parent.parent / "data" / "tmp" / "tau_optimized.json"
+_DATA = Path(__file__).parent.parent / "data" / "tmp"
+TAU_PATH = _DATA / "tau_optimized.json"
+FEATURES_CSV = _DATA / "mmaai_features.csv"
+FIGHTER_STATS_CSV = _DATA / "mmaai_fighter_stats.csv"
+FEATURE_COLS_JSON = _DATA / "mmaai_feature_cols.json"
+ELO_BOUTS_CSV = _DATA / "elo_bouts.csv"
 
 # ELO params (from optimize_pipeline.py, Bayesian-optimized)
 ELO_K               = 48.0
@@ -58,7 +60,10 @@ def load_taus():
 
 
 def build_training_data():
-    """Build MMA-AI features with clean taus, add Elo, return everything needed.
+    """Load pre-computed MMA-AI features from CSV, add Elo, return everything needed.
+
+    Features are pre-built by running the MMA-AI pipeline locally and saving to CSV.
+    This avoids needing the full SQLite DB on the deploy server.
 
     Returns dict with:
         df: full feature DataFrame (for training)
@@ -68,18 +73,58 @@ def build_training_data():
     """
     opt = load_taus()
 
-    # Set clean-optimized taus
-    PG_TAU_GLOBAL.update(opt["pg_tau"])
-    BB_TAU_GLOBAL.update(opt["bb_tau"])
+    # Load pre-computed features
+    print("  Loading pre-computed MMA-AI features from CSV...")
+    df = pd.read_csv(FEATURES_CSV)
+    df["DATE"] = pd.to_datetime(df["DATE"])
+    print(f"  Features: {df.shape[0]:,} fights × {df.shape[1]} columns")
 
-    # Build pipeline and get per-fighter stats
-    result = get_fighter_stats_lookup("jan26")
-    df = result["df"]
-    fighter_stats = result["fighter_stats"]
-    individual_feature_cols = result["feature_cols"]
+    # Load per-fighter stats
+    stats_df = pd.read_csv(FIGHTER_STATS_CSV)
+    with open(FEATURE_COLS_JSON) as f:
+        individual_feature_cols = json.load(f)
 
-    # Add Elo features
-    df = add_elo_features(df)
+    fighter_stats = {}
+    for _, row in stats_df.iterrows():
+        stats = {"DATE": row.get("last_fight_date", "")}
+        for col in individual_feature_cols:
+            if col in row.index:
+                stats[col] = float(row[col]) if pd.notna(row[col]) else 0.0
+        if "REACH" in row.index:
+            stats["REACH"] = float(row["REACH"]) if pd.notna(row["REACH"]) else 0.0
+        if "weightindex" in row.index:
+            stats["weightindex"] = int(row["weightindex"]) if pd.notna(row["weightindex"]) else 0
+        if "days_since_last_fight" in row.index:
+            stats["days_since_last_fight"] = float(row["days_since_last_fight"]) if pd.notna(row["days_since_last_fight"]) else 0.0
+        fighter_stats[row["jfighter"]] = stats
+    print(f"  Fighter stats: {len(fighter_stats)} fighters")
+
+    # Add Elo features from pre-saved bouts CSV (no DB needed)
+    print("  Computing Elo ratings...")
+    bouts = pd.read_csv(ELO_BOUTS_CSV)
+    bouts["DATE"] = pd.to_datetime(bouts["DATE"])
+    from elo_feature import compute_elo as _compute_elo
+    elo_df, _, _, _ = _compute_elo(
+        bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
+        decay_lambda=ELO_DECAY,
+        decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
+        decay_steepness=ELO_DECAY_STEEPNESS,
+        logistic_scale=ELO_LOGISTIC_SCALE,
+        opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
+    )
+    # Merge Elo features
+    elo_join = elo_df[["jbout", "f1", "precomp_elo_diff", "elo_win_prob",
+                        "elo_momentum_diff", "peak_elo_diff",
+                        "avg_opp_elo_diff", "elo_consist_diff"]].copy()
+    elo_join = elo_join.rename(columns={"f1": "jfighter"})
+    df = df.merge(elo_join, on=["jbout", "jfighter"], how="left")
+    for col in ["precomp_elo_diff", "elo_momentum_diff", "peak_elo_diff",
+                "avg_opp_elo_diff", "elo_consist_diff"]:
+        if col in df.columns:
+            df[col] = df[col].fillna(0.0)
+    if "elo_win_prob" in df.columns:
+        df["elo_win_prob"] = df["elo_win_prob"].fillna(0.5)
+    print(f"  Elo coverage: {(df.get('precomp_elo_diff', 0) != 0).sum():,} / {len(df):,}")
 
     # Build feature list: all MMA-AI diffs + selected Elo features
     feat_cols = [c for c in df.columns if c.endswith("_diff")]
@@ -87,17 +132,17 @@ def build_training_data():
         if c in df.columns:
             feat_cols.append(c)
 
-    # Remove custom features, add back only selected ones
-    custom_feats = ELO_DIFF_COLS + ELO_NODIFF_COLS + [
-        "weight_cut_pct_diff", "missed_weight_diff", "missed_weight_history_diff",
-        "home_advantage_diff", "card_position_norm_diff", "is_main_event",
-    ]
-    feat_cols = [f for f in feat_cols if f not in custom_feats]
+    # Remove Elo features not selected by forward selection
+    elo_all = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
+               "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff",
+               "elo_predictability"]
+    feat_cols = [f for f in feat_cols if f not in elo_all]
     feat_cols.extend(SELECTED_ELO_FEATURES)
 
     # Clean features
     for c in feat_cols:
-        df[c] = df[c].replace([np.inf, -np.inf], np.nan).fillna(0).clip(-100, 100)
+        if c in df.columns:
+            df[c] = df[c].replace([np.inf, -np.inf], np.nan).fillna(0).clip(-100, 100)
 
     return {
         "df": df,
