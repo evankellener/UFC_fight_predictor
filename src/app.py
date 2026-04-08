@@ -269,7 +269,7 @@ def index():
 def health():
     return jsonify({
         "status": "ok",
-        "model_loaded": "pipe" in model_state,
+        "model_loaded": "models" in model_state,
         "fighters": len(model_state.get("fighter_list", [])),
     })
 
