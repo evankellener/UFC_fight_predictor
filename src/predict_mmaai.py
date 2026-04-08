@@ -174,10 +174,12 @@ def train_ensemble(data: dict):
 
     lr_C = opt.get("lr_C", 0.1)
     lr_l1 = opt.get("lr_l1", 0.4)
-    recency_lambda = opt.get("recency_lambda", 0.347)
+    recency_lambda = opt.get("recency_lambda", 0.10)
+    train_era = opt.get("train_era", "2018-01-01")
 
-    # Train on all data (the app trains on everything, like predict_event.py)
-    train = df.copy()
+    # Filter to training era (drop old noisy fights)
+    train = df[df["DATE"] >= train_era].copy()
+    print(f"  Training era: >= {train_era} ({len(train):,} fights)")
 
     max_date = train["DATE"].max()
     days = (max_date - train["DATE"]).dt.days.clip(lower=0)
@@ -229,7 +231,7 @@ def train_ensemble(data: dict):
         "scaler": scaler,
         "imputer": imputer,
         "feat_cols": feat_cols,
-        "lr_weight": 0.7,  # LR*0.7 + CB*0.3 = best ensemble
+        "lr_weight": 0.8,  # LR*0.8 + CB*0.2
     }
 
 
