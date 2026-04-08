@@ -112,19 +112,29 @@ def build_training_data():
         logistic_scale=ELO_LOGISTIC_SCALE,
         opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
     )
-    # Merge Elo features
-    elo_join = elo_df[["jbout", "f1", "precomp_elo_diff", "elo_win_prob",
-                        "elo_momentum_diff", "peak_elo_diff",
-                        "avg_opp_elo_diff", "elo_consist_diff"]].copy()
-    elo_join = elo_join.rename(columns={"f1": "jfighter"})
-    df = df.merge(elo_join, on=["jbout", "jfighter"], how="left")
-    for col in ["precomp_elo_diff", "elo_momentum_diff", "peak_elo_diff",
-                "avg_opp_elo_diff", "elo_consist_diff"]:
-        if col in df.columns:
+    # Merge on jbout + DATE to handle rematches (same jbout, different dates)
+    ELO_DIFF_COLS = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
+                     "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff"]
+    elo_merge = elo_df[["jbout", "DATE", "f1", "f2"] + ELO_DIFF_COLS].copy()
+    elo_merge["DATE"] = pd.to_datetime(elo_merge["DATE"])
+    df = df.merge(elo_merge, on=["jbout", "DATE"], how="left")
+
+    # Flip signs when pipeline's jfighter is Elo's f2 (alphabetically second)
+    is_flipped = (df["jfighter"] == df["f2"])
+    for col in ELO_DIFF_COLS:
+        if col == "elo_win_prob":
+            df.loc[is_flipped, col] = 1.0 - df.loc[is_flipped, col]
+        else:
+            df.loc[is_flipped, col] = -df.loc[is_flipped, col]
+    df.drop(columns=["f1", "f2"], inplace=True, errors="ignore")
+
+    for col in ELO_DIFF_COLS:
+        if col == "elo_win_prob":
+            df[col] = df[col].fillna(0.5)
+        else:
             df[col] = df[col].fillna(0.0)
-    if "elo_win_prob" in df.columns:
-        df["elo_win_prob"] = df["elo_win_prob"].fillna(0.5)
-    print(f"  Elo coverage: {(df.get('precomp_elo_diff', 0) != 0).sum():,} / {len(df):,}")
+    coverage = (df["precomp_elo_diff"] != 0).sum()
+    print(f"  Elo coverage: {coverage:,} / {len(df):,}")
 
     # Build feature list: all MMA-AI diffs + selected Elo features
     feat_cols = [c for c in df.columns if c.endswith("_diff")]
