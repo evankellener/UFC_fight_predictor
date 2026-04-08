@@ -45,6 +45,18 @@ ELO_DECAY_STEEPNESS = 80.0
 # Features kept from forward selection (all others removed from custom feats)
 SELECTED_ELO_FEATURES = ["peak_elo_diff", "elo_win_prob"]
 
+# Style matchup features
+STYLE_STATS = [
+    'head_land_pm_dec_avg', 'body_land_pm_dec_avg', 'leg_land_pm_dec_avg',
+    'td_att_pm_dec_avg', 'td_def_dec_avg', 'sub_att_pm_dec_avg',
+    'ctrl_pm_dec_avg', 'kd_pm_dec_avg', 'head_acc_dec_avg', 'head_def_dec_avg',
+    'ground_acc_dec_avg', 'clinch_acc_dec_avg', 'ko_smooth_dec_avg',
+    'win_smooth_dec_avg', 'distance_acc_dec_avg',
+]
+STYLE_FEAT_NAMES = ['style_distance', 'striking_matchup', 'wrestling_matchup',
+                    'power_matchup', 'grappling_matchup', 'sub_matchup']
+STYLE_CONFIG_PATH = _DATA / "style_config.json"
+
 # All ELO feature names (for building live predictions)
 ALL_ELO_FEATURES = [
     "precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
@@ -99,55 +111,64 @@ def build_training_data():
         fighter_stats[row["jfighter"]] = stats
     print(f"  Fighter stats: {len(fighter_stats)} fighters")
 
-    # Add Elo features from pre-saved bouts CSV (no DB needed)
-    print("  Computing Elo ratings...")
-    bouts = pd.read_csv(ELO_BOUTS_CSV)
-    bouts["DATE"] = pd.to_datetime(bouts["DATE"])
-    from elo_feature import compute_elo as _compute_elo
-    elo_df, _, _, _ = _compute_elo(
-        bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
-        decay_lambda=ELO_DECAY,
-        decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
-        decay_steepness=ELO_DECAY_STEEPNESS,
-        logistic_scale=ELO_LOGISTIC_SCALE,
-        opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
-    )
-    # Merge on jbout + DATE to handle rematches (same jbout, different dates)
-    ELO_DIFF_COLS = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
-                     "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff"]
-    elo_merge = elo_df[["jbout", "DATE", "f1", "f2"] + ELO_DIFF_COLS].copy()
-    elo_merge["DATE"] = pd.to_datetime(elo_merge["DATE"])
-    df = df.merge(elo_merge, on=["jbout", "DATE"], how="left")
+    # Add Elo features (skip if already in CSV from pre-computation)
+    if "precomp_elo_diff" in df.columns and df["precomp_elo_diff"].notna().sum() > 0:
+        print("  Elo features already in CSV, skipping merge.")
+        coverage = (df["precomp_elo_diff"] != 0).sum()
+        print(f"  Elo coverage: {coverage:,} / {len(df):,}")
+    else:
+        print("  Computing Elo ratings...")
+        bouts = pd.read_csv(ELO_BOUTS_CSV)
+        bouts["DATE"] = pd.to_datetime(bouts["DATE"])
+        from elo_feature import compute_elo as _compute_elo
+        elo_df, _, _, _ = _compute_elo(
+            bouts, K=ELO_K, ko_mult=ELO_KO_MULT, sub_mult=ELO_SUB_MULT,
+            decay_lambda=ELO_DECAY,
+            decay_max=ELO_DECAY_MAX, decay_midpoint=ELO_DECAY_MIDPOINT,
+            decay_steepness=ELO_DECAY_STEEPNESS,
+            logistic_scale=ELO_LOGISTIC_SCALE,
+            opp_quality_k=True, sliding_k=True, upset_momentum=True, champ_mult=1.2,
+        )
+        ELO_DIFF_COLS = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
+                         "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff"]
+        elo_merge = elo_df[["jbout", "DATE", "f1", "f2"] + ELO_DIFF_COLS].copy()
+        elo_merge["DATE"] = pd.to_datetime(elo_merge["DATE"])
+        df = df.merge(elo_merge, on=["jbout", "DATE"], how="left")
+        is_flipped = (df["jfighter"] == df["f2"])
+        for col in ELO_DIFF_COLS:
+            if col == "elo_win_prob":
+                df.loc[is_flipped, col] = 1.0 - df.loc[is_flipped, col]
+            else:
+                df.loc[is_flipped, col] = -df.loc[is_flipped, col]
+        df.drop(columns=["f1", "f2"], inplace=True, errors="ignore")
+        for col in ELO_DIFF_COLS:
+            if col == "elo_win_prob":
+                df[col] = df[col].fillna(0.5)
+            else:
+                df[col] = df[col].fillna(0.0)
+        coverage = (df["precomp_elo_diff"] != 0).sum()
+        print(f"  Elo coverage: {coverage:,} / {len(df):,}")
 
-    # Flip signs when pipeline's jfighter is Elo's f2 (alphabetically second)
-    is_flipped = (df["jfighter"] == df["f2"])
-    for col in ELO_DIFF_COLS:
-        if col == "elo_win_prob":
-            df.loc[is_flipped, col] = 1.0 - df.loc[is_flipped, col]
-        else:
-            df.loc[is_flipped, col] = -df.loc[is_flipped, col]
-    df.drop(columns=["f1", "f2"], inplace=True, errors="ignore")
-
-    for col in ELO_DIFF_COLS:
-        if col == "elo_win_prob":
-            df[col] = df[col].fillna(0.5)
-        else:
-            df[col] = df[col].fillna(0.0)
-    coverage = (df["precomp_elo_diff"] != 0).sum()
-    print(f"  Elo coverage: {coverage:,} / {len(df):,}")
-
-    # Build feature list: all MMA-AI diffs + selected Elo features
-    feat_cols = [c for c in df.columns if c.endswith("_diff")]
-    for c in ["weightclass_encoded", "scheduled_rounds", "days_since_last_fight_f1"]:
-        if c in df.columns:
-            feat_cols.append(c)
-
-    # Remove Elo features not selected by forward selection
-    elo_all = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
-               "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff",
-               "elo_predictability"]
-    feat_cols = [f for f in feat_cols if f not in elo_all]
-    feat_cols.extend(SELECTED_ELO_FEATURES)
+    # Load model feature list (includes MMA-AI diffs + Elo + style matchup features)
+    model_feat_path = _DATA / "model_feat_cols.json"
+    if model_feat_path.exists():
+        with open(model_feat_path) as f:
+            feat_cols = json.load(f)
+        # Ensure all columns exist in df
+        for c in feat_cols:
+            if c not in df.columns:
+                df[c] = 0.0
+    else:
+        # Fallback: build feature list manually
+        feat_cols = [c for c in df.columns if c.endswith("_diff")]
+        for c in ["weightclass_encoded", "scheduled_rounds", "days_since_last_fight_f1"]:
+            if c in df.columns:
+                feat_cols.append(c)
+        elo_all = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
+                   "peak_elo_diff", "avg_opp_elo_diff", "elo_consist_diff",
+                   "elo_predictability"]
+        feat_cols = [f for f in feat_cols if f not in elo_all]
+        feat_cols.extend(SELECTED_ELO_FEATURES)
 
     # Clean features
     for c in feat_cols:
@@ -264,6 +285,8 @@ def predict_fight(name_a: str, name_b: str,
     for feat in feat_cols:
         if feat in SELECTED_ELO_FEATURES or feat in ALL_ELO_FEATURES:
             continue  # handled below
+        elif feat in STYLE_FEAT_NAMES:
+            continue  # handled below
         elif feat == "weightclass_encoded":
             row[feat] = sf1.get("weightindex", 0)
         elif feat == "scheduled_rounds":
@@ -271,13 +294,47 @@ def predict_fight(name_a: str, name_b: str,
         elif feat == "days_since_last_fight_f1":
             row[feat] = sf1.get("days_since_last_fight", 0)
         elif feat.endswith("_diff"):
-            # Strip _diff to get individual stat name
             col = feat[:-5]
             v1 = sf1.get(col, 0.0)
             v2 = sf2.get(col, 0.0)
             row[feat] = v1 - v2
         else:
             row[feat] = 0.0
+
+    # Style matchup features (non-transitive interactions)
+    s1 = {s: sf1.get(s, 0.0) for s in STYLE_STATS}
+    s2 = {s: sf2.get(s, 0.0) for s in STYLE_STATS}
+    has_style = any(s1[s] != 0 for s in STYLE_STATS) and any(s2[s] != 0 for s in STYLE_STATS)
+    if has_style:
+        # Load style config for distance calculation
+        if STYLE_CONFIG_PATH.exists():
+            with open(STYLE_CONFIG_PATH) as _f:
+                _cfg = json.load(_f)
+            _mean = np.array(_cfg['scaler_mean'])
+            _scale = np.array(_cfg['scaler_scale'])
+            sv1 = (np.array([s1[s] for s in STYLE_STATS]) - _mean) / _scale
+            sv2 = (np.array([s2[s] for s in STYLE_STATS]) - _mean) / _scale
+            row['style_distance'] = float(np.linalg.norm(sv1 - sv2))
+        else:
+            row['style_distance'] = 0.0
+        row['striking_matchup'] = (
+            s1['head_land_pm_dec_avg'] * s2['head_def_dec_avg'] -
+            s2['head_land_pm_dec_avg'] * s1['head_def_dec_avg'])
+        row['wrestling_matchup'] = (
+            s1['td_att_pm_dec_avg'] * (1 - s2['td_def_dec_avg']) -
+            s2['td_att_pm_dec_avg'] * (1 - s1['td_def_dec_avg']))
+        row['power_matchup'] = (
+            s1['kd_pm_dec_avg'] * s2['head_def_dec_avg'] -
+            s2['kd_pm_dec_avg'] * s1['head_def_dec_avg'])
+        row['grappling_matchup'] = (
+            s1['ctrl_pm_dec_avg'] * (1 - s2['td_def_dec_avg']) -
+            s2['ctrl_pm_dec_avg'] * (1 - s1['td_def_dec_avg']))
+        row['sub_matchup'] = (
+            s1['sub_att_pm_dec_avg'] * (1 - s2['ground_acc_dec_avg']) -
+            s2['sub_att_pm_dec_avg'] * (1 - s1['ground_acc_dec_avg']))
+    else:
+        for sf in STYLE_FEAT_NAMES:
+            row[sf] = 0.0
 
     # Elo features
     wc = sf1.get("weightindex", 0)
