@@ -439,17 +439,72 @@
 
   <!-- Model Insights Tab -->
   <div class="tab-content" id="tab-insights">
-    <div class="section-title">What the Model Looks At</div>
-    <p class="fi-subtitle">
-      The model uses <strong>194 features</strong> to predict fights.
-      These are the top 25 by weight in the logistic regression.
-      Positive (green) means a higher value favors the first fighter alphabetically;
-      negative (red) favors the second.
-      Features are differences between the two fighters' career stats.
+
+    <!-- Overview -->
+    <div class="section-title">How It Works</div>
+    <p class="fi-subtitle" style="margin-bottom:1.2rem;line-height:1.6;">
+      This model predicts UFC fights using <strong>200 features</strong> built from every fighter's
+      career stats. It combines a custom <strong>Elo rating system</strong> (tuned for MMA with
+      KO/submission multipliers, inactivity decay, and opponent quality scaling) with
+      <strong>smoothed fight statistics</strong> (striking, grappling, defense) and
+      <strong>style matchup interactions</strong> that capture how different fighting styles
+      match up against each other.
+    </p>
+    <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
+      The model trains on ~3,100 UFC fights from 2018-2024 and predicts by comparing
+      two fighters across all 200 dimensions, weighted by how predictive each stat has
+      been historically.
+    </p>
+
+    <!-- Key Numbers -->
+    <div class="section-title" style="margin-top:1rem;">Performance</div>
+    <div id="modelStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.8rem;margin:1rem 0;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAcc">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Accuracy</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statLL">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Log Loss</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAUC">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">AUC</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statFeats">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Features</div>
+      </div>
+    </div>
+    <p class="fi-subtitle" style="font-size:0.8rem;margin-bottom:1.5rem;">
+      Tested on 408 fights (May 2024 &ndash; Nov 2025) the model never saw during training.
+    </p>
+
+    <!-- Confidence Breakdown -->
+    <div class="section-title">When to Trust It</div>
+    <div id="confBreakdown" style="margin:1rem 0 1.5rem 0;"></div>
+
+    <!-- Elo Rankings -->
+    <div class="section-title">Elo Rankings (Top 10)</div>
+    <p class="fi-subtitle" style="margin-bottom:0.8rem;">
+      Custom Elo system with KO/submission multipliers, opponent quality scaling,
+      sliding K-factor for new fighters, and sigmoid inactivity decay.
+    </p>
+    <div id="eloRankings" style="margin:0.5rem 0 1.5rem 0;"></div>
+
+    <!-- Feature Importance -->
+    <div class="section-title">Top Features</div>
+    <p class="fi-subtitle" style="margin-bottom:0.5rem;">
+      The 20 most influential features. Green bars favor the first fighter; red bars favor the second.
     </p>
     <div class="fi-chart" id="fiChart">
-      <div style="color:var(--muted);padding:2rem 0;text-align:center;">Loading feature importance...</div>
+      <div style="color:var(--muted);padding:2rem 0;text-align:center;">Loading...</div>
     </div>
+
+    <!-- Feature Categories -->
+    <div class="section-title" style="margin-top:1.5rem;">Feature Categories</div>
+    <div id="featCategories" style="margin:0.5rem 0;"></div>
+
   </div>
 </main>
 
@@ -500,7 +555,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => {
     if (t.textContent === tabMap[name]) t.classList.add('active');
   });
-  if (name === 'insights' && !window._fiLoaded) loadFeatureImportance();
+  if (name === 'insights' && !window._fiLoaded) { loadFeatureImportance(); loadModelSummary(); }
 }
 
 // ── Fighter Search ─────────────────────────────────────────────────────
@@ -929,7 +984,57 @@ function copyShareImage() {
   });
 }
 
-// ── Feature Importance ────────────────────────────────────────────────
+// ── Model Summary + Feature Importance ────────────────────────────────
+async function loadModelSummary() {
+  try {
+    const res = await fetch(`${API}/api/model/summary`);
+    const d = await res.json();
+    if (d.error) return;
+
+    // Key stats
+    document.getElementById('statAcc').textContent = d.metrics.accuracy;
+    document.getElementById('statLL').textContent = d.metrics.log_loss;
+    document.getElementById('statAUC').textContent = d.metrics.auc;
+    document.getElementById('statFeats').textContent = `${d.active_features}/${d.total_features}`;
+
+    // Confidence tiers
+    const confEl = document.getElementById('confBreakdown');
+    confEl.innerHTML = d.confidence_tiers.map(t =>
+      `<div style="display:flex;align-items:center;gap:0.8rem;margin:0.4rem 0;">
+        <span style="min-width:90px;font-size:0.85rem;color:var(--muted);">${t.range}</span>
+        <div style="flex:1;background:var(--border);border-radius:4px;height:22px;position:relative;overflow:hidden;">
+          <div style="height:100%;border-radius:4px;background:var(--accent);width:${parseInt(t.accuracy)}%;opacity:0.8;"></div>
+          <span style="position:absolute;right:8px;top:2px;font-size:0.75rem;font-weight:600;">${t.accuracy} acc</span>
+        </div>
+        <span style="min-width:60px;font-size:0.8rem;color:var(--muted);text-align:right;">${t.fights} fights</span>
+      </div>`
+    ).join('');
+
+    // Elo rankings
+    const eloEl = document.getElementById('eloRankings');
+    eloEl.innerHTML = `<div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:0.3rem 1rem;font-size:0.9rem;">` +
+      d.elo_rankings.map((r, i) =>
+        `<span style="color:var(--muted);text-align:right;">${i+1}.</span>
+         <span style="font-weight:${i<3?'700':'400'};">${r.display_name}</span>
+         <span style="color:var(--accent);font-weight:600;">${r.elo}</span>
+         <span style="color:var(--muted);font-size:0.8rem;">peak ${r.peak}</span>`
+      ).join('') + `</div>`;
+
+    // Feature categories
+    const catEl = document.getElementById('featCategories');
+    catEl.innerHTML = d.categories.map(c => {
+      const pct = Math.round(c.active / d.active_features * 100);
+      return `<div style="display:flex;align-items:center;gap:0.8rem;margin:0.3rem 0;">
+        <span style="min-width:180px;font-size:0.85rem;">${c.name}</span>
+        <div style="flex:1;background:var(--border);border-radius:4px;height:18px;overflow:hidden;">
+          <div style="height:100%;border-radius:4px;background:var(--accent);width:${pct}%;opacity:0.7;"></div>
+        </div>
+        <span style="min-width:50px;font-size:0.8rem;color:var(--muted);text-align:right;">${c.active}/${c.total}</span>
+      </div>`;
+    }).join('');
+  } catch(e) { console.error('Model summary failed:', e); }
+}
+
 async function loadFeatureImportance() {
   try {
     const res = await fetch(`${API}/api/model/feature_importance`);

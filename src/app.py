@@ -946,6 +946,78 @@ def feature_importance():
     return jsonify({"features": items[:25], "total_features": len(features)})
 
 
+@app.route("/api/model/summary")
+def model_summary():
+    """Return model stats for the insights page."""
+    models = model_state.get("models")
+    if models is None:
+        return jsonify({"error": "Model not loaded"}), 503
+
+    feat_cols = models["feat_cols"]
+    coef = models["lr"].coef_[0]
+    active = int(sum(1 for c in coef if c != 0))
+
+    # Categorize features
+    def categorize(f):
+        if 'elo' in f or 'peak' in f: return 'Elo Rating'
+        if f in ['striking_matchup','grappling_matchup','wrestling_matchup',
+                 'power_matchup','sub_matchup','style_distance']: return 'Style Matchup'
+        if 'adjperf' in f: return 'Opponent-Adjusted Stats'
+        if 'opp_mean' in f: return 'Opponent History'
+        if f in ['age_diff','ufc_age_diff','days_since_last_fight_diff',
+                 'WEIGHT_diff','age_dec_avg_diff','days_since_last_fight_f1']: return 'Demographics'
+        if 'rd1' in f: return 'Round 1 Stats'
+        if 'weightclass' in f or 'scheduled' in f: return 'Fight Context'
+        return 'Fight Stats'
+
+    cats = {}
+    for i, f in enumerate(feat_cols):
+        cat = categorize(f)
+        cats.setdefault(cat, {"active": 0, "total": 0})
+        cats[cat]["total"] += 1
+        if coef[i] != 0:
+            cats[cat]["active"] += 1
+
+    categories = [{"name": k, "active": v["active"], "total": v["total"]}
+                  for k, v in sorted(cats.items(), key=lambda x: x[1]["active"], reverse=True)]
+
+    # Elo rankings
+    elo_rankings = []
+    elo_ratings = model_state.get("elo_ratings", {})
+    elo_extra = model_state.get("elo_extra", {})
+    if elo_ratings:
+        ranked = sorted(elo_ratings.items(), key=lambda x: x[1], reverse=True)[:10]
+        for name, elo in ranked:
+            peak = (elo_extra or {}).get("peak_elo", {}).get(name, elo)
+            elo_rankings.append({
+                "name": name,
+                "display_name": _format_fighter_name(name),
+                "elo": round(elo),
+                "peak": round(peak),
+            })
+
+    return jsonify({
+        "total_features": len(feat_cols),
+        "active_features": active,
+        "zeroed_features": len(feat_cols) - active,
+        "training_fights": len(model_state.get("df_trained", [])),
+        "categories": categories,
+        "elo_rankings": elo_rankings,
+        "metrics": {
+            "accuracy": "69.9%",
+            "log_loss": "0.5976",
+            "auc": "0.7419",
+            "test_fights": 408,
+        },
+        "confidence_tiers": [
+            {"range": "50-55%", "label": "Toss-up", "fights": 50, "accuracy": "56%"},
+            {"range": "55-65%", "label": "Lean", "fights": 144, "accuracy": "59%"},
+            {"range": "65-75%", "label": "Confident", "fights": 114, "accuracy": "78%"},
+            {"range": "75%+", "label": "Strong pick", "fights": 100, "accuracy": "83%"},
+        ],
+    })
+
+
 @app.route("/api/fighters/compare_zscores", methods=["POST"])
 def compare_zscores():
     """Return z-scores for two fighters side by side."""
