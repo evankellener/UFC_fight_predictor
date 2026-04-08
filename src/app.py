@@ -876,15 +876,20 @@ _FEAT_DISPLAY = {
     "reach_ratio_dec_avg_diff": "Reach Ratio",
     "grapple_strike_mix_dec_avg_diff": "Grapple/Strike Mix",
     "str_eff_diff_dec_avg_diff": "Striking Efficiency",
-    "adjperf_sigstr_pm_dec_avg_diff": "Adj. Sig Strikes/Min",
-    "adjperf_totalstr_pm_dec_avg_diff": "Adj. Total Strikes/Min",
-    "adjperf_td_per15_dec_avg_diff": "Adj. Takedowns/15Min",
-    "adjperf_sub_per15_dec_avg_diff": "Adj. Sub Attempts/15Min",
-    "adjperf_ctrl_per_min_dec_avg_diff": "Adj. Control/Min",
-    "adjperf_kd_pm_dec_avg_diff": "Adj. Knockdowns/Min",
-    "adjperf_ko_eff_dec_avg_diff": "Adj. KO Efficiency",
-    "adjperf_td_att_pm_dec_avg_diff": "Adj. TD Attempts/Min",
-    "peak_elo_diff": "Peak Elo Rating",
+    "age_diff": "Age Diff",
+    "age_dec_avg_diff": "Age (Career Avg) Diff",
+    "days_since_last_fight_diff": "Days Since Last Fight Diff",
+    "WEIGHT_diff": "Weight Diff",
+    "ufc_age_diff": "UFC Career Length Diff",
+    "adjperf_sigstr_pm_dec_avg_diff": "Adj. Sig Strikes/Min Diff",
+    "adjperf_totalstr_pm_dec_avg_diff": "Adj. Total Strikes/Min Diff",
+    "adjperf_td_per15_dec_avg_diff": "Adj. Takedowns/15Min Diff",
+    "adjperf_sub_per15_dec_avg_diff": "Adj. Sub Attempts/15Min Diff",
+    "adjperf_ctrl_per_min_dec_avg_diff": "Adj. Control/Min Diff",
+    "adjperf_kd_pm_dec_avg_diff": "Adj. Knockdowns/Min Diff",
+    "adjperf_ko_eff_dec_avg_diff": "Adj. KO Efficiency Diff",
+    "adjperf_td_att_pm_dec_avg_diff": "Adj. TD Attempts/Min Diff",
+    "peak_elo_diff": "Peak Elo Rating Diff",
     "elo_win_prob": "Elo Win Probability",
     "precomp_elo_diff": "Elo Rating Diff",
     "elo_momentum_diff": "Elo Momentum",
@@ -919,7 +924,28 @@ _FEAT_DISPLAY = {
 
 
 def _feat_display_name(feat):
-    return _FEAT_DISPLAY.get(feat, feat.replace("_dec_avg_diff", "").replace("_diff", "").replace("_", " ").title())
+    if feat in _FEAT_DISPLAY:
+        return _FEAT_DISPLAY[feat]
+    # Style matchup features (not diffs, they're interactions)
+    if feat in ('striking_matchup', 'grappling_matchup', 'wrestling_matchup',
+                'power_matchup', 'sub_matchup', 'style_distance'):
+        return feat.replace("_", " ").title()
+    # Everything else is a diff — clean up and append "Diff"
+    name = feat
+    for suffix in ["_adjperf_dec_avg_diff", "_opp_mean_dec_avg_diff", "_dec_avg_diff", "_diff"]:
+        if name.endswith(suffix):
+            name = name[:-len(suffix)]
+            break
+    # Add qualifier
+    qualifier = ""
+    if "adjperf" in feat:
+        qualifier = " (Adj.)"
+    elif "opp_mean" in feat:
+        qualifier = " (vs Opp)"
+    elif "rd1" in feat:
+        qualifier = " (R1)"
+    pretty = name.replace("_", " ").title()
+    return f"{pretty}{qualifier} Diff"
 
 
 @app.route("/api/model/feature_importance")
