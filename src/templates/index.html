@@ -451,9 +451,47 @@
       match up against each other.
     </p>
     <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
-      The model trains on ~3,100 UFC fights from 2018-2024 and predicts by comparing
+      The model trains on ~3,100 UFC fights from 2018&ndash;2024 and predicts by comparing
       two fighters across all 200 dimensions, weighted by how predictive each stat has
       been historically.
+    </p>
+
+    <!-- Architecture -->
+    <div class="section-title" style="margin-top:1rem;">Why Logistic Regression?</div>
+    <p class="fi-subtitle" style="margin-bottom:0.8rem;line-height:1.6;">
+      The core model is a <strong>Logistic Regression with ElasticNet regularization</strong>,
+      blended with a small CatBoost (gradient-boosted tree) component (80/20 weight).
+      Logistic Regression might sound simple, but it has three properties that make it
+      ideal for this problem:
+    </p>
+    <div style="margin:0 0 0.5rem 0.5rem;">
+      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
+        <strong style="color:var(--accent);">1. Calibrated probabilities.</strong>
+        LR directly optimizes log loss, which means the probabilities it outputs are
+        its best possible estimate of the true win chance &mdash; not just a ranking.
+        When the model says 70%, it means 70%. Tree-based models (XGBoost, CatBoost)
+        are often overconfident or underconfident and need post-hoc calibration, which
+        is unreliable with limited MMA data.
+      </p>
+      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
+        <strong style="color:var(--accent);">2. Built-in feature selection.</strong>
+        ElasticNet combines L1 (lasso) and L2 (ridge) penalties. The L1 component
+        automatically zeros out features that don't carry predictive signal &mdash;
+        of the 200 input features, only ~140 survive. This prevents the model from
+        overfitting to noise, which is critical when you only have ~3,000 training fights.
+      </p>
+      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
+        <strong style="color:var(--accent);">3. Robustness with small data.</strong>
+        MMA has far less data than team sports (the entire UFC history is ~8,000 fights).
+        Complex models like neural networks and deep ensembles need orders of magnitude
+        more data to outperform a well-regularized linear model. In testing, LR alone
+        beat CatBoost, random forests, and stacked ensembles on log loss and AUC.
+      </p>
+    </div>
+    <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
+      The 20% CatBoost component captures nonlinear interactions that LR misses
+      (e.g., age matters more for grapplers than strikers), but the majority of the
+      signal comes from the linear model.
     </p>
 
     <!-- Key Numbers -->
