@@ -230,14 +230,14 @@ def train_ensemble(data: dict):
         yval_cb = train.loc[val_mask, "win"].values
         wtr_cb = weights[train_mask].values
 
-        cb = CatBoostClassifier(depth=5, iterations=1000, learning_rate=0.05,
-                                l2_leaf_reg=3, random_seed=42, verbose=0,
+        cb = CatBoostClassifier(depth=3, iterations=500, learning_rate=0.03,
+                                l2_leaf_reg=10, random_seed=42, verbose=0,
                                 eval_metric="Logloss", early_stopping_rounds=50)
         cb.fit(Xtr_cb, ytr_cb, sample_weight=wtr_cb,
                eval_set=(Xval_cb, yval_cb), verbose=0)
     else:
-        cb = CatBoostClassifier(depth=5, iterations=300, learning_rate=0.05,
-                                l2_leaf_reg=3, random_seed=42, verbose=0)
+        cb = CatBoostClassifier(depth=3, iterations=300, learning_rate=0.03,
+                                l2_leaf_reg=10, random_seed=42, verbose=0)
         cb.fit(X, y, sample_weight=weights.values, verbose=0)
 
     n_active = int((lr.coef_[0] != 0).sum())
@@ -252,7 +252,7 @@ def train_ensemble(data: dict):
         "scaler": scaler,
         "imputer": imputer,
         "feat_cols": feat_cols,
-        "lr_weight": 0.8,  # LR*0.8 + CB*0.2
+        "lr_weight": 0.85,  # LR*0.85 + CB*0.15
     }
 
 

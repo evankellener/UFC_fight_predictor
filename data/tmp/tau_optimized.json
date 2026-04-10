@@ -27,9 +27,9 @@
     "sub_land": 2,
     "ctrl": 7
   },
-  "lr_C": 0.1,
-  "lr_l1": 0.4,
-  "recency_lambda": 0.10,
+  "lr_C": 0.05,
+  "lr_l1": 0.5,
+  "recency_lambda": 0.05,
   "train_era": "2018-01-01",
   "fitness": -0.07063792893926701,
   "avg_log_loss": 0.6509759380595055,
