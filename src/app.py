@@ -1030,10 +1030,11 @@ def model_summary():
         "categories": categories,
         "elo_rankings": elo_rankings,
         "metrics": {
-            "accuracy": "69.9%",
-            "log_loss": "0.5976",
-            "auc": "0.7419",
-            "test_fights": 408,
+            "accuracy": "66%",
+            "log_loss": "0.6300",
+            "auc": "0.74",
+            "test_fights": 517,
+            "eval_method": "Walk-forward (monthly retrain, zero leakage)",
         },
         "confidence_tiers": [
             {"range": "50-55%", "label": "Toss-up", "fights": 50, "accuracy": "56%"},
