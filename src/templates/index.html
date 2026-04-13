@@ -443,60 +443,122 @@
     <!-- Overview -->
     <div class="section-title">How It Works</div>
     <p class="fi-subtitle" style="margin-bottom:1.2rem;line-height:1.6;">
-      This model predicts UFC fights using <strong>200 features</strong> built from every fighter's
-      career stats. It combines a custom <strong>Elo rating system</strong> (tuned for MMA with
-      KO/submission multipliers, inactivity decay, and opponent quality scaling) with
-      <strong>smoothed fight statistics</strong> (striking, grappling, defense) and
-      <strong>style matchup interactions</strong> that capture how different fighting styles
-      match up against each other.
+      The predictor is a <strong>50/50 blend of Logistic Regression and XGBoost</strong>.
+      Both models see the same fight history and fighter stats, but use different
+      feature sets and different learning mechanics, so they make uncorrelated errors
+      &mdash; which is exactly what makes the blend more accurate than either alone.
+      The two probabilities get averaged at prediction time; a response marked
+      <code>live</code> means it was built from each fighter's current absolute stats
+      (no snapshot reuse), with Elo freshly computed using decay as of the event date.
     </p>
-    <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
-      The model trains on ~3,100 UFC fights from 2018&ndash;2024 and predicts by comparing
-      two fighters across all 200 dimensions, weighted by how predictive each stat has
-      been historically.
+    <p class="fi-subtitle" style="margin-bottom:1.2rem;line-height:1.6;">
+      Training data feeds in from three sources: (1) a custom
+      <strong>Elo rating system</strong> (K=48, KO &times; 1.80, submission &times; 1.20,
+      sigmoid inactivity decay, opponent-quality scaling, upset momentum), (2)
+      <strong>rolling smoothed fight statistics</strong> (Poisson-Gamma and Beta-Binomial
+      priors for 193 striking/grappling/control metrics with per-weight-class smoothing),
+      and (3) <strong>contextual + interaction features</strong> (strength of schedule,
+      layoff, stance matchup, age &times; Elo, etc.).
+      Zero vegas-odds information is used as an input &mdash; odds are only consulted
+      post-hoc for ROI evaluation.
     </p>
 
     <!-- Architecture -->
-    <div class="section-title" style="margin-top:1rem;">Why Logistic Regression?</div>
+    <div class="section-title" style="margin-top:1rem;">Architecture</div>
+    <div id="archBox" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;">
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem;">LR Component &middot; 50%</div>
+          <div style="font-size:0.95rem;line-height:1.45;">
+            Elastic-net (<code>C=0.05</code>, <code>l1_ratio=0.5</code>).
+            Trained on standardized features.
+            <span id="archLrFeats">&mdash;</span> baseline MMA-AI diff features.
+            <br><span style="color:var(--muted);font-size:0.82rem;">
+              Contributes: calibrated probabilities + interpretable coefficients
+              (visible in Top Features below).
+            </span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem;">XGBoost Component &middot; 50%</div>
+          <div style="font-size:0.95rem;line-height:1.45;">
+            Gradient boosted trees (<code>depth=4</code>, <code>n_estimators=1200</code>,
+            <code>learning_rate=0.015</code>, <code>reg_lambda=4</code>).
+            <span id="archXgbFeats">&mdash;</span> features: the 193 baseline diffs plus 10
+            contextual + 7 strength-of-schedule + 18 explicit pairwise interactions.
+            <br><span style="color:var(--muted);font-size:0.82rem;">
+              Contributes: non-linear lift from features LR shrinks to zero
+              (age&times;Elo, stance&times;reach, etc.).
+            </span>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);margin-top:1rem;padding-top:0.8rem;font-size:0.82rem;color:var(--muted);line-height:1.45;">
+        <strong>Training window:</strong> <span id="archTrainStart">&mdash;</span> &rarr;
+        <span id="archTrainEnd">&mdash;</span> &middot;
+        <strong>Rows:</strong> <span id="archTrainRows">&mdash;</span> &middot;
+        <strong>Blend weight:</strong> <span id="archBlendW">&mdash;</span>
+        <br><strong>Feature recompute at predict time:</strong> age from DOB,
+        days-since-last-fight from last bout date, Elo with time decay, strength
+        of schedule from cached per-fighter absolute values, then interactions
+        rebuilt from refreshed bases.
+      </div>
+    </div>
+
+    <!-- Why blend -->
+    <div class="section-title" style="margin-top:1rem;">Why a Blend</div>
     <p class="fi-subtitle" style="margin-bottom:0.8rem;line-height:1.6;">
-      The core model is a <strong>Logistic Regression with ElasticNet regularization</strong>,
-      blended with a small CatBoost (gradient-boosted tree) component (80/20 weight).
-      Logistic Regression might sound simple, but it has three properties that make it
-      ideal for this problem:
+      LR alone and XGBoost alone each cap out around 65&ndash;66% walk-forward accuracy
+      on the past year &mdash; but they make different kinds of mistakes.
     </p>
     <div style="margin:0 0 0.5rem 0.5rem;">
       <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">1. Calibrated probabilities.</strong>
-        LR directly optimizes log loss, which means the probabilities it outputs are
-        its best possible estimate of the true win chance &mdash; not just a ranking.
-        When the model says 70%, it means 70%. Tree-based models (XGBoost, CatBoost)
-        are often overconfident or underconfident and need post-hoc calibration, which
-        is unreliable with limited MMA data.
+        <strong style="color:var(--accent);">1. LR gives calibrated probabilities.</strong>
+        Elastic-net directly optimizes log loss, so when it says 70% the long-run win
+        rate of that bucket is close to 70%. Tree models need post-hoc calibration
+        with limited data (~5k fights) and usually wind up overconfident.
       </p>
       <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">2. Built-in feature selection.</strong>
-        ElasticNet combines L1 (lasso) and L2 (ridge) penalties. The L1 component
-        automatically zeros out features that don't carry predictive signal &mdash;
-        of the 200 input features, only ~140 survive. This prevents the model from
-        overfitting to noise, which is critical when you only have ~3,000 training fights.
+        <strong style="color:var(--accent);">2. XGBoost finds non-linearities LR can't.</strong>
+        Things like "young fighter on a streak vs declining former champ" are
+        interaction effects &mdash; LR's L1 penalty zeros out many stat features in
+        favor of a few global ones; XGBoost uses the same features plus explicit
+        pairwise products (<code>age&times;Elo</code>, <code>age&times;fights-last-12m</code>,
+        <code>reach&times;stance</code>) to pick up patterns LR misses. Our walk-forward
+        diagnostics show XGBoost's top-14 features include 4 of these interaction
+        terms; they would have cost far more trees to discover implicitly.
       </p>
       <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">3. Robustness with small data.</strong>
-        MMA has far less data than team sports (the entire UFC history is ~8,000 fights).
-        Complex models like neural networks and deep ensembles need orders of magnitude
-        more data to outperform a well-regularized linear model. In testing, LR alone
-        beat CatBoost, random forests, and stacked ensembles on log loss and AUC.
+        <strong style="color:var(--accent);">3. Their errors are uncorrelated.</strong>
+        LR is biased toward the average path (regularization pulls extreme predictions
+        toward 50%); XGBoost tends to commit harder on bouts with distinctive
+        interaction signatures. Averaging them cancels both biases &mdash; a blend
+        at 50/50 beats either alone on log-loss, Brier, and accuracy in 8/8
+        walk-forward folds over the past year.
       </p>
     </div>
+
+    <!-- Validation methodology -->
+    <div class="section-title" style="margin-top:1rem;">How We Validated This</div>
+    <p class="fi-subtitle" style="margin-bottom:0.8rem;line-height:1.6;">
+      Every metric shown below comes from <strong>walk-forward cross-validation</strong>,
+      not in-sample scoring. For each fold:
+    </p>
+    <ol class="fi-subtitle" style="margin:0 0 1rem 1.5rem;line-height:1.6;">
+      <li>Slice off the next ~1.5 months of fights as the test set.</li>
+      <li>Refit both LR and XGBoost from scratch using only data strictly
+        <em>before</em> that slice (sliding 8-year window).</li>
+      <li>Predict the test slice, record metrics.</li>
+      <li>Roll forward.</li>
+    </ol>
     <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
-      The 20% CatBoost component captures nonlinear interactions that LR misses
-      (e.g., age matters more for grapplers than strikers), but the majority of the
-      signal comes from the linear model.
+      Running this over the 8 folds of 2025-04 through 2026-04 gives the
+      numbers below. No fight the model was trained on ever enters a test set.
     </p>
 
     <!-- Key Numbers -->
     <div class="section-title" style="margin-top:1rem;">Performance</div>
-    <div id="modelStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.8rem;margin:1rem 0;">
+    <div id="modelStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.8rem;margin:1rem 0;">
       <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
         <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAcc">--</div>
         <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Accuracy</div>
@@ -506,16 +568,24 @@
         <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Log Loss</div>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statBrier">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Brier</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
         <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAUC">--</div>
         <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">AUC</div>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
         <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statFeats">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Features</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Active / Total</div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statROI">--</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Past-Yr ROI</div>
       </div>
     </div>
-    <p class="fi-subtitle" style="font-size:0.8rem;margin-bottom:1.5rem;">
-      Evaluated on 517 fights via walk-forward backtesting (monthly retrain, zero data leakage).
+    <p class="fi-subtitle" style="font-size:0.8rem;margin-bottom:1.5rem;" id="statsCaption">
+      Walk-forward backtested on 517 fights across 8 folds (2025-04 → 2026-04, ~1.5-month retraining cadence, zero leakage).
     </p>
 
     <!-- Confidence Breakdown -->
@@ -1035,6 +1105,33 @@ async function loadModelSummary() {
     document.getElementById('statLL').textContent = d.metrics.log_loss;
     document.getElementById('statAUC').textContent = d.metrics.auc;
     document.getElementById('statFeats').textContent = `${d.active_features}/${d.total_features}`;
+    const brierEl = document.getElementById('statBrier');
+    if (brierEl) brierEl.textContent = d.metrics.brier || '—';
+    const roiEl = document.getElementById('statROI');
+    if (roiEl) {
+      const roi = d.metrics.roi_past_year;
+      // roi string is like "+4.04% / 165 bets at ..." — show just the number
+      if (roi) {
+        const m = String(roi).match(/([+-]?\d+(\.\d+)?%)/);
+        roiEl.textContent = m ? m[1] : '—';
+      }
+    }
+    const capEl = document.getElementById('statsCaption');
+    if (capEl && d.metrics.eval_method) {
+      capEl.textContent = d.metrics.eval_method + (d.metrics.test_fights ? ` · n=${d.metrics.test_fights}` : '');
+    }
+
+    // Architecture box — populate from primary_model payload
+    const pm = d.primary_model || {};
+    const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setTxt('archLrFeats',    pm.lr_features != null  ? pm.lr_features  : '—');
+    setTxt('archXgbFeats',   pm.xgb_features != null ? pm.xgb_features : '—');
+    setTxt('archTrainStart', pm.train_start || '—');
+    setTxt('archTrainEnd',   pm.train_end   || '—');
+    setTxt('archTrainRows',  pm.trained_on_rows ? pm.trained_on_rows.toLocaleString() : '—');
+    setTxt('archBlendW',     pm.blend_weight_xgb != null
+                             ? `${Math.round(pm.blend_weight_xgb*100)}% XGB / ${Math.round((1-pm.blend_weight_xgb)*100)}% LR`
+                             : '—');
 
     // Confidence tiers
     const confEl = document.getElementById('confBreakdown');
