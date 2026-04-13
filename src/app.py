@@ -778,6 +778,10 @@ def predict():
                 vegas["implied_prob_a"] = round(imp_a / total, 4)
                 vegas["implied_prob_b"] = round(imp_b / total, 4)
 
+        # Weight-class z-scores
+        zscores_a = _compute_fighter_zscores(fighter_a)
+        zscores_b = _compute_fighter_zscores(fighter_b)
+
         response = {
             "fighter_a": fighter_a,
             "fighter_b": fighter_b,
@@ -788,10 +792,13 @@ def predict():
             "winner": result["winner"],
             "winner_display": _format_fighter_name(result["winner"]),
             "confidence": round(result["confidence"], 4),
+            "model": result.get("model"),
             "details_a": details_a,
             "details_b": details_b,
             "vegas": vegas,
             "drivers": drivers,
+            "zscores_a": zscores_a,
+            "zscores_b": zscores_b,
         }
         return jsonify(response)
 
@@ -842,6 +849,17 @@ def predict_card():
                     vegas["implied_prob_a"] = round(imp_a / total, 4)
                     vegas["implied_prob_b"] = round(imp_b / total, 4)
 
+            # Top feature drivers (LR coefficients × standardized values)
+            try:
+                drivers = _get_top_drivers(r, models)
+            except Exception as e:
+                print(f"[predict_card] drivers failed for {fa} vs {fb}: {e}")
+                drivers = []
+
+            # Weight-class z-scores for each fighter
+            zscores_a = _compute_fighter_zscores(fa)
+            zscores_b = _compute_fighter_zscores(fb)
+
             results.append({
                 "bout_num": i + 1,
                 "fighter_a": fa,
@@ -853,7 +871,11 @@ def predict_card():
                 "winner": r["winner"],
                 "winner_display": _format_fighter_name(r["winner"]),
                 "confidence": round(r["confidence"], 4),
+                "model": r.get("model"),
                 "vegas": vegas,
+                "drivers": drivers,
+                "zscores_a": zscores_a,
+                "zscores_b": zscores_b,
             })
         except ValueError as e:
             results.append({"bout_num": i + 1, "error": str(e),
@@ -882,25 +904,26 @@ def _get_top_drivers(result, models, n=5):
 
     coef = lr.coef_[0]
 
-    # Rebuild feature row
+    # Rebuild feature row (scrubbed to finite floats to avoid inf/NaN in scaler)
     row = {}
     for feat in feat_cols:
         if feat in SELECTED_ELO_FEATURES:
             row[feat] = 0.0
         elif feat == "weightclass_encoded":
-            row[feat] = sf1.get("weightindex", 0)
+            row[feat] = _safe_float(sf1.get("weightindex", 0))
         elif feat == "scheduled_rounds":
             row[feat] = 3.0
         elif feat == "days_since_last_fight_f1":
-            row[feat] = sf1.get("days_since_last_fight", 0)
+            row[feat] = _safe_float(sf1.get("days_since_last_fight", 0))
         elif feat.endswith("_diff"):
             col = feat[:-5]
-            row[feat] = sf1.get(col, 0) - sf2.get(col, 0)
+            row[feat] = _safe_float(sf1.get(col, 0)) - _safe_float(sf2.get(col, 0))
         else:
             row[feat] = 0.0
 
-    vals = [row.get(f, 0) for f in feat_cols]
-    X_arr = np.array(vals).reshape(1, -1)
+    vals = [_safe_float(row.get(f, 0)) for f in feat_cols]
+    X_arr = np.nan_to_num(np.array(vals, dtype=float).reshape(1, -1),
+                          nan=0.0, posinf=1e6, neginf=-1e6)
     X_scaled = scaler.transform(X_arr)[0]
 
     contributions = [(feat_cols[i], float(vals[i]), float(X_scaled[i] * coef[i]))
@@ -1001,6 +1024,75 @@ def _compute_wc_baselines():
     total_wc = len(baselines)
     total_stats = sum(len(v) for v in baselines.values())
     print(f"  Z-score baselines: {total_stats} stat×WC entries across {total_wc} weight classes")
+
+
+def _compute_fighter_zscores(name):
+    """Return the zscore payload dict for a fighter, or None if not computable.
+
+    Extracted from the Flask route so /api/predict and /api/predict_card can
+    inline per-fighter WC comparisons in their responses.
+    """
+    baselines = model_state.get("wc_baselines")
+    if not baselines:
+        return None
+    conn = sqlite3.connect(DB_PATH)
+    wi_row = pd.read_sql_query(
+        "SELECT weightindex FROM final_features_fast WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+        conn, params=(name,),
+    )
+    if wi_row.empty:
+        conn.close()
+        return None
+    wi = int(wi_row.iloc[0]["weightindex"])
+    wc_bl = baselines.get(wi, {})
+    table_cols = {}
+    for stats in ZSCORE_STAT_CONFIG.values():
+        for s in stats:
+            table_cols.setdefault(s["table"], []).append(s["col"])
+    fighter_vals = {}
+    for table, cols in table_cols.items():
+        try:
+            row = pd.read_sql_query(
+                f"SELECT {', '.join(cols)} FROM {table} WHERE jfighter = ? ORDER BY DATE DESC LIMIT 1",
+                conn, params=(name,),
+            )
+            if not row.empty:
+                for col in cols:
+                    val = row.iloc[0].get(col)
+                    if val is not None and pd.notna(val):
+                        fighter_vals[col] = float(val)
+        except Exception:
+            pass
+    conn.close()
+    categories = {}
+    for cat_name, stats in ZSCORE_STAT_CONFIG.items():
+        cat_stats = []
+        z_sum, z_count = 0.0, 0
+        for s in stats:
+            col = s["col"]
+            raw = fighter_vals.get(col)
+            bl = wc_bl.get(col)
+            if raw is not None and bl:
+                z = (raw - bl["mean"]) / bl["std"]
+                if s["inverted"]: z = -z
+                z = max(-3.0, min(3.0, z))
+                pct = round(_norm_cdf(z) * 100, 1)
+                z_sum += z; z_count += 1
+                cat_stats.append({"key": col, "display_name": s["name"],
+                                  "z_score": round(z, 2), "raw_value": round(raw, 4),
+                                  "wc_mean": round(bl["mean"], 4),
+                                  "percentile": pct, "inverted": s["inverted"]})
+            else:
+                cat_stats.append({"key": col, "display_name": s["name"],
+                                  "z_score": None,
+                                  "raw_value": round(raw, 4) if raw is not None else None,
+                                  "wc_mean": round(bl["mean"], 4) if bl else None,
+                                  "percentile": None, "inverted": s["inverted"]})
+        categories[cat_name] = {
+            "avg_z": round(z_sum / z_count, 2) if z_count > 0 else None,
+            "stats": cat_stats,
+        }
+    return {"jfighter": name, "weightindex": wi, "categories": categories}
 
 
 @app.route("/api/fighter/<name>/zscores")
@@ -1274,6 +1366,26 @@ def model_summary():
                 "peak": round(peak),
             })
 
+    # Model provenance: is the blend actually loaded and serving?
+    blend_info = {"available": False}
+    bp = model_state.get("blend")
+    if bp is not None:
+        try:
+            import json as _json, pathlib as _pl
+            _meta = _json.loads((_pl.Path(bp.blend_dir) / "feat_lists.json").read_text())
+            blend_info = {
+                "available": True,
+                "lr_features": len(bp.lr_cols),
+                "xgb_features": len(bp.xgb_cols),
+                "blend_weight_xgb": bp.blend_w,
+                "train_start": _meta.get("train_start"),
+                "train_end":   _meta.get("train_end"),
+                "trained_on_rows": _meta.get("trained_on_rows"),
+                "architecture": "LR (elastic net, C=0.05, l1_ratio=0.5) + XGBoost (depth=4, 1200 trees) blended 50/50",
+            }
+        except Exception as e:
+            blend_info = {"available": True, "error": str(e)}
+
     return jsonify({
         "total_features": len(feat_cols),
         "active_features": active,
@@ -1281,13 +1393,17 @@ def model_summary():
         "training_fights": len(model_state.get("df_trained", [])),
         "categories": categories,
         "elo_rankings": elo_rankings,
+        # Walk-forward validated metrics (past-year, 8 folds × ~1.5 mo)
         "metrics": {
-            "accuracy": "66%",
-            "log_loss": "0.6300",
-            "auc": "0.74",
+            "accuracy": "67.9%",
+            "log_loss": "0.6206",
+            "brier": "0.2154",
+            "auc": "0.7080",
             "test_fights": 517,
-            "eval_method": "Walk-forward (monthly retrain, zero leakage)",
+            "eval_method": "Walk-forward 8 folds × 1.5 mo (blend), past year 2025-04 → 2026-04",
+            "roi_past_year": "+4.04% / 165 bets at favorite + edge > 0%",
         },
+        "primary_model": blend_info,
         "confidence_tiers": [
             {"range": "50-55%", "label": "Toss-up", "fights": 50, "accuracy": "56%"},
             {"range": "55-65%", "label": "Lean", "fights": 144, "accuracy": "59%"},
