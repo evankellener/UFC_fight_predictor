@@ -287,6 +287,13 @@ def _predict(fighter_a, fighter_b, event_date):
     if bp is not None:
         r = bp.predict_fight(fighter_a, fighter_b, event_date)
         if r.get("success"):
+            # Alphabetize like the training convention so drivers can diff f1-f2
+            if fighter_a < fighter_b:
+                f1, f2 = fighter_a, fighter_b
+                prob_f1 = r["prob_f1"]
+            else:
+                f1, f2 = fighter_b, fighter_a
+                prob_f1 = r["prob_f2"]
             return {
                 "prob_a":     r["prob_f1"],
                 "prob_b":     r["prob_f2"],
@@ -295,6 +302,12 @@ def _predict(fighter_a, fighter_b, event_date):
                 "model":      f"LR+XGB blend ({r.get('method','?')})",
                 "lr_prob":    r.get("lr_prob"),
                 "xgb_prob":   r.get("xgb_prob"),
+                # Keys needed by _get_top_drivers
+                "f1":     f1,
+                "f2":     f2,
+                "name_a": fighter_a,
+                "name_b": fighter_b,
+                "prob_f1": prob_f1,
             }
         # fall through to LR+CB on blend failure
 

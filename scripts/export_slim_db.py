@@ -19,12 +19,19 @@ DST      = Path("data/sqlite_db/slim_scrapper.db")
 # Tables the Flask apps (src/app.py production site + app/app.py BlendPredictor) read.
 # KEEP_FROM_SCRAPER comes from sqlite_scrapper.db. KEEP_FROM_APP comes from app.db.
 KEEP_FROM_SCRAPER = [
-    "ufc_winlossko",         # fight-by-fight W/L (fighter profiles, history)
-    "ufc_fighter_tott",      # DOB, stance, weightindex
-    "ufc_event_details",     # event DATE + LOCATION
-    "ufc_fight_results",     # method + round + time fields
-    "ufc_fighter_details",   # fighter metadata (URL, nickname)
-    "final_features_fast",   # AdjPerf z-scores for radar charts (src/app.py)
+    "ufc_winlossko",              # fight-by-fight W/L (profiles, history)
+    "ufc_fighter_tott",           # DOB, stance, weightindex
+    "ufc_event_details",          # event DATE + LOCATION
+    "ufc_fight_results",          # method + round + time fields
+    "ufc_fighter_details",        # fighter metadata (URL, nickname)
+    # Derived tables used by the weight-class z-score comparison UI
+    "final_features_fast",        # AdjPerf z-scores for radar charts
+    "new_features_dec_avg",       # finish rate, late-round output
+    "new_features4_dec_avg",      # damage efficiency, R1 KO rate, KO'd rate
+    "new_features5_dec_avg",      # grappling dominance, top position
+    "cardio_features_dec_avg",    # late-round output ratios
+    "streak_features",            # win streak
+    "opp_quality_features",       # opponent-quality aggregate
 ]
 KEEP_FROM_APP = [
     "ufc_fighter_nationality",  # flags + home-advantage
