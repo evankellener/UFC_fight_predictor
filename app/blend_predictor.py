@@ -209,12 +209,27 @@ class BlendPredictor:
                     "error": f"One or both fighters unknown: {fighter1_name}, {fighter2_name}",
                 }
 
-            # Align to the column orders the models expect
-            lr_X  = self.scaler.transform([[row.get(c, 0.0) for c in self.lr_cols]])
-            xgb_X = np.array([[row.get(c, 0.0) for c in self.xgb_cols]], dtype=float)
+            def _score(r):
+                lr_X  = self.scaler.transform([[r.get(c, 0.0) for c in self.lr_cols]])
+                xgb_X = np.array([[r.get(c, 0.0) for c in self.xgb_cols]], dtype=float)
+                p_lr  = float(self.lr.predict_proba(lr_X)[0, 1])
+                p_xgb = float(self.xgb.predict_proba(xgb_X)[0, 1])
+                return p_lr, p_xgb
 
-            p_lr  = float(self.lr.predict_proba(lr_X)[0, 1])
-            p_xgb = float(self.xgb.predict_proba(xgb_X)[0, 1])
+            p_lr, p_xgb = _score(row)
+
+            # For live mode, force symmetry by averaging both orderings. Many
+            # decayed-avg diff features in the training data encode "fighter vs
+            # their last opponent" rather than absolute stats, so diffing two
+            # snapshots isn't perfectly order-invariant. Averaging p(A>B) and
+            # 1-p(B>A) cancels the residual perspective bias.
+            if method.startswith("live"):
+                row_flip = self._build_live_row(jf2, jf1, event_date=fight_date)
+                if row_flip is not None:
+                    p_lr_f, p_xgb_f = _score(row_flip)
+                    p_lr  = 0.5 * (p_lr  + (1 - p_lr_f))
+                    p_xgb = 0.5 * (p_xgb + (1 - p_xgb_f))
+
             p_bl  = self.blend_w * p_xgb + (1 - self.blend_w) * p_lr
 
             # Caller asked about fighter1_name.  The training convention is that
@@ -373,6 +388,23 @@ class BlendPredictor:
         }
         for diff_col, (abs_key, default) in sos_map.items():
             row[diff_col] = float(a1.get(abs_key, default) - a2.get(abs_key, default))
+
+        # ── Critical fix: recompute Elo-derived features from CURRENT absolute
+        # Elos. The snapshot values in fighter_latest_row.csv encode each
+        # fighter's Elo diff vs THEIR last opponent, so diffing them was
+        # double-subtracting and producing nonsense (asymmetric predictions).
+        elo1 = float(a1.get("current_elo", 1500.0))
+        elo2 = float(a2.get("current_elo", 1500.0))
+        row["precomp_elo_diff"] = elo1 - elo2
+        # Logistic scale from compute_elo: 449.205
+        import math
+        row["elo_win_prob"] = 1.0 / (1.0 + math.exp(-(elo1 - elo2) / 449.205))
+        # Peak Elo
+        peak1 = float(a1.get("peak_elo", elo1))
+        peak2 = float(a2.get("peak_elo", elo2))
+        row["peak_elo_diff"] = peak1 - peak2
+        # avg_opp_elo_diff: use sos_last5 as best proxy for "avg opponent quality"
+        row["avg_opp_elo_diff"] = float(a1.get("sos_last5", 1500.0) - a2.get("sos_last5", 1500.0))
 
         # Stance mismatch + southpaw advantage (from stance strings)
         def stance_code(s):

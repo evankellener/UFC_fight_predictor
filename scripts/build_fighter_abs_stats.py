@@ -67,6 +67,7 @@ for jf, g in hist.groupby("jfighter"):
     current_elo = float(ratings.get(jf, 1500.0))
 
     prof = tott_map.get(jf, {})
+    peak_elo = float(extra.get("peak_elo", {}).get(jf, current_elo))
     out[jf] = {
         "last_fight_date": dates[-1].strftime("%Y-%m-%d"),
         "dob": prof.get("dob").strftime("%Y-%m-%d") if pd.notna(prof.get("dob")) else None,
@@ -74,6 +75,7 @@ for jf, g in hist.groupby("jfighter"):
         "stance": prof.get("stance", ""),
         "weightindex": prof.get("weightindex", 0),
         "current_elo": current_elo,
+        "peak_elo": peak_elo,
         "sos_last3": sos3,
         "sos_last5": sos5,
         "sos_trajectory": sos_traj,
