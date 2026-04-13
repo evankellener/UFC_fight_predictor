@@ -277,39 +277,233 @@ def _american_to_implied(odds):
         return abs(odds) / (abs(odds) + 100.0)
 
 
+def _safe_float(v, default=0.0, lo=-1e6, hi=1e6):
+    """Coerce to a finite float in [lo, hi]. Returns default on any failure."""
+    try:
+        v = float(v)
+    except (TypeError, ValueError):
+        return default
+    if not np.isfinite(v):
+        return default
+    return max(lo, min(hi, v))
+
+
+def _build_blend_row(fighter_a, fighter_b, event_date):
+    """Build the 228-column feature row for the LR+XGB blend from per-fighter
+    ABSOLUTE stats (the dict fighter_stats[name]), not from pre-diffed snapshots.
+
+    Alphabetizes (f1, f2) like the training convention so the diff direction is
+    consistent. Returns (row_dict, f1, f2) or None if either fighter is unknown.
+    """
+    fs = model_state.get("fighter_stats") or {}
+    if fighter_a not in fs or fighter_b not in fs:
+        return None
+    # Training convention: f1 < f2 alphabetically
+    if fighter_a < fighter_b:
+        f1, f2 = fighter_a, fighter_b
+    else:
+        f1, f2 = fighter_b, fighter_a
+    sf1, sf2 = fs[f1], fs[f2]
+
+    bp = model_state["blend"]
+    lr_cols, xgb_cols = bp.lr_cols, bp.xgb_cols
+    all_cols = set(lr_cols + xgb_cols)
+
+    row = {}
+
+    # ── Baseline MMA-AI diff features (193). Each feature ending in _diff
+    # is computed from per-fighter absolute stats: f1 - f2. Straight copy of
+    # predict_fight_mmaai's diff logic so features match how LR/XGB were
+    # trained.
+    for feat in all_cols:
+        if feat == "weightclass_encoded":
+            row[feat] = _safe_float(sf1.get("weightindex", 0))
+        elif feat == "scheduled_rounds":
+            row[feat] = 3.0
+        elif feat == "days_since_last_fight_f1":
+            row[feat] = _safe_float(sf1.get("days_since_last_fight", 0))
+        elif feat in ("precomp_elo_diff", "elo_win_prob",
+                      "elo_momentum_diff", "peak_elo_diff",
+                      "avg_opp_elo_diff", "elo_consist_diff"):
+            row[feat] = 0.0  # filled below with proper as-of-date Elo
+        elif feat.startswith("ix_"):
+            row[feat] = 0.0  # filled after base features are in place
+        elif feat.endswith("_diff"):
+            col = feat[:-5]
+            row[feat] = _safe_float(sf1.get(col, 0.0) - sf2.get(col, 0.0))
+        else:
+            row[feat] = 0.0
+
+    # ── Elo features, freshly computed with decay at event_date ──
+    elo_ratings = model_state.get("elo_ratings")
+    elo_last_date = model_state.get("elo_last_date") or {}
+    elo_extra = model_state.get("elo_extra") or {}
+    try:
+        evt_ts = pd.to_datetime(event_date) if event_date else pd.Timestamp.now()
+    except Exception:
+        evt_ts = pd.Timestamp.now()
+    if elo_ratings:
+        elo_f1 = get_fighter_elo(f1, elo_ratings, elo_last_date, evt_ts,
+                                 ELO_DECAY, ELO_DECAY_MAX,
+                                 ELO_DECAY_MIDPOINT, ELO_DECAY_STEEPNESS)
+        elo_f2 = get_fighter_elo(f2, elo_ratings, elo_last_date, evt_ts,
+                                 ELO_DECAY, ELO_DECAY_MAX,
+                                 ELO_DECAY_MIDPOINT, ELO_DECAY_STEEPNESS)
+        peak_map = elo_extra.get("peak_elo", {})
+        row["precomp_elo_diff"] = _safe_float(elo_f1 - elo_f2)
+        row["elo_win_prob"] = 1.0 / (1.0 + 10 ** (-(elo_f1 - elo_f2) / ELO_LOGISTIC_SCALE))
+        row["peak_elo_diff"] = _safe_float(peak_map.get(f1, BASE_ELO) - peak_map.get(f2, BASE_ELO))
+
+    # ── Contextual market + SoS + form from fighter_abs_stats.json ──
+    abs_ = getattr(bp, "abs_stats", {}) or {}
+    a1, a2 = abs_.get(f1, {}), abs_.get(f2, {})
+
+    # Market / stance (defaults when venue context unknown)
+    def _stance_code(s):
+        s = (s or "").lower() if isinstance(s, str) else ""
+        return {"orthodox": 1, "southpaw": 2, "switch": 3}.get(s, 0)
+    s1 = _stance_code(a1.get("stance", ""))
+    s2 = _stance_code(a2.get("stance", ""))
+    if "stance_mismatch" in all_cols:
+        row["stance_mismatch"] = int(s1 != s2 and s1 > 0 and s2 > 0)
+    if "southpaw_advantage_diff" in all_cols:
+        row["southpaw_advantage_diff"] = int(s1 == 2) - int(s2 == 2)
+    for c in ("home_advantage_diff", "travel_distance_diff_km", "tz_diff_diff_hr",
+              "is_main_event", "card_position_norm_career_diff"):
+        if c in all_cols:
+            row[c] = 0.0  # no event/venue context at prediction time
+
+    # SoS / form / trajectory from absolute cached values
+    sos_map = {
+        "sos_last3_diff":      "sos_last3",
+        "sos_last5_diff":      "sos_last5",
+        "sos_trajectory_diff": "sos_trajectory",
+        "form_winrate3_diff":  "form_winrate3",
+        "form_winrate5_diff":  "form_winrate5",
+        "elo_trajectory_diff": "elo_trajectory",
+        "career_fights_diff":  "career_fights",
+    }
+    for diff_col, abs_key in sos_map.items():
+        if diff_col in all_cols:
+            row[diff_col] = _safe_float(a1.get(abs_key, 0) - a2.get(abs_key, 0))
+
+    # Layoff + age at event_date
+    def _days(abs_):
+        lf = abs_.get("last_fight_date")
+        if not lf: return 0.0
+        try:
+            return max(0.0, (evt_ts - pd.to_datetime(lf)).days)
+        except Exception:
+            return 0.0
+    l1, l2 = _days(a1), _days(a2)
+    if "days_since_last_fight_diff" in all_cols:
+        row["days_since_last_fight_diff"] = float(l1 - l2)
+    if "days_since_last_fight_f1" in all_cols:
+        row["days_since_last_fight_f1"] = float(l1)
+
+    def _age(abs_):
+        dob = abs_.get("dob")
+        if not dob: return 0.0
+        try:
+            return max(0.0, (evt_ts - pd.to_datetime(dob)).days / 365.25)
+        except Exception:
+            return 0.0
+    age1, age2 = _age(a1), _age(a2)
+    if age1 > 0 and age2 > 0:
+        if "age_diff" in all_cols:
+            row["age_diff"] = float(age1 - age2)
+        if "age_ratio_diff" in all_cols:
+            row["age_ratio_diff"] = float((age1 / age2) - (age2 / age1))
+        if "age_prime_diff" in all_cols:
+            peak, width = 27.0, 3.0
+            ap = lambda a: math.exp(-((a - peak) ** 2) / (2 * width ** 2))
+            row["age_prime_diff"] = ap(age1) - ap(age2)
+
+    # Psych features we can't compute cheaply live (need per-fight chronology)
+    # Defaulting to 0 — consistent with training when history is thin.
+    for c in ("coming_off_loss_diff", "win_streak_entering_diff", "fights_last_12m_diff"):
+        if c in all_cols and c not in row:
+            row[c] = 0.0
+
+    # ── Interactions (computed after all base features are set) ──
+    g = lambda k: _safe_float(row.get(k, 0.0))
+    ix_formulas = {
+        "ix_age_x_elo":       ("age_diff", "elo_win_prob"),
+        "ix_age_x_streak":    ("age_diff", "win_streak_entering_diff"),
+        "ix_elo_x_streak":    ("precomp_elo_diff", "win_streak_entering_diff"),
+        "ix_age_x_fights12m": ("age_diff", "fights_last_12m_diff"),
+        "ix_reach_x_stance":  ("reach_ratio_diff", "stance_mismatch"),
+        "ix_elo_x_layoff":    ("precomp_elo_diff", "days_since_last_fight_diff"),
+        "ix_age_x_layoff":    ("age_diff", "days_since_last_fight_diff"),
+        "ix_kd_x_ko_smooth":  ("kd_pm_dec_avg_diff", "ko_smooth_dec_avg_diff"),
+        "ix_td_x_ground_acc": ("td_land_pm_dec_avg_diff", "ground_acc_dec_avg_diff"),
+        "ix_sig_x_dist_acc":  ("sig_str_land_pm_dec_avg_diff", "dist_acc_dec_avg_diff"),
+        "ix_home_x_main":     ("home_advantage_diff", "is_main_event"),
+        "ix_age_x_main":      ("age_diff", "is_main_event"),
+        "ix_elo_x_age_ratio": ("elo_win_prob", "age_ratio_diff"),
+        "ix_elo_x_card":      ("elo_win_prob", "card_position_norm_career_diff"),
+        "ix_sos_x_age":       ("sos_last5_diff", "age_diff"),
+        "ix_sos_x_elo":       ("sos_last5_diff", "elo_win_prob"),
+        "ix_form_x_layoff":   ("form_winrate5_diff", "days_since_last_fight_diff"),
+        "ix_traj_x_age":      ("elo_trajectory_diff", "age_diff"),
+    }
+    for ix_col, (k1, k2) in ix_formulas.items():
+        if ix_col in all_cols:
+            row[ix_col] = g(k1) * g(k2)
+
+    # Final scrub: coerce every cell to a finite float
+    for k in list(row.keys()):
+        row[k] = _safe_float(row[k])
+
+    return row, f1, f2
+
+
 def _predict(fighter_a, fighter_b, event_date):
-    """Route predictions to the LR+XGB blend if loaded; otherwise LR+CB ensemble.
+    """LR+XGB blend prediction with proper live-mode feature construction.
+
+    Falls back to LR+CB ensemble if blend artifacts missing or fighter
+    absolute stats not found.
 
     Returns a dict shaped like predict_fight_mmaai():
-      { "prob_a": float, "winner": jfighter, "confidence": float, "model": str }
+      { prob_a, prob_b, winner, confidence, model, f1, f2, name_a, name_b,
+        prob_f1, lr_prob, xgb_prob }
     """
     bp = model_state.get("blend")
     if bp is not None:
-        r = bp.predict_fight(fighter_a, fighter_b, event_date)
-        if r.get("success"):
-            # Alphabetize like the training convention so drivers can diff f1-f2
-            if fighter_a < fighter_b:
-                f1, f2 = fighter_a, fighter_b
-                prob_f1 = r["prob_f1"]
-            else:
-                f1, f2 = fighter_b, fighter_a
-                prob_f1 = r["prob_f2"]
-            return {
-                "prob_a":     r["prob_f1"],
-                "prob_b":     r["prob_f2"],
-                "winner":     fighter_a if r["prob_f1"] >= 0.5 else fighter_b,
-                "confidence": r["confidence"],
-                "model":      f"LR+XGB blend ({r.get('method','?')})",
-                "lr_prob":    r.get("lr_prob"),
-                "xgb_prob":   r.get("xgb_prob"),
-                # Keys needed by _get_top_drivers
-                "f1":     f1,
-                "f2":     f2,
-                "name_a": fighter_a,
-                "name_b": fighter_b,
-                "prob_f1": prob_f1,
-            }
-        # fall through to LR+CB on blend failure
+        built = _build_blend_row(fighter_a, fighter_b, event_date)
+        if built is not None:
+            row, f1, f2 = built
+            try:
+                X_lr  = np.array([[row.get(c, 0.0) for c in bp.lr_cols]],  dtype=float)
+                X_xgb = np.array([[row.get(c, 0.0) for c in bp.xgb_cols]], dtype=float)
+                # Extra safety: replace any residual inf/nan
+                X_lr  = np.nan_to_num(X_lr,  nan=0.0, posinf=1e6, neginf=-1e6)
+                X_xgb = np.nan_to_num(X_xgb, nan=0.0, posinf=1e6, neginf=-1e6)
+                X_lr_scaled = bp.scaler.transform(X_lr)
+                p_lr  = float(bp.lr.predict_proba(X_lr_scaled)[0, 1])
+                p_xgb = float(bp.xgb.predict_proba(X_xgb)[0, 1])
+                p_f1  = 0.5 * p_lr + 0.5 * p_xgb
+                # Map from (f1, f2) alphabetical to (a, b) caller order
+                prob_a = p_f1 if fighter_a == f1 else (1.0 - p_f1)
+                prob_b = 1.0 - prob_a
+                return {
+                    "prob_a":     prob_a,
+                    "prob_b":     prob_b,
+                    "winner":     fighter_a if prob_a >= 0.5 else fighter_b,
+                    "confidence": max(prob_a, prob_b),
+                    "model":      "LR+XGB blend (live)",
+                    "lr_prob":    round(p_lr, 4),
+                    "xgb_prob":   round(p_xgb, 4),
+                    # Keys for _get_top_drivers
+                    "f1":      f1,
+                    "f2":      f2,
+                    "name_a":  fighter_a,
+                    "name_b":  fighter_b,
+                    "prob_f1": p_f1,
+                }
+            except Exception as e:
+                print(f"[_predict] blend inference failed, falling back: {e}")
+        # fall through to LR+CB
 
     r = predict_fight_mmaai(
         fighter_a, fighter_b,
