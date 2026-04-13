@@ -17,6 +17,18 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import math
 
+# Blend predictor (LR + XGB, walk-forward 67.9% acc / 0.6206 LL)
+# lives in the sibling app/ dir; import if available and prefer it.
+_BLEND_PATH = Path(__file__).parent.parent / "app"
+sys.path.insert(0, str(_BLEND_PATH))
+try:
+    from blend_predictor import BlendPredictor
+    _BLEND_AVAILABLE = True
+except Exception as _e:
+    print(f"[src/app] BlendPredictor unavailable, falling back to LR+CB: {_e}")
+    BlendPredictor = None
+    _BLEND_AVAILABLE = False
+
 from predict_mmaai import (
     build_training_data, train_ensemble,
     predict_fight as predict_fight_mmaai,
@@ -90,9 +102,21 @@ model_state = {}
 
 def init_model():
     """Train the MMA-AI pipeline model on all available data. Called once at startup."""
+    # ── Try loading the pre-trained LR+XGB blend first (fast: ~3s vs 60s+) ──
+    if _BLEND_AVAILABLE:
+        try:
+            print("Loading LR+XGB blend predictor (walk-forward 67.9% acc)...")
+            model_state["blend"] = BlendPredictor(verbose=True)
+            print("Blend predictor ready.")
+        except Exception as e:
+            print(f"Blend load failed: {e} — falling back to LR+CB only")
+            model_state["blend"] = None
+    else:
+        model_state["blend"] = None
+
     print("Building MMA-AI features (this takes ~60s)...")
     data = build_training_data()
-    print("Training LR+CB ensemble...")
+    print("Training LR+CB ensemble (fallback / drivers)...")
     models = train_ensemble(data)
 
     model_state["models"] = models
@@ -251,6 +275,42 @@ def _american_to_implied(odds):
         return 100.0 / (odds + 100.0)
     else:
         return abs(odds) / (abs(odds) + 100.0)
+
+
+def _predict(fighter_a, fighter_b, event_date):
+    """Route predictions to the LR+XGB blend if loaded; otherwise LR+CB ensemble.
+
+    Returns a dict shaped like predict_fight_mmaai():
+      { "prob_a": float, "winner": jfighter, "confidence": float, "model": str }
+    """
+    bp = model_state.get("blend")
+    if bp is not None:
+        r = bp.predict_fight(fighter_a, fighter_b, event_date)
+        if r.get("success"):
+            return {
+                "prob_a":     r["prob_f1"],
+                "prob_b":     r["prob_f2"],
+                "winner":     fighter_a if r["prob_f1"] >= 0.5 else fighter_b,
+                "confidence": r["confidence"],
+                "model":      f"LR+XGB blend ({r.get('method','?')})",
+                "lr_prob":    r.get("lr_prob"),
+                "xgb_prob":   r.get("xgb_prob"),
+            }
+        # fall through to LR+CB on blend failure
+
+    r = predict_fight_mmaai(
+        fighter_a, fighter_b,
+        models=model_state["models"],
+        fighter_stats=model_state["fighter_stats"],
+        feature_cols=model_state["feature_cols"],
+        elo_ratings=model_state["elo_ratings"],
+        elo_last_date=model_state["elo_last_date"],
+        elo_extra=model_state["elo_extra"],
+        event_date=event_date,
+        verbose=False,
+    )
+    r["model"] = "LR+CB ensemble (fallback)"
+    return r
 
 
 def _format_fighter_name(jfighter):
@@ -488,19 +548,9 @@ def predict():
         return jsonify({"error": "Model not loaded yet"}), 503
 
     try:
-        result = predict_fight_mmaai(
-            fighter_a, fighter_b,
-            models=models,
-            fighter_stats=model_state["fighter_stats"],
-            feature_cols=model_state["feature_cols"],
-            elo_ratings=model_state["elo_ratings"],
-            elo_last_date=model_state["elo_last_date"],
-            elo_extra=model_state["elo_extra"],
-            event_date=event_date,
-            verbose=False,
-        )
+        result = _predict(fighter_a, fighter_b, event_date)
 
-        # Get top feature drivers
+        # Get top feature drivers (uses LR coefficients from LR+CB ensemble)
         drivers = _get_top_drivers(result, models)
 
         # Get fighter details
@@ -572,17 +622,7 @@ def predict_card():
             continue
 
         try:
-            r = predict_fight_mmaai(
-                fa, fb,
-                models=models,
-                fighter_stats=model_state["fighter_stats"],
-                feature_cols=model_state["feature_cols"],
-                elo_ratings=model_state["elo_ratings"],
-                elo_last_date=model_state["elo_last_date"],
-                elo_extra=model_state["elo_extra"],
-                event_date=event_date,
-                verbose=False,
-            )
+            r = _predict(fa, fb, event_date)
             odds = _get_odds(fa, fb)
             vegas = {}
             if odds:
