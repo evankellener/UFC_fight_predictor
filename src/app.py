@@ -1294,13 +1294,23 @@ def _feat_display_name(feat):
 
 @app.route("/api/model/feature_importance")
 def feature_importance():
-    """Return top features by absolute LR coefficient weight."""
-    models = model_state.get("models")
-    if models is None:
-        return jsonify({"error": "Model not loaded"}), 503
+    """Return top features by absolute LR coefficient weight.
 
-    coef = models["lr"].coef_[0]
-    features = models["feat_cols"]
+    Prefers the BLEND's LR (the model actually serving predictions).
+    Falls back to the LR+CB ensemble's LR if blend not loaded.
+    """
+    bp = model_state.get("blend")
+    if bp is not None:
+        features = bp.lr_cols
+        coef = bp.lr.coef_[0]
+        source = "LR (blend component, elastic net, trained on standardized features)"
+    else:
+        models = model_state.get("models")
+        if models is None:
+            return jsonify({"error": "Model not loaded"}), 503
+        features = models["feat_cols"]
+        coef = models["lr"].coef_[0]
+        source = "LR+CB ensemble (blend artifact unavailable)"
 
     items = []
     for i, feat in enumerate(features):
@@ -1310,21 +1320,33 @@ def feature_importance():
             "display_name": _feat_display_name(feat),
             "coefficient": round(c, 5),
             "abs_weight": round(abs(c), 5),
-            "direction": "positive" if c > 0 else "negative",
+            "direction": "positive" if c > 0 else ("negative" if c < 0 else "zeroed"),
         })
     items.sort(key=lambda x: x["abs_weight"], reverse=True)
-    return jsonify({"features": items[:25], "total_features": len(features)})
+    return jsonify({
+        "features": items[:25],
+        "total_features": len(features),
+        "active_features": int(sum(1 for c in coef if c != 0)),
+        "source": source,
+    })
 
 
 @app.route("/api/model/summary")
 def model_summary():
-    """Return model stats for the insights page."""
-    models = model_state.get("models")
-    if models is None:
-        return jsonify({"error": "Model not loaded"}), 503
+    """Return model stats for the insights page.
 
-    feat_cols = models["feat_cols"]
-    coef = models["lr"].coef_[0]
+    Reports on the BLEND's LR when available (that's what serves predictions).
+    """
+    bp = model_state.get("blend")
+    models = model_state.get("models")
+    if bp is not None:
+        feat_cols = bp.lr_cols
+        coef = bp.lr.coef_[0]
+    elif models is not None:
+        feat_cols = models["feat_cols"]
+        coef = models["lr"].coef_[0]
+    else:
+        return jsonify({"error": "Model not loaded"}), 503
     active = int(sum(1 for c in coef if c != 0))
 
     # Categorize features
