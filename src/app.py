@@ -73,9 +73,14 @@ ZSCORE_STAT_CONFIG = {
     ],
 }
 
-_app_db = Path(__file__).parent.parent / "data/sqlite_db/app.db"
-_full_db = Path(__file__).parent.parent / "data/sqlite_db/sqlite_scrapper.db"
-DB_PATH = _app_db if _app_db.exists() else _full_db
+_repo = Path(__file__).parent.parent
+# Prefer the slim deployment DB (committed to git). Fall back to full local DBs.
+_candidates = [
+    _repo / "data/sqlite_db/slim_scrapper.db",
+    _repo / "data/sqlite_db/app.db",
+    _repo / "data/sqlite_db/sqlite_scrapper.db",
+]
+DB_PATH = next((p for p in _candidates if p.exists()), _candidates[0])
 
 app = Flask(__name__)
 
