@@ -74,3 +74,6 @@ data/sqlite_db/*_backup*.db
 data/sqlite_db/*_backup_*.db
 data/sqlite_db/*_og.db
 data/sqlite_db/*_pre_*.db
+
+# Exception: blend model artifacts need to ship to deployment
+!app/models/blend/*.pkl
