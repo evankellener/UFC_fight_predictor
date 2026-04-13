@@ -465,45 +465,53 @@
 
     <!-- Architecture -->
     <div class="section-title" style="margin-top:1rem;">Architecture</div>
-    <div id="archBox" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;">
-        <div>
-          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem;">LR Component &middot; 50%</div>
-          <div style="font-size:0.95rem;line-height:1.45;">
-            Elastic-net (<code>C=0.05</code>, <code>l1_ratio=0.5</code>).
-            Trained on standardized features.
-            <span id="archLrFeats">&mdash;</span> baseline MMA-AI diff features.
-            <br><span style="color:var(--muted);font-size:0.82rem;">
-              Contributes: calibrated probabilities + interpretable coefficients
-              (visible in Top Features below).
-            </span>
-          </div>
-        </div>
-        <div>
-          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3rem;">XGBoost Component &middot; 50%</div>
-          <div style="font-size:0.95rem;line-height:1.45;">
-            Gradient boosted trees (<code>depth=4</code>, <code>n_estimators=1200</code>,
-            <code>learning_rate=0.015</code>, <code>reg_lambda=4</code>).
-            <span id="archXgbFeats">&mdash;</span> features: the 193 baseline diffs plus 10
-            contextual + 7 strength-of-schedule + 18 explicit pairwise interactions.
-            <br><span style="color:var(--muted);font-size:0.82rem;">
-              Contributes: non-linear lift from features LR shrinks to zero
-              (age&times;Elo, stance&times;reach, etc.).
-            </span>
-          </div>
-        </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem 3rem;margin:0.5rem 0 1.25rem;">
+      <div>
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">
+          Logistic Regression
+          <span style="font-weight:400;color:var(--muted);font-size:0.82rem;">&middot; 50%</span>
+        </h4>
+        <p class="fi-subtitle" style="margin-bottom:0.4rem;line-height:1.55;font-size:0.88rem;">
+          Elastic net (α = 0.05, L1:L2 = 50/50), standardized inputs,
+          <span id="archLrFeats">&mdash;</span>&nbsp;baseline MMA-AI diff features.
+        </p>
+        <p class="fi-subtitle" style="color:var(--muted);font-size:0.82rem;line-height:1.5;">
+          Directly optimizes log loss &rarr; calibrated probabilities.
+          Coefficients are inspectable in <em>Top Features</em> below.
+        </p>
       </div>
-      <div style="border-top:1px solid var(--border);margin-top:1rem;padding-top:0.8rem;font-size:0.82rem;color:var(--muted);line-height:1.45;">
-        <strong>Training window:</strong> <span id="archTrainStart">&mdash;</span> &rarr;
-        <span id="archTrainEnd">&mdash;</span> &middot;
-        <strong>Rows:</strong> <span id="archTrainRows">&mdash;</span> &middot;
-        <strong>Blend weight:</strong> <span id="archBlendW">&mdash;</span>
-        <br><strong>Feature recompute at predict time:</strong> age from DOB,
-        days-since-last-fight from last bout date, Elo with time decay, strength
-        of schedule from cached per-fighter absolute values, then interactions
-        rebuilt from refreshed bases.
+
+      <div>
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">
+          XGBoost
+          <span style="font-weight:400;color:var(--muted);font-size:0.82rem;">&middot; 50%</span>
+        </h4>
+        <p class="fi-subtitle" style="margin-bottom:0.4rem;line-height:1.55;font-size:0.88rem;">
+          Depth-4 trees, 1,200 rounds at lr = 0.015, λ = 4.
+          <span id="archXgbFeats">&mdash;</span>&nbsp;features: the baseline set plus
+          10 contextual, 7 strength-of-schedule, and 18 explicit interactions.
+        </p>
+        <p class="fi-subtitle" style="color:var(--muted);font-size:0.82rem;line-height:1.5;">
+          Captures non-linear lift from features LR shrinks to zero &mdash;
+          age&thinsp;&times;&thinsp;Elo, reach&thinsp;&times;&thinsp;stance,
+          form&thinsp;&times;&thinsp;layoff.
+        </p>
       </div>
     </div>
+
+    <p class="fi-subtitle" style="font-size:0.78rem;color:var(--muted);letter-spacing:0.02em;margin:0 0 0.6rem;font-family:-apple-system,BlinkMacSystemFont,'SF Mono',Menlo,monospace;">
+      <span id="archTrainStart">&mdash;</span> &nbsp;&rarr;&nbsp;
+      <span id="archTrainEnd">&mdash;</span>
+      &nbsp;&middot;&nbsp; <span id="archTrainRows">&mdash;</span> training rows
+      &nbsp;&middot;&nbsp; blend <span id="archBlendW">&mdash;</span>
+    </p>
+    <p class="fi-subtitle" style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:1.5rem;">
+      At prediction time the model refreshes everything calendar-dependent against
+      the event date: age from DOB, layoff from last-bout date, Elo with sigmoid
+      decay, strength of schedule from cached per-fighter ratings, and all 18
+      interactions rebuilt from the refreshed bases.
+    </p>
 
     <!-- Why blend -->
     <div class="section-title" style="margin-top:1rem;">Why a Blend</div>
