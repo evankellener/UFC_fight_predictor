@@ -66,3 +66,11 @@ saved_models/
 data/tmp/*.csv
 # Full DB is too large for git; app.db (88MB slim version) is committed instead
 data/sqlite_db/sqlite_scrapper.db
+
+# Large sqlite DBs — ship data via slim_scrapper.db instead
+data/sqlite_db/sqlite_scrapper.db
+data/sqlite_db/app.db
+data/sqlite_db/*_backup*.db
+data/sqlite_db/*_backup_*.db
+data/sqlite_db/*_og.db
+data/sqlite_db/*_pre_*.db

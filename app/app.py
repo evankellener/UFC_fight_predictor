@@ -19,6 +19,12 @@ warnings.filterwarnings('ignore')
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from model import UFCFightPredictor
+try:
+    from blend_predictor import BlendPredictor
+    BLEND_AVAILABLE = True
+except Exception as _e:
+    print(f"[app] BlendPredictor unavailable: {_e}")
+    BLEND_AVAILABLE = False
 
 app = Flask(__name__)
 
@@ -26,39 +32,42 @@ app = Flask(__name__)
 predictor = None
 
 def initialize_predictor():
-    """Initialize the UFC Fight Predictor model"""
+    """Initialize the UFC Fight Predictor model.
+
+    Prefers the new LR + XGBoost blend (walk-forward validated: 67.9% acc,
+    0.6206 log-loss, +4.04% past-year ROI). Falls back to the legacy
+    UFCFightPredictor if blend artifacts are missing.
+    """
     global predictor
+
+    if BLEND_AVAILABLE:
+        blend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "blend")
+        if os.path.exists(os.path.join(blend_dir, "lr.pkl")):
+            try:
+                print("Initializing LR + XGBoost Blend predictor...")
+                predictor = BlendPredictor()
+                print("Blend predictor ready.")
+                return True
+            except Exception as e:
+                print(f"Blend predictor init failed, falling back to legacy: {e}")
+
     try:
-        print("Initializing UFC Fight Predictor...")
+        print("Initializing legacy UFCFightPredictor...")
         print(f"Current working directory: {os.getcwd()}")
-        print(f"Python path: {sys.path}")
-        
-        # Check if data files exist
+
         data_paths = [
             '../data/final.csv',
             'data/final.csv',
             '../data/tmp/final_min_fight1.csv',
             'data/tmp/final_min_fight1.csv'
         ]
-        
-        found_data = False
-        for path in data_paths:
-            if os.path.exists(path):
-                print(f"Found data file at: {path}")
-                found_data = True
-                break
-        
+        found_data = any(os.path.exists(p) for p in data_paths)
         if not found_data:
             print("No data file found in any expected location!")
-            print("Available files in current directory:")
-            for root, dirs, files in os.walk('.'):
-                for file in files:
-                    if file.endswith('.csv'):
-                        print(f"  {os.path.join(root, file)}")
             return False
-        
+
         predictor = UFCFightPredictor()
-        print("UFC Fight Predictor initialized successfully!")
+        print("Legacy predictor initialized.")
         return True
     except FileNotFoundError as e:
         print(f"Data file not found: {e}")
@@ -155,13 +164,17 @@ def get_fighter_fights(fighter_name):
             if not initialize_predictor():
                 return jsonify({'error': 'Predictor not initialized and reinitialization failed'}), 500
         
-        # Get fighter data from full dataset
+        # Prefer the BlendPredictor's sqlite-backed implementation (always current)
+        if hasattr(predictor, 'get_fighter_fights'):
+            fights = predictor.get_fighter_fights(fighter_name)
+            if not fights:
+                return jsonify({'error': 'Fighter not found'}), 404
+            return jsonify({'fights': fights})
+
+        # Legacy fallback (UFCFightPredictor with full_df)
         fighter_data = predictor.full_df[predictor.full_df['FIGHTER'] == fighter_name]
-        
         if len(fighter_data) == 0:
             return jsonify({'error': 'Fighter not found'}), 404
-        
-        # Sort by date and get fight details
         fights = []
         for _, fight in fighter_data.sort_values('DATE').iterrows():
             fights.append({
@@ -175,7 +188,6 @@ def get_fighter_fights(fighter_name):
                 'precomp_boutcount': int(fight.get('precomp_boutcount', 0)),
                 'postcomp_boutcount': int(fight.get('postcomp_boutcount', 0))
             })
-        
         return jsonify({'fights': fights})
         
     except Exception as e:
