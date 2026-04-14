@@ -1251,13 +1251,13 @@ html.light {
 
 <main>
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('predictions')">Predictions</button>
+    <button class="tab" onclick="switchTab('predictions')">Predictions</button>
     <button class="tab" onclick="switchTab('fighters')">Fighter Profiles</button>
-    <button class="tab" onclick="switchTab('insights')">Model Insights</button>
+    <button class="tab active" onclick="switchTab('insights')">Model Insights</button>
   </div>
 
   <!-- Predictions Tab -->
-  <div class="tab-content active" id="tab-predictions">
+  <div class="tab-content" id="tab-predictions">
     <div class="card-builder">
       <div class="section-title">Build Fight Card</div>
       <div class="event-info">
@@ -1283,7 +1283,7 @@ html.light {
   </div>
 
   <!-- Model Insights Tab -->
-  <div class="tab-content" id="tab-insights">
+  <div class="tab-content active" id="tab-insights">
 <h1 class="mi-title">How the model <em>thinks</em>.</h1>
 <p class="mi-sub">
   A 50/50 blend of logistic regression and gradient-boosted trees trained on thousands of UFC fights.
@@ -1510,11 +1510,24 @@ html.light {
 
   <div class="mi-explorer-card">
     <div class="mi-explorer-picker">
-      <input class="mi-explorer-input" id="explorerA" placeholder="Fighter A (e.g. PaddyPimblett)">
-      <input class="mi-explorer-input" id="explorerB" placeholder="Fighter B (e.g. MateuszGamrot)">
+      <div class="autocomplete-wrapper">
+        <input class="mi-explorer-input" id="explorerA" placeholder="Fighter A (e.g. PaddyPimblett)"
+               data-fighter="a" data-row="ex"
+               oninput="onExplorerInput(this)" onfocus="onExplorerInput(this)" autocomplete="off">
+        <div class="autocomplete-list" id="ac-ex-a"></div>
+      </div>
+      <div class="autocomplete-wrapper">
+        <input class="mi-explorer-input" id="explorerB" placeholder="Fighter B (e.g. MateuszGamrot)"
+               data-fighter="b" data-row="ex"
+               oninput="onExplorerInput(this)" onfocus="onExplorerInput(this)" autocomplete="off">
+        <div class="autocomplete-list" id="ac-ex-b"></div>
+      </div>
       <input class="mi-explorer-input mi-date-input" id="explorerDate" type="date">
       <button class="mi-pill mi-pill-action" onclick="miRunExplainer()">Explain</button>
     </div>
+    <p class="mi-fine-print" style="margin-top:0.5rem;">
+      Note: fighter names must be entered with first and last name capitalized and no spaces between them (e.g. <code>PaddyPimblett</code>). Start typing to see suggestions.
+    </p>
     <div id="waterfall">
       <div class="mi-empty">Enter two fighters and a date, then click Explain.</div>
     </div>
@@ -1676,6 +1689,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     allFighters = await res.json();
   } catch (e) {}
   for (let i = 0; i < 5; i++) addFightRow();
+  if (!window._miLoaded) miLoadAll();
 });
 
 // ── Fight Card Builder ─────────────────────────────────────────────────
@@ -2530,11 +2544,20 @@ function miRenderFolds() {
     const [y, m, day] = s.split('-').map(Number);
     return new Date(y, m - 1, day).getTime() / (1000 * 60 * 60 * 24);
   };
-  const minD = toDays(minDate), maxD = toDays(maxDate);
-  const span = maxD - minD || 1;
-  const pct = (s) => ((toDays(s) - minD) / span) * 100;
+  // Piecewise scale: squish the long pre-test training history into the first
+  // TRAIN_PCT of the axis so the short test windows get the rest.
+  const TRAIN_PCT = 18;
+  const firstTestStart = folds.reduce((e, f) => f.test_start < e ? f.test_start : e, folds[0].test_start);
+  const minD = toDays(minDate), maxD = toDays(maxDate), splitD = toDays(firstTestStart);
+  const trainSpan = Math.max(1, splitD - minD);
+  const testSpan  = Math.max(1, maxD - splitD);
+  const pct = (s) => {
+    const d = toDays(s);
+    if (d <= splitD) return ((d - minD) / trainSpan) * TRAIN_PCT;
+    return TRAIN_PCT + ((d - splitD) / testSpan) * (100 - TRAIN_PCT);
+  };
 
-  // Training background: earliest train_start to latest train_end (visual simplification)
+  // Training background: minDate → latest train_end
   const latestTrainEnd = folds.reduce((latest, f) => f.train_end > latest ? f.train_end : latest, folds[0].train_end);
   const trainBg = document.createElement('div');
   trainBg.className = 'mi-fold-block mi-train';
@@ -2729,6 +2752,34 @@ async function miShowTier(i) {
 // If the backend adds /api/predict/explain with a richer waterfall shape
 // later, swap the endpoint here.
 
+let acExTimeout = null;
+function onExplorerInput(input) {
+  const side = input.dataset.fighter;
+  const listEl = document.getElementById(`ac-ex-${side}`);
+  const q = input.value.trim().toLowerCase();
+  clearTimeout(acExTimeout);
+  if (q.length < 2) { listEl.classList.remove('show'); return; }
+  acExTimeout = setTimeout(async () => {
+    try {
+      const res = await fetch(`${API}/api/fighters?q=${encodeURIComponent(q)}`);
+      const fighters = await res.json();
+      if (!fighters.length) { listEl.classList.remove('show'); return; }
+      listEl.innerHTML = fighters.map(f =>
+        `<div class="autocomplete-item" onclick="selectExplorerFighter('${f.jfighter}','${side}')">
+           ${formatName(f.jfighter)}
+           <span class="date">${f.last_fight || ''}</span>
+         </div>`
+      ).join('');
+      listEl.classList.add('show');
+    } catch (e) {}
+  }, 150);
+}
+function selectExplorerFighter(jfighter, side) {
+  const id = side === 'a' ? 'explorerA' : 'explorerB';
+  document.getElementById(id).value = jfighter;
+  document.getElementById(`ac-ex-${side}`).classList.remove('show');
+}
+
 async function miRunExplainer() {
   const a = document.getElementById('explorerA').value.trim();
   const b = document.getElementById('explorerB').value.trim();
@@ -2829,7 +2880,7 @@ function miRenderFeats() {
     const sign = f.coef > 0 ? '+' : '';
     return `<div class="mi-feat-row">
       <span class="mi-feat-name" title="${f.name}">${f.name}</span>
-      <div class="mi-feat-bar-wrap"><div class="mi-feat-bar ${f.dir}" style="width:${w}%"></div></div>
+      <div class="mi-feat-bar-wrap"><div class="mi-feat-bar mi-${f.dir}" style="width:${w}%"></div></div>
       <span class="mi-feat-val">${sign}${f.coef.toFixed(4)}</span>
     </div>`;
   }).join('');
