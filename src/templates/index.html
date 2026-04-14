@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UFC Fight Predictor</title>
@@ -392,6 +395,848 @@
     .fi-label { flex: 0 0 120px; font-size: 0.7rem; }
     .h2h-stat-name { flex: 0 0 70px; }
   }
+
+/* ── Model Insights redesign (pasted) ───────────── */
+/* ═══════════════════════════════════════════════════════════════════════
+   MODEL INSIGHTS REDESIGN — CSS
+   Paste inside your existing <style> block in index.html.
+   All class names are prefixed `mi-` to avoid collision with existing rules.
+   Reuses your existing CSS variables (--bg, --card, --border, etc.).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Import fonts — add to <head> of index.html or keep here */
+/* New tokens — layered on top of your existing ones */
+:root {
+  --mi-accent: #4ec9b0;
+  --mi-accent-dim: #2d7a6a;
+  --mi-accent-bg: rgba(78, 201, 176, 0.08);
+  --mi-font-display: 'Newsreader', Georgia, serif;
+  --mi-font-body: 'Inter Tight', -apple-system, sans-serif;
+  --mi-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --mi-bar-neutral: #3a3f4d;
+  --mi-win: #5cb85c;
+  --mi-loss: #d9534f;
+}
+html.light {
+  --mi-accent: #1a8a73;
+  --mi-accent-dim: #4ec9b0;
+  --mi-accent-bg: rgba(26, 138, 115, 0.08);
+  --mi-bar-neutral: #d8d8d0;
+  --mi-win: #2d8a2d;
+  --mi-loss: #c9302c;
+}
+
+/* Scope body font changes to the insights tab only, so other tabs aren't affected */
+#tab-insights { font-family: var(--mi-font-body); font-size: 14px; line-height: 1.55; }
+#tab-insights .mi-num { font-family: var(--mi-font-mono); font-variant-numeric: tabular-nums; }
+
+/* ── Top matter ────────────────────────────────────────────── */
+.mi-title {
+  font-family: var(--mi-font-display);
+  font-size: 2.4rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+.mi-title em {
+  font-style: italic;
+  color: var(--mi-accent);
+  font-weight: 500;
+}
+.mi-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+  margin-bottom: 0.5rem;
+}
+.mi-meta {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Section wrapper ──────────────────────────────────────── */
+.mi-section { margin-bottom: 4rem; }
+.mi-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.mi-section-num {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+.mi-section-title {
+  font-family: var(--mi-font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.mi-section-title em { font-style: italic; color: var(--mi-accent); }
+.mi-section-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 680px;
+  margin-bottom: 1.5rem;
+  line-height: 1.55;
+}
+.mi-fine-print {
+  font-family: var(--mi-font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+/* ── 01. Architecture diagram ─────────────────────────────── */
+.mi-arch-diagram {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
+}
+.mi-arch-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.mi-arch-flow:last-of-type { margin-bottom: 0; }
+.mi-arch-node {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.mi-arch-node:hover, .mi-arch-node.mi-active {
+  border-color: var(--mi-accent);
+  background: var(--mi-accent-bg);
+}
+.mi-arch-node-name {
+  font-family: var(--mi-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--text);
+}
+.mi-arch-node-name em { font-style: italic; font-weight: 500; }
+.mi-arch-node-meta {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mi-arch-arrow {
+  color: var(--muted);
+  font-family: var(--mi-font-mono);
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0 0.5rem;
+  opacity: 0.5;
+}
+.mi-arch-blend {
+  background: var(--mi-accent-bg);
+  border-color: var(--mi-accent);
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+.mi-arch-blend .mi-arch-node-name { color: var(--mi-accent); }
+.mi-arch-output {
+  text-align: center;
+  font-family: var(--mi-font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mi-arch-detail {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.mi-arch-detail h4 {
+  font-family: var(--mi-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--mi-accent);
+}
+.mi-arch-detail-desc { color: var(--muted); }
+.mi-arch-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem 1.5rem;
+  margin-top: 0.75rem;
+  font-family: var(--mi-font-mono);
+  font-size: 0.78rem;
+}
+.mi-spec-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+}
+.mi-spec-val { color: var(--text); }
+
+/* ── 02. Blend slider ─────────────────────────────────────── */
+.mi-slider-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mi-slider-readout {
+  font-family: var(--mi-font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.mi-lr-w { color: var(--muted); }
+.mi-xgb-w { color: var(--mi-accent); }
+.mi-slider-n {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mi-slider-track-wrap {
+  position: relative;
+  margin: 2rem 0 1.5rem;
+}
+.mi-slider-track {
+  width: 100%;
+  height: 6px;
+  background: var(--mi-bar-neutral);
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.5;
+}
+.mi-slider-track-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--mi-accent);
+  border-radius: 3px;
+  opacity: 1.3; /* compensate for parent opacity */
+}
+.mi-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--mi-accent);
+  border: 2px solid var(--bg);
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: 0 0 0 1px var(--mi-accent);
+}
+.mi-slider-thumb:active { cursor: grabbing; }
+.mi-slider-marker {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 14px;
+  background: var(--muted);
+  pointer-events: none;
+  opacity: 0.4;
+}
+.mi-slider-marker.mi-optimal {
+  background: var(--mi-accent);
+  height: 18px;
+  top: -6px;
+  opacity: 1;
+}
+.mi-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+}
+.mi-optimal-label { color: var(--mi-accent); }
+
+.mi-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+.mi-metric-cell {
+  background: var(--card);
+  padding: 1rem 1.25rem;
+}
+.mi-metric-label {
+  font-family: var(--mi-font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+}
+.mi-metric-value {
+  font-family: var(--mi-font-mono);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.3s;
+}
+.mi-metric-value.mi-is-best { color: var(--mi-accent); }
+.mi-metric-delta {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  min-height: 1em;
+}
+.mi-metric-delta.mi-positive { color: var(--mi-win); }
+.mi-metric-delta.mi-negative { color: var(--mi-loss); }
+
+.mi-takeaway {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg);
+  border-left: 2px solid var(--mi-accent);
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.mi-takeaway strong { color: var(--text); font-weight: 600; }
+
+/* ── 03. Walk-forward folds ───────────────────────────────── */
+.mi-folds-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-fold-legend {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+.mi-fold-legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+.mi-fold-legend-swatch.mi-train { background: var(--mi-bar-neutral); opacity: 0.4; }
+.mi-fold-legend-swatch.mi-test { background: var(--mi-accent); opacity: 0.7; }
+
+.mi-folds-timeline {
+  position: relative;
+  margin: 1.5rem 0;
+}
+.mi-folds-axis {
+  position: relative;
+  height: 60px;
+  border-bottom: 1px solid var(--border);
+}
+.mi-fold-block {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mi-font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  overflow: hidden;
+}
+.mi-fold-block.mi-train {
+  background: var(--mi-bar-neutral);
+  opacity: 0.4;
+  z-index: 0;
+}
+.mi-fold-block.mi-test {
+  background: var(--mi-accent);
+  opacity: 0.7;
+  color: var(--bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  z-index: 1;
+}
+.mi-fold-block.mi-test:hover, .mi-fold-block.mi-test.mi-active { opacity: 1; }
+.mi-fold-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+.mi-fold-detail {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.mi-fold-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mi-fold-detail-title {
+  font-family: var(--mi-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.mi-fold-detail-meta {
+  font-family: var(--mi-font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.mi-fold-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.mi-fold-stat-lbl {
+  font-family: var(--mi-font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mi-fold-stat-val {
+  font-family: var(--mi-font-mono);
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-top: 0.2rem;
+}
+
+/* ── 04. Calibration ──────────────────────────────────────── */
+.mi-calib-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-calib-chart-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 1rem auto;
+}
+.mi-calib-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.mi-calib-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.mi-calib-legend-line {
+  display: inline-block;
+  width: 24px;
+  height: 0;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+.mi-calib-legend-line.mi-dashed {
+  border-top: 1px dashed var(--muted);
+}
+.mi-calib-legend-line.mi-solid {
+  border-top: 2px solid var(--mi-accent);
+}
+
+/* ── 05. Confidence tiers ─────────────────────────────────── */
+.mi-tiers-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-tier-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 80px 80px;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mi-tier-row:hover { background: var(--bg); }
+.mi-tier-row.mi-active { background: var(--mi-accent-bg); }
+.mi-tier-row:last-child { border-bottom: none; }
+.mi-tier-label { font-family: var(--mi-font-mono); font-size: 0.8rem; color: var(--text); }
+.mi-tier-bar-wrap {
+  background: var(--mi-bar-neutral);
+  border-radius: 2px;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+  opacity: 0.5;
+}
+.mi-tier-bar-fill {
+  height: 100%;
+  background: var(--mi-accent);
+  transition: width 0.4s;
+}
+.mi-tier-acc { font-family: var(--mi-font-mono); font-size: 0.85rem; text-align: right; color: var(--text); }
+.mi-tier-n { font-family: var(--mi-font-mono); font-size: 0.75rem; color: var(--muted); text-align: right; }
+
+.mi-tier-bouts {
+  margin-top: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  max-height: 360px;
+  overflow-y: auto;
+  display: none;
+}
+.mi-tier-bouts.mi-show { display: block; }
+.mi-tier-bouts-header {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.mi-bout-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 60px 24px;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+  align-items: center;
+}
+.mi-bout-row:last-child { border-bottom: none; }
+.mi-bout-date { font-family: var(--mi-font-mono); font-size: 0.72rem; color: var(--muted); }
+.mi-bout-prob { font-family: var(--mi-font-mono); font-size: 0.78rem; text-align: right; color: var(--text); }
+.mi-bout-result {
+  font-family: var(--mi-font-mono);
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 0.1rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.mi-bout-result.mi-correct { background: rgba(92,184,92,0.15); color: var(--mi-win); }
+.mi-bout-result.mi-wrong { background: rgba(217,83,79,0.15); color: var(--mi-loss); }
+
+/* ── 06. Feature explainer ────────────────────────────────── */
+.mi-explorer-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-explorer-picker {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.mi-explorer-input {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  font-family: var(--mi-font-body);
+  font-size: 0.88rem;
+  outline: none;
+}
+.mi-explorer-input:focus { border-color: var(--mi-accent); }
+.mi-date-input { max-width: 160px; min-width: 140px; }
+
+.mi-waterfall-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 70px;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.mi-waterfall-feat {
+  color: var(--muted);
+  font-family: var(--mi-font-mono);
+  font-size: 0.72rem;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mi-waterfall-bar-wrap {
+  position: relative;
+  height: 18px;
+  background: var(--bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mi-waterfall-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+.mi-waterfall-bar {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 1px;
+  transition: width 0.4s, left 0.4s;
+}
+.mi-waterfall-bar.mi-toward-a { background: var(--mi-loss); }
+.mi-waterfall-bar.mi-toward-b { background: #4a90c2; }
+.mi-waterfall-val {
+  font-family: var(--mi-font-mono);
+  font-size: 0.75rem;
+  text-align: right;
+  color: var(--muted);
+}
+.mi-waterfall-final {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--bg);
+  border-radius: 4px;
+  text-align: center;
+  font-family: var(--mi-font-mono);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.mi-waterfall-final strong { color: var(--mi-accent); }
+
+/* ── 07. Top features ─────────────────────────────────────── */
+.mi-features-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-features-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.mi-pill {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.35rem 0.75rem;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-family: var(--mi-font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.mi-pill:hover { color: var(--text); }
+.mi-pill.mi-active {
+  background: var(--mi-accent-bg);
+  color: var(--mi-accent);
+  border-color: var(--mi-accent);
+}
+.mi-pill-action {
+  background: var(--mi-accent);
+  color: var(--bg);
+  border-color: var(--mi-accent);
+  font-weight: 600;
+}
+.mi-pill-action:hover { color: var(--bg); filter: brightness(1.15); }
+
+.mi-feat-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 70px;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.82rem;
+}
+.mi-feat-name {
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mi-feat-bar-wrap {
+  height: 14px;
+  background: var(--bg);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.mi-feat-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s;
+}
+.mi-feat-bar.mi-positive { background: var(--mi-win); }
+.mi-feat-bar.mi-negative { background: var(--mi-loss); }
+.mi-feat-val {
+  font-family: var(--mi-font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ── 08. Elo rankings ─────────────────────────────────────── */
+.mi-elo-list {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+}
+.mi-elo-row {
+  display: grid;
+  grid-template-columns: 30px 1fr 80px 80px;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.mi-elo-row:last-child { border-bottom: none; }
+.mi-elo-rank {
+  font-family: var(--mi-font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: right;
+}
+.mi-elo-name { font-size: 0.92rem; color: var(--text); }
+.mi-elo-current {
+  font-family: var(--mi-font-mono);
+  font-size: 0.95rem;
+  color: var(--mi-accent);
+  text-align: right;
+}
+.mi-elo-peak {
+  font-family: var(--mi-font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ── 09. Categories ───────────────────────────────────────── */
+.mi-cat-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 60px;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.4rem 0;
+  font-size: 0.85rem;
+}
+.mi-cat-name { color: var(--text); }
+.mi-cat-bar-wrap {
+  height: 10px;
+  background: var(--bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mi-cat-bar {
+  height: 100%;
+  background: var(--muted);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+.mi-cat-count {
+  font-family: var(--mi-font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ── Empty state ──────────────────────────────────────────── */
+.mi-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .mi-title { font-size: 1.8rem; }
+  .mi-arch-flow { grid-template-columns: 1fr; gap: 0.5rem; }
+  .mi-arch-arrow { transform: rotate(90deg); padding: 0.5rem 0; }
+  .mi-metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .mi-fold-detail-stats { grid-template-columns: repeat(2, 1fr); }
+  .mi-feat-row, .mi-waterfall-row { grid-template-columns: 110px 1fr 60px; }
+  .mi-feat-name, .mi-waterfall-feat { font-size: 0.68rem; }
+  .mi-tier-row { grid-template-columns: 70px 1fr 60px 60px; }
+  .mi-elo-row { grid-template-columns: 24px 1fr 70px 70px; }
+}
+
 </style>
 </head>
 <body>
@@ -439,189 +1284,296 @@
 
   <!-- Model Insights Tab -->
   <div class="tab-content" id="tab-insights">
+<h1 class="mi-title">How the model <em>thinks</em>.</h1>
+<p class="mi-sub">
+  A 50/50 blend of logistic regression and gradient-boosted trees trained on thousands of UFC fights.
+  Below: the architecture, the validation, and tools to interrogate any of it yourself.
+</p>
+<div class="mi-meta" id="miMetaCaption">
+  Loading…
+</div>
 
-    <!-- Overview -->
-    <div class="section-title">How It Works</div>
-    <p class="fi-subtitle" style="margin-bottom:1.2rem;line-height:1.6;">
-      The predictor is a <strong>50/50 blend of Logistic Regression and XGBoost</strong>.
-      Both models see the same fight history and fighter stats, but use different
-      feature sets and different learning mechanics, so they make uncorrelated errors
-      &mdash; which is exactly what makes the blend more accurate than either alone.
-      The two probabilities get averaged at prediction time; a response marked
-      <code>live</code> means it was built from each fighter's current absolute stats
-      (no snapshot reuse), with Elo freshly computed using decay as of the event date.
-    </p>
-    <p class="fi-subtitle" style="margin-bottom:1.2rem;line-height:1.6;">
-      Training data feeds in from three sources: (1) a custom
-      <strong>Elo rating system</strong> (K=48, KO &times; 1.80, submission &times; 1.20,
-      sigmoid inactivity decay, opponent-quality scaling, upset momentum), (2)
-      <strong>rolling smoothed fight statistics</strong> (Poisson-Gamma and Beta-Binomial
-      priors for 193 striking/grappling/control metrics with per-weight-class smoothing),
-      and (3) <strong>contextual + interaction features</strong> (strength of schedule,
-      layoff, stance matchup, age &times; Elo, etc.).
-      Zero vegas-odds information is used as an input &mdash; odds are only consulted
-      post-hoc for ROI evaluation.
-    </p>
+<!-- ─── 01. Architecture ─────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">01</span>
+    <h2 class="mi-section-title">Architecture</h2>
+  </div>
+  <p class="mi-section-desc">
+    Two independently trained models, averaged. Click either to inspect.
+  </p>
 
-    <!-- Architecture -->
-    <div class="section-title" style="margin-top:1rem;">Architecture</div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem 3rem;margin:0.5rem 0 1.25rem;">
-      <div>
-        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">
-          Logistic Regression
-          <span style="font-weight:400;color:var(--muted);font-size:0.82rem;">&middot; 50%</span>
-        </h4>
-        <p class="fi-subtitle" style="margin-bottom:0.4rem;line-height:1.55;font-size:0.88rem;">
-          Elastic net (α = 0.05, L1:L2 = 50/50), standardized inputs,
-          <span id="archLrFeats">&mdash;</span>&nbsp;baseline MMA-AI diff features.
-        </p>
-        <p class="fi-subtitle" style="color:var(--muted);font-size:0.82rem;line-height:1.5;">
-          Directly optimizes log loss &rarr; calibrated probabilities.
-          Coefficients are inspectable in <em>Top Features</em> below.
-        </p>
+  <div class="mi-arch-diagram">
+    <div class="mi-arch-flow">
+      <div class="mi-arch-node" data-arch="lr" onclick="miShowArch('lr')">
+        <div class="mi-arch-node-name">Logistic <em>Regression</em></div>
+        <div class="mi-arch-node-meta">
+          <span id="archLrFeats">—</span> features · elastic net
+        </div>
       </div>
+      <div class="mi-arch-arrow">→</div>
+      <div class="mi-arch-node mi-arch-blend" data-arch="blend" onclick="miShowArch('blend')">
+        <div class="mi-arch-node-name">Blend</div>
+        <div class="mi-arch-node-meta">avg(p_lr, p_xgb)</div>
+      </div>
+    </div>
+    <div class="mi-arch-flow">
+      <div class="mi-arch-node" data-arch="xgb" onclick="miShowArch('xgb')">
+        <div class="mi-arch-node-name">XGBoost</div>
+        <div class="mi-arch-node-meta">
+          <span id="archXgbFeats">—</span> features · 1,200 trees
+        </div>
+      </div>
+      <div class="mi-arch-arrow">→</div>
+      <div class="mi-arch-output">P(A wins)</div>
+    </div>
 
-      <div>
-        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;">
-          XGBoost
-          <span style="font-weight:400;color:var(--muted);font-size:0.82rem;">&middot; 50%</span>
-        </h4>
-        <p class="fi-subtitle" style="margin-bottom:0.4rem;line-height:1.55;font-size:0.88rem;">
-          Depth-4 trees, 1,200 rounds at lr = 0.015, λ = 4.
-          <span id="archXgbFeats">&mdash;</span>&nbsp;features: the baseline set plus
-          10 contextual, 7 strength-of-schedule, and 18 explicit interactions.
-        </p>
-        <p class="fi-subtitle" style="color:var(--muted);font-size:0.82rem;line-height:1.5;">
-          Captures non-linear lift from features LR shrinks to zero &mdash;
-          age&thinsp;&times;&thinsp;Elo, reach&thinsp;&times;&thinsp;stance,
-          form&thinsp;&times;&thinsp;layoff.
-        </p>
+    <div class="mi-arch-detail" id="archDetail">
+      <h4 id="archDetailTitle">Click a model to inspect</h4>
+      <p id="archDetailDesc" class="mi-arch-detail-desc">—</p>
+      <div class="mi-arch-specs" id="archDetailSpecs"></div>
+    </div>
+  </div>
+
+  <p class="mi-fine-print">
+    Trained <span id="archTrainStart">—</span> → <span id="archTrainEnd">—</span> ·
+    <span id="archTrainRows">—</span> rows · blend <span id="archBlendW">—</span>
+  </p>
+</section>
+
+<!-- ─── 02. Blend weight slider ──────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">02</span>
+    <h2 class="mi-section-title">Why <em>50/50</em>?</h2>
+  </div>
+  <p class="mi-section-desc">
+    Drag the slider to change the blend weight. Watch the metrics update.
+    Both models alone cap out around 65% accuracy; the blend is measurably better.
+  </p>
+
+  <div class="mi-slider-card">
+    <div class="mi-slider-header">
+      <div class="mi-slider-readout">
+        <span class="mi-lr-w">LR <span class="mi-num" id="lrPct">50%</span></span>
+        &nbsp;·&nbsp;
+        <span class="mi-xgb-w">XGB <span class="mi-num" id="xgbPct">50%</span></span>
+      </div>
+      <div class="mi-slider-n" id="sliderN">n=— test bouts</div>
+    </div>
+
+    <div class="mi-slider-track-wrap">
+      <div class="mi-slider-track" id="sliderTrack">
+        <div class="mi-slider-marker" style="left:0%"></div>
+        <div class="mi-slider-marker mi-optimal" id="sliderOptimalMarker" style="left:50%"></div>
+        <div class="mi-slider-marker" style="left:100%"></div>
+        <div class="mi-slider-track-fill" id="sliderFill" style="width:50%"></div>
+        <div class="mi-slider-thumb" id="sliderThumb" style="left:50%"></div>
+      </div>
+      <div class="mi-slider-labels">
+        <span>LR only</span>
+        <span class="mi-optimal-label">optimal</span>
+        <span>XGB only</span>
       </div>
     </div>
 
-    <p class="fi-subtitle" style="font-size:0.78rem;color:var(--muted);letter-spacing:0.02em;margin:0 0 0.6rem;font-family:-apple-system,BlinkMacSystemFont,'SF Mono',Menlo,monospace;">
-      <span id="archTrainStart">&mdash;</span> &nbsp;&rarr;&nbsp;
-      <span id="archTrainEnd">&mdash;</span>
-      &nbsp;&middot;&nbsp; <span id="archTrainRows">&mdash;</span> training rows
-      &nbsp;&middot;&nbsp; blend <span id="archBlendW">&mdash;</span>
-    </p>
-    <p class="fi-subtitle" style="font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:1.5rem;">
-      At prediction time the model refreshes everything calendar-dependent against
-      the event date: age from DOB, layoff from last-bout date, Elo with sigmoid
-      decay, strength of schedule from cached per-fighter ratings, and all 18
-      interactions rebuilt from the refreshed bases.
-    </p>
-
-    <!-- Why blend -->
-    <div class="section-title" style="margin-top:1rem;">Why a Blend</div>
-    <p class="fi-subtitle" style="margin-bottom:0.8rem;line-height:1.6;">
-      LR alone and XGBoost alone each cap out around 65&ndash;66% walk-forward accuracy
-      on the past year &mdash; but they make different kinds of mistakes.
-    </p>
-    <div style="margin:0 0 0.5rem 0.5rem;">
-      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">1. LR gives calibrated probabilities.</strong>
-        Elastic-net directly optimizes log loss, so when it says 70% the long-run win
-        rate of that bucket is close to 70%. Tree models need post-hoc calibration
-        with limited data (~5k fights) and usually wind up overconfident.
-      </p>
-      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">2. XGBoost finds non-linearities LR can't.</strong>
-        Things like "young fighter on a streak vs declining former champ" are
-        interaction effects &mdash; LR's L1 penalty zeros out many stat features in
-        favor of a few global ones; XGBoost uses the same features plus explicit
-        pairwise products (<code>age&times;Elo</code>, <code>age&times;fights-last-12m</code>,
-        <code>reach&times;stance</code>) to pick up patterns LR misses. Our walk-forward
-        diagnostics show XGBoost's top-14 features include 4 of these interaction
-        terms; they would have cost far more trees to discover implicitly.
-      </p>
-      <p class="fi-subtitle" style="margin-bottom:0.6rem;line-height:1.6;">
-        <strong style="color:var(--accent);">3. Their errors are uncorrelated.</strong>
-        LR is biased toward the average path (regularization pulls extreme predictions
-        toward 50%); XGBoost tends to commit harder on bouts with distinctive
-        interaction signatures. Averaging them cancels both biases &mdash; a blend
-        at 50/50 beats either alone on log-loss, Brier, and accuracy in 8/8
-        walk-forward folds over the past year.
-      </p>
-    </div>
-
-    <!-- Validation methodology -->
-    <div class="section-title" style="margin-top:1rem;">How We Validated This</div>
-    <p class="fi-subtitle" style="margin-bottom:0.8rem;line-height:1.6;">
-      Every metric shown below comes from <strong>walk-forward cross-validation</strong>,
-      not in-sample scoring. For each fold:
-    </p>
-    <ol class="fi-subtitle" style="margin:0 0 1rem 1.5rem;line-height:1.6;">
-      <li>Slice off the next ~1.5 months of fights as the test set.</li>
-      <li>Refit both LR and XGBoost from scratch using only data strictly
-        <em>before</em> that slice (sliding 8-year window).</li>
-      <li>Predict the test slice, record metrics.</li>
-      <li>Roll forward.</li>
-    </ol>
-    <p class="fi-subtitle" style="margin-bottom:1.5rem;line-height:1.6;">
-      Running this over the 8 folds of 2025-04 through 2026-04 gives the
-      numbers below. No fight the model was trained on ever enters a test set.
-    </p>
-
-    <!-- Key Numbers -->
-    <div class="section-title" style="margin-top:1rem;">Performance</div>
-    <div id="modelStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.8rem;margin:1rem 0;">
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAcc">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Accuracy</div>
+    <div class="mi-metric-grid">
+      <div class="mi-metric-cell">
+        <div class="mi-metric-label">Accuracy</div>
+        <div class="mi-metric-value mi-num" id="mAcc">—</div>
+        <div class="mi-metric-delta mi-num" id="dAcc">—</div>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statLL">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Log Loss</div>
+      <div class="mi-metric-cell">
+        <div class="mi-metric-label">Log Loss</div>
+        <div class="mi-metric-value mi-num" id="mLL">—</div>
+        <div class="mi-metric-delta mi-num" id="dLL">—</div>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statBrier">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Brier</div>
+      <div class="mi-metric-cell">
+        <div class="mi-metric-label">Brier</div>
+        <div class="mi-metric-value mi-num" id="mBrier">—</div>
+        <div class="mi-metric-delta mi-num" id="dBrier">—</div>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statAUC">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">AUC</div>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statFeats">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Active / Total</div>
-      </div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
-        <div style="font-size:1.6rem;font-weight:700;color:var(--accent);" id="statROI">--</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.3rem;">Past-Yr ROI</div>
+      <div class="mi-metric-cell">
+        <div class="mi-metric-label">AUC</div>
+        <div class="mi-metric-value mi-num" id="mAUC">—</div>
+        <div class="mi-metric-delta mi-num" id="dAUC">—</div>
       </div>
     </div>
-    <p class="fi-subtitle" style="font-size:0.8rem;margin-bottom:1.5rem;" id="statsCaption">
-      Walk-forward backtested on 517 fights across 8 folds (2025-04 → 2026-04, ~1.5-month retraining cadence, zero leakage).
-    </p>
 
-    <!-- Confidence Breakdown -->
-    <div class="section-title">When to Trust It</div>
-    <div id="confBreakdown" style="margin:1rem 0 1.5rem 0;"></div>
+    <div class="mi-takeaway" id="sliderTakeaway">
+      <strong>50/50 is the sweet spot.</strong>
+      LR finds linear effects (Elo, age, reach); XGBoost captures interactions
+      (age × Elo, form × layoff). Their errors are uncorrelated, so averaging cancels both biases.
+    </div>
+  </div>
+</section>
 
-    <!-- Elo Rankings -->
-    <div class="section-title">Elo Rankings (Top 10)</div>
-    <p class="fi-subtitle" style="margin-bottom:0.8rem;">
-      Custom Elo system with KO/submission multipliers, opponent quality scaling,
-      sliding K-factor for new fighters, and sigmoid inactivity decay.
-    </p>
-    <div id="eloRankings" style="margin:0.5rem 0 1.5rem 0;"></div>
+<!-- ─── 03. Walk-forward folds ───────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">03</span>
+    <h2 class="mi-section-title">Walk-forward <em>validation</em></h2>
+  </div>
+  <p class="mi-section-desc">
+    No fight the model was trained on appears in any test set.
+    Every ~1.5 months, the model is refit from scratch on data strictly before that window,
+    then evaluated on the next slice. Click any test fold to inspect.
+  </p>
 
-    <!-- Feature Importance -->
-    <div class="section-title">Top Features</div>
-    <p class="fi-subtitle" style="margin-bottom:0.5rem;">
-      The 20 most influential features. "Diff" means Fighter A's stat minus Fighter B's.
-      Green (+) means a higher difference favors Fighter A; red (&minus;) favors Fighter B.
-    </p>
-    <div class="fi-chart" id="fiChart">
-      <div style="color:var(--muted);padding:2rem 0;text-align:center;">Loading...</div>
+  <div class="mi-folds-container">
+    <div class="mi-fold-legend">
+      <span><span class="mi-fold-legend-swatch mi-train"></span>Training window (8 yrs)</span>
+      <span><span class="mi-fold-legend-swatch mi-test"></span>Test slice (~1.5 mo)</span>
+    </div>
+    <div class="mi-folds-timeline">
+      <div class="mi-folds-axis" id="foldsAxis"></div>
+      <div class="mi-fold-axis-labels" id="foldAxisLabels">
+        <span>—</span><span>—</span><span>—</span>
+      </div>
     </div>
 
-    <!-- Feature Categories -->
-    <div class="section-title" style="margin-top:1.5rem;">Feature Categories</div>
-    <div id="featCategories" style="margin:0.5rem 0;"></div>
+    <div class="mi-fold-detail" id="foldDetail">
+      <div class="mi-fold-detail-header">
+        <div class="mi-fold-detail-title" id="foldTitle">Click a test fold above</div>
+        <div class="mi-fold-detail-meta" id="foldMeta">—</div>
+      </div>
+      <div class="mi-fold-detail-stats" id="foldStats"></div>
+    </div>
+  </div>
+</section>
 
+<!-- ─── 04. Calibration ──────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">04</span>
+    <h2 class="mi-section-title">Calibration</h2>
+  </div>
+  <p class="mi-section-desc">
+    A well-calibrated model that says "70%" should be right 70% of the time.
+    Points on the diagonal mean perfect calibration. Above means under-confident; below means over-confident.
+  </p>
+
+  <div class="mi-calib-card">
+    <div class="mi-calib-chart-wrap">
+      <svg class="mi-calib-chart" id="calibChart" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="mi-calib-legend">
+      <span><span class="mi-calib-legend-line mi-dashed"></span>Perfect calibration</span>
+      <span><span class="mi-calib-legend-line mi-solid"></span>Model</span>
+    </div>
+    <div class="mi-takeaway" id="calibTakeaway">Loading calibration data…</div>
+  </div>
+</section>
+
+<!-- ─── 05. Confidence tier drilldown ────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">05</span>
+    <h2 class="mi-section-title">When to <em>trust it</em></h2>
+  </div>
+  <p class="mi-section-desc">
+    Not all predictions are equal. Click a tier to see the actual bouts in it.
+  </p>
+
+  <div class="mi-tiers-container">
+    <!-- Preserved legacy ID for existing code compatibility -->
+    <div id="confBreakdown">
+      <div id="tiersList"></div>
+    </div>
+    <div class="mi-tier-bouts" id="tierBouts">
+      <div class="mi-tier-bouts-header" id="tierBoutsHeader">Sample bouts</div>
+      <div id="tierBoutsList"></div>
+    </div>
+  </div>
+
+  <!-- Hidden legacy stat tiles (values pushed into them so old code keeps working) -->
+  <div style="display:none;">
+    <span id="statAcc">—</span>
+    <span id="statLL">—</span>
+    <span id="statBrier">—</span>
+    <span id="statAUC">—</span>
+    <span id="statFeats">—</span>
+    <span id="statROI">—</span>
+    <span id="statsCaption">—</span>
+  </div>
+</section>
+
+<!-- ─── 06. Feature explainer ────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">06</span>
+    <h2 class="mi-section-title">Why did the model <em>pick that</em>?</h2>
+  </div>
+  <p class="mi-section-desc">
+    Pick any matchup. See which features pushed the prediction toward each fighter, ordered by impact.
+  </p>
+
+  <div class="mi-explorer-card">
+    <div class="mi-explorer-picker">
+      <input class="mi-explorer-input" id="explorerA" placeholder="Fighter A (e.g. PaddyPimblett)">
+      <input class="mi-explorer-input" id="explorerB" placeholder="Fighter B (e.g. MateuszGamrot)">
+      <input class="mi-explorer-input mi-date-input" id="explorerDate" type="date">
+      <button class="mi-pill mi-pill-action" onclick="miRunExplainer()">Explain</button>
+    </div>
+    <div id="waterfall">
+      <div class="mi-empty">Enter two fighters and a date, then click Explain.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 07. Top features ─────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">07</span>
+    <h2 class="mi-section-title">Top features</h2>
+  </div>
+  <p class="mi-section-desc">
+    The most influential features in the LR component. "Diff" means Fighter A minus Fighter B.
+    Green: a higher diff favors A. Red: favors B.
+  </p>
+
+  <div class="mi-features-container">
+    <div class="mi-features-controls">
+      <span class="mi-pill mi-active" data-filter="all" onclick="miFilterFeats('all')">All</span>
+      <span class="mi-pill" data-filter="positive" onclick="miFilterFeats('positive')">Favors A</span>
+      <span class="mi-pill" data-filter="negative" onclick="miFilterFeats('negative')">Favors B</span>
+      <span class="mi-pill mi-active" data-sort="weight" onclick="miSortFeats('weight')">Sort: Weight ↓</span>
+      <span class="mi-pill" data-sort="alpha" onclick="miSortFeats('alpha')">Sort: A–Z</span>
+    </div>
+    <!-- Preserved legacy ID -->
+    <div id="topFeatures"></div>
+  </div>
+</section>
+
+<!-- ─── 08. Elo Rankings ─────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">08</span>
+    <h2 class="mi-section-title">Elo rankings</h2>
+  </div>
+  <p class="mi-section-desc">
+    Custom Elo with KO (×1.80) and submission (×1.20) multipliers, opponent-quality scaling, and sigmoid inactivity decay.
+  </p>
+
+  <!-- Preserved legacy ID -->
+  <div id="eloRankings" class="mi-elo-list"></div>
+</section>
+
+<!-- ─── 09. Categories ───────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">09</span>
+    <h2 class="mi-section-title">Feature breakdown</h2>
+  </div>
+  <p class="mi-section-desc">
+    How the active features split by category.
+  </p>
+
+  <div class="mi-features-container">
+    <!-- Preserved legacy ID -->
+    <div id="featCategories"></div>
+  </div>
+</section>
   </div>
 </main>
 
@@ -672,7 +1624,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => {
     if (t.textContent === tabMap[name]) t.classList.add('active');
   });
-  if (name === 'insights' && !window._fiLoaded) { loadFeatureImportance(); loadModelSummary(); }
+  if (name === 'insights' && !window._miLoaded) { miLoadAll(); }
 }
 
 // ── Fighter Search ─────────────────────────────────────────────────────
@@ -1248,6 +2200,663 @@ async function loadH2HZScores(fighterA, fighterB, idx) {
     if (detail) detail.insertAdjacentHTML('beforeend', html);
   } catch (e) { console.error('H2H z-scores failed:', e); }
 }
+
+/* ── Model Insights redesign (pasted) ───────────── */
+/* ═══════════════════════════════════════════════════════════════════════
+   MODEL INSIGHTS REDESIGN — JAVASCRIPT
+   Paste inside your existing <script> block in index.html.
+   All functions are prefixed `mi*` to avoid collision.
+
+   ─── INTEGRATION WITH EXISTING CODE ───────────────────────────────────
+   Your current switchTab() function calls loadModelSummary() and
+   loadFeatureImportance() when the insights tab opens. Replace those two
+   calls with a single call to miLoadAll():
+
+       if (name === 'insights' && !window._miLoaded) { miLoadAll(); }
+
+   ─── ENDPOINTS USED ───────────────────────────────────────────────────
+   EXISTING (already in your backend):
+     GET  /api/model/summary              — section 01, 05, 07, 08, 09
+     GET  /api/model/feature_importance   — section 07
+     POST /api/predict                    — section 06 (feature explainer)
+
+   NEW (need to be built — see prompt for Claude Code):
+     GET  /api/model/blend_sweep          — section 02
+     GET  /api/model/folds                — section 03
+     GET  /api/model/calibration          — section 04
+     GET  /api/model/tier_bouts?tier=X    — section 05 drill-down
+
+   Any missing endpoint will render an empty state; nothing will crash.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+// Master loader — call this when the insights tab opens
+async function miLoadAll() {
+  if (window._miLoaded) return;
+  window._miLoaded = true;
+  // Load in parallel; each handler is defensive
+  miLoadSummary();
+  miLoadFeatureImportance();
+  miLoadBlendSweep();
+  miLoadFolds();
+  miLoadCalibration();
+  miLoadTiers();
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 01. ARCHITECTURE + model summary (reuses /api/model/summary)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadSummary() {
+  try {
+    const res = await fetch('/api/model/summary');
+    const d = await res.json();
+    if (d.error) return;
+
+    // Preserve legacy hidden tiles for any other code that reads them
+    const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    setTxt('statAcc', d.metrics.accuracy);
+    setTxt('statLL', d.metrics.log_loss);
+    setTxt('statBrier', d.metrics.brier || '—');
+    setTxt('statAUC', d.metrics.auc);
+    setTxt('statFeats', `${d.active_features}/${d.total_features}`);
+    if (d.metrics.roi_past_year) {
+      const m = String(d.metrics.roi_past_year).match(/([+-]?\d+(\.\d+)?%)/);
+      setTxt('statROI', m ? m[1] : '—');
+    }
+    setTxt('statsCaption', d.metrics.eval_method || '');
+
+    // Top-of-page meta caption
+    const cap = `Last trained ${(d.primary_model?.train_end || '—')} · Walk-forward backtested · n=${d.metrics.test_fights || '—'} test bouts`;
+    setTxt('miMetaCaption', cap);
+
+    // Architecture diagram node counts + training window
+    const pm = d.primary_model || {};
+    setTxt('archLrFeats', pm.lr_features ?? '—');
+    setTxt('archXgbFeats', pm.xgb_features ?? '—');
+    setTxt('archTrainStart', pm.train_start || '—');
+    setTxt('archTrainEnd', pm.train_end || '—');
+    setTxt('archTrainRows', pm.trained_on_rows ? pm.trained_on_rows.toLocaleString() : '—');
+    setTxt('archBlendW', pm.blend_weight_xgb != null
+      ? `${Math.round(pm.blend_weight_xgb*100)}% XGB / ${Math.round((1-pm.blend_weight_xgb)*100)}% LR`
+      : '—');
+
+    // Store for architecture detail panel
+    window._miSummary = d;
+    window._miArchData = {
+      lr: {
+        title: `Logistic Regression · ${Math.round((1-(pm.blend_weight_xgb ?? 0.5))*100)}% weight`,
+        desc: 'Trained on standardized "diff" features (Fighter A minus Fighter B for each stat). Elastic net penalty zeros out roughly half the coefficients; survivors are calibrated. Directly optimizes log loss, so its probabilities are honest.',
+        specs: [
+          ['Features', pm.lr_features ?? '—'],
+          ['Active', d.active_features ?? '—'],
+          ['Penalty', 'Elastic Net'],
+          ['C', '0.05'],
+          ['L1 ratio', '0.50'],
+          ['Solver', 'saga']
+        ]
+      },
+      xgb: {
+        title: `XGBoost · ${Math.round((pm.blend_weight_xgb ?? 0.5)*100)}% weight`,
+        desc: 'Gradient-boosted trees on the LR feature set plus 10 contextual, 7 strength-of-schedule, and 18 hand-engineered interactions (age × Elo, reach × stance, form × layoff). Captures the non-linear lift LR cannot.',
+        specs: [
+          ['Features', pm.xgb_features ?? '—'],
+          ['Trees', '1,200'],
+          ['Max depth', '4'],
+          ['Learning rate', '0.015'],
+          ['λ (reg)', '4'],
+          ['Subsample', '0.7']
+        ]
+      },
+      blend: {
+        title: 'Blend · 50/50 average',
+        desc: 'Final prediction = (P_lr + P_xgb) / 2. The two models make uncorrelated errors — averaging cancels both biases. Beats either alone on log-loss in 8/8 walk-forward folds. See section 02 to test other weights.',
+        specs: [
+          ['Test bouts', d.metrics.test_fights ?? '—'],
+          ['Accuracy', d.metrics.accuracy ?? '—'],
+          ['Log Loss', d.metrics.log_loss ?? '—'],
+          ['Brier', d.metrics.brier ?? '—'],
+          ['AUC', d.metrics.auc ?? '—'],
+          ['Past-yr ROI', d.metrics.roi_past_year ? String(d.metrics.roi_past_year).match(/([+-]?\d+(\.\d+)?%)/)?.[1] ?? '—' : '—']
+        ]
+      }
+    };
+    miShowArch('blend'); // default
+
+    // Section 05 tier list (from summary's confidence_tiers)
+    if (d.confidence_tiers) {
+      window._miTiers = d.confidence_tiers;
+      miRenderTiers();
+    }
+
+    // Section 08 Elo rankings
+    if (d.elo_rankings) {
+      document.getElementById('eloRankings').innerHTML = d.elo_rankings.map((r, i) => `
+        <div class="mi-elo-row">
+          <span class="mi-elo-rank">${i + 1}</span>
+          <span class="mi-elo-name">${r.display_name}</span>
+          <span class="mi-elo-current">${r.elo}</span>
+          <span class="mi-elo-peak">${r.peak === r.elo ? '—' : 'pk ' + r.peak}</span>
+        </div>
+      `).join('');
+    }
+
+    // Section 09 Categories
+    if (d.categories) {
+      const total = d.active_features || 1;
+      document.getElementById('featCategories').innerHTML = d.categories.map(c => {
+        const pct = c.active / total * 100;
+        return `<div class="mi-cat-row">
+          <span class="mi-cat-name">${c.name}</span>
+          <div class="mi-cat-bar-wrap"><div class="mi-cat-bar" style="width:${pct}%"></div></div>
+          <span class="mi-cat-count">${c.active}/${c.total}</span>
+        </div>`;
+      }).join('');
+    }
+  } catch (e) { console.error('miLoadSummary failed:', e); }
+}
+
+function miShowArch(key) {
+  const data = window._miArchData?.[key];
+  if (!data) return;
+  document.querySelectorAll('.mi-arch-node').forEach(n => n.classList.remove('mi-active'));
+  document.querySelector(`[data-arch="${key}"]`)?.classList.add('mi-active');
+  document.getElementById('archDetailTitle').textContent = data.title;
+  document.getElementById('archDetailDesc').textContent = data.desc;
+  document.getElementById('archDetailSpecs').innerHTML = data.specs.map(([k, v]) =>
+    `<div><div class="mi-spec-label">${k}</div><div class="mi-spec-val">${v}</div></div>`
+  ).join('');
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 02. BLEND SWEEP (new endpoint: GET /api/model/blend_sweep)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadBlendSweep() {
+  try {
+    const res = await fetch('/api/model/blend_sweep');
+    if (!res.ok) { miShowSliderEmpty(); return; }
+    const d = await res.json();
+    if (!d.weights || d.weights.length < 2) { miShowSliderEmpty(); return; }
+
+    window._miSweep = d.weights.map(w => ({
+      w: w.xgb_w,
+      acc: w.accuracy,
+      ll: w.log_loss,
+      br: w.brier,
+      auc: w.auc
+    })).sort((a, b) => a.w - b.w);
+
+    // Find optimal (best log loss — matches training objective)
+    const opt = window._miSweep.reduce((best, cur) => cur.ll < best.ll ? cur : best);
+    window._miOptimal = opt;
+    document.getElementById('sliderOptimalMarker').style.left = (opt.w * 100) + '%';
+    document.getElementById('sliderN').textContent = `n=${d.n_bouts || '—'} test bouts`;
+
+    miSliderBind();
+    miSliderUpdate(opt.w);
+  } catch (e) {
+    console.error('miLoadBlendSweep failed:', e);
+    miShowSliderEmpty();
+  }
+}
+
+function miShowSliderEmpty() {
+  document.getElementById('mAcc').textContent = '—';
+  document.getElementById('mLL').textContent = '—';
+  document.getElementById('mBrier').textContent = '—';
+  document.getElementById('mAUC').textContent = '—';
+  document.getElementById('sliderTakeaway').innerHTML =
+    '<strong>Waiting for /api/model/blend_sweep.</strong> Once the endpoint returns per-weight metrics, the slider will become interactive.';
+}
+
+function miSweepAt(w) {
+  const sweep = window._miSweep;
+  if (!sweep) return null;
+  w = Math.max(sweep[0].w, Math.min(sweep[sweep.length - 1].w, w));
+  // Find bracketing points
+  let lo = sweep[0], hi = sweep[sweep.length - 1];
+  for (let i = 0; i < sweep.length - 1; i++) {
+    if (sweep[i].w <= w && sweep[i+1].w >= w) {
+      lo = sweep[i]; hi = sweep[i+1];
+      break;
+    }
+  }
+  const t = hi.w === lo.w ? 0 : (w - lo.w) / (hi.w - lo.w);
+  return {
+    acc: lo.acc + (hi.acc - lo.acc) * t,
+    ll: lo.ll + (hi.ll - lo.ll) * t,
+    br: lo.br + (hi.br - lo.br) * t,
+    auc: lo.auc + (hi.auc - lo.auc) * t
+  };
+}
+
+function miSliderUpdate(xgbW) {
+  xgbW = Math.max(0, Math.min(1, xgbW));
+  const lrW = 1 - xgbW;
+  document.getElementById('lrPct').textContent = `${Math.round(lrW * 100)}%`;
+  document.getElementById('xgbPct').textContent = `${Math.round(xgbW * 100)}%`;
+  document.getElementById('sliderFill').style.width = `${xgbW * 100}%`;
+  document.getElementById('sliderThumb').style.left = `${xgbW * 100}%`;
+
+  const m = miSweepAt(xgbW);
+  const opt = window._miOptimal;
+  if (!m || !opt) return;
+
+  miSetMetric('mAcc', 'dAcc', `${(m.acc * 100).toFixed(1)}%`, m.acc - opt.acc, true, Math.abs(m.acc - opt.acc) < 0.001);
+  miSetMetric('mLL', 'dLL', m.ll.toFixed(4), m.ll - opt.ll, false, Math.abs(m.ll - opt.ll) < 0.0005);
+  miSetMetric('mBrier', 'dBrier', m.br.toFixed(4), m.br - opt.br, false, Math.abs(m.br - opt.br) < 0.0005);
+  miSetMetric('mAUC', 'dAUC', m.auc.toFixed(4), m.auc - opt.auc, true, Math.abs(m.auc - opt.auc) < 0.0005);
+
+  const tk = document.getElementById('sliderTakeaway');
+  const accDelta = ((opt.acc - m.acc) * 100);
+  if (xgbW < 0.05) {
+    tk.innerHTML = `<strong>Pure LR.</strong> Calibrated probabilities, but missing the non-linear lift from XGBoost interactions. Accuracy drops ${accDelta.toFixed(1)} points vs the optimum.`;
+  } else if (xgbW > 0.95) {
+    tk.innerHTML = `<strong>Pure XGBoost.</strong> Captures interactions but tends to over-commit. Accuracy drops ${accDelta.toFixed(1)} points vs the optimum.`;
+  } else if (Math.abs(xgbW - opt.w) < 0.06) {
+    tk.innerHTML = `<strong>${Math.round(opt.w*100)}/${Math.round((1-opt.w)*100)} is the sweet spot.</strong> LR finds linear effects (Elo, age, reach); XGBoost captures interactions (age × Elo, form × layoff). Their errors are uncorrelated, so averaging cancels both biases.`;
+  } else {
+    const dom = xgbW > 0.5 ? 'XGBoost' : 'LR';
+    tk.innerHTML = `<strong>${dom}-leaning blend.</strong> Sub-optimal — accuracy is ${Math.abs(accDelta).toFixed(2)} points worse than the optimum on the test set.`;
+  }
+}
+
+function miSetMetric(valId, dId, valStr, delta, higherBetter, isBest) {
+  const valEl = document.getElementById(valId);
+  const dEl = document.getElementById(dId);
+  valEl.textContent = valStr;
+  valEl.classList.toggle('mi-is-best', isBest);
+  if (Math.abs(delta) < 0.0001) {
+    dEl.textContent = '— optimal';
+    dEl.className = 'mi-metric-delta mi-num';
+  } else {
+    const sign = delta > 0 ? '+' : '';
+    const isImprovement = higherBetter ? delta > 0 : delta < 0;
+    dEl.textContent = `${sign}${delta.toFixed(4)}`;
+    dEl.className = `mi-metric-delta mi-num ${isImprovement ? 'mi-positive' : 'mi-negative'}`;
+  }
+}
+
+function miSliderBind() {
+  if (window._miSliderBound) return;
+  window._miSliderBound = true;
+  const track = document.getElementById('sliderTrack');
+  let dragging = false;
+  const pickW = (e) => {
+    const r = track.getBoundingClientRect();
+    const x = (e.clientX || e.touches?.[0]?.clientX) - r.left;
+    return Math.max(0, Math.min(1, x / r.width));
+  };
+  track.addEventListener('mousedown', e => { dragging = true; miSliderUpdate(pickW(e)); });
+  window.addEventListener('mousemove', e => { if (dragging) miSliderUpdate(pickW(e)); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  track.addEventListener('touchstart', e => { dragging = true; miSliderUpdate(pickW(e)); });
+  window.addEventListener('touchmove', e => { if (dragging) miSliderUpdate(pickW(e)); });
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 03. WALK-FORWARD FOLDS (new endpoint: GET /api/model/folds)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadFolds() {
+  try {
+    const res = await fetch('/api/model/folds');
+    if (!res.ok) { miShowFoldsEmpty(); return; }
+    const d = await res.json();
+    if (!d.folds || d.folds.length === 0) { miShowFoldsEmpty(); return; }
+    window._miFolds = d.folds;
+    miRenderFolds();
+    miShowFold(d.folds[Math.floor(d.folds.length / 2)].fold_num); // middle fold
+  } catch (e) {
+    console.error('miLoadFolds failed:', e);
+    miShowFoldsEmpty();
+  }
+}
+
+function miShowFoldsEmpty() {
+  document.getElementById('foldDetail').innerHTML =
+    '<div class="mi-empty">Waiting for /api/model/folds.</div>';
+}
+
+function miRenderFolds() {
+  const folds = window._miFolds;
+  const axis = document.getElementById('foldsAxis');
+  axis.innerHTML = '';
+
+  // Compute date range
+  const allDates = folds.flatMap(f => [f.train_start, f.train_end, f.test_end]);
+  const minDate = allDates.reduce((a, b) => a < b ? a : b);
+  const maxDate = allDates.reduce((a, b) => a > b ? a : b);
+
+  const toDays = (s) => {
+    const [y, m, day] = s.split('-').map(Number);
+    return new Date(y, m - 1, day).getTime() / (1000 * 60 * 60 * 24);
+  };
+  const minD = toDays(minDate), maxD = toDays(maxDate);
+  const span = maxD - minD || 1;
+  const pct = (s) => ((toDays(s) - minD) / span) * 100;
+
+  // Training background: earliest train_start to latest train_end (visual simplification)
+  const latestTrainEnd = folds.reduce((latest, f) => f.train_end > latest ? f.train_end : latest, folds[0].train_end);
+  const trainBg = document.createElement('div');
+  trainBg.className = 'mi-fold-block mi-train';
+  trainBg.style.left = pct(minDate) + '%';
+  trainBg.style.width = (pct(latestTrainEnd) - pct(minDate)) + '%';
+  axis.appendChild(trainBg);
+
+  // Test blocks
+  folds.forEach(f => {
+    const el = document.createElement('div');
+    el.className = 'mi-fold-block mi-test';
+    el.style.left = pct(f.test_start) + '%';
+    el.style.width = Math.max(1.5, pct(f.test_end) - pct(f.test_start)) + '%';
+    el.textContent = 'F' + f.fold_num;
+    el.dataset.fold = f.fold_num;
+    el.onclick = () => miShowFold(f.fold_num);
+    axis.appendChild(el);
+  });
+
+  // Axis labels
+  const fmt = (s) => s.substring(0, 7);
+  document.getElementById('foldAxisLabels').innerHTML =
+    `<span>${fmt(minDate)}</span><span>${fmt(folds[0].test_start)}</span><span>${fmt(maxDate)}</span>`;
+}
+
+function miShowFold(n) {
+  const f = window._miFolds?.find(x => x.fold_num === n);
+  if (!f) return;
+  document.querySelectorAll('.mi-fold-block.mi-test').forEach(b => b.classList.remove('mi-active'));
+  document.querySelector(`.mi-fold-block.mi-test[data-fold="${n}"]`)?.classList.add('mi-active');
+
+  document.getElementById('foldTitle').textContent = `Fold ${n}`;
+  document.getElementById('foldMeta').textContent =
+    `train: ${f.train_start} → ${f.train_end} · test: ${f.test_start} → ${f.test_end}`;
+  document.getElementById('foldStats').innerHTML = `
+    <div><div class="mi-fold-stat-lbl">Test bouts</div><div class="mi-fold-stat-val">${f.n_bouts}</div></div>
+    <div><div class="mi-fold-stat-lbl">Accuracy</div><div class="mi-fold-stat-val">${(f.accuracy * 100).toFixed(1)}%</div></div>
+    <div><div class="mi-fold-stat-lbl">Log Loss</div><div class="mi-fold-stat-val">${f.log_loss.toFixed(4)}</div></div>
+    <div><div class="mi-fold-stat-lbl">Brier</div><div class="mi-fold-stat-val">${f.brier.toFixed(4)}</div></div>
+  `;
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 04. CALIBRATION (new endpoint: GET /api/model/calibration)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadCalibration() {
+  try {
+    const res = await fetch('/api/model/calibration');
+    if (!res.ok) { miShowCalibEmpty(); return; }
+    const d = await res.json();
+    if (!d.buckets || d.buckets.length === 0) { miShowCalibEmpty(); return; }
+    window._miCalib = d.buckets;
+    miDrawCalibration();
+
+    // Takeaway: find largest deviation from diagonal
+    const maxDev = d.buckets.reduce((m, b) => Math.max(m, Math.abs(b.actual - b.pred_avg)), 0);
+    const pts = (maxDev * 100).toFixed(1);
+    document.getElementById('calibTakeaway').innerHTML =
+      `<strong>Calibrated within ${pts} points across all confidence buckets.</strong> ` +
+      `The model ${maxDev < 0.05 ? "isn't systematically over- or under-confident" : "drifts slightly from the diagonal in some buckets"} — ` +
+      `when it says 70%, fighters in that bucket win close to 70% of the time.`;
+  } catch (e) {
+    console.error('miLoadCalibration failed:', e);
+    miShowCalibEmpty();
+  }
+}
+
+function miShowCalibEmpty() {
+  document.getElementById('calibChart').innerHTML = '';
+  document.getElementById('calibTakeaway').innerHTML =
+    '<strong>Waiting for /api/model/calibration.</strong>';
+}
+
+function miDrawCalibration() {
+  const buckets = window._miCalib;
+  if (!buckets) return;
+  const svg = document.getElementById('calibChart');
+  const W = 480, H = 360;
+  const pad = { top: 20, right: 20, bottom: 50, left: 60 };
+  const cw = W - pad.left - pad.right;
+  const ch = H - pad.top - pad.bottom;
+  const xs = v => pad.left + (v - 0.5) / 0.5 * cw;
+  const ys = v => pad.top + ch - (v - 0.5) / 0.5 * ch;
+
+  const isLight = document.documentElement.classList.contains('light');
+  const gridColor = isLight ? '#e0e0d8' : '#23262f';
+  const textColor = isLight ? '#6b6b75' : '#8a8fa0';
+  const accent = isLight ? '#1a8a73' : '#4ec9b0';
+  const faintColor = isLight ? '#a0a098' : '#585d6d';
+
+  let html = '';
+  const ticks = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+  ticks.forEach(t => {
+    html += `<line x1="${xs(t)}" y1="${pad.top}" x2="${xs(t)}" y2="${H - pad.bottom}" stroke="${gridColor}" stroke-width="1"/>`;
+    html += `<line x1="${pad.left}" y1="${ys(t)}" x2="${W - pad.right}" y2="${ys(t)}" stroke="${gridColor}" stroke-width="1"/>`;
+    html += `<text x="${xs(t)}" y="${H - pad.bottom + 16}" font-family="JetBrains Mono, monospace" font-size="10" fill="${textColor}" text-anchor="middle">${(t*100).toFixed(0)}%</text>`;
+    html += `<text x="${pad.left - 8}" y="${ys(t) + 4}" font-family="JetBrains Mono, monospace" font-size="10" fill="${textColor}" text-anchor="end">${(t*100).toFixed(0)}%</text>`;
+  });
+
+  // Diagonal
+  html += `<line x1="${xs(0.5)}" y1="${ys(0.5)}" x2="${xs(1.0)}" y2="${ys(1.0)}" stroke="${faintColor}" stroke-width="1.5" stroke-dasharray="4,4"/>`;
+
+  // Axis labels
+  html += `<text x="${pad.left + cw/2}" y="${H - 10}" font-family="Inter Tight, sans-serif" font-size="11" fill="${textColor}" text-anchor="middle">Predicted probability</text>`;
+  html += `<text x="15" y="${pad.top + ch/2}" font-family="Inter Tight, sans-serif" font-size="11" fill="${textColor}" text-anchor="middle" transform="rotate(-90 15 ${pad.top + ch/2})">Actual win rate</text>`;
+
+  // Model line
+  const sorted = buckets.slice().sort((a, b) => a.pred_avg - b.pred_avg);
+  let pathD = '';
+  sorted.forEach((d, i) => {
+    pathD += (i === 0 ? 'M' : 'L') + ' ' + xs(d.pred_avg) + ' ' + ys(d.actual) + ' ';
+  });
+  html += `<path d="${pathD}" stroke="${accent}" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+
+  // Points sized by n
+  sorted.forEach(d => {
+    const r = Math.max(3, Math.sqrt(d.n) * 0.6);
+    html += `<circle cx="${xs(d.pred_avg)}" cy="${ys(d.actual)}" r="${r}" fill="${accent}" fill-opacity="0.25" stroke="${accent}" stroke-width="1.5"><title>${d.range || (d.pred_avg*100).toFixed(0)+'%'}: ${d.n} bouts, actual ${(d.actual*100).toFixed(1)}%</title></circle>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 05. CONFIDENCE TIERS (reuses /api/model/summary + new drilldown)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadTiers() {
+  // Tier summary is already loaded via miLoadSummary. Nothing to do here
+  // except wait — miRenderTiers is called from miLoadSummary.
+  // We only fetch bout lists lazily on click.
+}
+
+function miRenderTiers() {
+  const tiers = window._miTiers;
+  if (!tiers) return;
+  document.getElementById('tiersList').innerHTML = tiers.map((t, i) => {
+    const acc = typeof t.accuracy === 'string' ? parseFloat(t.accuracy) : t.accuracy * 100;
+    return `
+    <div class="mi-tier-row" data-tier="${i}" onclick="miShowTier(${i})">
+      <span class="mi-tier-label">${t.range}</span>
+      <div class="mi-tier-bar-wrap"><div class="mi-tier-bar-fill" style="width:${acc}%"></div></div>
+      <span class="mi-tier-acc">${acc.toFixed(0)}%</span>
+      <span class="mi-tier-n">${t.fights} bouts</span>
+    </div>`;
+  }).join('');
+}
+
+async function miShowTier(i) {
+  const t = window._miTiers?.[i];
+  if (!t) return;
+  document.querySelectorAll('.mi-tier-row').forEach(r => r.classList.remove('mi-active'));
+  document.querySelector(`.mi-tier-row[data-tier="${i}"]`)?.classList.add('mi-active');
+
+  const header = document.getElementById('tierBoutsHeader');
+  const list = document.getElementById('tierBoutsList');
+  const wrap = document.getElementById('tierBouts');
+  wrap.classList.add('mi-show');
+  header.textContent = `${t.label} — loading bouts…`;
+  list.innerHTML = '';
+
+  // Convert range to tier param: "50-55%" -> "50-55", "75%+" -> "75+"
+  const tierParam = String(t.range).replace(/[%\s]/g, '').replace('–', '-');
+
+  try {
+    const res = await fetch(`/api/model/tier_bouts?tier=${encodeURIComponent(tierParam)}`);
+    if (!res.ok) {
+      header.textContent = `${t.label} — endpoint unavailable`;
+      list.innerHTML = '<div class="mi-empty">Waiting for /api/model/tier_bouts.</div>';
+      return;
+    }
+    const d = await res.json();
+    const bouts = d.bouts || [];
+    header.textContent = `${t.label} — ${bouts.length} of ${t.fights} bouts`;
+    list.innerHTML = bouts.map(b => `
+      <div class="mi-bout-row">
+        <span class="mi-bout-date">${b.date}</span>
+        <span>${b.display_a || b.fighter_a} <span style="color:var(--muted);opacity:0.5;">vs</span> ${b.display_b || b.fighter_b}</span>
+        <span class="mi-bout-prob">${(b.predicted_prob * 100).toFixed(0)}%</span>
+        <span class="mi-bout-result ${b.correct ? 'mi-correct' : 'mi-wrong'}">${b.correct ? '✓' : '✗'}</span>
+      </div>
+    `).join('') || '<div class="mi-empty">No bouts returned.</div>';
+  } catch (e) {
+    console.error('miShowTier failed:', e);
+    header.textContent = `${t.label} — error`;
+    list.innerHTML = '<div class="mi-empty">Failed to load bouts.</div>';
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 06. FEATURE EXPLAINER (reuses POST /api/predict; uses `drivers` field)
+// ──────────────────────────────────────────────────────────────────────
+// If the backend adds /api/predict/explain with a richer waterfall shape
+// later, swap the endpoint here.
+
+async function miRunExplainer() {
+  const a = document.getElementById('explorerA').value.trim();
+  const b = document.getElementById('explorerB').value.trim();
+  const date = document.getElementById('explorerDate').value || new Date().toISOString().split('T')[0];
+  const out = document.getElementById('waterfall');
+  if (!a || !b) {
+    out.innerHTML = '<div class="mi-empty">Enter both fighters.</div>';
+    return;
+  }
+  out.innerHTML = '<div class="mi-empty">Computing…</div>';
+  try {
+    const res = await fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fighter_a: a, fighter_b: b, event_date: date })
+    });
+    const d = await res.json();
+    if (d.error) { out.innerHTML = `<div class="mi-empty">${d.error}</div>`; return; }
+
+    const drivers = d.drivers || [];
+    if (drivers.length === 0) {
+      out.innerHTML = '<div class="mi-empty">No driver data returned.</div>';
+      return;
+    }
+
+    // Normalize: each driver has {feature, contribution, favors, favors_display}
+    // Waterfall is keyed on contribution magnitude
+    const max = Math.max(...drivers.map(dr => Math.abs(dr.contribution)));
+    let html = drivers.map(dr => {
+      const w = Math.abs(dr.contribution) / max * 50;
+      const towardA = dr.favors === d.fighter_a;
+      const left = towardA ? 50 : (50 - w);
+      const cls = towardA ? 'mi-toward-a' : 'mi-toward-b';
+      const sign = dr.contribution >= 0 ? '+' : '';
+      const feat = miFormatFeature(dr.feature);
+      return `<div class="mi-waterfall-row">
+        <span class="mi-waterfall-feat" title="${feat}">${feat}</span>
+        <div class="mi-waterfall-bar-wrap">
+          <div class="mi-waterfall-center"></div>
+          <div class="mi-waterfall-bar ${cls}" style="left:${left}%;width:${w}%"></div>
+        </div>
+        <span class="mi-waterfall-val">${sign}${dr.contribution.toFixed(3)}</span>
+      </div>`;
+    }).join('');
+
+    html += `<div class="mi-waterfall-final">
+      P(${d.display_a || a} wins) = <strong>${(d.prob_a * 100).toFixed(1)}%</strong>
+      &nbsp;·&nbsp; P(${d.display_b || b} wins) = ${(d.prob_b * 100).toFixed(1)}%
+    </div>`;
+    out.innerHTML = html;
+  } catch (e) {
+    console.error('miRunExplainer failed:', e);
+    out.innerHTML = '<div class="mi-empty">Request failed.</div>';
+  }
+}
+
+function miFormatFeature(feat) {
+  return String(feat)
+    .replace(/_diff$/, '')
+    .replace(/_dec_avg$/, '')
+    .replace(/_/g, ' ')
+    .replace(/adjperf /i, 'Adj ')
+    .replace(/\b\w/g, l => l.toUpperCase());
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 07. TOP FEATURES (reuses /api/model/feature_importance)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadFeatureImportance() {
+  try {
+    const res = await fetch('/api/model/feature_importance');
+    const d = await res.json();
+    if (!d.features) return;
+    window._miFeats = d.features.map(f => ({
+      name: f.display_name || miFormatFeature(f.feature),
+      coef: f.coefficient,
+      dir: f.direction || (f.coefficient >= 0 ? 'positive' : 'negative')
+    }));
+    miRenderFeats();
+  } catch (e) { console.error('miLoadFeatureImportance failed:', e); }
+}
+
+let miFeatFilter = 'all', miFeatSort = 'weight';
+
+function miRenderFeats() {
+  const feats = window._miFeats;
+  if (!feats) return;
+  let data = feats.slice();
+  if (miFeatFilter === 'positive') data = data.filter(f => f.dir === 'positive');
+  if (miFeatFilter === 'negative') data = data.filter(f => f.dir === 'negative');
+  if (miFeatSort === 'alpha') data.sort((a, b) => a.name.localeCompare(b.name));
+  else data.sort((a, b) => Math.abs(b.coef) - Math.abs(a.coef));
+  data = data.slice(0, 25);
+
+  const max = Math.max(...feats.map(f => Math.abs(f.coef)));
+  document.getElementById('topFeatures').innerHTML = data.map(f => {
+    const w = Math.abs(f.coef) / max * 100;
+    const sign = f.coef > 0 ? '+' : '';
+    return `<div class="mi-feat-row">
+      <span class="mi-feat-name" title="${f.name}">${f.name}</span>
+      <div class="mi-feat-bar-wrap"><div class="mi-feat-bar ${f.dir}" style="width:${w}%"></div></div>
+      <span class="mi-feat-val">${sign}${f.coef.toFixed(4)}</span>
+    </div>`;
+  }).join('');
+}
+
+function miFilterFeats(f) {
+  miFeatFilter = f;
+  document.querySelectorAll('[data-filter]').forEach(p =>
+    p.classList.toggle('mi-active', p.dataset.filter === f));
+  miRenderFeats();
+}
+
+function miSortFeats(s) {
+  miFeatSort = s;
+  document.querySelectorAll('[data-sort]').forEach(p =>
+    p.classList.toggle('mi-active', p.dataset.sort === s));
+  miRenderFeats();
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Defaults for explorer date field
+// ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const dateEl = document.getElementById('explorerDate');
+  if (dateEl && !dateEl.value) dateEl.value = new Date().toISOString().split('T')[0];
+});
+
 </script>
 </body>
 </html>
