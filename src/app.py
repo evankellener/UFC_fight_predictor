@@ -4,6 +4,7 @@ Flask app wrapping the MMA-AI pipeline with LR+CB ensemble.
 Model trains once at startup, then serves predictions via API.
 """
 
+import json
 import sqlite3
 import sys
 import os
@@ -154,7 +155,38 @@ def init_model():
         _compute_wc_baselines()
     except Exception as e:
         print(f"  Z-score baselines skipped (DB tables missing): {e}")
+
+    # Load walk-forward backtest predictions for /api/model/* endpoints
+    _load_backtest_predictions()
     print("Model ready.")
+
+
+def _load_backtest_predictions():
+    """Load app/models/blend/backtest_predictions.json into model_state."""
+    from pathlib import Path as _Path
+    bt_path = _Path(__file__).parent.parent / "app" / "models" / "blend" / "backtest_predictions.json"
+    if not bt_path.exists():
+        print(f"  Backtest predictions NOT found at {bt_path}")
+        print("  /api/model/blend_sweep, /folds, /calibration, /tier_bouts will 503")
+        model_state["backtest"] = None
+        return
+    try:
+        with open(bt_path) as f:
+            bt = json.load(f)
+        # Pre-build a DataFrame with y (did fighter_a win?) + p_blend columns
+        bt_df = pd.DataFrame(bt["predictions"])
+        bt_df["y"] = (bt_df["actual_winner"] == bt_df["fighter_a"]).astype(int)
+        bt_df["p_blend"] = 0.5 * bt_df["p_lr"] + 0.5 * bt_df["p_xgb"]
+        bt_df["bout_date_parsed"] = pd.to_datetime(bt_df["bout_date"], errors="coerce")
+        model_state["backtest"] = {
+            "folds": bt["folds"],
+            "df": bt_df,
+            "config": bt.get("config", {}),
+        }
+        print(f"  Backtest: {len(bt_df)} bouts across {len(bt['folds'])} folds")
+    except Exception as e:
+        print(f"  Backtest load failed: {e}")
+        model_state["backtest"] = None
 
 
 def _load_fighter_list():
@@ -1433,6 +1465,378 @@ def model_summary():
             {"range": "75%+", "label": "Strong pick", "fights": 100, "accuracy": "83%"},
         ],
     })
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Walk-forward backtest endpoints (powered by app/models/blend/backtest_predictions.json)
+# ─────────────────────────────────────────────────────────────────────────────
+
+_BT_MISSING_MSG = ("backtest_predictions not found, run scripts/run_backtest_and_save.py "
+                   "(part of refresh_app_artifacts.sh)")
+
+
+def _agg_metrics(y, p):
+    """Return acc / log_loss / brier / auc for an array of preds p and truths y."""
+    from sklearn.metrics import (accuracy_score, log_loss,
+                                 brier_score_loss, roc_auc_score)
+    pred = (p >= 0.5).astype(int)
+    out = {
+        "accuracy": round(float(accuracy_score(y, pred)), 4),
+        "log_loss": round(float(log_loss(y, p)), 4),
+        "brier":    round(float(brier_score_loss(y, p)), 4),
+    }
+    # AUC needs both classes present; guard against degenerate folds
+    try:
+        out["auc"] = round(float(roc_auc_score(y, p)), 4)
+    except ValueError:
+        out["auc"] = None
+    return out
+
+
+@app.route("/api/model/blend_sweep")
+def blend_sweep():
+    """Aggregate metrics across all walk-forward folds at 11 blend weights.
+
+    p_blend = (1 - w) * p_lr + w * p_xgb, for w in [0.0, 0.1, ..., 1.0].
+    No refitting — just re-blend the persisted per-fold p_lr / p_xgb.
+    """
+    bt = model_state.get("backtest")
+    if not bt:
+        return jsonify({"error": _BT_MISSING_MSG}), 503
+
+    df = bt["df"]
+    y = df["y"].values
+    p_lr  = df["p_lr"].values
+    p_xgb = df["p_xgb"].values
+
+    rows = []
+    best_w, best_ll = None, float("inf")
+    for w in np.linspace(0.0, 1.0, 11):
+        p = (1 - w) * p_lr + w * p_xgb
+        m = _agg_metrics(y, p)
+        rows.append({"xgb_w": round(float(w), 2), **m})
+        if m["log_loss"] < best_ll:
+            best_ll = m["log_loss"]
+            best_w = round(float(w), 2)
+
+    return jsonify({
+        "weights": rows,
+        "optimal_w": best_w,
+        "production_w": 0.5,
+        "n_bouts": int(len(y)),
+    })
+
+
+@app.route("/api/model/folds")
+def model_folds():
+    """Per-fold metrics at the production blend weight (0.5)."""
+    bt = model_state.get("backtest")
+    if not bt:
+        return jsonify({"error": _BT_MISSING_MSG}), 503
+
+    df = bt["df"]
+    meta_by_num = {f["fold_num"]: f for f in bt["folds"]}
+
+    folds_out = []
+    for fold_num, grp in df.groupby("fold_num"):
+        meta = meta_by_num.get(int(fold_num), {})
+        m = _agg_metrics(grp["y"].values, grp["p_blend"].values)
+        folds_out.append({
+            "fold_num":    int(fold_num),
+            "train_start": meta.get("train_start"),
+            "train_end":   meta.get("train_end"),
+            "test_start":  meta.get("test_start"),
+            "test_end":    meta.get("test_end"),
+            "n_bouts":     int(len(grp)),
+            **m,
+        })
+    folds_out.sort(key=lambda f: f["fold_num"])
+    return jsonify({
+        "folds": folds_out,
+        "blend_weight_xgb": 0.5,
+        "n_bouts_total": int(len(df)),
+    })
+
+
+@app.route("/api/model/calibration")
+def calibration():
+    """Bucket predictions by MODEL CONFIDENCE (max(p_a, p_b)) in 5% bins from
+    50% to 100%. For each bucket return pred_avg, actual win rate, count."""
+    bt = model_state.get("backtest")
+    if not bt:
+        return jsonify({"error": _BT_MISSING_MSG}), 503
+
+    df = bt["df"].copy()
+    # Model confidence in whoever it picks, and whether that pick was correct
+    df["conf"] = df["p_blend"].where(df["p_blend"] >= 0.5, 1.0 - df["p_blend"])
+    predicted_a = df["p_blend"] >= 0.5
+    df["correct"] = ((predicted_a & (df["y"] == 1)) |
+                     (~predicted_a & (df["y"] == 0))).astype(int)
+
+    edges = np.arange(0.50, 1.0001, 0.05)
+    buckets = []
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        # Include upper edge only for the last bucket (85-90% excludes 0.90,
+        # but 95-100% includes 1.0)
+        if hi == edges[-1]:
+            mask = (df["conf"] >= lo) & (df["conf"] <= hi)
+        else:
+            mask = (df["conf"] >= lo) & (df["conf"] < hi)
+        sub = df[mask]
+        buckets.append({
+            "range":    f"{int(lo*100)}-{int(hi*100)}%",
+            "lo":       round(float(lo), 2),
+            "hi":       round(float(hi), 2),
+            "pred_avg": round(float(sub["conf"].mean()), 4) if len(sub) else None,
+            "actual":   round(float(sub["correct"].mean()), 4) if len(sub) else None,
+            "n":        int(len(sub)),
+        })
+
+    return jsonify({
+        "buckets": buckets,
+        "n_total": int(len(df)),
+    })
+
+
+def _parse_tier(tier_str):
+    """Translate 'x-y' or 'x+' to (lo, hi) in [0,1] fractions.
+
+    Accepted: '50-55', '55-65', '65-75', '75+', also '75-100'.
+    Returns (lo, hi, label) or (None, None, None) if unparseable.
+    """
+    labels = {
+        "50-55": "Toss-up",
+        "55-65": "Lean",
+        "65-75": "Confident",
+        "75+":   "Strong pick",
+        "75-100": "Strong pick",
+    }
+    if tier_str in labels:
+        lo, hi_str = tier_str.split("-") if "-" in tier_str else (tier_str.replace("+",""), "100")
+        return int(lo) / 100, int(hi_str) / 100, labels[tier_str]
+    # Generic x-y
+    if "-" in tier_str:
+        try:
+            lo, hi = [int(s) for s in tier_str.split("-")]
+            return lo / 100, hi / 100, None
+        except ValueError:
+            pass
+    if tier_str.endswith("+"):
+        try:
+            lo = int(tier_str[:-1])
+            return lo / 100, 1.0, None
+        except ValueError:
+            pass
+    return None, None, None
+
+
+@app.route("/api/model/tier_bouts")
+def tier_bouts():
+    """Return the actual backtest bouts that fell in a confidence tier.
+
+    Query params:
+      tier:  e.g. '50-55', '55-65', '65-75', '75+'. Required.
+      limit: cap on bouts returned (default 50, max 1000).
+    """
+    bt = model_state.get("backtest")
+    if not bt:
+        return jsonify({"error": _BT_MISSING_MSG}), 503
+
+    tier = request.args.get("tier", "").strip()
+    lo, hi, label = _parse_tier(tier)
+    if lo is None:
+        return jsonify({"error": f"Bad tier '{tier}'. Expected e.g. 50-55, 65-75, 75+."}), 400
+    try:
+        limit = min(max(int(request.args.get("limit", 50)), 1), 1000)
+    except ValueError:
+        limit = 50
+
+    df = bt["df"].copy()
+    df["conf"] = df["p_blend"].where(df["p_blend"] >= 0.5, 1.0 - df["p_blend"])
+    # Upper-inclusive on the top end of the top bucket only
+    if hi >= 1.0 - 1e-9:
+        mask = (df["conf"] >= lo) & (df["conf"] <= hi)
+    else:
+        mask = (df["conf"] >= lo) & (df["conf"] < hi)
+    sub = df[mask].copy()
+    n_total = int(len(sub))
+    if n_total == 0:
+        return jsonify({
+            "tier": tier, "label": label, "n_total": 0,
+            "accuracy": None, "bouts": []
+        })
+
+    # Correctness + predicted winner
+    predicted_a = sub["p_blend"] >= 0.5
+    sub["predicted_winner"] = np.where(predicted_a, sub["fighter_a"], sub["fighter_b"])
+    sub["predicted_prob"]   = sub["conf"]
+    sub["correct"]          = ((predicted_a & (sub["y"] == 1)) |
+                               (~predicted_a & (sub["y"] == 0)))
+
+    acc = round(float(sub["correct"].mean()), 4)
+
+    # Most-recent first
+    sub = sub.sort_values("bout_date_parsed", ascending=False).head(limit)
+
+    bouts = [
+        {
+            "date":             row["bout_date"],
+            "fold_num":         int(row["fold_num"]),
+            "fighter_a":        row["fighter_a"],
+            "fighter_b":        row["fighter_b"],
+            "display_a":        row["display_a"],
+            "display_b":        row["display_b"],
+            "predicted_winner": row["predicted_winner"],
+            "predicted_prob":   round(float(row["predicted_prob"]), 4),
+            "actual_winner":    row["actual_winner"],
+            "correct":          bool(row["correct"]),
+        }
+        for _, row in sub.iterrows()
+    ]
+
+    return jsonify({
+        "tier":     tier,
+        "label":    label,
+        "lo":       round(float(lo), 2),
+        "hi":       round(float(hi), 2),
+        "n_total":  n_total,
+        "n_shown":  len(bouts),
+        "accuracy": acc,
+        "bouts":    bouts,
+    })
+
+
+@app.route("/api/predict/explain", methods=["POST"])
+def predict_explain():
+    """Waterfall-style feature contributions for a hypothetical matchup.
+
+    Uses the PRODUCTION blend model (not backtest predictions) because this
+    is for arbitrary future matchups. Returns top 12 drivers by absolute
+    contribution. Contributions are approximate (sigmoid-linearized for LR,
+    SHAP tree values for XGB, 50/50 weighted); they do NOT sum exactly to
+    (final_prob - 0.5).
+    """
+    data = request.get_json() or {}
+    fa = (data.get("fighter_a") or "").strip()
+    fb = (data.get("fighter_b") or "").strip()
+    if not fa or not fb:
+        return jsonify({"error": "Provide fighter_a and fighter_b"}), 400
+    event_date = data.get("event_date", pd.Timestamp.now().strftime("%Y-%m-%d"))
+
+    bp = model_state.get("blend")
+    if bp is None:
+        return jsonify({"error": "Blend model not loaded"}), 503
+
+    built = _build_blend_row(fa, fb, event_date)
+    if built is None:
+        return jsonify({"error": f"Unknown fighter(s): {fa}, {fb}"}), 404
+    row, f1, f2 = built
+
+    # Final probabilities (should match /api/predict exactly at same inputs)
+    X_lr  = np.nan_to_num(np.array([[row.get(c, 0.0) for c in bp.lr_cols]],  dtype=float),
+                          nan=0.0, posinf=1e6, neginf=-1e6)
+    X_xgb = np.nan_to_num(np.array([[row.get(c, 0.0) for c in bp.xgb_cols]], dtype=float),
+                          nan=0.0, posinf=1e6, neginf=-1e6)
+    X_lr_scaled = bp.scaler.transform(X_lr)[0]
+    p_lr  = float(bp.lr.predict_proba(X_lr_scaled.reshape(1, -1))[0, 1])
+    p_xgb = float(bp.xgb.predict_proba(X_xgb)[0, 1])
+    p_f1  = 0.5 * p_lr + 0.5 * p_xgb
+    prob_a = p_f1 if fa == f1 else (1.0 - p_f1)
+
+    # LR contributions in LOGIT space, then sigmoid-linearize to prob space.
+    # logit contribution per feature i = coef_i * scaled_value_i
+    # at operating point p, d(prob)/d(logit) = p * (1 - p)
+    coef = bp.lr.coef_[0]
+    lr_contrib_logit = coef * X_lr_scaled
+    sigmoid_prime = p_lr * (1.0 - p_lr)
+    lr_contrib_prob = lr_contrib_logit * sigmoid_prime
+
+    # XGB contributions via SHAP (tree model's built-in)
+    try:
+        import xgboost as _xgb
+        dmat = _xgb.DMatrix(X_xgb, feature_names=bp.xgb_cols)
+        # pred_contribs returns shape (1, n_features + 1); last col is bias
+        shap_vals = bp.xgb.get_booster().predict(dmat, pred_contribs=True)[0]
+        xgb_bias = float(shap_vals[-1])
+        xgb_feat_shap = shap_vals[:-1]  # margin-space
+        # Convert margin-space SHAP to probability-space via XGB's sigmoid prime
+        margin_xgb = float(xgb_bias + xgb_feat_shap.sum())
+        p_xgb_check = 1.0 / (1.0 + np.exp(-margin_xgb))
+        xgb_sigmoid_prime = p_xgb_check * (1.0 - p_xgb_check)
+        xgb_contrib_prob = xgb_feat_shap * xgb_sigmoid_prime
+    except Exception as _e:
+        print(f"[explain] XGB SHAP failed, falling back to 0: {_e}")
+        xgb_contrib_prob = np.zeros(len(bp.xgb_cols))
+
+    # Combine — feature name → total blend contribution (prob space, w.r.t. p_f1)
+    from collections import defaultdict
+    contrib = defaultdict(float)
+    raw_val = {}
+    for i, feat in enumerate(bp.lr_cols):
+        contrib[feat] += 0.5 * float(lr_contrib_prob[i])
+        raw_val[feat] = float(X_lr[0, i])
+    for i, feat in enumerate(bp.xgb_cols):
+        contrib[feat] += 0.5 * float(xgb_contrib_prob[i])
+        raw_val.setdefault(feat, float(X_xgb[0, i]))
+
+    # If caller put fighter_a second alphabetically, flip sign so contributions
+    # are with respect to fighter_a (not f1).
+    sign = 1.0 if fa == f1 else -1.0
+
+    top = sorted(contrib.items(), key=lambda x: -abs(x[1]))[:12]
+    drivers = []
+    for feat, c in top:
+        c_for_a = sign * c
+        rv = raw_val.get(feat, 0.0)
+        drivers.append({
+            "feature":           feat,
+            "display_name":      _feat_display_name(feat),
+            "raw_value":         round(rv, 4),
+            "raw_value_display": _format_raw_value(feat, rv),
+            "contribution":      round(float(c_for_a), 4),
+            "favors":            fa if c_for_a > 0 else fb,
+            "favors_display":    _format_fighter_name(fa if c_for_a > 0 else fb),
+        })
+
+    # lr_prob / xgb_prob reported in fighter_a's frame (same as final_prob_a)
+    lr_prob_a  = p_lr  if fa == f1 else (1.0 - p_lr)
+    xgb_prob_a = p_xgb if fa == f1 else (1.0 - p_xgb)
+
+    return jsonify({
+        "fighter_a":    fa,
+        "fighter_b":    fb,
+        "display_a":    _format_fighter_name(fa),
+        "display_b":    _format_fighter_name(fb),
+        "event_date":   event_date,
+        "final_prob_a": round(float(prob_a), 4),
+        "baseline":     0.5,
+        "lr_prob_a":    round(lr_prob_a, 4),
+        "xgb_prob_a":   round(xgb_prob_a, 4),
+        "drivers":      drivers,
+    })
+
+
+def _format_raw_value(feat, v):
+    """Human-friendly raw-value string for the explain waterfall."""
+    try:
+        v = float(v)
+    except (TypeError, ValueError):
+        return str(v)
+    fl = feat.lower()
+    if "elo" in fl and "prob" not in fl:
+        return f"{v:+.0f} Elo"
+    if "age_diff" == fl or "ufc_age" in fl:
+        return f"{v:+.1f} yr"
+    if "reach" in fl or "height" in fl or "weight" in fl:
+        return f"{v:+.1f}"
+    if "days_since" in fl:
+        return f"{v:+.0f} d"
+    if "prob" in fl or "rate" in fl or "ratio" in fl or "acc" in fl or "def" in fl:
+        return f"{v:+.3f}"
+    return f"{v:+.3f}"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 
 
 @app.route("/api/fighters/compare_zscores", methods=["POST"])

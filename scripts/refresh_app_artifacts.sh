@@ -9,8 +9,11 @@ echo ""
 echo "[2/3] Building per-fighter absolute-stats cache for live predictions..."
 python scripts/build_fighter_abs_stats.py
 echo ""
-echo "[3/3] Exporting slim sqlite for deployment (commit-safe)..."
+echo "[3/4] Exporting slim sqlite for deployment (commit-safe)..."
 python scripts/export_slim_db.py
+echo ""
+echo "[4/4] Running walk-forward backtest and persisting predictions..."
+python scripts/run_backtest_and_save.py
 echo ""
 echo "Done."
 echo "To deploy: git add app/models/blend/ data/sqlite_db/slim_scrapper.db && git commit && git push"
