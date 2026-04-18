@@ -188,6 +188,110 @@ def _load_backtest_predictions():
         print(f"  Backtest load failed: {e}")
         model_state["backtest"] = None
 
+    # Piggyback: load Vegas odds and pre-merge against backtest for the
+    # /api/model/vegas_comparison endpoint.
+    _load_vegas_odds_merged()
+
+
+# ── Vegas odds (long-format CSV) + backtest merge ──────────────────────────
+# odds_table.csv is the multi-book average, devig'd long-format pipeline the
+# notebook writes. Two rows per bout (one per fighter). American odds in
+# [-110, +110] are clamped to ±100 here (matches the notebook's clamping).
+import re as _re
+_ODDS_CSV_PATH = Path(__file__).parent.parent / "data" / "tmp" / "odds_table.csv"
+_NAME_ALIASES = {"patriciofreire": "patriciopitbull"}
+
+
+def _norm_jf(name):
+    n = _re.sub(r"\W+", "", str(name)).lower()
+    return _NAME_ALIASES.get(n, n)
+
+
+def _am_to_implied(a):
+    return np.where(a < 0, -a / (-a + 100), 100 / (a + 100))
+
+
+def _am_to_decimal(a):
+    return np.where(a < 0, 1 + 100 / (-a), 1 + a / 100)
+
+
+def _clamp_100(a):
+    if a > 0 and a <= 110:
+        return 100.0
+    if a < 0 and a >= -110:
+        return -100.0
+    return a
+
+
+def _load_vegas_odds_merged():
+    """Merge backtest predictions with market odds (devig'd, ±100 clamped).
+
+    Stored at model_state['vegas'] = {'df': merged, 'odds_min': ..., 'odds_max': ...}
+    """
+    model_state["vegas"] = None
+    bt = model_state.get("backtest")
+    if not bt:
+        return
+    if not _ODDS_CSV_PATH.exists():
+        print(f"  Vegas odds CSV NOT found at {_ODDS_CSV_PATH}")
+        print("  /api/model/vegas_comparison will 503")
+        return
+    try:
+        raw = pd.read_csv(_ODDS_CSV_PATH, parse_dates=["DATE"])
+        raw["jfighter"] = raw["FIGHTER"].apply(_norm_jf)
+        raw["odds_clamped"] = raw["odds"].apply(_clamp_100)
+
+        wide = raw.pivot_table(
+            index=["DATE", "BOUT"],
+            columns=raw.groupby(["DATE", "BOUT"]).cumcount(),
+            values=["jfighter", "odds_clamped"],
+            aggfunc="first",
+        ).reset_index()
+        wide.columns = ["DATE", "BOUT", "jf_a", "jf_b", "odds_a", "odds_b"]
+        pa, pb = _am_to_implied(wide["odds_a"]), _am_to_implied(wide["odds_b"])
+        s = pa + pb
+        wide["prob_a_clamped"] = pa / s
+        wide["prob_b_clamped"] = pb / s
+        wide["vig"] = s - 1
+        wide["dec_a"] = _am_to_decimal(wide["odds_a"])
+        wide["dec_b"] = _am_to_decimal(wide["odds_b"])
+        wide["am_a"] = wide["odds_a"]
+        wide["am_b"] = wide["odds_b"]
+        wide["pair"] = [tuple(sorted([a, b])) for a, b in zip(wide["jf_a"], wide["jf_b"])]
+        wide = wide.rename(columns={"DATE": "bout_date_parsed"}).drop_duplicates(
+            subset=["bout_date_parsed", "pair"], keep="first")
+
+        df = bt["df"].copy()
+        df["jf_a_n"] = df["fighter_a"].apply(_norm_jf)
+        df["jf_b_n"] = df["fighter_b"].apply(_norm_jf)
+        df["pair"] = [tuple(sorted([a, b])) for a, b in zip(df["jf_a_n"], df["jf_b_n"])]
+
+        m = df.merge(
+            wide[["bout_date_parsed", "pair", "jf_a", "jf_b",
+                  "prob_a_clamped", "prob_b_clamped", "dec_a", "dec_b",
+                  "am_a", "am_b", "vig"]],
+            on=["bout_date_parsed", "pair"], how="left")
+        same = m["jf_a_n"] == m["jf_a"]
+        m["p_vegas_a"] = np.where(same, m["prob_a_clamped"], m["prob_b_clamped"])
+        m["dec_odds_a"] = np.where(same, m["dec_a"], m["dec_b"])
+        m["dec_odds_b"] = np.where(same, m["dec_b"], m["dec_a"])
+        m["am_odds_a"] = np.where(same, m["am_a"], m["am_b"])
+        m["am_odds_b"] = np.where(same, m["am_b"], m["am_a"])
+
+        matched = int(m["p_vegas_a"].notna().sum())
+        model_state["vegas"] = {
+            "df": m,
+            "odds_min": str(raw["DATE"].min().date()),
+            "odds_max": str(raw["DATE"].max().date()),
+            "matched": matched,
+            "total": int(len(m)),
+        }
+        print(f"  Vegas: {matched}/{len(m)} bouts matched "
+              f"({raw['DATE'].min().date()} → {raw['DATE'].max().date()})")
+    except Exception as e:
+        print(f"  Vegas odds load failed: {e}")
+        model_state["vegas"] = None
+
 
 def _load_fighter_list():
     """Load all fighter names with their most recent fight date."""
@@ -1703,6 +1807,142 @@ def tier_bouts():
         "n_shown":  len(bouts),
         "accuracy": acc,
         "bouts":    bouts,
+    })
+
+
+@app.route("/api/model/vegas_comparison")
+def vegas_comparison():
+    """Per-fold + pooled comparison of the blended model against the market.
+
+    Source: app/models/blend/backtest_predictions.json merged with the
+    multi-book devig'd odds at data/tmp/odds_table.csv (American odds in
+    [-110, +110] are clamped to ±100 — matches the notebook pipeline).
+
+    Returns:
+      coverage       : {matched, total, pct, odds_start, odds_end}
+      pooled         : metrics across all matched bouts
+      per_fold       : list of metrics per walk-forward fold
+      decomposition  : agree/disagree with Vegas, favorite/underdog picks
+      config         : {blend_weight_xgb, edge_threshold_pp, odds_clamp}
+    """
+    v = model_state.get("vegas")
+    if not v:
+        return jsonify({"error": "Vegas odds not loaded (see startup logs)"}), 503
+
+    EDGE_THRESH = 0.05  # 5pp — model must exceed Vegas by this to flag edge
+    bt = model_state["backtest"]
+    folds_meta = {int(f["fold_num"]): f for f in bt["folds"]}
+
+    df = v["df"]
+    matched = df[df["p_vegas_a"].notna()].copy()
+
+    def _metrics(sub):
+        if len(sub) == 0:
+            return {"n": 0}
+        y = sub["y"].values
+        pm = sub["p_blend"].clip(1e-6, 1 - 1e-6).values
+        pv = sub["p_vegas_a"].clip(1e-6, 1 - 1e-6).values
+        acc_m = float(((pm >= 0.5) == y).mean())
+        acc_v = float(((pv >= 0.5) == y).mean())
+        ll_m = float(-np.mean(y * np.log(pm) + (1 - y) * np.log(1 - pm)))
+        ll_v = float(-np.mean(y * np.log(pv) + (1 - y) * np.log(1 - pv)))
+        br_m = float(np.mean((pm - y) ** 2))
+        br_v = float(np.mean((pv - y) ** 2))
+
+        pick_a = pm >= 0.5
+        odds_p = np.where(pick_a, sub["dec_odds_a"], sub["dec_odds_b"])
+        won = np.where(pick_a, y == 1, y == 0)
+        pnl = np.where(won, odds_p - 1.0, -1.0)
+        roi = float(pnl.mean() * 100)
+
+        vpick = np.where(pick_a, pv, 1 - pv)
+        mpick = np.where(pick_a, pm, 1 - pm)
+        mask = (mpick - vpick) > EDGE_THRESH
+        n_edge = int(mask.sum())
+        roi_edge = float(pnl[mask].mean() * 100) if n_edge > 0 else None
+
+        return {
+            "n": int(len(sub)),
+            "acc_model": round(acc_m, 4),
+            "acc_vegas": round(acc_v, 4),
+            "ll_model":  round(ll_m, 4),
+            "ll_vegas":  round(ll_v, 4),
+            "br_model":  round(br_m, 4),
+            "br_vegas":  round(br_v, 4),
+            "roi_flat":  round(roi, 4),
+            "n_edge":    n_edge,
+            "roi_edge":  round(roi_edge, 4) if roi_edge is not None else None,
+            "vig_mean":  round(float(sub["vig"].mean()), 4),
+        }
+
+    per_fold = []
+    for fn in sorted(matched["fold_num"].unique()):
+        sub = matched[matched["fold_num"] == fn]
+        meta = folds_meta.get(int(fn), {})
+        per_fold.append({
+            "fold":       int(fn),
+            "test_start": meta.get("test_start"),
+            "test_end":   meta.get("test_end"),
+            "n_total":    int(meta.get("n_bouts", 0)),
+            **_metrics(sub),
+        })
+
+    pooled = _metrics(matched)
+    pooled["test_start"] = bt["folds"][0]["test_start"]
+    pooled["test_end"]   = bt["folds"][-1]["test_end"]
+    pooled["n_total"]    = int(len(df))
+
+    # ── Decomposition: where ROI comes from ────────────────────────────────
+    M = matched.copy()
+    M["model_pick_a"] = M["p_blend"] >= 0.5
+    M["vegas_pick_a"] = M["p_vegas_a"] >= 0.5
+    M["agree"]        = M["model_pick_a"] == M["vegas_pick_a"]
+    M["odds_pick"]    = np.where(M["model_pick_a"], M["dec_odds_a"], M["dec_odds_b"])
+    M["am_pick"]      = np.where(M["model_pick_a"], M["am_odds_a"],  M["am_odds_b"])
+    M["won"]          = np.where(M["model_pick_a"], M["y"] == 1, M["y"] == 0)
+    M["pnl"]          = np.where(M["won"], M["odds_pick"] - 1.0, -1.0)
+    M["v_odds_pick"]  = np.where(M["vegas_pick_a"], M["dec_odds_a"], M["dec_odds_b"])
+    M["v_won"]        = np.where(M["vegas_pick_a"], M["y"] == 1, M["y"] == 0)
+    M["v_pnl"]        = np.where(M["v_won"], M["v_odds_pick"] - 1.0, -1.0)
+
+    def _bucket(sub):
+        if len(sub) == 0:
+            return {"n": 0}
+        return {
+            "n":                  int(len(sub)),
+            "win_rate":           round(float(sub["won"].mean()), 4),
+            "avg_american_odds":  round(float(sub["am_pick"].mean()), 1),
+            "avg_decimal":        round(float(sub["odds_pick"].mean()), 3),
+            "roi":                round(float(sub["pnl"].mean() * 100), 3),
+            "total_pnl":          round(float(sub["pnl"].sum()), 3),
+        }
+
+    decomposition = {
+        "agree":          _bucket(M[M["agree"]]),
+        "disagree":       _bucket(M[~M["agree"]]),
+        "picks_favorite": _bucket(M[M["am_pick"] < 0]),
+        "picks_underdog": _bucket(M[M["am_pick"] >= 0]),
+        "vegas_pick_roi":      round(float(M["v_pnl"].mean() * 100), 3),
+        "vegas_pick_win_rate": round(float(M["v_won"].mean()), 4),
+    }
+
+    return jsonify({
+        "coverage": {
+            "matched":    int(len(matched)),
+            "total":      int(len(df)),
+            "pct":        round(float(len(matched) / max(len(df), 1)), 4),
+            "odds_start": v["odds_min"],
+            "odds_end":   v["odds_max"],
+        },
+        "pooled":        pooled,
+        "per_fold":      per_fold,
+        "decomposition": decomposition,
+        "config": {
+            "blend_weight_xgb":  0.5,
+            "edge_threshold_pp": round(EDGE_THRESH * 100, 1),
+            "odds_clamp":        "+/-100",
+            "odds_source":       "data/tmp/odds_table.csv (multi-book avg, devig'd)",
+        },
     })
 
 

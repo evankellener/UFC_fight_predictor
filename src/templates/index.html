@@ -903,6 +903,102 @@ html.light {
   border-top: 2px solid var(--mi-accent);
 }
 
+/* ── Vegas comparison ────────────────────────────────────── */
+.mi-vegas-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.mi-vegas-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.mi-vegas-tile {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+}
+.mi-vegas-tile .mi-vegas-label {
+  font-family: var(--mi-font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mi-vegas-tile .mi-vegas-value {
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 0.25rem;
+  font-family: var(--mi-font-mono);
+}
+.mi-vegas-tile .mi-vegas-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+  font-family: var(--mi-font-mono);
+}
+.mi-vegas-table-wrap { overflow-x: auto; margin: 1rem 0; }
+.mi-vegas-table {
+  width: 100%;
+  font-family: var(--mi-font-mono);
+  font-size: 0.78rem;
+  border-collapse: collapse;
+}
+.mi-vegas-table th, .mi-vegas-table td {
+  padding: 0.55rem 0.65rem;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.mi-vegas-table th:first-child, .mi-vegas-table td:first-child { text-align: left; }
+.mi-vegas-table thead th {
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.68rem;
+}
+.mi-vegas-table tr.mi-vegas-total td {
+  font-weight: 600;
+  border-top: 2px solid var(--border);
+  background: var(--bg);
+}
+.mi-vegas-pos { color: var(--mi-win); }
+.mi-vegas-neg { color: var(--mi-loss); }
+.mi-vegas-mute { color: var(--muted); }
+.mi-vegas-decomp {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.25rem;
+}
+.mi-vegas-decomp-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+}
+.mi-vegas-decomp-card.mi-vegas-highlight { border-color: var(--mi-accent); }
+.mi-vegas-decomp-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.mi-vegas-decomp-row {
+  display: flex; justify-content: space-between;
+  font-family: var(--mi-font-mono);
+  font-size: 0.78rem;
+  padding: 0.18rem 0;
+}
+.mi-vegas-decomp-row .mi-vegas-k { color: var(--muted); }
+.mi-vegas-decomp-row .mi-vegas-v { color: var(--text); font-weight: 500; }
+
 /* ── 05. Confidence tiers ─────────────────────────────────── */
 .mi-tiers-container {
   background: var(--card);
@@ -1462,6 +1558,88 @@ html.light {
       <span><span class="mi-calib-legend-line mi-solid"></span>Model</span>
     </div>
     <div class="mi-takeaway" id="calibTakeaway">Loading calibration data…</div>
+  </div>
+</section>
+
+<!-- ─── Vs. the market ─────────────────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">★</span>
+    <h2 class="mi-section-title">Vs. the <em>market</em></h2>
+  </div>
+  <p class="mi-section-desc">
+    Per-fold comparison against multi-book consensus odds (devig'd, clamped to ±100).
+    Accuracy / log loss / Brier vs the market, plus flat-bet ROI at market prices.
+  </p>
+
+  <div class="mi-vegas-card" id="vegasCard">
+    <div class="mi-empty" id="vegasEmpty">Loading Vegas comparison…</div>
+
+    <div id="vegasContent" style="display:none;">
+      <!-- Hero tiles -->
+      <div class="mi-vegas-hero">
+        <div class="mi-vegas-tile">
+          <div class="mi-vegas-label">Accuracy</div>
+          <div class="mi-vegas-value" id="vegasAcc">—</div>
+          <div class="mi-vegas-sub" id="vegasAccSub">—</div>
+        </div>
+        <div class="mi-vegas-tile">
+          <div class="mi-vegas-label">Log Loss</div>
+          <div class="mi-vegas-value" id="vegasLL">—</div>
+          <div class="mi-vegas-sub" id="vegasLLSub">—</div>
+        </div>
+        <div class="mi-vegas-tile">
+          <div class="mi-vegas-label">Brier</div>
+          <div class="mi-vegas-value" id="vegasBR">—</div>
+          <div class="mi-vegas-sub" id="vegasBRSub">—</div>
+        </div>
+        <div class="mi-vegas-tile">
+          <div class="mi-vegas-label">ROI flat</div>
+          <div class="mi-vegas-value" id="vegasROI">—</div>
+          <div class="mi-vegas-sub">bet model's pick at market odds</div>
+        </div>
+        <div class="mi-vegas-tile">
+          <div class="mi-vegas-label">ROI edge &gt;5pp</div>
+          <div class="mi-vegas-value" id="vegasROIEdge">—</div>
+          <div class="mi-vegas-sub" id="vegasROIEdgeSub">—</div>
+        </div>
+      </div>
+
+      <!-- Per-fold table -->
+      <div class="mi-vegas-table-wrap">
+        <table class="mi-vegas-table">
+          <thead>
+            <tr>
+              <th>Fold</th>
+              <th>Window</th>
+              <th>Cov</th>
+              <th>Acc M</th>
+              <th>Acc V</th>
+              <th>LL M</th>
+              <th>LL V</th>
+              <th>Br M</th>
+              <th>Br V</th>
+              <th>ROI</th>
+              <th>Edge n</th>
+              <th>ROI edge</th>
+              <th>Vig</th>
+            </tr>
+          </thead>
+          <tbody id="vegasFoldRows"></tbody>
+        </table>
+      </div>
+
+      <!-- Decomposition -->
+      <h3 style="font-size:0.95rem; font-weight:600; margin-top:1.5rem; color:var(--text);">
+        Where the ROI comes from
+      </h3>
+      <div class="mi-vegas-decomp" id="vegasDecomp"></div>
+
+      <div class="mi-takeaway" id="vegasTakeaway">—</div>
+
+      <div class="mi-vegas-mute" style="font-size:0.72rem; margin-top:1rem;"
+           id="vegasFootnote">—</div>
+    </div>
   </div>
 </section>
 
@@ -2253,6 +2431,7 @@ async function miLoadAll() {
   miLoadBlendSweep();
   miLoadFolds();
   miLoadCalibration();
+  miLoadVegasComparison();
   miLoadTiers();
 }
 
@@ -2679,6 +2858,169 @@ function miDrawCalibration() {
   });
 
   svg.innerHTML = html;
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// ★ VS. THE MARKET (endpoint: GET /api/model/vegas_comparison)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadVegasComparison() {
+  const emptyEl = document.getElementById('vegasEmpty');
+  const contentEl = document.getElementById('vegasContent');
+  if (!emptyEl || !contentEl) return;
+  try {
+    const res = await fetch('/api/model/vegas_comparison');
+    if (!res.ok) {
+      emptyEl.textContent = 'Market comparison unavailable.';
+      return;
+    }
+    const d = await res.json();
+    if (d.error) {
+      emptyEl.textContent = d.error;
+      return;
+    }
+    miRenderVegas(d);
+    emptyEl.style.display = 'none';
+    contentEl.style.display = 'block';
+  } catch (e) {
+    console.error('miLoadVegasComparison failed:', e);
+    emptyEl.textContent = 'Failed to load market comparison.';
+  }
+}
+
+function miFmtPct(v, digits = 1) {
+  if (v === null || v === undefined || Number.isNaN(v)) return '—';
+  return (v * 100).toFixed(digits) + '%';
+}
+function miFmtNum(v, digits = 4) {
+  if (v === null || v === undefined || Number.isNaN(v)) return '—';
+  return Number(v).toFixed(digits);
+}
+function miFmtSigned(v, digits = 2) {
+  if (v === null || v === undefined || Number.isNaN(v)) return '—';
+  const s = v >= 0 ? '+' : '';
+  return `${s}${Number(v).toFixed(digits)}%`;
+}
+function miSignClass(v) {
+  if (v === null || v === undefined || Number.isNaN(v)) return '';
+  return v >= 0 ? 'mi-vegas-pos' : 'mi-vegas-neg';
+}
+
+function miRenderVegas(d) {
+  const p = d.pooled;
+  const cov = d.coverage;
+
+  // ── Hero tiles ─────────────────────────────────────────────
+  const accDelta = (p.acc_model - p.acc_vegas) * 100;
+  document.getElementById('vegasAcc').textContent    = miFmtPct(p.acc_model, 1);
+  document.getElementById('vegasAccSub').innerHTML   =
+    `Vegas ${miFmtPct(p.acc_vegas, 1)} <span class="${miSignClass(accDelta)}">` +
+    `(${accDelta >= 0 ? '+' : ''}${accDelta.toFixed(1)}pp)</span>`;
+
+  const llDelta = p.ll_vegas - p.ll_model; // positive = model better
+  document.getElementById('vegasLL').textContent     = miFmtNum(p.ll_model, 4);
+  document.getElementById('vegasLLSub').innerHTML    =
+    `Vegas ${miFmtNum(p.ll_vegas, 4)} <span class="${miSignClass(llDelta)}">` +
+    `(${llDelta >= 0 ? '−' : '+'}${Math.abs(p.ll_model - p.ll_vegas).toFixed(4)})</span>`;
+
+  const brDelta = p.br_vegas - p.br_model;
+  document.getElementById('vegasBR').textContent     = miFmtNum(p.br_model, 4);
+  document.getElementById('vegasBRSub').innerHTML    =
+    `Vegas ${miFmtNum(p.br_vegas, 4)} <span class="${miSignClass(brDelta)}">` +
+    `(${brDelta >= 0 ? '−' : '+'}${Math.abs(p.br_model - p.br_vegas).toFixed(4)})</span>`;
+
+  const roiEl = document.getElementById('vegasROI');
+  roiEl.textContent = miFmtSigned(p.roi_flat, 2);
+  roiEl.className = `mi-vegas-value ${miSignClass(p.roi_flat)}`;
+
+  const roiEdgeEl = document.getElementById('vegasROIEdge');
+  roiEdgeEl.textContent = p.roi_edge === null ? '—' : miFmtSigned(p.roi_edge, 2);
+  roiEdgeEl.className = `mi-vegas-value ${miSignClass(p.roi_edge)}`;
+  document.getElementById('vegasROIEdgeSub').textContent = `${p.n_edge} bets`;
+
+  // ── Per-fold rows ──────────────────────────────────────────
+  const rows = d.per_fold.map(f => {
+    const roiC  = miSignClass(f.roi_flat);
+    const roiEC = miSignClass(f.roi_edge);
+    return `<tr>
+      <td>${f.fold}</td>
+      <td class="mi-vegas-mute">${(f.test_start || '').slice(5)} → ${(f.test_end || '').slice(5)}</td>
+      <td>${f.n}/${f.n_total}</td>
+      <td>${miFmtNum(f.acc_model, 3)}</td>
+      <td>${miFmtNum(f.acc_vegas, 3)}</td>
+      <td>${miFmtNum(f.ll_model, 4)}</td>
+      <td>${miFmtNum(f.ll_vegas, 4)}</td>
+      <td>${miFmtNum(f.br_model, 4)}</td>
+      <td>${miFmtNum(f.br_vegas, 4)}</td>
+      <td class="${roiC}">${miFmtSigned(f.roi_flat, 2)}</td>
+      <td>${f.n_edge}</td>
+      <td class="${roiEC}">${f.roi_edge === null ? '—' : miFmtSigned(f.roi_edge, 2)}</td>
+      <td class="mi-vegas-mute">${miFmtPct(f.vig_mean, 1)}</td>
+    </tr>`;
+  }).join('');
+
+  const totalRoiC  = miSignClass(p.roi_flat);
+  const totalRoiEC = miSignClass(p.roi_edge);
+  const totalRow = `<tr class="mi-vegas-total">
+    <td>ALL</td>
+    <td class="mi-vegas-mute">${(p.test_start || '').slice(5)} → ${(p.test_end || '').slice(5)}</td>
+    <td>${p.n}/${p.n_total}</td>
+    <td>${miFmtNum(p.acc_model, 3)}</td>
+    <td>${miFmtNum(p.acc_vegas, 3)}</td>
+    <td>${miFmtNum(p.ll_model, 4)}</td>
+    <td>${miFmtNum(p.ll_vegas, 4)}</td>
+    <td>${miFmtNum(p.br_model, 4)}</td>
+    <td>${miFmtNum(p.br_vegas, 4)}</td>
+    <td class="${totalRoiC}">${miFmtSigned(p.roi_flat, 2)}</td>
+    <td>${p.n_edge}</td>
+    <td class="${totalRoiEC}">${p.roi_edge === null ? '—' : miFmtSigned(p.roi_edge, 2)}</td>
+    <td class="mi-vegas-mute">${miFmtPct(p.vig_mean, 1)}</td>
+  </tr>`;
+  document.getElementById('vegasFoldRows').innerHTML = rows + totalRow;
+
+  // ── Decomposition cards ────────────────────────────────────
+  const dec = d.decomposition;
+  const decCard = (title, b, highlight) => {
+    if (!b || b.n === 0) {
+      return `<div class="mi-vegas-decomp-card${highlight ? ' mi-vegas-highlight' : ''}">
+        <h4>${title}</h4>
+        <div class="mi-vegas-decomp-row"><span class="mi-vegas-mute">no data</span></div>
+      </div>`;
+    }
+    const roiSign = miSignClass(b.roi);
+    const amSign  = b.avg_american_odds >= 0 ? '+' : '';
+    return `<div class="mi-vegas-decomp-card${highlight ? ' mi-vegas-highlight' : ''}">
+      <h4>${title}</h4>
+      <div class="mi-vegas-decomp-row"><span class="mi-vegas-k">Bouts</span><span class="mi-vegas-v">${b.n}</span></div>
+      <div class="mi-vegas-decomp-row"><span class="mi-vegas-k">Win rate</span><span class="mi-vegas-v">${miFmtPct(b.win_rate, 1)}</span></div>
+      <div class="mi-vegas-decomp-row"><span class="mi-vegas-k">Avg odds</span><span class="mi-vegas-v">${amSign}${b.avg_american_odds.toFixed(0)}</span></div>
+      <div class="mi-vegas-decomp-row"><span class="mi-vegas-k">ROI</span><span class="mi-vegas-v ${roiSign}">${miFmtSigned(b.roi, 2)}</span></div>
+    </div>`;
+  };
+  document.getElementById('vegasDecomp').innerHTML = [
+    decCard('Agree with Vegas', dec.agree, false),
+    decCard('Disagree with Vegas', dec.disagree, true),
+    decCard('Picks Favorite', dec.picks_favorite, false),
+    decCard('Picks Underdog', dec.picks_underdog, false),
+  ].join('');
+
+  // ── Takeaway + footnote ────────────────────────────────────
+  const tk = document.getElementById('vegasTakeaway');
+  const vegasBaselineSign = miSignClass(dec.vegas_pick_roi);
+  const modelRoiSign      = miSignClass(p.roi_flat);
+  tk.innerHTML = `
+    <strong>Baseline:</strong> blindly betting every Vegas favorite at market odds returns
+    <strong class="${vegasBaselineSign}">${miFmtSigned(dec.vegas_pick_roi, 2)}</strong>
+    ROI on these same ${p.n} bouts. The model clears
+    <strong class="${modelRoiSign}">${miFmtSigned(p.roi_flat, 2)}</strong>
+    by selectively deviating — most of that comes from picking underdogs it thinks
+    the market has priced too low.
+  `;
+
+  const ft = document.getElementById('vegasFootnote');
+  ft.textContent = `Coverage ${miFmtPct(cov.pct, 1)} (${cov.matched}/${cov.total}) · ` +
+    `odds ${cov.odds_start} → ${cov.odds_end} · ` +
+    `clamp ${d.config.odds_clamp} · edge threshold ${d.config.edge_threshold_pp}pp · ` +
+    `vig avg ${miFmtPct(p.vig_mean, 1)}`;
 }
 
 // ──────────────────────────────────────────────────────────────────────
