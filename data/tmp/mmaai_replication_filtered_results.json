@@ -1,0 +1,28 @@
+{
+  "n_test": 508,
+  "n_train": 2636,
+  "test_window": [
+    "2024-05-04",
+    "2025-11-08"
+  ],
+  "filter": "both_fighters_ge_2_priors + drop_dq/overturned/split_decision/majority_decision",
+  "metrics": {
+    "acc": 0.6751968503937008,
+    "ll": 0.6114142292618955,
+    "auc": 0.7243891237905207,
+    "brier": 0.2111236324325723
+  },
+  "target": {
+    "acc": 0.7032,
+    "ll": 0.5985,
+    "auc": 0.7297,
+    "brier": 0.2057
+  },
+  "gap": {
+    "acc_pp": -2.800314960629924,
+    "ll": 0.012914229261895449,
+    "auc": -0.005310876209479343,
+    "brier": 0.005423632432572295
+  },
+  "model": "LogReg ElasticNet C=0.05 l1=0.5, recency-weighted \u03bb=0.13"
+}

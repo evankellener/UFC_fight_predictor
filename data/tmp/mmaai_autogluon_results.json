@@ -1,0 +1,212 @@
+{
+  "n_test": 422,
+  "n_train": 1530,
+  "n_val": 270,
+  "filter": {
+    "threshold": 3,
+    "method_strict": true,
+    "train_start": "2016-01-01"
+  },
+  "results": {
+    "acc": 0.6943127962085308,
+    "ll": 0.6057822035902547,
+    "auc": 0.7337006427915517,
+    "brier": 0.20883586294913506
+  },
+  "target_published_leaky": {
+    "acc": 0.7032,
+    "ll": 0.5985,
+    "auc": 0.7297,
+    "brier": 0.2057
+  },
+  "target_postfix_clean_acc": 0.64,
+  "baseline_blend": {
+    "acc": 0.6919,
+    "ll": 0.5974,
+    "auc": 0.7348,
+    "brier": 0.2051
+  },
+  "ag_leaderboard": [
+    {
+      "model": "WeightedEnsemble_L4",
+      "score_val": -0.6321583599260152,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.6066484451293945,
+      "fit_time": 164.75438809394836,
+      "pred_time_val_marginal": 0.0002810955047607422,
+      "fit_time_marginal": 0.0037870407104492188,
+      "stack_level": 4,
+      "can_infer": true,
+      "fit_order": 15
+    },
+    {
+      "model": "NeuralNetTorch_BAG_L3",
+      "score_val": -0.6322602286895239,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.5921363830566406,
+      "fit_time": 150.67631721496582,
+      "pred_time_val_marginal": 0.07686090469360352,
+      "fit_time_marginal": 12.374431848526001,
+      "stack_level": 3,
+      "can_infer": true,
+      "fit_order": 14
+    },
+    {
+      "model": "NeuralNetTorch_BAG_L2",
+      "score_val": -0.6326175289113107,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.44820284843444824,
+      "fit_time": 85.7349681854248,
+      "pred_time_val_marginal": 0.07992887496948242,
+      "fit_time_marginal": 12.270358085632324,
+      "stack_level": 2,
+      "can_infer": true,
+      "fit_order": 9
+    },
+    {
+      "model": "WeightedEnsemble_L3",
+      "score_val": -0.6326175289113107,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.4485158920288086,
+      "fit_time": 85.73939990997314,
+      "pred_time_val_marginal": 0.00031304359436035156,
+      "fit_time_marginal": 0.004431724548339844,
+      "stack_level": 3,
+      "can_infer": true,
+      "fit_order": 10
+    },
+    {
+      "model": "WeightedEnsemble_L2",
+      "score_val": -0.6399494558249602,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.11178398132324219,
+      "fit_time": 30.87054204940796,
+      "pred_time_val_marginal": 0.0003440380096435547,
+      "fit_time_marginal": 0.006033182144165039,
+      "stack_level": 2,
+      "can_infer": true,
+      "fit_order": 5
+    },
+    {
+      "model": "LightGBM_2_BAG_L3",
+      "score_val": -0.6430218338051212,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.5295064449310303,
+      "fit_time": 152.3761692047119,
+      "pred_time_val_marginal": 0.014230966567993164,
+      "fit_time_marginal": 14.074283838272095,
+      "stack_level": 3,
+      "can_infer": true,
+      "fit_order": 12
+    },
+    {
+      "model": "LightGBM_2_BAG_L1",
+      "score_val": -0.6430862405149355,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.017455101013183594,
+      "fit_time": 16.13115692138672,
+      "pred_time_val_marginal": 0.017455101013183594,
+      "fit_time_marginal": 16.13115692138672,
+      "stack_level": 1,
+      "can_infer": true,
+      "fit_order": 2
+    },
+    {
+      "model": "NeuralNetTorch_BAG_L1",
+      "score_val": -0.6437873769247535,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.09398484230041504,
+      "fit_time": 14.733351945877075,
+      "pred_time_val_marginal": 0.09398484230041504,
+      "fit_time_marginal": 14.733351945877075,
+      "stack_level": 1,
+      "can_infer": true,
+      "fit_order": 4
+    },
+    {
+      "model": "LightGBM_BAG_L3",
+      "score_val": -0.6442587822650061,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.5335736274719238,
+      "fit_time": 149.3723623752594,
+      "pred_time_val_marginal": 0.01829814910888672,
+      "fit_time_marginal": 11.07047700881958,
+      "stack_level": 3,
+      "can_infer": true,
+      "fit_order": 11
+    },
+    {
+      "model": "CatBoost_BAG_L1",
+      "score_val": -0.6457961969521131,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.06067490577697754,
+      "fit_time": 28.894508123397827,
+      "pred_time_val_marginal": 0.06067490577697754,
+      "fit_time_marginal": 28.894508123397827,
+      "stack_level": 1,
+      "can_infer": true,
+      "fit_order": 3
+    },
+    {
+      "model": "LightGBM_BAG_L2",
+      "score_val": -0.6459773597449134,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.3934178352355957,
+      "fit_time": 86.63371920585632,
+      "pred_time_val_marginal": 0.025143861770629883,
+      "fit_time_marginal": 13.169109106063843,
+      "stack_level": 2,
+      "can_infer": true,
+      "fit_order": 6
+    },
+    {
+      "model": "LightGBM_BAG_L1",
+      "score_val": -0.647436945559254,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.19615912437438965,
+      "fit_time": 13.70559310913086,
+      "pred_time_val_marginal": 0.19615912437438965,
+      "fit_time_marginal": 13.70559310913086,
+      "stack_level": 1,
+      "can_infer": true,
+      "fit_order": 1
+    },
+    {
+      "model": "CatBoost_BAG_L3",
+      "score_val": -0.6482688896373683,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.5346634387969971,
+      "fit_time": 158.9985454082489,
+      "pred_time_val_marginal": 0.01938796043395996,
+      "fit_time_marginal": 20.696660041809082,
+      "stack_level": 3,
+      "can_infer": true,
+      "fit_order": 13
+    },
+    {
+      "model": "CatBoost_BAG_L2",
+      "score_val": -0.6502964514516104,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.3902280330657959,
+      "fit_time": 96.60045909881592,
+      "pred_time_val_marginal": 0.021954059600830078,
+      "fit_time_marginal": 23.135848999023438,
+      "stack_level": 2,
+      "can_infer": true,
+      "fit_order": 8
+    },
+    {
+      "model": "LightGBM_2_BAG_L2",
+      "score_val": -0.6504979368589204,
+      "eval_metric": "log_loss",
+      "pred_time_val": 0.3882486820220947,
+      "fit_time": 89.72656917572021,
+      "pred_time_val_marginal": 0.019974708557128906,
+      "fit_time_marginal": 16.261959075927734,
+      "stack_level": 2,
+      "can_infer": true,
+      "fit_order": 7
+    }
+  ],
+  "arch": "AutoGluon WeightedEnsemble_L2 (CAT + GBM\u00d72 + NN_TORCH), num_stack_levels=2, num_bag_folds=4, num_bag_sets=2, use_bag_holdout=True, calibrate=True, NO best_quality preset"
+}

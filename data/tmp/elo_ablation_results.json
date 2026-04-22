@@ -1,0 +1,176 @@
+{
+  "test_window": [
+    "2025-04-05",
+    "2026-04-05"
+  ],
+  "n_folds": 8,
+  "train_years": 8,
+  "hyperparams_frozen": {
+    "lr_C": 0.05,
+    "lr_l1": 0.5,
+    "recency_lambda": 0.05,
+    "xgb": {
+      "n_estimators": 1200,
+      "max_depth": 4,
+      "learning_rate": 0.015,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 4.0,
+      "min_child_weight": 20,
+      "tree_method": "hist",
+      "random_state": 42
+    }
+  },
+  "configs": {
+    "C1_baseline": {
+      "elo": {
+        "K": 48.0,
+        "ko_mult": 1.8,
+        "sub_mult": 1.2,
+        "decay_lambda": 0.923,
+        "decay_max": 0.25,
+        "decay_midpoint": 730.0,
+        "decay_steepness": 80.0,
+        "logistic_scale": 449.205,
+        "opp_quality_k": true,
+        "sliding_k": true,
+        "upset_momentum": true,
+        "champ_mult": 1.2
+      },
+      "features": "deployed",
+      "n": 517,
+      "lr": {
+        "acc": 0.6595744680851063,
+        "ll": 0.6262126143957857,
+        "auc": 0.7005721551176096,
+        "brier": 0.2179064731375111
+      },
+      "xgb": {
+        "acc": 0.6847195357833655,
+        "ll": 0.6283579745958815,
+        "auc": 0.699497472224745,
+        "brier": 0.21847273511000959
+      },
+      "blend": {
+        "acc": 0.6982591876208898,
+        "ll": 0.6212334298159887,
+        "auc": 0.7079435715799353,
+        "brier": 0.21542484924085972
+      }
+    },
+    "C2_restored": {
+      "elo": {
+        "K": 48.0,
+        "ko_mult": 1.8,
+        "sub_mult": 1.2,
+        "decay_lambda": 0.923,
+        "decay_max": 0.25,
+        "decay_midpoint": 730.0,
+        "decay_steepness": 80.0,
+        "logistic_scale": 449.205,
+        "opp_quality_k": true,
+        "sliding_k": true,
+        "upset_momentum": true,
+        "champ_mult": 1.2
+      },
+      "features": "deployed+restored",
+      "n": 517,
+      "lr": {
+        "acc": 0.6576402321083172,
+        "ll": 0.6265579577599518,
+        "auc": 0.699618563254927,
+        "brier": 0.2181027654861275
+      },
+      "xgb": {
+        "acc": 0.6595744680851063,
+        "ll": 0.6274604123958607,
+        "auc": 0.6963036963036963,
+        "brier": 0.2187758368468604
+      },
+      "blend": {
+        "acc": 0.6827852998065764,
+        "ll": 0.6210320481739373,
+        "auc": 0.7051584778857506,
+        "brier": 0.21572814819524846
+      }
+    },
+    "C3_best_params": {
+      "elo": {
+        "K": 48.0,
+        "ko_mult": 1.8,
+        "sub_mult": 1.2,
+        "decay_lambda": 0.923,
+        "r1_finish_mult": 1.25,
+        "streak_bonus": 0.4,
+        "streak_cap": 5,
+        "decay_max": 0.8,
+        "decay_midpoint": 365.0,
+        "decay_steepness": 40.0,
+        "logistic_scale": 449.205,
+        "opp_quality_k": true,
+        "sliding_k": true,
+        "upset_momentum": true,
+        "champ_mult": 1.2
+      },
+      "features": "deployed",
+      "n": 517,
+      "lr": {
+        "acc": 0.6653771760154739,
+        "ll": 0.6299870999912136,
+        "auc": 0.6951079223806497,
+        "brier": 0.21947195642340248
+      },
+      "xgb": {
+        "acc": 0.6808510638297872,
+        "ll": 0.6287257410933879,
+        "auc": 0.696666969394242,
+        "brier": 0.21887652444449823
+      },
+      "blend": {
+        "acc": 0.6789168278529981,
+        "ll": 0.6233191564865872,
+        "auc": 0.7013592468137922,
+        "brier": 0.21651320358283357
+      }
+    },
+    "C4_combined": {
+      "elo": {
+        "K": 48.0,
+        "ko_mult": 1.8,
+        "sub_mult": 1.2,
+        "decay_lambda": 0.923,
+        "r1_finish_mult": 1.25,
+        "streak_bonus": 0.4,
+        "streak_cap": 5,
+        "decay_max": 0.8,
+        "decay_midpoint": 365.0,
+        "decay_steepness": 40.0,
+        "logistic_scale": 449.205,
+        "opp_quality_k": true,
+        "sliding_k": true,
+        "upset_momentum": true,
+        "champ_mult": 1.2
+      },
+      "features": "deployed+restored",
+      "n": 517,
+      "lr": {
+        "acc": 0.6789168278529981,
+        "ll": 0.6291156506806623,
+        "auc": 0.696031241485787,
+        "brier": 0.21902725820698848
+      },
+      "xgb": {
+        "acc": 0.6615087040618955,
+        "ll": 0.6298064776249077,
+        "auc": 0.6928223291859655,
+        "brier": 0.21956241743518912
+      },
+      "blend": {
+        "acc": 0.6731141199226306,
+        "ll": 0.6235062063208682,
+        "auc": 0.7015106106015198,
+        "brier": 0.216619175706414
+      }
+    }
+  }
+}

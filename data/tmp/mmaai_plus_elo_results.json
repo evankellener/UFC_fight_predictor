@@ -1,0 +1,50 @@
+{
+  "results": {
+    "blend_no_elo": {
+      "acc": 0.6919431279620853,
+      "ll": 0.5973609448949286,
+      "auc": 0.7348484848484849,
+      "brier": 0.20509446489881586
+    },
+    "blend_with_elo": {
+      "acc": 0.6848341232227488,
+      "ll": 0.5940324431744975,
+      "auc": 0.7405876951331496,
+      "brier": 0.2038696555556884
+    },
+    "ag_no_elo": {
+      "acc": 0.6943127962085308,
+      "ll": 0.6057822035902547,
+      "auc": 0.7337006427915517,
+      "brier": 0.20883586294913506
+    },
+    "ag_with_elo": {
+      "acc": 0.6895734597156398,
+      "ll": 0.6010741397222908,
+      "auc": 0.7361340679522499,
+      "brier": 0.20667814720116012
+    }
+  },
+  "elo_cols": [
+    "precomp_elo_diff",
+    "elo_win_prob",
+    "elo_momentum_diff",
+    "peak_elo_diff",
+    "avg_opp_elo_diff",
+    "elo_consist_diff"
+  ],
+  "elo_params": {
+    "K": 48.0,
+    "ko_mult": 1.8,
+    "sub_mult": 1.2,
+    "decay_lambda": 0.923,
+    "decay_max": 0.25,
+    "decay_midpoint": 730.0,
+    "decay_steepness": 80.0,
+    "logistic_scale": 449.205,
+    "opp_quality_k": true,
+    "sliding_k": true,
+    "upset_momentum": true,
+    "champ_mult": 1.2
+  }
+}

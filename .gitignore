@@ -77,3 +77,7 @@ data/sqlite_db/*_pre_*.db
 
 # Exception: blend model artifacts need to ship to deployment
 !app/models/blend/*.pkl
+
+# AutoGluon and CatBoost training artifacts
+AutogluonModels/
+catboost_info/

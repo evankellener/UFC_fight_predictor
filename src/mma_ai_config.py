@@ -62,11 +62,16 @@ PG_TAU_RD1 = {
 }
 
 # Per-weight-class overrides (weightindex → stat → τ)
+# NOTE: weightindex values below match the DB's actual encoding (see
+# WEIGHTCLASS_NAMES below + data/sqlite_db/slim_scrapper.db). Prior versions
+# of this file used indices 1/7/8 with comments "Flyweight/LHW/HW", but those
+# indices actually point to W.Strawweight / FW(men) / LW in the DB — every
+# override was hitting the wrong division. Fixed to match DB encoding.
 PG_TAU_WC_OVERRIDES = {
-    1: {"rev": 22.0},                    # Flyweight
-    7: {"head_land_rd1": 0.5},           # Light Heavyweight
-    8: {"td_land": 5.0, "td_att": 5.0,
-        "td_land_rd1": 4.0, "td_att_rd1": 4.0},  # Heavyweight
+    5:  {"rev": 22.0},                              # Flyweight (men's)
+    11: {"head_land_rd1": 0.5},                     # Light Heavyweight
+    12: {"td_land": 5.0, "td_att": 5.0,
+         "td_land_rd1": 4.0, "td_att_rd1": 4.0},    # Heavyweight
 }
 
 # ── Beta-Binomial pseudo-counts (τ) ──────────────────────────────────────
@@ -88,9 +93,9 @@ BB_TAU_RD1 = {
 }
 
 BB_TAU_WC_OVERRIDES = {
-    4: {"sub_land": 3},                  # Featherweight
-    7: {"ctrl": 1.5},                    # Light Heavyweight
-    8: {"ctrl": 1.5},                    # Heavyweight
+    7:  {"sub_land": 3},    # Featherweight (men's) — was 4 (W.Featherweight, 30 fights)
+    11: {"ctrl": 1.5},      # Light Heavyweight    — was 7 (FW men's)
+    12: {"ctrl": 1.5},      # Heavyweight          — was 8 (Lightweight)
 }
 
 # ── AdjPerf K values ─────────────────────────────────────────────────────
@@ -132,18 +137,21 @@ AG_SETTINGS = {
 }
 
 # ── Weight class index mapping ────────────────────────────────────────────
+# Source of truth: the DB's `weightindex` column in final_features_fast.
+# Verified by cross-referencing known fighters (Stipe=12=HW, Khabib=8=LW,
+# Pantoja=5=Fly). This matches the README mapping, NOT the prior dict in
+# this file which had an entirely different scheme.
 WEIGHTCLASS_NAMES = {
-    0: "Catchweight",
-    1: "Flyweight",
-    2: "Bantamweight",
-    3: "Featherweight",
-    4: "Lightweight",
-    5: "Welterweight",
-    6: "Middleweight",
-    7: "Light Heavyweight",
-    8: "Heavyweight",
-    9: "W_Strawweight",
-    10: "W_Flyweight",
-    11: "W_Bantamweight",
-    12: "W_Featherweight",
+    1:  "W_Strawweight",     # 115 lbs
+    2:  "W_Flyweight",       # 125 lbs
+    3:  "W_Bantamweight",    # 135 lbs
+    4:  "W_Featherweight",   # 145 lbs
+    5:  "Flyweight",         # 125 lbs (men's)
+    6:  "Bantamweight",      # 135 lbs (men's)
+    7:  "Featherweight",     # 145 lbs (men's)
+    8:  "Lightweight",       # 155 lbs
+    9:  "Welterweight",      # 170 lbs
+    10: "Middleweight",      # 185 lbs
+    11: "Light Heavyweight", # 205 lbs
+    12: "Heavyweight",       # 265 lbs
 }

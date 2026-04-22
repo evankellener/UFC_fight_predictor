@@ -1,0 +1,205 @@
+{
+  "target": 411,
+  "best": {
+    "threshold": 3,
+    "start_date": "2014-04-01",
+    "method_strict": true,
+    "n_test": 422,
+    "n_train": 2096,
+    "delta": 11
+  },
+  "all": [
+    {
+      "threshold": 2,
+      "start_date": "2014-04-01",
+      "method_strict": true,
+      "n_test": 508,
+      "n_train": 2636,
+      "delta": 97
+    },
+    {
+      "threshold": 2,
+      "start_date": "2014-04-01",
+      "method_strict": false,
+      "n_test": 559,
+      "n_train": 3000,
+      "delta": 148
+    },
+    {
+      "threshold": 2,
+      "start_date": "2015-01-01",
+      "method_strict": true,
+      "n_test": 508,
+      "n_train": 2471,
+      "delta": 97
+    },
+    {
+      "threshold": 2,
+      "start_date": "2015-01-01",
+      "method_strict": false,
+      "n_test": 559,
+      "n_train": 2822,
+      "delta": 148
+    },
+    {
+      "threshold": 2,
+      "start_date": "2016-01-01",
+      "method_strict": true,
+      "n_test": 508,
+      "n_train": 2226,
+      "delta": 97
+    },
+    {
+      "threshold": 2,
+      "start_date": "2016-01-01",
+      "method_strict": false,
+      "n_test": 559,
+      "n_train": 2549,
+      "delta": 148
+    },
+    {
+      "threshold": 3,
+      "start_date": "2014-04-01",
+      "method_strict": true,
+      "n_test": 422,
+      "n_train": 2096,
+      "delta": 11
+    },
+    {
+      "threshold": 3,
+      "start_date": "2014-04-01",
+      "method_strict": false,
+      "n_test": 464,
+      "n_train": 2393,
+      "delta": 53
+    },
+    {
+      "threshold": 3,
+      "start_date": "2015-01-01",
+      "method_strict": true,
+      "n_test": 422,
+      "n_train": 1980,
+      "delta": 11
+    },
+    {
+      "threshold": 3,
+      "start_date": "2015-01-01",
+      "method_strict": false,
+      "n_test": 464,
+      "n_train": 2265,
+      "delta": 53
+    },
+    {
+      "threshold": 3,
+      "start_date": "2016-01-01",
+      "method_strict": true,
+      "n_test": 422,
+      "n_train": 1800,
+      "delta": 11
+    },
+    {
+      "threshold": 3,
+      "start_date": "2016-01-01",
+      "method_strict": false,
+      "n_test": 464,
+      "n_train": 2064,
+      "delta": 53
+    },
+    {
+      "threshold": 4,
+      "start_date": "2014-04-01",
+      "method_strict": true,
+      "n_test": 347,
+      "n_train": 1687,
+      "delta": -64
+    },
+    {
+      "threshold": 4,
+      "start_date": "2014-04-01",
+      "method_strict": false,
+      "n_test": 381,
+      "n_train": 1934,
+      "delta": -30
+    },
+    {
+      "threshold": 4,
+      "start_date": "2015-01-01",
+      "method_strict": true,
+      "n_test": 347,
+      "n_train": 1599,
+      "delta": -64
+    },
+    {
+      "threshold": 4,
+      "start_date": "2015-01-01",
+      "method_strict": false,
+      "n_test": 381,
+      "n_train": 1836,
+      "delta": -30
+    },
+    {
+      "threshold": 4,
+      "start_date": "2016-01-01",
+      "method_strict": true,
+      "n_test": 347,
+      "n_train": 1458,
+      "delta": -64
+    },
+    {
+      "threshold": 4,
+      "start_date": "2016-01-01",
+      "method_strict": false,
+      "n_test": 381,
+      "n_train": 1678,
+      "delta": -30
+    },
+    {
+      "threshold": 5,
+      "start_date": "2014-04-01",
+      "method_strict": true,
+      "n_test": 290,
+      "n_train": 1372,
+      "delta": -121
+    },
+    {
+      "threshold": 5,
+      "start_date": "2014-04-01",
+      "method_strict": false,
+      "n_test": 319,
+      "n_train": 1577,
+      "delta": -92
+    },
+    {
+      "threshold": 5,
+      "start_date": "2015-01-01",
+      "method_strict": true,
+      "n_test": 290,
+      "n_train": 1309,
+      "delta": -121
+    },
+    {
+      "threshold": 5,
+      "start_date": "2015-01-01",
+      "method_strict": false,
+      "n_test": 319,
+      "n_train": 1508,
+      "delta": -92
+    },
+    {
+      "threshold": 5,
+      "start_date": "2016-01-01",
+      "method_strict": true,
+      "n_test": 290,
+      "n_train": 1198,
+      "delta": -121
+    },
+    {
+      "threshold": 5,
+      "start_date": "2016-01-01",
+      "method_strict": false,
+      "n_test": 319,
+      "n_train": 1381,
+      "delta": -92
+    }
+  ]
+}
