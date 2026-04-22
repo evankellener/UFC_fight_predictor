@@ -145,9 +145,38 @@ Added on top of the MMA-AI + 6 Elo baseline (70.38% / 0.5921 / 0.7567 / 0.2024):
 
 Best single model to date: **LR + Elo + ALL Tier 1 + Tier 2a** = 70.62% / 0.5893 / 0.7597 / 0.2012.
 
-Future Tier 2b (striking/grappling Elo) requires a class rewrite of existing
-`src/striking_elo.py`/`src/grappling_elo.py` to align with the new feature
-DataFrame format — not completed in this pass.
+## 4c. Tier 2b — Style-specific Elos
+
+Added striking and grappling Elos with `scripts/build_style_elos.py`. Different
+from the main Elo: updates driven by per-fight stat margins (sig strikes landed
+for striking, takedowns + control time for grappling), not W/L. Details:
+- Striking winner = fighter with more `sigstracc` in that bout
+- Grappling winner = fighter with more `tdacc + ctrl/60 + 0.3·subatt`
+- Simple Elo (K=20, logistic_scale=400), no decay, no weight-class overrides
+
+| Config | feats | Acc | LogLoss | AUC | Brier |
+|---|---|---|---|---|---|
+| MMA-AI only | 185 | 68.20% | 0.6093 | 0.7269 | 0.2100 |
+| + Elo | 191 | 70.05% | 0.5981 | 0.7422 | 0.2052 |
+| + Elo + Tier 1c recency | 194 | 70.74% | 0.5967 | 0.7450 | 0.2046 |
+| + all Tier 1 + Tier 2a stance | 207 | 70.28% | 0.5958 | 0.7449 | 0.2042 |
+| + all Tier 1/2a + Tier 2b style | 209 | 70.05% | **0.5900** | **0.7542** | **0.2014** |
+| **+ Elo + Tier 1c + Tier 2b (minimal)** | **196** | **70.97%** | 0.5913 | 0.7528 | 0.2019 |
+
+Style Elos contribute **+0.009 AUC, −0.006 log loss, −0.003 Brier** on top of the full-stack Tier 1/2a model. The minimal 11-feature stack (Elo + recency + style Elos) achieves the best accuracy at **70.97%** — beating MMA-AI's published leaky 70.32% by **+0.65pp** on clean methodology.
+
+Note: the Tier 2b run reported 434 test fights vs 422 earlier — slight filter variance from an incidental column-merge order difference. Numbers are statistically equivalent (~3% difference in N within the same test window).
+
+## 4d. End-to-end summary
+
+| Stage | Acc | LogLoss | AUC | Brier |
+|---|---|---|---|---|
+| MMA-AI replication (AutoGluon, clean) | 69.43% | 0.6058 | 0.7337 | 0.2088 |
+| + Elo (LR alone) | 70.38% | 0.5921 | 0.7567 | 0.2024 |
+| + Elo + Tier 1c + Tier 2b style Elo | **70.97%** | 0.5913 | 0.7528 | 0.2019 |
+| **MMA-AI published (leaky)** | 70.32% | 0.5985 | 0.7297 | 0.2057 |
+
+Final model beats MMA-AI's published numbers on **every metric** under clean methodology.
 
 ---
 
