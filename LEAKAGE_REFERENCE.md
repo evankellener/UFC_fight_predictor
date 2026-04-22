@@ -76,6 +76,31 @@ Vegas lines themselves are result-correlated (sharp closing lines near-optimal),
 - `feature_age_prime.md` — deterministic Gaussian on age; leakage-safe
 - `feature_market_edge.md` — prior events only, `d < dt`
 
+## 8a. Vegas odds pre-processing (added 2026-04-22)
+
+Vegas odds join is **evaluation-only** (§7), but the *mechanics* of joining and
+scoring have their own gotchas:
+
+- **Reject scraper-artifact American odds**: `|avg_odds| < 100` is not a valid
+  American odds value. Examples found in `ufc_fight_odds`: `-1, -2, -40, 34,
+  49`. Converting these to decimal via the standard formula gives absurd payouts
+  (e.g., `-1` → decimal 101, "bet $1 win $100"), which corrupt ROI and log-loss
+  arithmetic. Enforced in [scripts/compute_roi.py](scripts/compute_roi.py) and
+  [scripts/compare_to_vegas.py](scripts/compare_to_vegas.py). ~291 rows in the
+  current odds table fail this check.
+
+- **Clip probabilities before log loss**: sklearn's `log_loss` default
+  `eps=1e-15` is pathologically sensitive to probabilities near 0 or 1. A single
+  bad data point (e.g., `p=1.000` for a fighter who lost) adds `-log(1e-15)≈34.5`
+  to the sum. Always clip to `[0.02, 0.98]` or similar before computing log
+  loss when comparing model outputs to market odds (or to any source producing
+  extreme probabilities). Brier is robust; AUC is ranking-only. Applied
+  uniformly to all models being compared.
+
+- **Fighter1 alignment**: our features' `jfighter` is the red-corner fighter
+  (parsed from `BOUT` string). The odds table's `jfighter` may not match. Flip
+  the Vegas probability when the two disagree — never assume ordering aligns.
+
 ## 9. Historical leakage bugs (do not re-introduce)
 
 From [memory/mma_ai_full_spec.md](../../../../.claude/projects/-Users-evankellener-Desktop-UFC-fight-predictor/memory/mma_ai_full_spec.md) and [memory/handoff_prompt.md](../../../../.claude/projects/-Users-evankellener-Desktop-UFC-fight-predictor/memory/handoff_prompt.md):
@@ -83,6 +108,8 @@ From [memory/mma_ai_full_spec.md](../../../../.claude/projects/-Users-evankellen
 - **Dec 5 2025**: AutoGluon presets were mixing future data into training. Fix dropped accuracy 70% → 64% ("more honest"). Do not re-enable `best_quality` presets without verifying the fold-aware splitter.
 - **Jan 13 2026**: Shuffled CV was leaking across folds. Switched to temporal (no shuffle) + per-stat-per-WC τ.
 - Reference model MMA-AI published "70.6% acc / 0.5964 LL / 0.7297 AUC" — noted as **leaky** by our measurements; their clean number is ~71% / 0.602. Do not calibrate target metrics to the leaky figure.
+- **Apr 22 2026 (WC-index bug)**: All 6 per-weight-class τ overrides in `src/mma_ai_config.py` were routed against a WRONG weightindex-to-name map. E.g., `BB[4]={"sub_land":3}` labeled "Featherweight" was hitting index 4 = Women's Featherweight (30 fights). Verify any hardcoded WC literal against the DB's actual encoding (Stipe=12=HW, Khabib=8=LW, Pantoja=5=Fly). See `memory/finding_wc_index_bug.md`.
+- **Apr 22 2026 (odds scraper garbage)**: `ufc_fight_odds` contains ~291 rows with invalid American odds (|o|<100 or NaN). A single bad row with `avg_odds_f2=0.0` propagated through devig to produce `p_vegas=1.000` for a fighter who lost → added ~0.10 to mean log loss over 349 fights. Reject invalid odds before any comparison; clip probabilities to `[0.02, 0.98]` before log loss.
 
 ## 10. Things this repo does NOT currently test
 
