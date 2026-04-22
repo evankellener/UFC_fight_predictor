@@ -180,6 +180,42 @@ Final model beats MMA-AI's published numbers on **every metric** under clean met
 
 ---
 
+## 4e. Nonlinear model ablation (negative result)
+
+Tested small gradient-boosted models on the final 196-feature stack.
+
+### Individual models
+
+| Model | Acc | LogLoss | AUC | Brier |
+|---|---|---|---|---|
+| **LR ElasticNet (baseline)** | **70.97%** | **0.5914** | **0.7528** | 0.2020 |
+| CatBoost (d=3, 300 iters) | 68.89% | 0.6013 | 0.7320 | 0.2070 |
+| CatBoost (d=4, 500 iters) | 68.89% | 0.6040 | 0.7287 | 0.2073 |
+| XGBoost (d=3, 400 trees) | 68.66% | 0.6055 | 0.7213 | 0.2093 |
+| LightGBM (leaves=15, 400 trees) | 66.59% | 0.6132 | 0.7212 | 0.2113 |
+
+**LR wins every individual comparison on every metric.**
+
+### Best blend (28 tested)
+
+`LR × 0.7 + LGBM × 0.3` — best log loss at 0.5888 (−0.0026 vs LR). But accuracy
+drops to 68.66% (−2.30pp). **Not a net win.**
+
+### Why
+
+Feature engineering (Elo, per-stat AdjPerf, recency, style Elos) already encodes
+the nonlinearities. ElasticNet LR picks clean linear combinations; small trees
+overfit noisy splits on a 1,800-row training sample. Consistent with the earlier
+"CatBoost rejects Elo" finding.
+
+### Takeaway
+
+**Stay with LR alone** for the main model. Nonlinear ensembles only pay off with
+meaningfully different features (e.g., fighter network embeddings, video-derived
+features) that LR can't linearly exploit.
+
+---
+
 ## 5. Defensible resume claims
 
 1. **Replication**: "Replicated MMA-AI.net's architecture (AutoGluon WeightedEnsemble, no `best_quality` leakage preset, temporal validation) and achieved 69.43% accuracy / 0.6058 log loss / 0.7337 AUC on 422 filtered test fights — +5.4pp above their own post-leakage-fix clean number."
