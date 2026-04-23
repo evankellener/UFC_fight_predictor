@@ -137,11 +137,13 @@ class PredictorV2:
         jf_a = _to_jf(fighter_a); jf_b = _to_jf(fighter_b)
         evt_ts = pd.to_datetime(event_date)
 
-        # Alphabetize to match training convention (f1 < f2)
-        if jf_a < jf_b:
-            jf1, jf2, flip = jf_a, jf_b, False
-        else:
-            jf1, jf2, flip = jf_b, jf_a, True
+        # NOTE: Training convention is red-corner = f1, NOT alphabetical. The
+        # `jfighter` column in mmaai_features.csv is always the red corner
+        # (parsed from BOUT string by load_base_data). Caller passes
+        # fighter_a as the "we want P(a wins)" perspective — so treat
+        # jf_a = f1 for feature construction. The LR was trained with this
+        # orientation. No flip needed.
+        jf1, jf2, flip = jf_a, jf_b, False
 
         row = self._build_feature_row(jf1, jf2, evt_ts, scheduled_rounds)
         if row is None:

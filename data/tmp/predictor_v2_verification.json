@@ -7,13 +7,13 @@
   },
   "predictor_v2": {
     "name": "predictor_v2",
-    "acc": 0.6952380952380952,
-    "ll": 0.6105606740653579
+    "acc": 0.7142857142857143,
+    "ll": 0.5840865775807995
   },
-  "mean_abs_prob_diff": 0.06118742900978778,
-  "median_abs_prob_diff": 0.08053604160019669,
-  "max_abs_prob_diff": 0.13551104078629733,
-  "correlation": 0.9352189500099862,
-  "sign_agreement": 0.8666666666666667,
+  "mean_abs_prob_diff": 0.0008916863553121023,
+  "median_abs_prob_diff": 0.0008808867851605728,
+  "max_abs_prob_diff": 0.011966417109472105,
+  "correlation": 0.9999902358033748,
+  "sign_agreement": 1.0,
   "n_failed": 0
 }
