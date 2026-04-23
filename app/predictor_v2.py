@@ -113,9 +113,22 @@ class PredictorV2:
         self.db_path = str(db_path) if db_path else str(
             REPO_DIR / "data" / "sqlite_db" / "sqlite_scrapper.db"
         )
-        # Pre-load the full UFC winlossko + event date join into memory for fast
-        # per-fighter prior lookups. One-time cost, dramatically faster per-bet.
-        self._wl_history = self._load_winlossko_history()
+        # Prefer pre-computed winlossko cache (JSON artifact) over live DB query.
+        # The full DB (sqlite_scrapper.db) is gitignored; slim_scrapper.db on
+        # Render doesn't have ufc_winlossko. Fall back to DB if cache missing.
+        wl_json = self.dir / "fighter_winlossko.json"
+        if wl_json.exists():
+            raw = json.loads(wl_json.read_text())
+            # Rehydrate: {jf: [[iso_date_str, win_int], ...]} → {jf: [(np.datetime64, int), ...]}
+            self._wl_history = {
+                jf: [(np.datetime64(d), int(w)) for d, w in entries]
+                for jf, entries in raw.items()
+            }
+            if self.verbose:
+                print(f"[PredictorV2] loaded winlossko cache ({len(self._wl_history)} fighters)")
+        else:
+            # Fallback: live DB query (won't work on Render with slim DB)
+            self._wl_history = self._load_winlossko_history()
 
         if self.verbose:
             print(f"[PredictorV2] loaded {len(self.feat_cols)} features, "
