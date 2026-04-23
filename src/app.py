@@ -1052,12 +1052,106 @@ def predict():
         return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
 
 
+def _bet_recommendation(p_model_a, odds_a_american, odds_b_american, stake=10.0):
+    """Compute edge + bet recommendation from user-entered American odds.
+
+    Returns dict with:
+      implied_prob_a/b  — raw implied probs (sum > 1 due to vig)
+      devig_prob_a/b    — normalized to sum to 1
+      dec_odds_a/b      — decimal odds
+      pick              — "a" or "b" (model's pick)
+      pick_display      — "a" or "b" label
+      edge_pp           — model_p_pick - devig_p_pick, in pp
+      edge_bucket       — no_bet / low_edge / mid_edge / big_edge
+      ev_per_dollar     — expected value of a $1 bet on the pick
+      recommendation    — "BET" or "PASS"
+      stake_suggestion  — flat $ amount if BET (else 0)
+
+    Returns None if odds invalid.
+    """
+    ia = _american_to_implied(odds_a_american)
+    ib = _american_to_implied(odds_b_american)
+    if ia is None or ib is None:
+        return None
+    total = ia + ib
+    if total <= 0:
+        return None
+    devig_a = ia / total
+    devig_b = ib / total
+
+    # Decimal odds (for EV calculation)
+    def _am_to_dec(o):
+        o = float(o)
+        if o >= 100:  return 1.0 + o / 100.0
+        if o <= -100: return 1.0 + 100.0 / abs(o)
+        return None
+    dec_a = _am_to_dec(odds_a_american)
+    dec_b = _am_to_dec(odds_b_american)
+    if dec_a is None or dec_b is None:
+        return None
+
+    pick = "a" if p_model_a >= 0.5 else "b"
+    p_pick = p_model_a if pick == "a" else (1 - p_model_a)
+    devig_pick = devig_a if pick == "a" else devig_b
+    dec_pick = dec_a if pick == "a" else dec_b
+    edge = p_pick - devig_pick
+    edge_pp = edge * 100
+
+    # Buckets per finding_ev_slice_analysis.md + ROI re-verification
+    # post-symmetrization. Overall +EV = real edge (p=0.013). Slice-specific
+    # claims weaker than initially thought but still trend positive.
+    if edge <= 0:
+        bucket = "no_bet"
+        rec = "PASS"
+        stake_sug = 0.0
+    elif edge < 0.025:
+        bucket = "low_edge"
+        rec = "WEAK BET"
+        stake_sug = stake * 0.5  # half-size for thin edges
+    elif edge < 0.10:
+        bucket = "mid_edge"
+        rec = "BET"
+        stake_sug = stake
+    else:
+        bucket = "big_edge"
+        rec = "BET (large edge — verify odds)"
+        stake_sug = stake
+
+    # EV per $1 on the picked side: p*(dec-1) - (1-p)*1
+    ev = float(p_pick * (dec_pick - 1.0) - (1.0 - p_pick))
+
+    return {
+        "implied_prob_a": round(ia, 4),
+        "implied_prob_b": round(ib, 4),
+        "devig_prob_a": round(devig_a, 4),
+        "devig_prob_b": round(devig_b, 4),
+        "dec_odds_a": round(dec_a, 3),
+        "dec_odds_b": round(dec_b, 3),
+        "pick": pick,
+        "edge_pp": round(edge_pp, 2),
+        "edge_bucket": bucket,
+        "ev_per_dollar": round(ev, 4),
+        "recommendation": rec,
+        "stake_suggestion": round(stake_sug, 2),
+        "vig_pct": round((total - 1.0) * 100, 2),
+    }
+
+
 @app.route("/api/predict_card", methods=["POST"])
 def predict_card():
     """
     Predict a full fight card.
-    POST JSON: {"fights": [{"fighter_a": "...", "fighter_b": "..."}, ...],
-                "event_date": "2026-04-05", "event_name": "UFC 315"}
+    POST JSON: {
+      "fights": [
+        {"fighter_a": "...", "fighter_b": "...",
+         "odds_a": -150, "odds_b": 130},   # OPTIONAL user odds (American)
+        ...
+      ],
+      "event_date": "2026-04-05",
+      "event_name": "UFC 315",
+      "stake": 10.0                         # OPTIONAL, default $10 flat
+    }
+    If odds_a / odds_b provided, `bet_rec` field populated with edge + recommendation.
     """
     data = request.get_json()
     if not data or "fights" not in data:
@@ -1065,6 +1159,7 @@ def predict_card():
 
     event_date = data.get("event_date", pd.Timestamp.now().strftime("%Y-%m-%d"))
     event_name = data.get("event_name", "UFC Event")
+    stake = float(data.get("stake", 10.0))
 
     models = model_state.get("models")
     if models is None:
@@ -1093,6 +1188,17 @@ def predict_card():
                     vegas["implied_prob_a"] = round(imp_a / total, 4)
                     vegas["implied_prob_b"] = round(imp_b / total, 4)
 
+            # User-provided odds → bet recommendation (if any)
+            user_odds_a = fight.get("odds_a")
+            user_odds_b = fight.get("odds_b")
+            bet_rec = None
+            if user_odds_a not in (None, "", 0) and user_odds_b not in (None, "", 0):
+                try:
+                    bet_rec = _bet_recommendation(
+                        float(r["prob_a"]), user_odds_a, user_odds_b, stake=stake)
+                except (ValueError, TypeError):
+                    bet_rec = None
+
             # Top feature drivers (LR coefficients × standardized values)
             try:
                 drivers = _get_top_drivers(r, models)
@@ -1117,6 +1223,8 @@ def predict_card():
                 "confidence": round(r["confidence"], 4),
                 "model": r.get("model"),
                 "vegas": vegas,
+                "user_odds": {"odds_a": user_odds_a, "odds_b": user_odds_b} if user_odds_a else None,
+                "bet_rec": bet_rec,
                 "drivers": drivers,
                 "zscores_a": zscores_a,
                 "zscores_b": zscores_b,
@@ -1125,10 +1233,20 @@ def predict_card():
             results.append({"bout_num": i + 1, "error": str(e),
                             "fighter_a": fa, "fighter_b": fb})
 
+    # Summary across the card
+    n_bets = sum(1 for x in results if x.get("bet_rec") and x["bet_rec"]["recommendation"] != "PASS")
+    total_stake = sum(x["bet_rec"]["stake_suggestion"] for x in results
+                      if x.get("bet_rec") and x["bet_rec"]["recommendation"] != "PASS")
+
     return jsonify({
         "event_name": event_name,
         "event_date": event_date,
         "predictions": results,
+        "summary": {
+            "total_fights": len(results),
+            "recommended_bets": n_bets,
+            "total_stake": round(total_stake, 2),
+        },
     })
 
 
