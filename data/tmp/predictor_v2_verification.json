@@ -1,0 +1,19 @@
+{
+  "n_test": 420,
+  "training_path": {
+    "name": "training-path",
+    "acc": 0.7142857142857143,
+    "ll": 0.5839000351831724
+  },
+  "predictor_v2": {
+    "name": "predictor_v2",
+    "acc": 0.6952380952380952,
+    "ll": 0.6105606740653579
+  },
+  "mean_abs_prob_diff": 0.06118742900978778,
+  "median_abs_prob_diff": 0.08053604160019669,
+  "max_abs_prob_diff": 0.13551104078629733,
+  "correlation": 0.9352189500099862,
+  "sign_agreement": 0.8666666666666667,
+  "n_failed": 0
+}
