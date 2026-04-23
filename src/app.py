@@ -117,12 +117,35 @@ def init_model():
     if _V2_AVAILABLE:
         try:
             print("Loading PredictorV2 (LR+Elo+Style, 202 features)...")
+            # Probe for artifacts + parquet engine before constructing, so
+            # we get specific error messages rather than generic ImportError.
+            from pathlib import Path as _P
+            _art = _P(__file__).parent.parent / "app" / "models" / "blend_v2"
+            _files_needed = ["lr.pkl", "lr_scaler.pkl", "lr_imputer.pkl",
+                             "feat_cols.json", "fighter_mma_history.parquet",
+                             "fighter_elo_ufc.json", "fighter_elo_exp.json",
+                             "fighter_style_elo.json", "fighter_bios.json"]
+            for _f in _files_needed:
+                _p = _art / _f
+                if not _p.exists():
+                    raise FileNotFoundError(f"v2 artifact missing: {_p}")
+                print(f"  [v2] {_f}: {_p.stat().st_size / 1024:.1f} KB")
+            try:
+                import pyarrow  # noqa: F401
+                print(f"  [v2] pyarrow {pyarrow.__version__} OK")
+            except ImportError as ie:
+                raise ImportError(f"pyarrow not installed (needed for parquet): {ie}")
             model_state["v2"] = PredictorV2(verbose=True)
             print("PredictorV2 ready.")
         except Exception as e:
-            print(f"PredictorV2 load failed: {e} — falling back to blend")
+            import traceback
+            print(f"PredictorV2 load FAILED: {type(e).__name__}: {e}")
+            print("Full traceback:")
+            traceback.print_exc()
+            print("Falling back to blend predictor.")
             model_state["v2"] = None
     else:
+        print("PredictorV2 module not importable — skipping")
         model_state["v2"] = None
 
     # ── Try loading the pre-trained LR+XGB blend (legacy fallback) ──
