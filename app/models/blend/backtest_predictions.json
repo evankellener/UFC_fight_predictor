@@ -73,8 +73,8 @@
    "fighter_b": "PedroFalcao",
    "display_a": "Victor Henry",
    "display_b": "Pedro Falcao",
-   "p_lr": 0.4595895192733031,
-   "p_xgb": 0.8278845548629761,
+   "p_lr": 0.4704680300712663,
+   "p_xgb": 0.840911865234375,
    "actual_winner": "VictorHenry"
   },
   {
@@ -84,8 +84,8 @@
    "fighter_b": "TalitaAlencar",
    "display_a": "Vanessa Demopoulos",
    "display_b": "Talita Alencar",
-   "p_lr": 0.44261661480541525,
-   "p_xgb": 0.4885804057121277,
+   "p_lr": 0.4375501404569711,
+   "p_xgb": 0.4474329948425293,
    "actual_winner": "TalitaAlencar"
   },
   {
@@ -95,8 +95,8 @@
    "fighter_b": "RobertValentin",
    "display_a": "Torrez Finney",
    "display_b": "Robert Valentin",
-   "p_lr": 0.6127240596493319,
-   "p_xgb": 0.5264919400215149,
+   "p_lr": 0.6185363774873861,
+   "p_xgb": 0.5627155900001526,
    "actual_winner": "TorrezFinney"
   },
   {
@@ -106,8 +106,8 @@
    "fighter_b": "DanielFrunza",
    "display_a": "Rhys Mc Kee",
    "display_b": "Daniel Frunza",
-   "p_lr": 0.5060349119207742,
-   "p_xgb": 0.5186868906021118,
+   "p_lr": 0.4926440934549614,
+   "p_xgb": 0.5156075358390808,
    "actual_winner": "RhysMcKee"
   },
   {
@@ -117,8 +117,8 @@
    "fighter_b": "JoandersonBrito",
    "display_a": "Pat Sabatini",
    "display_b": "Joanderson Brito",
-   "p_lr": 0.4243283651213439,
-   "p_xgb": 0.19977858662605286,
+   "p_lr": 0.40398534416144305,
+   "p_xgb": 0.36482545733451843,
    "actual_winner": "PatSabatini"
   },
   {
@@ -128,8 +128,8 @@
    "fighter_b": "LuisGurule",
    "display_a": "Ode Osbourne",
    "display_b": "Luis Gurule",
-   "p_lr": 0.5500637970722404,
-   "p_xgb": 0.43218496441841125,
+   "p_lr": 0.52531038304666,
+   "p_xgb": 0.3785622715950012,
    "actual_winner": "OdeOsbourne"
   },
   {
@@ -139,8 +139,8 @@
    "fighter_b": "GeraldMeerschaert",
    "display_a": "Brad Tavares",
    "display_b": "Gerald Meerschaert",
-   "p_lr": 0.43251914094400434,
-   "p_xgb": 0.4091372489929199,
+   "p_lr": 0.4575851146055843,
+   "p_xgb": 0.44479987025260925,
    "actual_winner": "BradTavares"
   },
   {
@@ -150,8 +150,8 @@
    "fighter_b": "IstelaNunes",
    "display_a": "Loma Lookboonmee",
    "display_b": "Istela Nunes",
-   "p_lr": 0.7135909256321261,
-   "p_xgb": 0.6733556985855103,
+   "p_lr": 0.8158184811966888,
+   "p_xgb": 0.8430325388908386,
    "actual_winner": "LomaLookboonmee"
   },
   {
@@ -161,8 +161,8 @@
    "fighter_b": "LeroneMurphy",
    "display_a": "Josh Emmett",
    "display_b": "Lerone Murphy",
-   "p_lr": 0.3173851097734263,
-   "p_xgb": 0.2915269136428833,
+   "p_lr": 0.27723372305718574,
+   "p_xgb": 0.2829481065273285,
    "actual_winner": "LeroneMurphy"
   },
   {
@@ -172,8 +172,8 @@
    "fighter_b": "DioneBarbosa",
    "display_a": "Diana Belbita",
    "display_b": "Dione Barbosa",
-   "p_lr": 0.27751657809254293,
-   "p_xgb": 0.29829153418540955,
+   "p_lr": 0.3797492470123827,
+   "p_xgb": 0.325345903635025,
    "actual_winner": "DioneBarbosa"
   },
   {
@@ -183,8 +183,8 @@
    "fighter_b": "ChangHoLee",
    "display_a": "Cortavious Romious",
    "display_b": "Chang Ho Lee",
-   "p_lr": 0.25304039412693263,
-   "p_xgb": 0.5429049134254456,
+   "p_lr": 0.4382363601649081,
+   "p_xgb": 0.42614927887916565,
    "actual_winner": "ChangHoLee"
   },
   {
@@ -194,8 +194,8 @@
    "fighter_b": "UranSatybaldiev",
    "display_a": "Martin Buday",
    "display_b": "Uran Satybaldiev",
-   "p_lr": 0.695238082938647,
-   "p_xgb": 0.6425341367721558,
+   "p_lr": 0.684090249561634,
+   "p_xgb": 0.6814144253730774,
    "actual_winner": "MartinBuday"
   },
   {
@@ -205,8 +205,8 @@
    "fighter_b": "MichalOleksiejczuk",
    "display_a": "Sedriques Dumas",
    "display_b": "Michal Oleksiejczuk",
-   "p_lr": 0.49148370643510203,
-   "p_xgb": 0.5012157559394836,
+   "p_lr": 0.5416354946186955,
+   "p_xgb": 0.7688144445419312,
    "actual_winner": "MichalOleksiejczuk"
   },
   {
@@ -216,8 +216,8 @@
    "fighter_b": "VirnaJandiroba",
    "display_a": "Yan Xiaonan",
    "display_b": "Virna Jandiroba",
-   "p_lr": 0.4936953956477293,
-   "p_xgb": 0.49935585260391235,
+   "p_lr": 0.46899881169593727,
+   "p_xgb": 0.5111888647079468,
    "actual_winner": "VirnaJandiroba"
   },
   {
@@ -227,8 +227,8 @@
    "fighter_b": "PatricioPitbull",
    "display_a": "Yair Rodriguez",
    "display_b": "Patricio Pitbull",
-   "p_lr": 0.7088124709350581,
-   "p_xgb": 0.7966375946998596,
+   "p_lr": 0.6681461388927884,
+   "p_xgb": 0.719666600227356,
    "actual_winner": "YairRodriguez"
   },
   {
@@ -238,8 +238,8 @@
    "fighter_b": "PatricioFreire",
    "display_a": "Yair Rodriguez",
    "display_b": "Patricio Freire",
-   "p_lr": 0.732318339288981,
-   "p_xgb": 0.7460909485816956,
+   "p_lr": 0.7074246939914811,
+   "p_xgb": 0.6779940724372864,
    "actual_winner": "YairRodriguez"
   },
   {
@@ -249,8 +249,8 @@
    "fighter_b": "MarcoTulio",
    "display_a": "Tresean Gore",
    "display_b": "Marco Tulio",
-   "p_lr": 0.6570751660058852,
-   "p_xgb": 0.31690213084220886,
+   "p_lr": 0.5337083135035595,
+   "p_xgb": 0.42184919118881226,
    "actual_winner": "MarcoTulio"
   },
   {
@@ -260,8 +260,8 @@
    "fighter_b": "MitchRaposo",
    "display_a": "Sumudaerji",
    "display_b": "Mitch Raposo",
-   "p_lr": 0.39640207340121475,
-   "p_xgb": 0.7901520133018494,
+   "p_lr": 0.3585748958838474,
+   "p_xgb": 0.562038779258728,
    "actual_winner": "Sumudaerji"
   },
   {
@@ -271,8 +271,8 @@
    "fighter_b": "HaileyCowan",
    "display_a": "Nora Cornolle",
    "display_b": "Hailey Cowan",
-   "p_lr": 0.7588632242608864,
-   "p_xgb": 0.8554781079292297,
+   "p_lr": 0.7306087497890047,
+   "p_xgb": 0.8207640051841736,
    "actual_winner": "NoraCornolle"
   },
   {
@@ -282,8 +282,8 @@
    "fighter_b": "JeanSilva",
    "display_a": "Bryce Mitchell",
    "display_b": "Jean Silva",
-   "p_lr": 0.40530094759044205,
-   "p_xgb": 0.3363397419452667,
+   "p_lr": 0.36324967902991157,
+   "p_xgb": 0.3851068317890167,
    "actual_winner": "JeanSilva"
   },
   {
@@ -293,8 +293,8 @@
    "fighter_b": "PaddyPimblett",
    "display_a": "Michael Chandler",
    "display_b": "Paddy Pimblett",
-   "p_lr": 0.3214077432870522,
-   "p_xgb": 0.21872541308403015,
+   "p_lr": 0.294685518453539,
+   "p_xgb": 0.26721373200416565,
    "actual_winner": "PaddyPimblett"
   },
   {
@@ -304,8 +304,8 @@
    "fighter_b": "ChaseHooper",
    "display_a": "Jim Miller",
    "display_b": "Chase Hooper",
-   "p_lr": 0.2204274856152973,
-   "p_xgb": 0.4176984131336212,
+   "p_lr": 0.17857074416604543,
+   "p_xgb": 0.3217693865299225,
    "actual_winner": "ChaseHooper"
   },
   {
@@ -315,8 +315,8 @@
    "fighter_b": "JulianErosa",
    "display_a": "Darren Elkins",
    "display_b": "Julian Erosa",
-   "p_lr": 0.5116910746824609,
-   "p_xgb": 0.4526076316833496,
+   "p_lr": 0.5485003011496519,
+   "p_xgb": 0.4456387758255005,
    "actual_winner": "JulianErosa"
   },
   {
@@ -326,8 +326,8 @@
    "fighter_b": "SeanWoodson",
    "display_a": "Dan Ige",
    "display_b": "Sean Woodson",
-   "p_lr": 0.35733117397839054,
-   "p_xgb": 0.37670671939849854,
+   "p_lr": 0.3527331002162391,
+   "p_xgb": 0.29572105407714844,
    "actual_winner": "DanIge"
   },
   {
@@ -337,8 +337,8 @@
    "fighter_b": "DiegoLopes",
    "display_a": "Alexander Volkanovski",
    "display_b": "Diego Lopes",
-   "p_lr": 0.5266268380407404,
-   "p_xgb": 0.5120958089828491,
+   "p_lr": 0.5611613407354288,
+   "p_xgb": 0.5309348106384277,
    "actual_winner": "AlexanderVolkanovski"
   },
   {
@@ -348,8 +348,8 @@
    "fighter_b": "DominickReyes",
    "display_a": "Nikita Krylov",
    "display_b": "Dominick Reyes",
-   "p_lr": 0.48485841722131595,
-   "p_xgb": 0.6333922743797302,
+   "p_lr": 0.4876964785775696,
+   "p_xgb": 0.7518740892410278,
    "actual_winner": "DominickReyes"
   },
   {
@@ -359,8 +359,8 @@
    "fighter_b": "RobertoRomero",
    "display_a": "Timmy Cuamba",
    "display_b": "Roberto Romero",
-   "p_lr": 0.46582095589139966,
-   "p_xgb": 0.39295321702957153,
+   "p_lr": 0.5465639775806452,
+   "p_xgb": 0.37244006991386414,
    "actual_winner": "TimmyCuamba"
   },
   {
@@ -370,8 +370,8 @@
    "fighter_b": "NicolasDalby",
    "display_a": "Randy Brown",
    "display_b": "Nicolas Dalby",
-   "p_lr": 0.7643929998168413,
-   "p_xgb": 0.738556444644928,
+   "p_lr": 0.7868883638610117,
+   "p_xgb": 0.8202527761459351,
    "actual_winner": "RandyBrown"
   },
   {
@@ -381,8 +381,8 @@
    "fighter_b": "AbusMagomedov",
    "display_a": "Michel Pereira",
    "display_b": "Abus Magomedov",
-   "p_lr": 0.5579783390322112,
-   "p_xgb": 0.5020051002502441,
+   "p_lr": 0.5767891762572213,
+   "p_xgb": 0.5679404139518738,
    "actual_winner": "AbusMagomedov"
   },
   {
@@ -392,8 +392,8 @@
    "fighter_b": "JimmyFlick",
    "display_a": "Matt Schnell",
    "display_b": "Jimmy Flick",
-   "p_lr": 0.5461233871806553,
-   "p_xgb": 0.5319778919219971,
+   "p_lr": 0.6458806389435097,
+   "p_xgb": 0.6349782943725586,
    "actual_winner": "MattSchnell"
   },
   {
@@ -403,8 +403,8 @@
    "fighter_b": "CameronSaaiman",
    "display_a": "Malcolm Wellmaker",
    "display_b": "Cameron Saaiman",
-   "p_lr": 0.5304793308131188,
-   "p_xgb": 0.5722519159317017,
+   "p_lr": 0.5253629166376981,
+   "p_xgb": 0.5158520340919495,
    "actual_winner": "MalcolmWellmaker"
   },
   {
@@ -414,8 +414,8 @@
    "fighter_b": "PolyanaViana",
    "display_a": "Jaqueline Amorim",
    "display_b": "Polyana Viana",
-   "p_lr": 0.8147257623853684,
-   "p_xgb": 0.8395586609840393,
+   "p_lr": 0.8267465432445381,
+   "p_xgb": 0.8705037236213684,
    "actual_winner": "JaquelineAmorim"
   },
   {
@@ -425,8 +425,8 @@
    "fighter_b": "AndreMuniz",
    "display_a": "Ikram Aliskerov",
    "display_b": "Andre Muniz",
-   "p_lr": 0.5265936411305088,
-   "p_xgb": 0.4580194652080536,
+   "p_lr": 0.5224682657400405,
+   "p_xgb": 0.42603224515914917,
    "actual_winner": "IkramAliskerov"
   },
   {
@@ -436,8 +436,8 @@
    "fighter_b": "CarlosPrates",
    "display_a": "Ian Machado Garry",
    "display_b": "Carlos Prates",
-   "p_lr": 0.5830552073454986,
-   "p_xgb": 0.521641731262207,
+   "p_lr": 0.5603796332016703,
+   "p_xgb": 0.6825480461120605,
    "actual_winner": "IanMachadoGarry"
   },
   {
@@ -447,8 +447,8 @@
    "fighter_b": "GaugeYoung",
    "display_a": "Evan Elder",
    "display_b": "Gauge Young",
-   "p_lr": 0.5301904696465475,
-   "p_xgb": 0.48279690742492676,
+   "p_lr": 0.5641968621546835,
+   "p_xgb": 0.5716314315795898,
    "actual_winner": "EvanElder"
   },
   {
@@ -458,8 +458,8 @@
    "fighter_b": "Alatengheili",
    "display_a": "Da' Mon Blackshear",
    "display_b": "Alatengheili",
-   "p_lr": 0.6756145057478382,
-   "p_xgb": 0.7527607679367065,
+   "p_lr": 0.6828099788061132,
+   "p_xgb": 0.7970463037490845,
    "actual_winner": "Da'MonBlackshear"
   },
   {
@@ -469,8 +469,8 @@
    "fighter_b": "JohnCastaneda",
    "display_a": "Chris Gutierrez",
    "display_b": "John Castaneda",
-   "p_lr": 0.7002762162350906,
-   "p_xgb": 0.7723385691642761,
+   "p_lr": 0.7439360503507491,
+   "p_xgb": 0.8267093896865845,
    "actual_winner": "ChrisGutierrez"
   },
   {
@@ -480,8 +480,8 @@
    "fighter_b": "JoselyneEdwards",
    "display_a": "Chelsea Chandler",
    "display_b": "Joselyne Edwards",
-   "p_lr": 0.3660780284592481,
-   "p_xgb": 0.3192622661590576,
+   "p_lr": 0.37403672863091547,
+   "p_xgb": 0.4030478596687317,
    "actual_winner": "JoselyneEdwards"
   },
   {
@@ -491,8 +491,8 @@
    "fighter_b": "ZhangMingyang",
    "display_a": "Anthony Smith",
    "display_b": "Zhang Mingyang",
-   "p_lr": 0.40256159959771265,
-   "p_xgb": 0.25734180212020874,
+   "p_lr": 0.3884268508602127,
+   "p_xgb": 0.25023090839385986,
    "actual_winner": "ZhangMingyang"
   },
   {
@@ -502,8 +502,8 @@
    "fighter_b": "DavidOnama",
    "display_a": "Giga Chikadze",
    "display_b": "David Onama",
-   "p_lr": 0.39061772009124823,
-   "p_xgb": 0.38173744082450867,
+   "p_lr": 0.4664141435543844,
+   "p_xgb": 0.3803691565990448,
    "actual_winner": "DavidOnama"
   },
   {
@@ -513,8 +513,8 @@
    "fighter_b": "AzamatBekoev",
    "display_a": "Ryan Loder",
    "display_b": "Azamat Bekoev",
-   "p_lr": 0.650615632466792,
-   "p_xgb": 0.557835578918457,
+   "p_lr": 0.5784493321375687,
+   "p_xgb": 0.5913645029067993,
    "actual_winner": "AzamatBekoev"
   },
   {
@@ -524,8 +524,8 @@
    "fighter_b": "MieshaTate",
    "display_a": "Yana Santos",
    "display_b": "Miesha Tate",
-   "p_lr": 0.5393115431837554,
-   "p_xgb": 0.5301791429519653,
+   "p_lr": 0.5865171470194445,
+   "p_xgb": 0.609771192073822,
    "actual_winner": "YanaSantos"
   },
   {
@@ -535,8 +535,8 @@
    "fighter_b": "Don'TaleMayes",
    "display_a": "Thomas Petersen",
    "display_b": "Don' Tale Mayes",
-   "p_lr": 0.6831420138335006,
-   "p_xgb": 0.7323832511901855,
+   "p_lr": 0.7573884235389426,
+   "p_xgb": 0.7237769961357117,
    "actual_winner": "ThomasPetersen"
   },
   {
@@ -546,8 +546,8 @@
    "fighter_b": "DanielRodriguez",
    "display_a": "Santiago Ponzinibbio",
    "display_b": "Daniel Rodriguez",
-   "p_lr": 0.6524489816891508,
-   "p_xgb": 0.6926973462104797,
+   "p_lr": 0.5982575318615005,
+   "p_xgb": 0.6318258047103882,
    "actual_winner": "DanielRodriguez"
   },
   {
@@ -557,8 +557,8 @@
    "fighter_b": "DanielMarcos",
    "display_a": "Montel Jackson",
    "display_b": "Daniel Marcos",
-   "p_lr": 0.6598347370824473,
-   "p_xgb": 0.6859210729598999,
+   "p_lr": 0.6210458564629293,
+   "p_xgb": 0.5496485233306885,
    "actual_winner": "MontelJackson"
   },
   {
@@ -568,8 +568,8 @@
    "fighter_b": "BoNickal",
    "display_a": "Reinierde Ridder",
    "display_b": "Bo Nickal",
-   "p_lr": 0.6202687472026043,
-   "p_xgb": 0.6119728684425354,
+   "p_lr": 0.5112824199591145,
+   "p_xgb": 0.7119685411453247,
    "actual_winner": "ReinierdeRidder"
   },
   {
@@ -579,8 +579,8 @@
    "fighter_b": "IvanaPetrovic",
    "display_a": "Juliana Miller",
    "display_b": "Ivana Petrovic",
-   "p_lr": 0.3302076757376,
-   "p_xgb": 0.3209456503391266,
+   "p_lr": 0.4102880960595987,
+   "p_xgb": 0.27990618348121643,
    "actual_winner": "JulianaMiller"
   },
   {
@@ -590,8 +590,8 @@
    "fighter_b": "SerhiySidey",
    "display_a": "Cameron Smotherman",
    "display_b": "Serhiy Sidey",
-   "p_lr": 0.5433317350999706,
-   "p_xgb": 0.5840975642204285,
+   "p_lr": 0.6449558537056865,
+   "p_xgb": 0.6413999199867249,
    "actual_winner": "SerhiySidey"
   },
   {
@@ -601,8 +601,8 @@
    "fighter_b": "DeivesonFigueiredo",
    "display_a": "Cory Sandhagen",
    "display_b": "Deiveson Figueiredo",
-   "p_lr": 0.6624390186681288,
-   "p_xgb": 0.6677574515342712,
+   "p_lr": 0.7133735329836728,
+   "p_xgb": 0.658547043800354,
    "actual_winner": "CorySandhagen"
   },
   {
@@ -612,8 +612,8 @@
    "fighter_b": "GillianRobertson",
    "display_a": "Marina Rodriguez",
    "display_b": "Gillian Robertson",
-   "p_lr": 0.3498375809899225,
-   "p_xgb": 0.321388304233551,
+   "p_lr": 0.3638583472582996,
+   "p_xgb": 0.33502018451690674,
    "actual_winner": "GillianRobertson"
   },
   {
@@ -623,8 +623,8 @@
    "fighter_b": "MasonJones",
    "display_a": "Jeremy Stephens",
    "display_b": "Mason Jones",
-   "p_lr": 0.30980649141220884,
-   "p_xgb": 0.28329116106033325,
+   "p_lr": 0.3714539993466457,
+   "p_xgb": 0.2171974778175354,
    "actual_winner": "MasonJones"
   },
   {
@@ -634,8 +634,8 @@
    "fighter_b": "QuangLe",
    "display_a": "Gaston Bolanos",
    "display_b": "Quang Le",
-   "p_lr": 0.7704345959373683,
-   "p_xgb": 0.6495674848556519,
+   "p_lr": 0.5992290296429806,
+   "p_xgb": 0.722002387046814,
    "actual_winner": "QuangLe"
   },
   {
@@ -645,8 +645,8 @@
    "fighter_b": "ManonFiorot",
    "display_a": "Valentina Shevchenko",
    "display_b": "Manon Fiorot",
-   "p_lr": 0.6659689645748496,
-   "p_xgb": 0.4203600585460663,
+   "p_lr": 0.533416568808865,
+   "p_xgb": 0.6341926455497742,
    "actual_winner": "ValentinaShevchenko"
   },
   {
@@ -656,8 +656,8 @@
    "fighter_b": "IonCutelaba",
    "display_a": "Modestas Bukauskas",
    "display_b": "Ion Cutelaba",
-   "p_lr": 0.570474845091316,
-   "p_xgb": 0.5200607776641846,
+   "p_lr": 0.5164055254688985,
+   "p_xgb": 0.5442057847976685,
    "actual_winner": "ModestasBukauskas"
   },
   {
@@ -667,8 +667,8 @@
    "fighter_b": "CharlesRadtke",
    "display_a": "Mike Malott",
    "display_b": "Charles Radtke",
-   "p_lr": 0.5618318622733707,
-   "p_xgb": 0.6152777075767517,
+   "p_lr": 0.6066676198270453,
+   "p_xgb": 0.620644748210907,
    "actual_winner": "MikeMalott"
   },
   {
@@ -678,8 +678,8 @@
    "fighter_b": "BrunoSilva",
    "display_a": "Marc- Andre Barriault",
    "display_b": "Bruno Silva",
-   "p_lr": 0.49493765832409015,
-   "p_xgb": 0.2968616485595703,
+   "p_lr": 0.5979473281403588,
+   "p_xgb": 0.4801570177078247,
    "actual_winner": "Marc-AndreBarriault"
   },
   {
@@ -689,8 +689,8 @@
    "fighter_b": "AiemannZahabi",
    "display_a": "Jose Aldo",
    "display_b": "Aiemann Zahabi",
-   "p_lr": 0.4838224812785444,
-   "p_xgb": 0.3134515881538391,
+   "p_lr": 0.4314565586418354,
+   "p_xgb": 0.23960071802139282,
    "actual_winner": "AiemannZahabi"
   },
   {
@@ -700,8 +700,8 @@
    "fighter_b": "IvanErslan",
    "display_a": "Navajo Stirling",
    "display_b": "Ivan Erslan",
-   "p_lr": 0.8048280119559814,
-   "p_xgb": 0.781477689743042,
+   "p_lr": 0.6999392440297859,
+   "p_xgb": 0.6613969802856445,
    "actual_winner": "NavajoStirling"
   },
   {
@@ -711,8 +711,8 @@
    "fighter_b": "JeongYeongLee",
    "display_a": "Daniel Santos",
    "display_b": "Jeong Yeong Lee",
-   "p_lr": 0.5635005577166339,
-   "p_xgb": 0.4793250262737274,
+   "p_lr": 0.5387226053364764,
+   "p_xgb": 0.4118708670139313,
    "actual_winner": "DanielSantos"
   },
   {
@@ -722,8 +722,8 @@
    "fighter_b": "BekzatAlmakhan",
    "display_a": "Brad Katona",
    "display_b": "Bekzat Almakhan",
-   "p_lr": 0.7800298835971228,
-   "p_xgb": 0.6952429413795471,
+   "p_lr": 0.6396168839584306,
+   "p_xgb": 0.4163322150707245,
    "actual_winner": "BekzatAlmakhan"
   },
   {
@@ -733,8 +733,8 @@
    "fighter_b": "KylePrepolec",
    "display_a": "Benoit Saint Denis",
    "display_b": "Kyle Prepolec",
-   "p_lr": 0.9256840973990493,
-   "p_xgb": 0.8897601366043091,
+   "p_lr": 0.8912773584883026,
+   "p_xgb": 0.8614184260368347,
    "actual_winner": "BenoitSaintDenis"
   },
   {
@@ -744,8 +744,8 @@
    "fighter_b": "JackDellaMaddalena",
    "display_a": "Belal Muhammad",
    "display_b": "Jack Della Maddalena",
-   "p_lr": 0.37809878193643703,
-   "p_xgb": 0.4427296817302704,
+   "p_lr": 0.47198399565438615,
+   "p_xgb": 0.4067291021347046,
    "actual_winner": "JackDellaMaddalena"
   },
   {
@@ -755,8 +755,8 @@
    "fighter_b": "NataliaSilva",
    "display_a": "Alexa Grasso",
    "display_b": "Natalia Silva",
-   "p_lr": 0.3999099890698753,
-   "p_xgb": 0.30908456444740295,
+   "p_lr": 0.33517137226237015,
+   "p_xgb": 0.27655741572380066,
    "actual_winner": "NataliaSilva"
   },
   {
@@ -766,8 +766,8 @@
    "fighter_b": "JasmineJasudavicius",
    "display_a": "Jessica Andrade",
    "display_b": "Jasmine Jasudavicius",
-   "p_lr": 0.4309717500144945,
-   "p_xgb": 0.42241331934928894,
+   "p_lr": 0.46570386180798873,
+   "p_xgb": 0.5229580402374268,
    "actual_winner": "JasmineJasudavicius"
   },
   {
@@ -777,8 +777,8 @@
    "fighter_b": "ConnorMatthews",
    "display_a": "Yadierdel Valle",
    "display_b": "Connor Matthews",
-   "p_lr": 0.6446245341035242,
-   "p_xgb": 0.6160697340965271,
+   "p_lr": 0.6482214313283023,
+   "p_xgb": 0.6251716613769531,
    "actual_winner": "YadierdelValle"
   },
   {
@@ -788,8 +788,8 @@
    "fighter_b": "LuanaPinheiro",
    "display_a": "Tecia Pennington",
    "display_b": "Luana Pinheiro",
-   "p_lr": 0.5375443138248273,
-   "p_xgb": 0.6519888043403625,
+   "p_lr": 0.6178168744744456,
+   "p_xgb": 0.620941698551178,
    "actual_winner": "TeciaPennington"
   },
   {
@@ -799,8 +799,8 @@
    "fighter_b": "MaironSantos",
    "display_a": "Sodiq Yusuff",
    "display_b": "Mairon Santos",
-   "p_lr": 0.5417157763915901,
-   "p_xgb": 0.3911440074443817,
+   "p_lr": 0.4653500080788871,
+   "p_xgb": 0.5013040900230408,
    "actual_winner": "MaironSantos"
   },
   {
@@ -810,8 +810,8 @@
    "fighter_b": "TainaraLisboa",
    "display_a": "Luana Santos",
    "display_b": "Tainara Lisboa",
-   "p_lr": 0.6574490744351115,
-   "p_xgb": 0.6320346593856812,
+   "p_lr": 0.7715930090381091,
+   "p_xgb": 0.7103844881057739,
    "actual_winner": "LuanaSantos"
   },
   {
@@ -821,8 +821,8 @@
    "fighter_b": "MelquizaelCosta",
    "display_a": "Julian Erosa",
    "display_b": "Melquizael Costa",
-   "p_lr": 0.38242362726737134,
-   "p_xgb": 0.4513860046863556,
+   "p_lr": 0.43845920670787336,
+   "p_xgb": 0.5127238631248474,
    "actual_winner": "MelquizaelCosta"
   },
   {
@@ -832,8 +832,8 @@
    "fighter_b": "CarlosHernandez",
    "display_a": "Hyun Sung Park",
    "display_b": "Carlos Hernandez",
-   "p_lr": 0.578517827104338,
-   "p_xgb": 0.513254702091217,
+   "p_lr": 0.4728808754990541,
+   "p_xgb": 0.428415983915329,
    "actual_winner": "HyunSungPark"
   },
   {
@@ -843,8 +843,8 @@
    "fighter_b": "MichaelMorales",
    "display_a": "Gilbert Burns",
    "display_b": "Michael Morales",
-   "p_lr": 0.24205388091534547,
-   "p_xgb": 0.23055492341518402,
+   "p_lr": 0.1813338199456978,
+   "p_xgb": 0.11370392143726349,
    "actual_winner": "MichaelMorales"
   },
   {
@@ -854,8 +854,8 @@
    "fighter_b": "MatheusCamilo",
    "display_a": "Gabe Green",
    "display_b": "Matheus Camilo",
-   "p_lr": 0.44556135920224804,
-   "p_xgb": 0.46166539192199707,
+   "p_lr": 0.4280902315358529,
+   "p_xgb": 0.43545445799827576,
    "actual_winner": "GabeGreen"
   },
   {
@@ -865,8 +865,8 @@
    "fighter_b": "DeniseGomes",
    "display_a": "Elise Reed",
    "display_b": "Denise Gomes",
-   "p_lr": 0.245635513260173,
-   "p_xgb": 0.15573550760746002,
+   "p_lr": 0.252523606429435,
+   "p_xgb": 0.23204000294208527,
    "actual_winner": "DeniseGomes"
   },
   {
@@ -876,8 +876,8 @@
    "fighter_b": "ThiagoMoises",
    "display_a": "Jared Gordon",
    "display_b": "Thiago Moises",
-   "p_lr": 0.4815290224609142,
-   "p_xgb": 0.7407634854316711,
+   "p_lr": 0.54726424734203,
+   "p_xgb": 0.6819398999214172,
    "actual_winner": "JaredGordon"
   },
   {
@@ -887,8 +887,8 @@
    "fighter_b": "NursultonRuziboev",
    "display_a": "Dustin Stoltzfus",
    "display_b": "Nursulton Ruziboev",
-   "p_lr": 0.34222935352126976,
-   "p_xgb": 0.38576656579971313,
+   "p_lr": 0.37896675286220116,
+   "p_xgb": 0.3572005331516266,
    "actual_winner": "NursultonRuziboev"
   },
   {
@@ -898,8 +898,8 @@
    "fighter_b": "DuskoTodorovic",
    "display_a": "Zach Reese",
    "display_b": "Dusko Todorovic",
-   "p_lr": 0.6367890924250575,
-   "p_xgb": 0.5973353385925293,
+   "p_lr": 0.5321863040507689,
+   "p_xgb": 0.42301374673843384,
    "actual_winner": "ZachReese"
   },
   {
@@ -909,8 +909,8 @@
    "fighter_b": "JordanLeavitt",
    "display_a": "Kurt Holobaugh",
    "display_b": "Jordan Leavitt",
-   "p_lr": 0.22089161467954718,
-   "p_xgb": 0.3467332720756531,
+   "p_lr": 0.2533584132972061,
+   "p_xgb": 0.17194144427776337,
    "actual_winner": "JordanLeavitt"
   },
   {
@@ -920,8 +920,8 @@
    "fighter_b": "AliceArdelean",
    "display_a": "Rayannedos Santos",
    "display_b": "Alice Ardelean",
-   "p_lr": 0.7462767255168237,
-   "p_xgb": 0.7642431259155273,
+   "p_lr": 0.6657227615331235,
+   "p_xgb": 0.698562502861023,
    "actual_winner": "AliceArdelean"
   },
   {
@@ -931,8 +931,8 @@
    "fighter_b": "LudovitKlein",
    "display_a": "Mateusz Gamrot",
    "display_b": "Ludovit Klein",
-   "p_lr": 0.6581682972333542,
-   "p_xgb": 0.5388408899307251,
+   "p_lr": 0.5464868842980591,
+   "p_xgb": 0.4328781068325043,
    "actual_winner": "MateuszGamrot"
   },
   {
@@ -942,8 +942,8 @@
    "fighter_b": "MacyChiasson",
    "display_a": "Ketlen Vieira",
    "display_b": "Macy Chiasson",
-   "p_lr": 0.4537207410064264,
-   "p_xgb": 0.561387300491333,
+   "p_lr": 0.3412378607115528,
+   "p_xgb": 0.5454842448234558,
    "actual_winner": "KetlenVieira"
   },
   {
@@ -953,8 +953,8 @@
    "fighter_b": "BrunoLopes",
    "display_a": "Dustin Jacoby",
    "display_b": "Bruno Lopes",
-   "p_lr": 0.19802590304495563,
-   "p_xgb": 0.24268777668476105,
+   "p_lr": 0.15491299661913577,
+   "p_xgb": 0.4227612614631653,
    "actual_winner": "DustinJacoby"
   },
   {
@@ -964,8 +964,8 @@
    "fighter_b": "MichaelAswellJr.",
    "display_a": "Bolaji Oki",
    "display_b": "Michael Aswell Jr.",
-   "p_lr": 0.5782962729574411,
-   "p_xgb": 0.5881654620170593,
+   "p_lr": 0.5953409928828631,
+   "p_xgb": 0.6439043283462524,
    "actual_winner": "BolajiOki"
   },
   {
@@ -975,8 +975,8 @@
    "fighter_b": "RamizBrahimaj",
    "display_a": "Billy Ray Goff",
    "display_b": "Ramiz Brahimaj",
-   "p_lr": 0.8760259058156586,
-   "p_xgb": 0.9140481948852539,
+   "p_lr": 0.8504838366517457,
+   "p_xgb": 0.8817669749259949,
    "actual_winner": "RamizBrahimaj"
   },
   {
@@ -986,8 +986,8 @@
    "fighter_b": "AllanNascimento",
    "display_a": "Jafel Filho",
    "display_b": "Allan Nascimento",
-   "p_lr": 0.6128186091599345,
-   "p_xgb": 0.5971947908401489,
+   "p_lr": 0.6222217177776301,
+   "p_xgb": 0.7805688977241516,
    "actual_winner": "AllanNascimento"
   },
   {
@@ -997,8 +997,8 @@
    "fighter_b": "WaldoCortesAcosta",
    "display_a": "Serghei Spivac",
    "display_b": "Waldo Cortes Acosta",
-   "p_lr": 0.4878406315549632,
-   "p_xgb": 0.5547201037406921,
+   "p_lr": 0.6088036958684314,
+   "p_xgb": 0.7700988054275513,
    "actual_winner": "WaldoCortesAcosta"
   },
   {
@@ -1008,8 +1008,8 @@
    "fighter_b": "YanalAshmouz",
    "display_a": "Quillan Salkilld",
    "display_b": "Yanal Ashmouz",
-   "p_lr": 0.6206888948436275,
-   "p_xgb": 0.8140131235122681,
+   "p_lr": 0.5705884023222699,
+   "p_xgb": 0.6892691850662231,
    "actual_winner": "QuillanSalkilld"
   },
   {
@@ -1019,8 +1019,8 @@
    "fighter_b": "SeanO'Malley",
    "display_a": "Merab Dvalishvili",
    "display_b": "Sean O' Malley",
-   "p_lr": 0.7189251446399132,
-   "p_xgb": 0.7069953680038452,
+   "p_lr": 0.8242040867451186,
+   "p_xgb": 0.6952470541000366,
    "actual_winner": "MerabDvalishvili"
   },
   {
@@ -1030,8 +1030,8 @@
    "fighter_b": "PatchyMix",
    "display_a": "Mario Bautista",
    "display_b": "Patchy Mix",
-   "p_lr": 0.6925921246703669,
-   "p_xgb": 0.7097100615501404,
+   "p_lr": 0.7450104494187944,
+   "p_xgb": 0.7575329542160034,
    "actual_winner": "MarioBautista"
   },
   {
@@ -1041,8 +1041,8 @@
    "fighter_b": "MarkChoinski",
    "display_a": "Mar Quel Mederos",
    "display_b": "Mark Choinski",
-   "p_lr": 0.6440618066948336,
-   "p_xgb": 0.7742795348167419,
+   "p_lr": 0.6705587548224172,
+   "p_xgb": 0.7803192138671875,
    "actual_winner": "MarQuelMederos"
   },
   {
@@ -1052,8 +1052,8 @@
    "fighter_b": "AndreasGustafsson",
    "display_a": "Khaos Williams",
    "display_b": "Andreas Gustafsson",
-   "p_lr": 0.7429434284324907,
-   "p_xgb": 0.8012387752532959,
+   "p_lr": 0.7043912563544638,
+   "p_xgb": 0.7435318827629089,
    "actual_winner": "AndreasGustafsson"
   },
   {
@@ -1063,8 +1063,8 @@
    "fighter_b": "KevinHolland",
    "display_a": "Vicente Luque",
    "display_b": "Kevin Holland",
-   "p_lr": 0.5604232710284305,
-   "p_xgb": 0.6333504915237427,
+   "p_lr": 0.511081518778668,
+   "p_xgb": 0.6521295309066772,
    "actual_winner": "KevinHolland"
   },
   {
@@ -1074,8 +1074,8 @@
    "fighter_b": "KaylaHarrison",
    "display_a": "Julianna Pena",
    "display_b": "Kayla Harrison",
-   "p_lr": 0.36615075620051685,
-   "p_xgb": 0.2833213806152344,
+   "p_lr": 0.39910284878488134,
+   "p_xgb": 0.37137046456336975,
    "actual_winner": "KaylaHarrison"
   },
   {
@@ -1085,8 +1085,8 @@
    "fighter_b": "JooSangYoo",
    "display_a": "Jeka Saragih",
    "display_b": "Joo Sang Yoo",
-   "p_lr": 0.5185536398960886,
-   "p_xgb": 0.5477334856987,
+   "p_lr": 0.520564185674644,
+   "p_xgb": 0.5488765239715576,
    "actual_winner": "JooSangYoo"
   },
   {
@@ -1096,8 +1096,8 @@
    "fighter_b": "JoshuaVan",
    "display_a": "Bruno Silva",
    "display_b": "Joshua Van",
-   "p_lr": 0.2089874054212948,
-   "p_xgb": 0.16980451345443726,
+   "p_lr": 0.17737476769919405,
+   "p_xgb": 0.28883853554725647,
    "actual_winner": "JoshuaVan"
   },
   {
@@ -1107,8 +1107,8 @@
    "fighter_b": "BrendsonRibeiro",
    "display_a": "Azamat Murzakanov",
    "display_b": "Brendson Ribeiro",
-   "p_lr": 0.62359495302273,
-   "p_xgb": 0.5206530690193176,
+   "p_lr": 0.6492673031816034,
+   "p_xgb": 0.652245819568634,
    "actual_winner": "AzamatMurzakanov"
   },
   {
@@ -1118,8 +1118,8 @@
    "fighter_b": "WangCong",
    "display_a": "Arianeda Silva",
    "display_b": "Wang Cong",
-   "p_lr": 0.5265245291975037,
-   "p_xgb": 0.4617547392845154,
+   "p_lr": 0.47122236124768435,
+   "p_xgb": 0.4656655490398407,
    "actual_winner": "WangCong"
   },
   {
@@ -1129,8 +1129,8 @@
    "fighter_b": "JoePyfer",
    "display_a": "Kelvin Gastelum",
    "display_b": "Joe Pyfer",
-   "p_lr": 0.3303767573878114,
-   "p_xgb": 0.4250625669956207,
+   "p_lr": 0.4348552535801938,
+   "p_xgb": 0.6578218936920166,
    "actual_winner": "JoePyfer"
   },
   {
@@ -1140,8 +1140,8 @@
    "fighter_b": "MirandaMaverick",
    "display_a": "Rose Namajunas",
    "display_b": "Miranda Maverick",
-   "p_lr": 0.5235777793794983,
-   "p_xgb": 0.353545606136322,
+   "p_lr": 0.4471094388492629,
+   "p_xgb": 0.3375599980354309,
    "actual_winner": "RoseNamajunas"
   },
   {
@@ -1151,8 +1151,8 @@
    "fighter_b": "CameronSmotherman",
    "display_a": "Ricky Simon",
    "display_b": "Cameron Smotherman",
-   "p_lr": 0.7515131519174214,
-   "p_xgb": 0.7044100165367126,
+   "p_lr": 0.6902680672755159,
+   "p_xgb": 0.693055272102356,
    "actual_winner": "RickySimon"
   },
   {
@@ -1162,8 +1162,8 @@
    "fighter_b": "AngeLoosa",
    "display_a": "Phil Rowe",
    "display_b": "Ange Loosa",
-   "p_lr": 0.6473049055107438,
-   "p_xgb": 0.5171216130256653,
+   "p_lr": 0.6324007874201113,
+   "p_xgb": 0.530428946018219,
    "actual_winner": "PhilRowe"
   },
   {
@@ -1173,8 +1173,8 @@
    "fighter_b": "CourtMcGee",
    "display_a": "Michael Chiesa",
    "display_b": "Court Mc Gee",
-   "p_lr": 0.7895986717671857,
-   "p_xgb": 0.8216349482536316,
+   "p_lr": 0.7628547825157271,
+   "p_xgb": 0.7804876565933228,
    "actual_winner": "MichaelChiesa"
   },
   {
@@ -1184,8 +1184,8 @@
    "fighter_b": "CodyBrundage",
    "display_a": "Mansur Abdul- Malik",
    "display_b": "Cody Brundage",
-   "p_lr": 0.8284173009149688,
-   "p_xgb": 0.8527694940567017,
+   "p_lr": 0.7987035563234116,
+   "p_xgb": 0.7234055399894714,
    "actual_winner": "CodyBrundage"
   },
   {
@@ -1195,8 +1195,8 @@
    "fighter_b": "KrisMoutinho",
    "display_a": "Malcolm Wellmaker",
    "display_b": "Kris Moutinho",
-   "p_lr": 0.9477997640391292,
-   "p_xgb": 0.8085534572601318,
+   "p_lr": 0.8524848888308921,
+   "p_xgb": 0.8413107991218567,
    "actual_winner": "MalcolmWellmaker"
   },
   {
@@ -1206,8 +1206,8 @@
    "fighter_b": "JoaquinBuckley",
    "display_a": "Kamaru Usman",
    "display_b": "Joaquin Buckley",
-   "p_lr": 0.4632330780394498,
-   "p_xgb": 0.3499697148799896,
+   "p_lr": 0.42957004525043335,
+   "p_xgb": 0.409557044506073,
    "actual_winner": "KamaruUsman"
   },
   {
@@ -1217,8 +1217,8 @@
    "fighter_b": "AndrePetroski",
    "display_a": "Edmen Shahbazyan",
    "display_b": "Andre Petroski",
-   "p_lr": 0.6855753373494285,
-   "p_xgb": 0.6961168646812439,
+   "p_lr": 0.5803174210877948,
+   "p_xgb": 0.5205720067024231,
    "actual_winner": "EdmenShahbazyan"
   },
   {
@@ -1228,8 +1228,8 @@
    "fighter_b": "RaoniBarcelos",
    "display_a": "Cody Garbrandt",
    "display_b": "Raoni Barcelos",
-   "p_lr": 0.3194479737801163,
-   "p_xgb": 0.24603614211082458,
+   "p_lr": 0.3600504832677729,
+   "p_xgb": 0.15784429013729095,
    "actual_winner": "RaoniBarcelos"
   },
   {
@@ -1239,8 +1239,8 @@
    "fighter_b": "JoseOchoa",
    "display_a": "Cody Durden",
    "display_b": "Jose Ochoa",
-   "p_lr": 0.4436462626614019,
-   "p_xgb": 0.5068901777267456,
+   "p_lr": 0.44556049943427267,
+   "p_xgb": 0.4042322039604187,
    "actual_winner": "JoseOchoa"
   },
   {
@@ -1250,8 +1250,8 @@
    "fighter_b": "OumarSy",
    "display_a": "Alonzo Menifield",
    "display_b": "Oumar Sy",
-   "p_lr": 0.37154437141204366,
-   "p_xgb": 0.20842058956623077,
+   "p_lr": 0.3708919283428975,
+   "p_xgb": 0.17647166550159454,
    "actual_winner": "AlonzoMenifield"
   },
   {
@@ -1261,8 +1261,8 @@
    "fighter_b": "VanessaDemopoulos",
    "display_a": "Jamey- Lyn Horth",
    "display_b": "Vanessa Demopoulos",
-   "p_lr": 0.8395145038359259,
-   "p_xgb": 0.8204702734947205,
+   "p_lr": 0.8294163681899366,
+   "p_xgb": 0.8809590339660645,
    "actual_winner": "Jamey-LynHorth"
   },
   {
@@ -1272,8 +1272,8 @@
    "fighter_b": "NikolasMotta",
    "display_a": "Nazim Sadykhov",
    "display_b": "Nikolas Motta",
-   "p_lr": 0.6572455107525899,
-   "p_xgb": 0.6555640697479248,
+   "p_lr": 0.6004014565375221,
+   "p_xgb": 0.595340371131897,
    "actual_winner": "NazimSadykhov"
   },
   {
@@ -1283,8 +1283,8 @@
    "fighter_b": "MyktybekOrolbai",
    "display_a": "Tofiq Musayev",
    "display_b": "Myktybek Orolbai",
-   "p_lr": 0.42460240639493857,
-   "p_xgb": 0.47946903109550476,
+   "p_lr": 0.45007348955620075,
+   "p_xgb": 0.5394405722618103,
    "actual_winner": "MyktybekOrolbai"
   },
   {
@@ -1294,8 +1294,8 @@
    "fighter_b": "AzatMaksum",
    "display_a": "Tagir Ulanbekov",
    "display_b": "Azat Maksum",
-   "p_lr": 0.6185854933238705,
-   "p_xgb": 0.7622247338294983,
+   "p_lr": 0.6430694376993515,
+   "p_xgb": 0.7080237865447998,
    "actual_winner": "TagirUlanbekov"
   },
   {
@@ -1305,8 +1305,8 @@
    "fighter_b": "ObanElliott",
    "display_a": "Seokhyeon Ko",
    "display_b": "Oban Elliott",
-   "p_lr": 0.4176128266296194,
-   "p_xgb": 0.649345874786377,
+   "p_lr": 0.3768891476705097,
+   "p_xgb": 0.6247287392616272,
    "actual_winner": "SeokhyeonKo"
   },
   {
@@ -1316,8 +1316,8 @@
    "fighter_b": "BogdanGrad",
    "display_a": "Muhammad Naimov",
    "display_b": "Bogdan Grad",
-   "p_lr": 0.4178054521503598,
-   "p_xgb": 0.5703397393226624,
+   "p_lr": 0.47791451031672083,
+   "p_xgb": 0.42314544320106506,
    "actual_winner": "MuhammadNaimov"
   },
   {
@@ -1327,8 +1327,8 @@
    "fighter_b": "IgnacioBahamondes",
    "display_a": "Rafael Fiziev",
    "display_b": "Ignacio Bahamondes",
-   "p_lr": 0.3503331986007777,
-   "p_xgb": 0.23181915283203125,
+   "p_lr": 0.33601681346546963,
+   "p_xgb": 0.2238742560148239,
    "actual_winner": "RafaelFiziev"
   },
   {
@@ -1338,8 +1338,8 @@
    "fighter_b": "JunYongPark",
    "display_a": "Ismail Naurdiev",
    "display_b": "Jun Yong Park",
-   "p_lr": 0.7157560987140335,
-   "p_xgb": 0.6537175178527832,
+   "p_lr": 0.6967587644851868,
+   "p_xgb": 0.6992032527923584,
    "actual_winner": "JunYongPark"
   },
   {
@@ -1349,8 +1349,8 @@
    "fighter_b": "KlaudiaSygula",
    "display_a": "Irina Alekseeva",
    "display_b": "Klaudia Sygula",
-   "p_lr": 0.5509210737255388,
-   "p_xgb": 0.5724926590919495,
+   "p_lr": 0.5733965738764306,
+   "p_xgb": 0.49496421217918396,
    "actual_winner": "KlaudiaSygula"
   },
   {
@@ -1360,8 +1360,8 @@
    "fighter_b": "KhalilRountreeJr.",
    "display_a": "Jamahal Hill",
    "display_b": "Khalil Rountree Jr.",
-   "p_lr": 0.650285112240974,
-   "p_xgb": 0.785578191280365,
+   "p_lr": 0.6731767869833007,
+   "p_xgb": 0.667124330997467,
    "actual_winner": "KhalilRountreeJr."
   },
   {
@@ -1371,8 +1371,8 @@
    "fighter_b": "MohammedUsman",
    "display_a": "Hamdy Abdelwahab",
    "display_b": "Mohammed Usman",
-   "p_lr": 0.7331281743593606,
-   "p_xgb": 0.7009183168411255,
+   "p_lr": 0.6901511080697101,
+   "p_xgb": 0.7767089605331421,
    "actual_winner": "MohammedUsman"
   },
   {
@@ -1382,8 +1382,8 @@
    "fighter_b": "MelissaMullins",
    "display_a": "Daria Zhelezniakova",
    "display_b": "Melissa Mullins",
-   "p_lr": 0.48477704443129677,
-   "p_xgb": 0.5422582626342773,
+   "p_lr": 0.4777398809869942,
+   "p_xgb": 0.517268180847168,
    "actual_winner": "DariaZhelezniakova"
   },
   {
@@ -1393,8 +1393,8 @@
    "fighter_b": "RizvanKuniev",
    "display_a": "Curtis Blaydes",
    "display_b": "Rizvan Kuniev",
-   "p_lr": 0.7820461555764928,
-   "p_xgb": 0.7742044925689697,
+   "p_lr": 0.7882821752096753,
+   "p_xgb": 0.7947975993156433,
    "actual_winner": "CurtisBlaydes"
   },
   {
@@ -1404,8 +1404,8 @@
    "fighter_b": "TracyCortez",
    "display_a": "Viviane Araujo",
    "display_b": "Tracy Cortez",
-   "p_lr": 0.5170700611372179,
-   "p_xgb": 0.4528213143348694,
+   "p_lr": 0.4720197095736245,
+   "p_xgb": 0.4319313168525696,
    "actual_winner": "TracyCortez"
   },
   {
@@ -1415,8 +1415,8 @@
    "fighter_b": "ViacheslavBorshchev",
    "display_a": "Terrance Mc Kinney",
    "display_b": "Viacheslav Borshchev",
-   "p_lr": 0.6705082486154814,
-   "p_xgb": 0.7748313546180725,
+   "p_lr": 0.6657989198718923,
+   "p_xgb": 0.7899028658866882,
    "actual_winner": "TerranceMcKinney"
   },
   {
@@ -1426,8 +1426,8 @@
    "fighter_b": "FelipeLima",
    "display_a": "Payton Talbott",
    "display_b": "Felipe Lima",
-   "p_lr": 0.28713840718516664,
-   "p_xgb": 0.24381780624389648,
+   "p_lr": 0.2706639716613178,
+   "p_xgb": 0.26873254776000977,
    "actual_winner": "PaytonTalbott"
   },
   {
@@ -1437,8 +1437,8 @@
    "fighter_b": "JacobeSmith",
    "display_a": "Niko Price",
    "display_b": "Jacobe Smith",
-   "p_lr": 0.42432464756227295,
-   "p_xgb": 0.2643345594406128,
+   "p_lr": 0.40523848794035117,
+   "p_xgb": 0.3886563181877136,
    "actual_winner": "JacobeSmith"
   },
   {
@@ -1448,8 +1448,8 @@
    "fighter_b": "AlvinHines",
    "display_a": "Jhonata Diniz",
    "display_b": "Alvin Hines",
-   "p_lr": 0.6181420637049135,
-   "p_xgb": 0.6192886829376221,
+   "p_lr": 0.6198340003901066,
+   "p_xgb": 0.6152365803718567,
    "actual_winner": "JhonataDiniz"
   },
   {
@@ -1459,8 +1459,8 @@
    "fighter_b": "GregoryRodrigues",
    "display_a": "Jack Hermansson",
    "display_b": "Gregory Rodrigues",
-   "p_lr": 0.3939638449606653,
-   "p_xgb": 0.23974600434303284,
+   "p_lr": 0.4246362612791842,
+   "p_xgb": 0.3912508189678192,
    "actual_winner": "GregoryRodrigues"
   },
   {
@@ -1470,8 +1470,8 @@
    "fighter_b": "CharlesOliveira",
    "display_a": "Ilia Topuria",
    "display_b": "Charles Oliveira",
-   "p_lr": 0.7094733432037991,
-   "p_xgb": 0.7494488954544067,
+   "p_lr": 0.8424490259723936,
+   "p_xgb": 0.8382746577262878,
    "actual_winner": "IliaTopuria"
   },
   {
@@ -1481,8 +1481,8 @@
    "fighter_b": "JoseDelgado",
    "display_a": "Hyder Amil",
    "display_b": "Jose Delgado",
-   "p_lr": 0.6262192872179604,
-   "p_xgb": 0.5461469888687134,
+   "p_lr": 0.6199375895325527,
+   "p_xgb": 0.40506067872047424,
    "actual_winner": "JoseDelgado"
   },
   {
@@ -1492,8 +1492,8 @@
    "fighter_b": "JoshuaVan",
    "display_a": "Brandon Royval",
    "display_b": "Joshua Van",
-   "p_lr": 0.3688959354441024,
-   "p_xgb": 0.39288267493247986,
+   "p_lr": 0.3562238408625757,
+   "p_xgb": 0.30401262640953064,
    "actual_winner": "JoshuaVan"
   },
   {
@@ -1503,8 +1503,8 @@
    "fighter_b": "RenatoMoicano",
    "display_a": "Beneil Dariush",
    "display_b": "Renato Moicano",
-   "p_lr": 0.38883811385013456,
-   "p_xgb": 0.26665717363357544,
+   "p_lr": 0.4879280489511569,
+   "p_xgb": 0.49372169375419617,
    "actual_winner": "BeneilDariush"
   },
   {
@@ -1514,8 +1514,8 @@
    "fighter_b": "KaiKara-France",
    "display_a": "Alexandre Pantoja",
    "display_b": "Kai Kara- France",
-   "p_lr": 0.615764614512416,
-   "p_xgb": 0.6742071509361267,
+   "p_lr": 0.5929272483042832,
+   "p_xgb": 0.6813058853149414,
    "actual_winner": "AlexandrePantoja"
   },
   {
@@ -1525,8 +1525,8 @@
    "fighter_b": "AustenLane",
    "display_a": "Vitor Petrino",
    "display_b": "Austen Lane",
-   "p_lr": 0.8814144676661327,
-   "p_xgb": 0.8527849912643433,
+   "p_lr": 0.8316095105567977,
+   "p_xgb": 0.8244873285293579,
    "actual_winner": "VitorPetrino"
   },
   {
@@ -1536,8 +1536,8 @@
    "fighter_b": "GabrielBonfim",
    "display_a": "Stephen Thompson",
    "display_b": "Gabriel Bonfim",
-   "p_lr": 0.1772650426460252,
-   "p_xgb": 0.18018940091133118,
+   "p_lr": 0.29472965316600847,
+   "p_xgb": 0.28001824021339417,
    "actual_winner": "GabrielBonfim"
   },
   {
@@ -1547,8 +1547,8 @@
    "fighter_b": "MorganCharriere",
    "display_a": "Nate Landwehr",
    "display_b": "Morgan Charriere",
-   "p_lr": 0.38428445586083587,
-   "p_xgb": 0.31299668550491333,
+   "p_lr": 0.38905769015309055,
+   "p_xgb": 0.4305807948112488,
    "actual_winner": "MorganCharriere"
   },
   {
@@ -1558,8 +1558,8 @@
    "fighter_b": "MikeDavis",
    "display_a": "Mitch Ramirez",
    "display_b": "Mike Davis",
-   "p_lr": 0.2440114833016013,
-   "p_xgb": 0.3948681056499481,
+   "p_lr": 0.30435680520079755,
+   "p_xgb": 0.2656286656856537,
    "actual_winner": "MikeDavis"
   },
   {
@@ -1569,8 +1569,8 @@
    "fighter_b": "ChrisCurtis",
    "display_a": "Max Griffin",
    "display_b": "Chris Curtis",
-   "p_lr": 0.4862273795360664,
-   "p_xgb": 0.27426907420158386,
+   "p_lr": 0.510676507262254,
+   "p_xgb": 0.3076566159725189,
    "actual_winner": "ChrisCurtis"
   },
   {
@@ -1580,8 +1580,8 @@
    "fighter_b": "EduardaMoura",
    "display_a": "Lauren Murphy",
    "display_b": "Eduarda Moura",
-   "p_lr": 0.22891010013551977,
-   "p_xgb": 0.16499973833560944,
+   "p_lr": 0.19962854278529224,
+   "p_xgb": 0.11996868997812271,
    "actual_winner": "EduardaMoura"
   },
   {
@@ -1591,8 +1591,8 @@
    "fighter_b": "SteveGarcia",
    "display_a": "Calvin Kattar",
    "display_b": "Steve Garcia",
-   "p_lr": 0.3128951438625382,
-   "p_xgb": 0.4752933382987976,
+   "p_lr": 0.244681976513554,
+   "p_xgb": 0.4588836431503296,
    "actual_winner": "SteveGarcia"
   },
   {
@@ -1602,8 +1602,8 @@
    "fighter_b": "TucoTokkos",
    "display_a": "Junior Tafa",
    "display_b": "Tuco Tokkos",
-   "p_lr": 0.596502865148896,
-   "p_xgb": 0.6702721118927002,
+   "p_lr": 0.6271133676176567,
+   "p_xgb": 0.7290129661560059,
    "actual_winner": "TucoTokkos"
   },
   {
@@ -1613,8 +1613,8 @@
    "fighter_b": "ChidiNjokuani",
    "display_a": "Jake Matthews",
    "display_b": "Chidi Njokuani",
-   "p_lr": 0.483459961103408,
-   "p_xgb": 0.7068904638290405,
+   "p_lr": 0.5714590922718905,
+   "p_xgb": 0.5961107015609741,
    "actual_winner": "JakeMatthews"
   },
   {
@@ -1624,8 +1624,8 @@
    "fighter_b": "MelissaMartinez",
    "display_a": "Fatima Kline",
    "display_b": "Melissa Martinez",
-   "p_lr": 0.5628214415419527,
-   "p_xgb": 0.6329179406166077,
+   "p_lr": 0.6360668188106224,
+   "p_xgb": 0.6292542219161987,
    "actual_winner": "FatimaKline"
   },
   {
@@ -1635,8 +1635,8 @@
    "fighter_b": "TallisonTeixeira",
    "display_a": "Derrick Lewis",
    "display_b": "Tallison Teixeira",
-   "p_lr": 0.2151621021984526,
-   "p_xgb": 0.17170755565166473,
+   "p_lr": 0.20636498497787834,
+   "p_xgb": 0.22259026765823364,
    "actual_winner": "DerrickLewis"
   },
   {
@@ -1646,8 +1646,8 @@
    "fighter_b": "ValterWalker",
    "display_a": "Kennedy Nzechukwu",
    "display_b": "Valter Walker",
-   "p_lr": 0.6288947495146885,
-   "p_xgb": 0.7528068423271179,
+   "p_lr": 0.4225779196145053,
+   "p_xgb": 0.619239091873169,
    "actual_winner": "ValterWalker"
   },
   {
@@ -1657,8 +1657,8 @@
    "fighter_b": "ViniciusOliveira",
    "display_a": "Kyler Phillips",
    "display_b": "Vinicius Oliveira",
-   "p_lr": 0.5442032214480823,
-   "p_xgb": 0.41744479537010193,
+   "p_lr": 0.5386343908346538,
+   "p_xgb": 0.3388001620769501,
    "actual_winner": "ViniciusOliveira"
   },
   {
@@ -1668,8 +1668,8 @@
    "fighter_b": "LukaszBrzeski",
    "display_a": "Ryan Spann",
    "display_b": "Lukasz Brzeski",
-   "p_lr": 0.4291582696200962,
-   "p_xgb": 0.6618599891662598,
+   "p_lr": 0.47685019017003477,
+   "p_xgb": 0.576230525970459,
    "actual_winner": "RyanSpann"
   },
   {
@@ -1679,8 +1679,8 @@
    "fighter_b": "RomanKopylov",
    "display_a": "Paulo Costa",
    "display_b": "Roman Kopylov",
-   "p_lr": 0.24007851909521394,
-   "p_xgb": 0.16587989032268524,
+   "p_lr": 0.32553145413020984,
+   "p_xgb": 0.16379860043525696,
    "actual_winner": "PauloCosta"
   },
   {
@@ -1690,8 +1690,8 @@
    "fighter_b": "DanielZellhuber",
    "display_a": "Michael Johnson",
    "display_b": "Daniel Zellhuber",
-   "p_lr": 0.3025834482969837,
-   "p_xgb": 0.21353793144226074,
+   "p_lr": 0.4095427197326816,
+   "p_xgb": 0.24222974479198456,
    "actual_winner": "MichaelJohnson"
   },
   {
@@ -1701,8 +1701,8 @@
    "fighter_b": "DustinPoirier",
    "display_a": "Max Holloway",
    "display_b": "Dustin Poirier",
-   "p_lr": 0.7545809414271244,
-   "p_xgb": 0.7145645618438721,
+   "p_lr": 0.7408629751961829,
+   "p_xgb": 0.809004008769989,
    "actual_winner": "MaxHolloway"
   },
   {
@@ -1712,8 +1712,8 @@
    "fighter_b": "BrendanAllen",
    "display_a": "Marvin Vettori",
    "display_b": "Brendan Allen",
-   "p_lr": 0.40016152646240416,
-   "p_xgb": 0.3210281431674957,
+   "p_lr": 0.5083747299170887,
+   "p_xgb": 0.37589842081069946,
    "actual_winner": "BrendanAllen"
   },
   {
@@ -1723,8 +1723,8 @@
    "fighter_b": "DanielRodriguez",
    "display_a": "Kevin Holland",
    "display_b": "Daniel Rodriguez",
-   "p_lr": 0.7003842912090942,
-   "p_xgb": 0.7354537844657898,
+   "p_lr": 0.6990652726160932,
+   "p_xgb": 0.6349884271621704,
    "actual_winner": "DanielRodriguez"
   },
   {
@@ -1734,8 +1734,8 @@
    "fighter_b": "MarcinPrachnio",
    "display_a": "Jimmy Crute",
    "display_b": "Marcin Prachnio",
-   "p_lr": 0.7451637931335381,
-   "p_xgb": 0.8295141458511353,
+   "p_lr": 0.7564676697483727,
+   "p_xgb": 0.8207220435142517,
    "actual_winner": "JimmyCrute"
   },
   {
@@ -1745,8 +1745,8 @@
    "fighter_b": "NikolayVeretennikov",
    "display_a": "Francisco Prado",
    "display_b": "Nikolay Veretennikov",
-   "p_lr": 0.8090535217708457,
-   "p_xgb": 0.7683581709861755,
+   "p_lr": 0.820692366015123,
+   "p_xgb": 0.7946289777755737,
    "actual_winner": "NikolayVeretennikov"
   },
   {
@@ -1756,8 +1756,8 @@
    "fighter_b": "PatricioPitbull",
    "display_a": "Dan Ige",
    "display_b": "Patricio Pitbull",
-   "p_lr": 0.7063162972166929,
-   "p_xgb": 0.7407314777374268,
+   "p_lr": 0.6304873388348544,
+   "p_xgb": 0.6629525423049927,
    "actual_winner": "PatricioPitbull"
   },
   {
@@ -1767,8 +1767,8 @@
    "fighter_b": "PatricioFreire",
    "display_a": "Dan Ige",
    "display_b": "Patricio Freire",
-   "p_lr": 0.7773828685035133,
-   "p_xgb": 0.8213498592376709,
+   "p_lr": 0.7239592482196249,
+   "p_xgb": 0.7478989362716675,
    "actual_winner": "PatricioFreire"
   },
   {
@@ -1778,8 +1778,8 @@
    "fighter_b": "NicolleCaliari",
    "display_a": "Carli Judice",
    "display_b": "Nicolle Caliari",
-   "p_lr": 0.766388115418362,
-   "p_xgb": 0.6348462700843811,
+   "p_lr": 0.7087950123165444,
+   "p_xgb": 0.7188782691955566,
    "actual_winner": "CarliJudice"
   },
   {
@@ -1789,8 +1789,8 @@
    "fighter_b": "JacksonMcVey",
    "display_a": "Brunno Ferreira",
    "display_b": "Jackson Mc Vey",
-   "p_lr": 0.5634211101376736,
-   "p_xgb": 0.6920868158340454,
+   "p_lr": 0.5449491478468166,
+   "p_xgb": 0.6502970457077026,
    "actual_winner": "BrunnoFerreira"
   },
   {
@@ -1800,8 +1800,8 @@
    "fighter_b": "RobertValentin",
    "display_a": "Ateba Gautier",
    "display_b": "Robert Valentin",
-   "p_lr": 0.7940161009944369,
-   "p_xgb": 0.8041360974311829,
+   "p_lr": 0.7896627169484214,
+   "p_xgb": 0.8201965689659119,
    "actual_winner": "AtebaGautier"
   },
   {
@@ -1811,8 +1811,8 @@
    "fighter_b": "IslamDulatov",
    "display_a": "Adam Fugitt",
    "display_b": "Islam Dulatov",
-   "p_lr": 0.4949197980721224,
-   "p_xgb": 0.48357006907463074,
+   "p_lr": 0.4794321351718625,
+   "p_xgb": 0.4529764652252197,
    "actual_winner": "IslamDulatov"
   },
   {
@@ -1822,8 +1822,8 @@
    "fighter_b": "ReinierdeRidder",
    "display_a": "Robert Whittaker",
    "display_b": "Reinierde Ridder",
-   "p_lr": 0.34756601380636515,
-   "p_xgb": 0.2711735665798187,
+   "p_lr": 0.4087019790208393,
+   "p_xgb": 0.3785896301269531,
    "actual_winner": "ReinierdeRidder"
   },
   {
@@ -1833,8 +1833,8 @@
    "fighter_b": "MarcusMcGhee",
    "display_a": "Petr Yan",
    "display_b": "Marcus Mc Ghee",
-   "p_lr": 0.6983844141747452,
-   "p_xgb": 0.6942903399467468,
+   "p_lr": 0.6162563023242787,
+   "p_xgb": 0.580100953578949,
    "actual_winner": "PetrYan"
   },
   {
@@ -1844,8 +1844,8 @@
    "fighter_b": "BogdanGuskov",
    "display_a": "Nikita Krylov",
    "display_b": "Bogdan Guskov",
-   "p_lr": 0.4844841287140219,
-   "p_xgb": 0.27278798818588257,
+   "p_lr": 0.5882086360859277,
+   "p_xgb": 0.3899187445640564,
    "actual_winner": "BogdanGuskov"
   },
   {
@@ -1855,8 +1855,8 @@
    "fighter_b": "CarlosLeal",
    "display_a": "Muslim Salikhov",
    "display_b": "Carlos Leal",
-   "p_lr": 0.3813802748116726,
-   "p_xgb": 0.25759994983673096,
+   "p_lr": 0.4539243607993607,
+   "p_xgb": 0.16733458638191223,
    "actual_winner": "MuslimSalikhov"
   },
   {
@@ -1866,8 +1866,8 @@
    "fighter_b": "StevenNguyen",
    "display_a": "Mohammad Yahya",
    "display_b": "Steven Nguyen",
-   "p_lr": 0.6881762296285627,
-   "p_xgb": 0.7303775548934937,
+   "p_lr": 0.7954204477745039,
+   "p_xgb": 0.6992412209510803,
    "actual_winner": "StevenNguyen"
   },
   {
@@ -1877,8 +1877,8 @@
    "fighter_b": "Marc-AndreBarriault",
    "display_a": "Shara Magomedov",
    "display_b": "Marc- Andre Barriault",
-   "p_lr": 0.8156952864559763,
-   "p_xgb": 0.9144307971000671,
+   "p_lr": 0.7402305938407288,
+   "p_xgb": 0.8079530596733093,
    "actual_winner": "SharaMagomedov"
   },
   {
@@ -1888,8 +1888,8 @@
    "fighter_b": "BillyElekana",
    "display_a": "Ibo Aslan",
    "display_b": "Billy Elekana",
-   "p_lr": 0.8157524760633736,
-   "p_xgb": 0.8202413320541382,
+   "p_lr": 0.719208159305609,
+   "p_xgb": 0.7500569820404053,
    "actual_winner": "BillyElekana"
   },
   {
@@ -1899,8 +1899,8 @@
    "fighter_b": "Da'MonBlackshear",
    "display_a": "Davey Grant",
    "display_b": "Da' Mon Blackshear",
-   "p_lr": 0.3026974411895151,
-   "p_xgb": 0.48475053906440735,
+   "p_lr": 0.31868392247410604,
+   "p_xgb": 0.3286489248275757,
    "actual_winner": "DaveyGrant"
   },
   {
@@ -1910,8 +1910,8 @@
    "fighter_b": "SaidNurmagomedov",
    "display_a": "Bryce Mitchell",
    "display_b": "Said Nurmagomedov",
-   "p_lr": 0.5536278242636014,
-   "p_xgb": 0.6433156132698059,
+   "p_lr": 0.6610755230849902,
+   "p_xgb": 0.5812034606933594,
    "actual_winner": "BryceMitchell"
   },
   {
@@ -1921,8 +1921,8 @@
    "fighter_b": "JoseOchoa",
    "display_a": "Asu Almabayev",
    "display_b": "Jose Ochoa",
-   "p_lr": 0.5967225406483113,
-   "p_xgb": 0.675550103187561,
+   "p_lr": 0.6127491223920523,
+   "p_xgb": 0.6225186586380005,
    "actual_winner": "AsuAlmabayev"
   },
   {
@@ -1932,8 +1932,8 @@
    "fighter_b": "TabathaRicci",
    "display_a": "Amanda Ribas",
    "display_b": "Tabatha Ricci",
-   "p_lr": 0.5078620122443435,
-   "p_xgb": 0.4705001413822174,
+   "p_lr": 0.5484153157688133,
+   "p_xgb": 0.4901316463947296,
    "actual_winner": "TabathaRicci"
   },
   {
@@ -1943,8 +1943,8 @@
    "fighter_b": "MarcusBuchecha",
    "display_a": "Martin Buday",
    "display_b": "Marcus Buchecha",
-   "p_lr": 0.6796376153100899,
-   "p_xgb": 0.8061361908912659,
+   "p_lr": 0.685991877014141,
+   "p_xgb": 0.7562965154647827,
    "actual_winner": "MartinBuday"
   },
   {
@@ -1954,8 +1954,8 @@
    "fighter_b": "HyunSungPark",
    "display_a": "Tatsuro Taira",
    "display_b": "Hyun Sung Park",
-   "p_lr": 0.5922724203048911,
-   "p_xgb": 0.7067384719848633,
+   "p_lr": 0.6084484061087669,
+   "p_xgb": 0.6738647222518921,
    "actual_winner": "TatsuroTaira"
   },
   {
@@ -1965,8 +1965,8 @@
    "fighter_b": "TreseanGore",
    "display_a": "Rodolfo Vieira",
    "display_b": "Tresean Gore",
-   "p_lr": 0.770978218519737,
-   "p_xgb": 0.7710233926773071,
+   "p_lr": 0.6707704936613177,
+   "p_xgb": 0.7496229410171509,
    "actual_winner": "RodolfoVieira"
   },
   {
@@ -1976,8 +1976,8 @@
    "fighter_b": "NathanFletcher",
    "display_a": "Rinya Nakamura",
    "display_b": "Nathan Fletcher",
-   "p_lr": 0.539488381800289,
-   "p_xgb": 0.44120538234710693,
+   "p_lr": 0.4259164676965858,
+   "p_xgb": 0.3572436273097992,
    "actual_winner": "RinyaNakamura"
   },
   {
@@ -1987,8 +1987,8 @@
    "fighter_b": "FelipeBunes",
    "display_a": "Rafael Estevam",
    "display_b": "Felipe Bunes",
-   "p_lr": 0.7814629318271951,
-   "p_xgb": 0.8868201971054077,
+   "p_lr": 0.7455393813736021,
+   "p_xgb": 0.8458027839660645,
    "actual_winner": "RafaelEstevam"
   },
   {
@@ -1998,8 +1998,8 @@
    "fighter_b": "KetlenSouza",
    "display_a": "Piera Rodriguez",
    "display_b": "Ketlen Souza",
-   "p_lr": 0.7070967403052881,
-   "p_xgb": 0.6998711228370667,
+   "p_lr": 0.6823076133411035,
+   "p_xgb": 0.814454197883606,
    "actual_winner": "PieraRodriguez"
   },
   {
@@ -2009,8 +2009,8 @@
    "fighter_b": "AndreyPulyaev",
    "display_a": "Nick Klein",
    "display_b": "Andrey Pulyaev",
-   "p_lr": 0.6891398943223188,
-   "p_xgb": 0.5631087422370911,
+   "p_lr": 0.578993257255378,
+   "p_xgb": 0.5780792832374573,
    "actual_winner": "AndreyPulyaev"
   },
   {
@@ -2020,8 +2020,8 @@
    "fighter_b": "ElizeuZaleskidosSantos",
    "display_a": "Neil Magny",
    "display_b": "Elizeu Zaleskidos Santos",
-   "p_lr": 0.5457413195861095,
-   "p_xgb": 0.5471872091293335,
+   "p_lr": 0.6179664972214323,
+   "p_xgb": 0.5267807245254517,
    "actual_winner": "NeilMagny"
   },
   {
@@ -2031,8 +2031,8 @@
    "fighter_b": "NoraCornolle",
    "display_a": "Karol Rosa",
    "display_b": "Nora Cornolle",
-   "p_lr": 0.5396526330183856,
-   "p_xgb": 0.40437114238739014,
+   "p_lr": 0.5163630188346393,
+   "p_xgb": 0.46561741828918457,
    "actual_winner": "KarolRosa"
   },
   {
@@ -2042,8 +2042,8 @@
    "fighter_b": "EstebanRibovics",
    "display_a": "Elves Brener",
    "display_b": "Esteban Ribovics",
-   "p_lr": 0.5569744471828468,
-   "p_xgb": 0.7415055632591248,
+   "p_lr": 0.4656441052304225,
+   "p_xgb": 0.5198414921760559,
    "actual_winner": "EstebanRibovics"
   },
   {
@@ -2053,8 +2053,8 @@
    "fighter_b": "KevinVallejos",
    "display_a": "Danny Silva",
    "display_b": "Kevin Vallejos",
-   "p_lr": 0.5477294584868491,
-   "p_xgb": 0.5172192454338074,
+   "p_lr": 0.5246072572547221,
+   "p_xgb": 0.6058446764945984,
    "actual_winner": "KevinVallejos"
   },
   {
@@ -2064,8 +2064,8 @@
    "fighter_b": "JohnYannis",
    "display_a": "Austin Bashi",
    "display_b": "John Yannis",
-   "p_lr": 0.6194511810856542,
-   "p_xgb": 0.7230892181396484,
+   "p_lr": 0.6366027813552126,
+   "p_xgb": 0.673207700252533,
    "actual_winner": "AustinBashi"
   },
   {
@@ -2075,8 +2075,8 @@
    "fighter_b": "ChrisDuncan",
    "display_a": "Mateusz Rebecki",
    "display_b": "Chris Duncan",
-   "p_lr": 0.5783562482461687,
-   "p_xgb": 0.6092634797096252,
+   "p_lr": 0.5212502685568667,
+   "p_xgb": 0.42234864830970764,
    "actual_winner": "ChrisDuncan"
   },
   {
@@ -2086,8 +2086,8 @@
    "fighter_b": "RafaelCerqueira",
    "display_a": "Julius Walker",
    "display_b": "Rafael Cerqueira",
-   "p_lr": 0.8930854344843366,
-   "p_xgb": 0.7815411686897278,
+   "p_lr": 0.8656254354582094,
+   "p_xgb": 0.8337347507476807,
    "actual_winner": "JuliusWalker"
   },
   {
@@ -2097,8 +2097,8 @@
    "fighter_b": "GilbertUrbina",
    "display_a": "Uros Medic",
    "display_b": "Gilbert Urbina",
-   "p_lr": 0.7776924605867449,
-   "p_xgb": 0.7237664461135864,
+   "p_lr": 0.6785728361577416,
+   "p_xgb": 0.627227783203125,
    "actual_winner": "UrosMedic"
   },
   {
@@ -2108,8 +2108,8 @@
    "fighter_b": "OdeOsbourne",
    "display_a": "Steve Erceg",
    "display_b": "Ode Osbourne",
-   "p_lr": 0.7253543767217979,
-   "p_xgb": 0.795070469379425,
+   "p_lr": 0.7579712662734945,
+   "p_xgb": 0.8656115531921387,
    "actual_winner": "SteveErceg"
   },
   {
@@ -2119,8 +2119,8 @@
    "fighter_b": "AnthonyHernandez",
    "display_a": "Roman Dolidze",
    "display_b": "Anthony Hernandez",
-   "p_lr": 0.17965098785875583,
-   "p_xgb": 0.21976469457149506,
+   "p_lr": 0.18476322735455997,
+   "p_xgb": 0.22074759006500244,
    "actual_winner": "AnthonyHernandez"
   },
   {
@@ -2130,8 +2130,8 @@
    "fighter_b": "JeanMatsumoto",
    "display_a": "Miles Johns",
    "display_b": "Jean Matsumoto",
-   "p_lr": 0.4999342058358297,
-   "p_xgb": 0.24753913283348083,
+   "p_lr": 0.5975818083775901,
+   "p_xgb": 0.395269513130188,
    "actual_winner": "JeanMatsumoto"
   },
   {
@@ -2141,8 +2141,8 @@
    "fighter_b": "PriscilaCachoeira",
    "display_a": "Joselyne Edwards",
    "display_b": "Priscila Cachoeira",
-   "p_lr": 0.7909835738760157,
-   "p_xgb": 0.8850370049476624,
+   "p_lr": 0.8285612916502588,
+   "p_xgb": 0.8502064943313599,
    "actual_winner": "JoselyneEdwards"
   },
   {
@@ -2152,8 +2152,8 @@
    "fighter_b": "ChristianRodriguez",
    "display_a": "Andre Fili",
    "display_b": "Christian Rodriguez",
-   "p_lr": 0.26398854707108926,
-   "p_xgb": 0.2575315237045288,
+   "p_lr": 0.2744718618832352,
+   "p_xgb": 0.2760988771915436,
    "actual_winner": "AndreFili"
   },
   {
@@ -2163,8 +2163,8 @@
    "fighter_b": "JulijaStoliarenko",
    "display_a": "Gabriella Fernandes",
    "display_b": "Julija Stoliarenko",
-   "p_lr": 0.7739127051365934,
-   "p_xgb": 0.7840819954872131,
+   "p_lr": 0.7104127462513443,
+   "p_xgb": 0.8056251406669617,
    "actual_winner": "GabriellaFernandes"
   },
   {
@@ -2174,8 +2174,8 @@
    "fighter_b": "ChristianLeroyDuncan",
    "display_a": "Eryk Anders",
    "display_b": "Christian Leroy Duncan",
-   "p_lr": 0.32739098165537495,
-   "p_xgb": 0.1947554498910904,
+   "p_lr": 0.3333174034311019,
+   "p_xgb": 0.18976786732673645,
    "actual_winner": "ChristianLeroyDuncan"
   },
   {
@@ -2185,8 +2185,8 @@
    "fighter_b": "ToshiomiKazama",
    "display_a": "Elijah Smith",
    "display_b": "Toshiomi Kazama",
-   "p_lr": 0.6814124114491594,
-   "p_xgb": 0.6387391090393066,
+   "p_lr": 0.6299104248934139,
+   "p_xgb": 0.6161843538284302,
    "actual_winner": "ElijahSmith"
   },
   {
@@ -2196,8 +2196,8 @@
    "fighter_b": "EricMcConico",
    "display_a": "Cody Brundage",
    "display_b": "Eric Mc Conico",
-   "p_lr": 0.7452603221246189,
-   "p_xgb": 0.6421594023704529,
+   "p_lr": 0.6332607056775856,
+   "p_xgb": 0.5247388482093811,
    "actual_winner": "EricMcConico"
   },
   {
@@ -2207,8 +2207,8 @@
    "fighter_b": "AngelaHill",
    "display_a": "Iasmin Lucindo",
    "display_b": "Angela Hill",
-   "p_lr": 0.7808633263462579,
-   "p_xgb": 0.7148371934890747,
+   "p_lr": 0.7867051979587426,
+   "p_xgb": 0.6989666819572449,
    "actual_winner": "IasminLucindo"
   },
   {
@@ -2218,8 +2218,8 @@
    "fighter_b": "DioneBarbosa",
    "display_a": "Karine Silva",
    "display_b": "Dione Barbosa",
-   "p_lr": 0.4026280276820049,
-   "p_xgb": 0.3925768733024597,
+   "p_lr": 0.46908772538777355,
+   "p_xgb": 0.3014470338821411,
    "actual_winner": "KarineSilva"
   },
   {
@@ -2229,8 +2229,8 @@
    "fighter_b": "LoopyGodinez",
    "display_a": "Jessica Andrade",
    "display_b": "Loopy Godinez",
-   "p_lr": 0.3435383106760532,
-   "p_xgb": 0.23617129027843475,
+   "p_lr": 0.3877860504641322,
+   "p_xgb": 0.1421075165271759,
    "actual_winner": "LoopyGodinez"
   },
   {
@@ -2240,8 +2240,8 @@
    "fighter_b": "MichaelPage",
    "display_a": "Jared Cannonier",
    "display_b": "Michael Page",
-   "p_lr": 0.5423769462453525,
-   "p_xgb": 0.3951939344406128,
+   "p_lr": 0.4487239013521175,
+   "p_xgb": 0.4088928699493408,
    "actual_winner": "MichaelPage"
   },
   {
@@ -2251,8 +2251,8 @@
    "fighter_b": "MichalOleksiejczuk",
    "display_a": "Gerald Meerschaert",
    "display_b": "Michal Oleksiejczuk",
-   "p_lr": 0.35701698531817233,
-   "p_xgb": 0.31135207414627075,
+   "p_lr": 0.39312275538472274,
+   "p_xgb": 0.36454203724861145,
    "actual_winner": "MichalOleksiejczuk"
   },
   {
@@ -2262,8 +2262,8 @@
    "fighter_b": "CarlosPrates",
    "display_a": "Geoff Neal",
    "display_b": "Carlos Prates",
-   "p_lr": 0.6111026791405119,
-   "p_xgb": 0.7011741995811462,
+   "p_lr": 0.6453801839707165,
+   "p_xgb": 0.6203292012214661,
    "actual_winner": "CarlosPrates"
   },
   {
@@ -2273,8 +2273,8 @@
    "fighter_b": "KhamzatChimaev",
    "display_a": "Dricus Du Plessis",
    "display_b": "Khamzat Chimaev",
-   "p_lr": 0.5973441970615049,
-   "p_xgb": 0.45436379313468933,
+   "p_lr": 0.6157546008335196,
+   "p_xgb": 0.5710686445236206,
    "actual_winner": "KhamzatChimaev"
   },
   {
@@ -2284,8 +2284,8 @@
    "fighter_b": "AaronPico",
    "display_a": "Lerone Murphy",
    "display_b": "Aaron Pico",
-   "p_lr": 0.7203256421493625,
-   "p_xgb": 0.8235092759132385,
+   "p_lr": 0.7998886525067664,
+   "p_xgb": 0.8406100273132324,
    "actual_winner": "LeroneMurphy"
   },
   {
@@ -2295,8 +2295,8 @@
    "fighter_b": "AlexanderHernandez",
    "display_a": "Chase Hooper",
    "display_b": "Alexander Hernandez",
-   "p_lr": 0.812868799565225,
-   "p_xgb": 0.7862771153450012,
+   "p_lr": 0.8224454237749443,
+   "p_xgb": 0.8170449733734131,
    "actual_winner": "AlexanderHernandez"
   },
   {
@@ -2306,8 +2306,8 @@
    "fighter_b": "EricNolan",
    "display_a": "Baisangur Susurkaev",
    "display_b": "Eric Nolan",
-   "p_lr": 0.6249680507393368,
-   "p_xgb": 0.5400503873825073,
+   "p_lr": 0.6371070848236903,
+   "p_xgb": 0.5541788935661316,
    "actual_winner": "BaisangurSusurkaev"
   },
   {
@@ -2317,8 +2317,8 @@
    "fighter_b": "JosephMorales",
    "display_a": "Alibi Idiris",
    "display_b": "Joseph Morales",
-   "p_lr": 0.8039582749080955,
-   "p_xgb": 0.7870930433273315,
+   "p_lr": 0.7994503863652211,
+   "p_xgb": 0.7112470269203186,
    "actual_winner": "JosephMorales"
   },
   {
@@ -2328,8 +2328,8 @@
    "fighter_b": "DrakkarKlose",
    "display_a": "Edson Barboza",
    "display_b": "Drakkar Klose",
-   "p_lr": 0.4839649118767785,
-   "p_xgb": 0.3576492369174957,
+   "p_lr": 0.45228681518791825,
+   "p_xgb": 0.30515778064727783,
    "actual_winner": "DrakkarKlose"
   },
   {
@@ -2339,8 +2339,8 @@
    "fighter_b": "KaiAsakura",
    "display_a": "Tim Elliott",
    "display_b": "Kai Asakura",
-   "p_lr": 0.5007057781008025,
-   "p_xgb": 0.3719322681427002,
+   "p_lr": 0.49264312657342196,
+   "p_xgb": 0.37230831384658813,
    "actual_winner": "TimElliott"
   },
   {
@@ -2350,8 +2350,8 @@
    "fighter_b": "BrunaBrasil",
    "display_a": "Shi Ming",
    "display_b": "Bruna Brasil",
-   "p_lr": 0.47995201284516287,
-   "p_xgb": 0.4494950473308563,
+   "p_lr": 0.6531424375302084,
+   "p_xgb": 0.6884526610374451,
    "actual_winner": "BrunaBrasil"
   },
   {
@@ -2361,8 +2361,8 @@
    "fighter_b": "TerranceSaeteurn",
    "display_a": "Nyamjargal Tumendemberel",
    "display_b": "Terrance Saeteurn",
-   "p_lr": 0.5646333874610757,
-   "p_xgb": 0.5001847743988037,
+   "p_lr": 0.5648516448003412,
+   "p_xgb": 0.5139569044113159,
    "actual_winner": "NyamjargalTumendemberel"
   },
   {
@@ -2372,8 +2372,8 @@
    "fighter_b": "KieferCrosbie",
    "display_a": "Taiyilake Nueraji",
    "display_b": "Kiefer Crosbie",
-   "p_lr": 0.7438521897942089,
-   "p_xgb": 0.8194319009780884,
+   "p_lr": 0.7405212392067454,
+   "p_xgb": 0.7844269871711731,
    "actual_winner": "TaiyilakeNueraji"
   },
   {
@@ -2383,8 +2383,8 @@
    "fighter_b": "AljamainSterling",
    "display_a": "Brian Ortega",
    "display_b": "Aljamain Sterling",
-   "p_lr": 0.35694717863347075,
-   "p_xgb": 0.3641763925552368,
+   "p_lr": 0.28353310917543373,
+   "p_xgb": 0.5715788006782532,
    "actual_winner": "AljamainSterling"
   },
   {
@@ -2394,8 +2394,8 @@
    "fighter_b": "Lone'erKavanagh",
    "display_a": "Charles Johnson",
    "display_b": "Lone'er Kavanagh",
-   "p_lr": 0.42361396927414563,
-   "p_xgb": 0.36053264141082764,
+   "p_lr": 0.40821143635461216,
+   "p_xgb": 0.4109664559364319,
    "actual_winner": "CharlesJohnson"
   },
   {
@@ -2405,8 +2405,8 @@
    "fighter_b": "ZhangMingyang",
    "display_a": "Johnny Walker",
    "display_b": "Zhang Mingyang",
-   "p_lr": 0.3721849849064826,
-   "p_xgb": 0.3198418915271759,
+   "p_lr": 0.3842860922855014,
+   "p_xgb": 0.3071071207523346,
    "actual_winner": "JohnnyWalker"
   },
   {
@@ -2416,8 +2416,8 @@
    "fighter_b": "GaugeYoung",
    "display_a": "Maheshate",
    "display_b": "Gauge Young",
-   "p_lr": 0.40124379910532054,
-   "p_xgb": 0.676831066608429,
+   "p_lr": 0.4799626242371194,
+   "p_xgb": 0.6238753199577332,
    "actual_winner": "GaugeYoung"
   },
   {
@@ -2427,8 +2427,8 @@
    "fighter_b": "KyleDaukaus",
    "display_a": "Michel Pereira",
    "display_b": "Kyle Daukaus",
-   "p_lr": 0.6972628903496945,
-   "p_xgb": 0.7696440815925598,
+   "p_lr": 0.7289663790014738,
+   "p_xgb": 0.71356600522995,
    "actual_winner": "KyleDaukaus"
   },
   {
@@ -2438,8 +2438,8 @@
    "fighter_b": "AustinHubbard",
    "display_a": "Rongzhu",
    "display_b": "Austin Hubbard",
-   "p_lr": 0.6616652665686351,
-   "p_xgb": 0.5466946363449097,
+   "p_lr": 0.7009913706732208,
+   "p_xgb": 0.48824480175971985,
    "actual_winner": "Rongzhu"
   },
   {
@@ -2449,8 +2449,8 @@
    "fighter_b": "WaldoCortesAcosta",
    "display_a": "Sergei Pavlovich",
    "display_b": "Waldo Cortes Acosta",
-   "p_lr": 0.5672135058632676,
-   "p_xgb": 0.447002112865448,
+   "p_lr": 0.6065344908378044,
+   "p_xgb": 0.6380090713500977,
    "actual_winner": "SergeiPavlovich"
   },
   {
@@ -2460,8 +2460,8 @@
    "fighter_b": "KevinBorjas",
    "display_a": "Sumudaerji",
    "display_b": "Kevin Borjas",
-   "p_lr": 0.5710655067588755,
-   "p_xgb": 0.6102507710456848,
+   "p_lr": 0.6023873902537707,
+   "p_xgb": 0.7316561341285706,
    "actual_winner": "Sumudaerji"
   },
   {
@@ -2471,8 +2471,8 @@
    "fighter_b": "DiyarNurgozhay",
    "display_a": "Uran Satybaldiev",
    "display_b": "Diyar Nurgozhay",
-   "p_lr": 0.36630996003357535,
-   "p_xgb": 0.3538738489151001,
+   "p_lr": 0.41066035342681817,
+   "p_xgb": 0.38332220911979675,
    "actual_winner": "UranSatybaldiev"
   },
   {
@@ -2482,8 +2482,8 @@
    "fighter_b": "SuYoungYou",
    "display_a": "Xiao Long",
    "display_b": "Su Young You",
-   "p_lr": 0.043486226412134885,
-   "p_xgb": 0.41400596499443054,
+   "p_lr": 0.3461435345565797,
+   "p_xgb": 0.47084665298461914,
    "actual_winner": "SuYoungYou"
   },
   {
@@ -2493,8 +2493,8 @@
    "fighter_b": "WestinWilson",
    "display_a": "Yizha",
    "display_b": "Westin Wilson",
-   "p_lr": 0.7851427647027892,
-   "p_xgb": 0.5738111138343811,
+   "p_lr": 0.7122736847572588,
+   "p_xgb": 0.6642761826515198,
    "actual_winner": "Yizha"
   },
   {
@@ -2504,8 +2504,8 @@
    "fighter_b": "BrendsonRibeiro",
    "display_a": "Oumar Sy",
    "display_b": "Brendson Ribeiro",
-   "p_lr": 0.6763658802796064,
-   "p_xgb": 0.5160678029060364,
+   "p_lr": 0.6921892965608186,
+   "p_xgb": 0.6291337609291077,
    "actual_winner": "OumarSy"
   },
   {
@@ -2515,8 +2515,8 @@
    "fighter_b": "TreyWaters",
    "display_a": "Sam Patterson",
    "display_b": "Trey Waters",
-   "p_lr": 0.6078033208683481,
-   "p_xgb": 0.7322352528572083,
+   "p_lr": 0.723255266066222,
+   "p_xgb": 0.7022767663002014,
    "actual_winner": "SamPatterson"
   },
   {
@@ -2526,8 +2526,8 @@
    "fighter_b": "CaioBorralho",
    "display_a": "Nassourdine Imavov",
    "display_b": "Caio Borralho",
-   "p_lr": 0.6531939056874643,
-   "p_xgb": 0.6513411998748779,
+   "p_lr": 0.648807685298187,
+   "p_xgb": 0.6159257292747498,
    "actual_winner": "NassourdineImavov"
   },
   {
@@ -2537,8 +2537,8 @@
    "fighter_b": "RobertRuchala",
    "display_a": "William Gomis",
    "display_b": "Robert Ruchala",
-   "p_lr": 0.665853993421736,
-   "p_xgb": 0.7615500688552856,
+   "p_lr": 0.6648964303697112,
+   "p_xgb": 0.8042634725570679,
    "actual_winner": "WilliamGomis"
   },
   {
@@ -2548,8 +2548,8 @@
    "fighter_b": "SamHughes",
    "display_a": "Shauna Bannon",
    "display_b": "Sam Hughes",
-   "p_lr": 0.39338297819701284,
-   "p_xgb": 0.20128318667411804,
+   "p_lr": 0.4641513199082981,
+   "p_xgb": 0.2744210958480835,
    "actual_winner": "SamHughes"
   },
   {
@@ -2559,8 +2559,8 @@
    "fighter_b": "PaulCraig",
    "display_a": "Modestas Bukauskas",
    "display_b": "Paul Craig",
-   "p_lr": 0.6472242784204005,
-   "p_xgb": 0.6937236189842224,
+   "p_lr": 0.6924453827882386,
+   "p_xgb": 0.6674184799194336,
    "actual_winner": "ModestasBukauskas"
   },
   {
@@ -2570,8 +2570,8 @@
    "fighter_b": "RinatFakhretdinov",
    "display_a": "Andreas Gustafsson",
    "display_b": "Rinat Fakhretdinov",
-   "p_lr": 0.5225284508146989,
-   "p_xgb": 0.5879572033882141,
+   "p_lr": 0.5073600100918786,
+   "p_xgb": 0.6439790725708008,
    "actual_winner": "RinatFakhretdinov"
   },
   {
@@ -2581,8 +2581,8 @@
    "fighter_b": "KaueFernandes",
    "display_a": "Harry Hardwick",
    "display_b": "Kaue Fernandes",
-   "p_lr": 0.47497422444639725,
-   "p_xgb": 0.6706146597862244,
+   "p_lr": 0.4428707996180802,
+   "p_xgb": 0.6195081472396851,
    "actual_winner": "KaueFernandes"
   },
   {
@@ -2592,8 +2592,8 @@
    "fighter_b": "RobertBryczek",
    "display_a": "Brad Tavares",
    "display_b": "Robert Bryczek",
-   "p_lr": 0.7065145312128052,
-   "p_xgb": 0.5924335718154907,
+   "p_lr": 0.6677903280862691,
+   "p_xgb": 0.7029181122779846,
    "actual_winner": "RobertBryczek"
   },
   {
@@ -2603,8 +2603,8 @@
    "fighter_b": "MasonJones",
    "display_a": "Bolaji Oki",
    "display_b": "Mason Jones",
-   "p_lr": 0.5345426457088674,
-   "p_xgb": 0.49716097116470337,
+   "p_lr": 0.5651295654034836,
+   "p_xgb": 0.6926360130310059,
    "actual_winner": "MasonJones"
   },
   {
@@ -2614,8 +2614,8 @@
    "fighter_b": "MauricioRuffy",
    "display_a": "Benoit Saint Denis",
    "display_b": "Mauricio Ruffy",
-   "p_lr": 0.5440327989414169,
-   "p_xgb": 0.4593961536884308,
+   "p_lr": 0.4848845426260195,
+   "p_xgb": 0.44201934337615967,
    "actual_winner": "BenoitSaintDenis"
   },
   {
@@ -2625,8 +2625,8 @@
    "fighter_b": "RhysMcKee",
    "display_a": "Axel Sola",
    "display_b": "Rhys Mc Kee",
-   "p_lr": 0.5693597476873831,
-   "p_xgb": 0.5353115797042847,
+   "p_lr": 0.6213469165744647,
+   "p_xgb": 0.6646992564201355,
    "actual_winner": "AxelSola"
   },
   {
@@ -2636,8 +2636,8 @@
    "fighter_b": "AnteDelija",
    "display_a": "Marcin Tybura",
    "display_b": "Ante Delija",
-   "p_lr": 0.6835818365335372,
-   "p_xgb": 0.7822108864784241,
+   "p_lr": 0.6707516752594058,
+   "p_xgb": 0.8333659172058105,
    "actual_winner": "AnteDelija"
   },
   {
@@ -2647,8 +2647,8 @@
    "fighter_b": "AmandaLemos",
    "display_a": "Tatiana Suarez",
    "display_b": "Amanda Lemos",
-   "p_lr": 0.5919714118460121,
-   "p_xgb": 0.4166952073574066,
+   "p_lr": 0.6604076211217702,
+   "p_xgb": 0.7072198987007141,
    "actual_winner": "TatianaSuarez"
   },
   {
@@ -2658,8 +2658,8 @@
    "fighter_b": "QuangLe",
    "display_a": "Santiago Luna",
    "display_b": "Quang Le",
-   "p_lr": 0.697906897264011,
-   "p_xgb": 0.6918362975120544,
+   "p_lr": 0.7168421766662119,
+   "p_xgb": 0.7309667468070984,
    "actual_winner": "SantiagoLuna"
   },
   {
@@ -2669,8 +2669,8 @@
    "fighter_b": "DaniilDonchenko",
    "display_a": "Rodrigo Sezinando",
    "display_b": "Daniil Donchenko",
-   "p_lr": 0.5265402741125657,
-   "p_xgb": 0.49883368611335754,
+   "p_lr": 0.5214590293215725,
+   "p_xgb": 0.4579817056655884,
    "actual_winner": "DaniilDonchenko"
   },
   {
@@ -2680,8 +2680,8 @@
    "fighter_b": "DavidMartinez",
    "display_a": "Rob Font",
    "display_b": "David Martinez",
-   "p_lr": 0.4368411845287129,
-   "p_xgb": 0.28211015462875366,
+   "p_lr": 0.5732897253256763,
+   "p_xgb": 0.43361005187034607,
    "actual_winner": "DavidMartinez"
   },
   {
@@ -2691,8 +2691,8 @@
    "fighter_b": "JaredGordon",
    "display_a": "Rafa Garcia",
    "display_b": "Jared Gordon",
-   "p_lr": 0.6450561844407119,
-   "p_xgb": 0.7003453969955444,
+   "p_lr": 0.5847538369055282,
+   "p_xgb": 0.755133330821991,
    "actual_winner": "RafaGarcia"
   },
   {
@@ -2702,8 +2702,8 @@
    "fighter_b": "AlicePereira",
    "display_a": "Montse Rendon",
    "display_b": "Alice Pereira",
-   "p_lr": 0.36566169515642355,
-   "p_xgb": 0.44322070479393005,
+   "p_lr": 0.3365000803074237,
+   "p_xgb": 0.38240763545036316,
    "actual_winner": "MontseRendon"
   },
   {
@@ -2713,8 +2713,8 @@
    "fighter_b": "DustinStoltzfus",
    "display_a": "Kelvin Gastelum",
    "display_b": "Dustin Stoltzfus",
-   "p_lr": 0.574753898474934,
-   "p_xgb": 0.5379176139831543,
+   "p_lr": 0.6380774024807773,
+   "p_xgb": 0.6113934516906738,
    "actual_winner": "KelvinGastelum"
   },
   {
@@ -2724,8 +2724,8 @@
    "fighter_b": "LuisGurule",
    "display_a": "Jesus Aguilar",
    "display_b": "Luis Gurule",
-   "p_lr": 0.6770412769498307,
-   "p_xgb": 0.7056194543838501,
+   "p_lr": 0.6170735359374427,
+   "p_xgb": 0.6086075901985168,
    "actual_winner": "JesusAguilar"
   },
   {
@@ -2735,8 +2735,8 @@
    "fighter_b": "JeanSilva",
    "display_a": "Diego Lopes",
    "display_b": "Jean Silva",
-   "p_lr": 0.3751554503541891,
-   "p_xgb": 0.3061904013156891,
+   "p_lr": 0.34745359355650063,
+   "p_xgb": 0.2915494740009308,
    "actual_winner": "DiegoLopes"
   },
   {
@@ -2746,8 +2746,8 @@
    "fighter_b": "JoaquimSilva",
    "display_a": "Claudio Puelles",
    "display_b": "Joaquim Silva",
-   "p_lr": 0.7468938419412597,
-   "p_xgb": 0.6837189197540283,
+   "p_lr": 0.7679427634153385,
+   "p_xgb": 0.6394146084785461,
    "actual_winner": "JoaquimSilva"
   },
   {
@@ -2757,8 +2757,8 @@
    "fighter_b": "DiegoFerreira",
    "display_a": "Alexander Hernandez",
    "display_b": "Diego Ferreira",
-   "p_lr": 0.6630833507790252,
-   "p_xgb": 0.5664708018302917,
+   "p_lr": 0.6595628771993186,
+   "p_xgb": 0.5903809070587158,
    "actual_winner": "AlexanderHernandez"
   },
   {
@@ -2768,8 +2768,8 @@
    "fighter_b": "AldenCoria",
    "display_a": "Alessandro Costa",
    "display_b": "Alden Coria",
-   "p_lr": 0.5549901877023188,
-   "p_xgb": 0.5136715769767761,
+   "p_lr": 0.54650524155299,
+   "p_xgb": 0.4810883700847626,
    "actual_winner": "AldenCoria"
   },
   {
@@ -2779,8 +2779,8 @@
    "fighter_b": "DuskoTodorovic",
    "display_a": "Jose Daniel Medina",
    "display_b": "Dusko Todorovic",
-   "p_lr": 0.46684754726738575,
-   "p_xgb": 0.36082741618156433,
+   "p_lr": 0.4120685450824379,
+   "p_xgb": 0.23517532646656036,
    "actual_winner": "DuskoTodorovic"
   },
   {
@@ -2790,8 +2790,8 @@
    "fighter_b": "IvanErslan",
    "display_a": "Jimmy Crute",
    "display_b": "Ivan Erslan",
-   "p_lr": 0.6161921314163992,
-   "p_xgb": 0.656893253326416,
+   "p_lr": 0.6489583648704793,
+   "p_xgb": 0.5870723724365234,
    "actual_winner": "JimmyCrute"
   },
   {
@@ -2801,8 +2801,8 @@
    "fighter_b": "RodolfoBellato",
    "display_a": "Navajo Stirling",
    "display_b": "Rodolfo Bellato",
-   "p_lr": 0.8031481908218155,
-   "p_xgb": 0.8154824376106262,
+   "p_lr": 0.7319112262262996,
+   "p_xgb": 0.7377868294715881,
    "actual_winner": "NavajoStirling"
   },
   {
@@ -2812,8 +2812,8 @@
    "fighter_b": "LuanaCarolina",
    "display_a": "Michelle Montague",
    "display_b": "Luana Carolina",
-   "p_lr": 0.5267344705463965,
-   "p_xgb": 0.5202189683914185,
+   "p_lr": 0.5091464501056416,
+   "p_xgb": 0.5283629894256592,
    "actual_winner": "MichelleMontague"
   },
   {
@@ -2823,8 +2823,8 @@
    "fighter_b": "CharlieCampbell",
    "display_a": "Tom Nolan",
    "display_b": "Charlie Campbell",
-   "p_lr": 0.4827659910681362,
-   "p_xgb": 0.38296541571617126,
+   "p_lr": 0.544057053607988,
+   "p_xgb": 0.32223767042160034,
    "actual_winner": "TomNolan"
   },
   {
@@ -2834,8 +2834,8 @@
    "fighter_b": "AlexiaThainara",
    "display_a": "Loma Lookboonmee",
    "display_b": "Alexia Thainara",
-   "p_lr": 0.542267801655243,
-   "p_xgb": 0.4125227928161621,
+   "p_lr": 0.4017104453316558,
+   "p_xgb": 0.4771207273006439,
    "actual_winner": "AlexiaThainara"
   },
   {
@@ -2845,8 +2845,8 @@
    "fighter_b": "RolandoBedoya",
    "display_a": "Jamie Mullarkey",
    "display_b": "Rolando Bedoya",
-   "p_lr": 0.7057649273061227,
-   "p_xgb": 0.6021077036857605,
+   "p_lr": 0.6369125307354345,
+   "p_xgb": 0.5485460162162781,
    "actual_winner": "JamieMullarkey"
   },
   {
@@ -2856,8 +2856,8 @@
    "fighter_b": "DominickReyes",
    "display_a": "Carlos Ulberg",
    "display_b": "Dominick Reyes",
-   "p_lr": 0.6411670926922044,
-   "p_xgb": 0.6141396164894104,
+   "p_lr": 0.6557006722656931,
+   "p_xgb": 0.5094546675682068,
    "actual_winner": "CarlosUlberg"
   },
   {
@@ -2867,8 +2867,8 @@
    "fighter_b": "RamonTaveras",
    "display_a": "Jack Jenkins",
    "display_b": "Ramon Taveras",
-   "p_lr": 0.6309165667366065,
-   "p_xgb": 0.49975961446762085,
+   "p_lr": 0.614144547449274,
+   "p_xgb": 0.5408616662025452,
    "actual_winner": "JackJenkins"
   },
   {
@@ -2878,8 +2878,8 @@
    "fighter_b": "JosiasMusasa",
    "display_a": "Colby Thicknesse",
    "display_b": "Josias Musasa",
-   "p_lr": 0.5436296775232848,
-   "p_xgb": 0.5284180641174316,
+   "p_lr": 0.6067386212952431,
+   "p_xgb": 0.6119113564491272,
    "actual_winner": "ColbyThicknesse"
   },
   {
@@ -2889,8 +2889,8 @@
    "fighter_b": "AndrePetroski",
    "display_a": "Cam Rowston",
    "display_b": "Andre Petroski",
-   "p_lr": 0.5453076608257847,
-   "p_xgb": 0.6303290128707886,
+   "p_lr": 0.6085922482934216,
+   "p_xgb": 0.7344964146614075,
    "actual_winner": "CamRowston"
   },
   {
@@ -2900,8 +2900,8 @@
    "fighter_b": "ElishaEllison",
    "display_a": "Brando Pericic",
    "display_b": "Elisha Ellison",
-   "p_lr": 0.5598796384353155,
-   "p_xgb": 0.48362666368484497,
+   "p_lr": 0.5574169029957955,
+   "p_xgb": 0.48208141326904297,
    "actual_winner": "BrandoPericic"
   },
   {
@@ -2911,8 +2911,8 @@
    "fighter_b": "NeilMagny",
    "display_a": "Jake Matthews",
    "display_b": "Neil Magny",
-   "p_lr": 0.6659547870535253,
-   "p_xgb": 0.6288749575614929,
+   "p_lr": 0.6893932746773429,
+   "p_xgb": 0.7012880444526672,
    "actual_winner": "NeilMagny"
   },
   {
@@ -2922,8 +2922,8 @@
    "fighter_b": "BroganWalker",
    "display_a": "Veronica Hardy",
    "display_b": "Brogan Walker",
-   "p_lr": 0.8304399789932837,
-   "p_xgb": 0.7861512303352356,
+   "p_lr": 0.7865864335239536,
+   "p_xgb": 0.7929620742797852,
    "actual_winner": "VeronicaHardy"
   },
   {
@@ -2933,8 +2933,8 @@
    "fighter_b": "AustinVanderford",
    "display_a": "Ramiz Brahimaj",
    "display_b": "Austin Vanderford",
-   "p_lr": 0.23166481389244345,
-   "p_xgb": 0.329347163438797,
+   "p_lr": 0.22196826905316328,
+   "p_xgb": 0.2839721441268921,
    "actual_winner": "RamizBrahimaj"
   },
   {
@@ -2944,8 +2944,8 @@
    "fighter_b": "NikolayVeretennikov",
    "display_a": "Punahele Soriano",
    "display_b": "Nikolay Veretennikov",
-   "p_lr": 0.6807982214445389,
-   "p_xgb": 0.5818294882774353,
+   "p_lr": 0.7579317561078772,
+   "p_xgb": 0.62416011095047,
    "actual_winner": "PunaheleSoriano"
   },
   {
@@ -2955,8 +2955,8 @@
    "fighter_b": "JakubWiklacz",
    "display_a": "Patchy Mix",
    "display_b": "Jakub Wiklacz",
-   "p_lr": 0.5321359945640325,
-   "p_xgb": 0.4916857182979584,
+   "p_lr": 0.5286626538287457,
+   "p_xgb": 0.4839455187320709,
    "actual_winner": "JakubWiklacz"
   },
   {
@@ -2966,8 +2966,8 @@
    "fighter_b": "CorySandhagen",
    "display_a": "Merab Dvalishvili",
    "display_b": "Cory Sandhagen",
-   "p_lr": 0.7155904235857152,
-   "p_xgb": 0.6662525534629822,
+   "p_lr": 0.8227162711055642,
+   "p_xgb": 0.7894623279571533,
    "actual_winner": "MerabDvalishvili"
   },
   {
@@ -2977,8 +2977,8 @@
    "fighter_b": "AlexPereira",
    "display_a": "Magomed Ankalaev",
    "display_b": "Alex Pereira",
-   "p_lr": 0.6000932933980253,
-   "p_xgb": 0.5613800883293152,
+   "p_lr": 0.617919541016496,
+   "p_xgb": 0.46623966097831726,
    "actual_winner": "AlexPereira"
   },
   {
@@ -2988,8 +2988,8 @@
    "fighter_b": "YanaSantos",
    "display_a": "Macy Chiasson",
    "display_b": "Yana Santos",
-   "p_lr": 0.6910590701706804,
-   "p_xgb": 0.6449703574180603,
+   "p_lr": 0.6755899338315201,
+   "p_xgb": 0.7360900044441223,
    "actual_winner": "YanaSantos"
   },
   {
@@ -2999,8 +2999,8 @@
    "fighter_b": "YoussefZalal",
    "display_a": "Josh Emmett",
    "display_b": "Youssef Zalal",
-   "p_lr": 0.3087468166490119,
-   "p_xgb": 0.4411732852458954,
+   "p_lr": 0.1991826284593413,
+   "p_xgb": 0.1603034883737564,
    "actual_winner": "YoussefZalal"
   },
   {
@@ -3010,8 +3010,8 @@
    "fighter_b": "KhalilRountreeJr.",
    "display_a": "Jiri Prochazka",
    "display_b": "Khalil Rountree Jr.",
-   "p_lr": 0.7514968824400399,
-   "p_xgb": 0.7426411509513855,
+   "p_lr": 0.747175514515616,
+   "p_xgb": 0.7740220427513123,
    "actual_winner": "JiriProchazka"
   },
   {
@@ -3021,8 +3021,8 @@
    "fighter_b": "AndreMuniz",
    "display_a": "Edmen Shahbazyan",
    "display_b": "Andre Muniz",
-   "p_lr": 0.6174523110033783,
-   "p_xgb": 0.5500189661979675,
+   "p_lr": 0.650022763384931,
+   "p_xgb": 0.5570258498191833,
    "actual_winner": "EdmenShahbazyan"
   },
   {
@@ -3032,8 +3032,8 @@
    "fighter_b": "JooSangYoo",
    "display_a": "Daniel Santos",
    "display_b": "Joo Sang Yoo",
-   "p_lr": 0.7339386905949952,
-   "p_xgb": 0.795598566532135,
+   "p_lr": 0.6584666575257822,
+   "p_xgb": 0.7726441025733948,
    "actual_winner": "DanielSantos"
   },
   {
@@ -3043,8 +3043,8 @@
    "fighter_b": "FaridBasharat",
    "display_a": "Chris Gutierrez",
    "display_b": "Farid Basharat",
-   "p_lr": 0.37641631015558275,
-   "p_xgb": 0.36624273657798767,
+   "p_lr": 0.46270889457546316,
+   "p_xgb": 0.4979090392589569,
    "actual_winner": "FaridBasharat"
   },
   {
@@ -3054,8 +3054,8 @@
    "fighter_b": "Tre'stonVines",
    "display_a": "Ateba Gautier",
    "display_b": "Tre'ston Vines",
-   "p_lr": 0.7155033130499884,
-   "p_xgb": 0.8680033087730408,
+   "p_lr": 0.7431692765611386,
+   "p_xgb": 0.8455671668052673,
    "actual_winner": "AtebaGautier"
   },
   {
@@ -3065,8 +3065,8 @@
    "fighter_b": "JoePyfer",
    "display_a": "Abus Magomedov",
    "display_b": "Joe Pyfer",
-   "p_lr": 0.43135827833006973,
-   "p_xgb": 0.5514565110206604,
+   "p_lr": 0.4612288747238504,
+   "p_xgb": 0.5347248911857605,
    "actual_winner": "JoePyfer"
   },
   {
@@ -3076,8 +3076,8 @@
    "fighter_b": "JoelAlvarez",
    "display_a": "Vicente Luque",
    "display_b": "Joel Alvarez",
-   "p_lr": 0.3822468506790113,
-   "p_xgb": 0.23925866186618805,
+   "p_lr": 0.4461043800932778,
+   "p_xgb": 0.35024216771125793,
    "actual_winner": "JoelAlvarez"
   },
   {
@@ -3087,8 +3087,8 @@
    "fighter_b": "KaanOfli",
    "display_a": "Ricardo Ramos",
    "display_b": "Kaan Ofli",
-   "p_lr": 0.2559139091296964,
-   "p_xgb": 0.4277724325656891,
+   "p_lr": 0.4307349172347296,
+   "p_xgb": 0.4289794862270355,
    "actual_winner": "KaanOfli"
   },
   {
@@ -3098,8 +3098,8 @@
    "fighter_b": "StewartNicoll",
    "display_a": "Lucas Rocha",
    "display_b": "Stewart Nicoll",
-   "p_lr": 0.5759005126227936,
-   "p_xgb": 0.5226403474807739,
+   "p_lr": 0.5374429534962669,
+   "p_xgb": 0.5482363104820251,
    "actual_winner": "LucasRocha"
   },
   {
@@ -3109,8 +3109,8 @@
    "fighter_b": "MichaelAswellJr.",
    "display_a": "Lucas Almeida",
    "display_b": "Michael Aswell Jr.",
-   "p_lr": 0.32095094730452167,
-   "p_xgb": 0.17401190102100372,
+   "p_lr": 0.19801450785191754,
+   "p_xgb": 0.17634150385856628,
    "actual_winner": "MichaelAswellJr."
   },
   {
@@ -3120,8 +3120,8 @@
    "fighter_b": "SaimonOliveira",
    "display_a": "Luan Lacerda",
    "display_b": "Saimon Oliveira",
-   "p_lr": 0.7591423011828963,
-   "p_xgb": 0.7630884051322937,
+   "p_lr": 0.654804832411621,
+   "p_xgb": 0.6580539345741272,
    "actual_winner": "LuanLacerda"
   },
   {
@@ -3131,8 +3131,8 @@
    "fighter_b": "ThomasPetersen",
    "display_a": "Vitor Petrino",
    "display_b": "Thomas Petersen",
-   "p_lr": 0.6114805963976051,
-   "p_xgb": 0.7843744158744812,
+   "p_lr": 0.622926541706394,
+   "p_xgb": 0.6097968220710754,
    "actual_winner": "VitorPetrino"
   },
   {
@@ -3142,8 +3142,8 @@
    "fighter_b": "MarioPinto",
    "display_a": "Jhonata Diniz",
    "display_b": "Mario Pinto",
-   "p_lr": 0.6495797885592727,
-   "p_xgb": 0.65766441822052,
+   "p_lr": 0.49024965537740683,
+   "p_xgb": 0.5180528163909912,
    "actual_winner": "MarioPinto"
   },
   {
@@ -3153,8 +3153,8 @@
    "fighter_b": "ClaytonCarpenter",
    "display_a": "Jafel Filho",
    "display_b": "Clayton Carpenter",
-   "p_lr": 0.6074746457724999,
-   "p_xgb": 0.39531806111335754,
+   "p_lr": 0.5259422237365795,
+   "p_xgb": 0.5517250895500183,
    "actual_winner": "JafelFilho"
   },
   {
@@ -3164,8 +3164,8 @@
    "fighter_b": "MontelJackson",
    "display_a": "Deiveson Figueiredo",
    "display_b": "Montel Jackson",
-   "p_lr": 0.32723420921211765,
-   "p_xgb": 0.3008469343185425,
+   "p_lr": 0.3218881068942641,
+   "p_xgb": 0.4438239336013794,
    "actual_winner": "DeivesonFigueiredo"
   },
   {
@@ -3175,8 +3175,8 @@
    "fighter_b": "MateuszGamrot",
    "display_a": "Charles Oliveira",
    "display_b": "Mateusz Gamrot",
-   "p_lr": 0.4132632212729738,
-   "p_xgb": 0.21827566623687744,
+   "p_lr": 0.3885115586758776,
+   "p_xgb": 0.3898548483848572,
    "actual_winner": "CharlesOliveira"
   },
   {
@@ -3186,8 +3186,8 @@
    "fighter_b": "IrinaAlekseeva",
    "display_a": "Bia Mesquita",
    "display_b": "Irina Alekseeva",
-   "p_lr": 0.578536404256214,
-   "p_xgb": 0.5271097421646118,
+   "p_lr": 0.5877545488999902,
+   "p_xgb": 0.5762799382209778,
    "actual_winner": "BiaMesquita"
   },
   {
@@ -3197,8 +3197,8 @@
    "fighter_b": "KarolinaKowalkiewicz",
    "display_a": "Julia Polastri",
    "display_b": "Karolina Kowalkiewicz",
-   "p_lr": 0.856138601271127,
-   "p_xgb": 0.8299956917762756,
+   "p_lr": 0.8137231980461067,
+   "p_xgb": 0.8411678671836853,
    "actual_winner": "JuliaPolastri"
   },
   {
@@ -3208,8 +3208,8 @@
    "fighter_b": "BrendanAllen",
    "display_a": "Reinierde Ridder",
    "display_b": "Brendan Allen",
-   "p_lr": 0.6620416839943741,
-   "p_xgb": 0.4720936715602875,
+   "p_lr": 0.7348815676469057,
+   "p_xgb": 0.6244145035743713,
    "actual_winner": "BrendanAllen"
   },
   {
@@ -3219,8 +3219,8 @@
    "fighter_b": "TainaraLisboa",
    "display_a": "Melissa Croden",
    "display_b": "Tainara Lisboa",
-   "p_lr": 0.5406038409872044,
-   "p_xgb": 0.5560912489891052,
+   "p_lr": 0.5468681964807962,
+   "p_xgb": 0.5656141638755798,
    "actual_winner": "MelissaCroden"
   },
   {
@@ -3230,8 +3230,8 @@
    "fighter_b": "AiemannZahabi",
    "display_a": "Marlon Vera",
    "display_b": "Aiemann Zahabi",
-   "p_lr": 0.6216642981094976,
-   "p_xgb": 0.41033387184143066,
+   "p_lr": 0.4131225124060495,
+   "p_xgb": 0.3731883466243744,
    "actual_winner": "AiemannZahabi"
   },
   {
@@ -3241,8 +3241,8 @@
    "fighter_b": "JasmineJasudavicius",
    "display_a": "Manon Fiorot",
    "display_b": "Jasmine Jasudavicius",
-   "p_lr": 0.6159986022166146,
-   "p_xgb": 0.5640260577201843,
+   "p_lr": 0.6525313860582763,
+   "p_xgb": 0.6959280371665955,
    "actual_winner": "ManonFiorot"
   },
   {
@@ -3252,8 +3252,8 @@
    "fighter_b": "DrewDober",
    "display_a": "Kyle Prepolec",
    "display_b": "Drew Dober",
-   "p_lr": 0.3531967781808633,
-   "p_xgb": 0.23703071475028992,
+   "p_lr": 0.48386535868296676,
+   "p_xgb": 0.2717345952987671,
    "actual_winner": "DrewDober"
   },
   {
@@ -3263,8 +3263,8 @@
    "fighter_b": "MattFrevola",
    "display_a": "Kyle Nelson",
    "display_b": "Matt Frevola",
-   "p_lr": 0.5769281333926681,
-   "p_xgb": 0.4814086854457855,
+   "p_lr": 0.6314672218201521,
+   "p_xgb": 0.6493838429450989,
    "actual_winner": "KyleNelson"
   },
   {
@@ -3274,8 +3274,8 @@
    "fighter_b": "RavenaOliveira",
    "display_a": "Stephanie Luciano",
    "display_b": "Ravena Oliveira",
-   "p_lr": 0.5982338814092824,
-   "p_xgb": 0.6762170791625977,
+   "p_lr": 0.5496486660698015,
+   "p_xgb": 0.621485710144043,
    "actual_winner": "StephanieLuciano"
   },
   {
@@ -3285,8 +3285,8 @@
    "fighter_b": "DjordenSantos",
    "display_a": "Danny Barlow",
    "display_b": "Djorden Santos",
-   "p_lr": 0.5398095900203456,
-   "p_xgb": 0.5114226937294006,
+   "p_lr": 0.5220392372156005,
+   "p_xgb": 0.59305739402771,
    "actual_winner": "DjordenSantos"
   },
   {
@@ -3296,8 +3296,8 @@
    "fighter_b": "Aoriqileng",
    "display_a": "Cody Gibson",
    "display_b": "Aoriqileng",
-   "p_lr": 0.5901968867688404,
-   "p_xgb": 0.4785102307796478,
+   "p_lr": 0.5616571820531447,
+   "p_xgb": 0.5065265893936157,
    "actual_winner": "Aoriqileng"
   },
   {
@@ -3307,8 +3307,8 @@
    "fighter_b": "DaveyGrant",
    "display_a": "Charles Jourdain",
    "display_b": "Davey Grant",
-   "p_lr": 0.7070054346467319,
-   "p_xgb": 0.8170827627182007,
+   "p_lr": 0.6585890850880148,
+   "p_xgb": 0.8477814793586731,
    "actual_winner": "CharlesJourdain"
   },
   {
@@ -3318,8 +3318,8 @@
    "fighter_b": "HyunSungPark",
    "display_a": "Bruno Silva",
    "display_b": "Hyun Sung Park",
-   "p_lr": 0.33780540706534645,
-   "p_xgb": 0.5132916569709778,
+   "p_lr": 0.27319815159996713,
+   "p_xgb": 0.5208200812339783,
    "actual_winner": "BrunoSilva"
   },
   {
@@ -3329,8 +3329,8 @@
    "fighter_b": "YousriBelgaroui",
    "display_a": "Azamat Bekoev",
    "display_b": "Yousri Belgaroui",
-   "p_lr": 0.6639190675082989,
-   "p_xgb": 0.7037467956542969,
+   "p_lr": 0.6857635273480553,
+   "p_xgb": 0.7453241348266602,
    "actual_winner": "YousriBelgaroui"
   },
   {
@@ -3340,8 +3340,8 @@
    "fighter_b": "MikeMalott",
    "display_a": "Kevin Holland",
    "display_b": "Mike Malott",
-   "p_lr": 0.5714669289905883,
-   "p_xgb": 0.4230836033821106,
+   "p_lr": 0.5726294314243903,
+   "p_xgb": 0.5643859505653381,
    "actual_winner": "MikeMalott"
   },
   {
@@ -3351,8 +3351,8 @@
    "fighter_b": "MackenzieDern",
    "display_a": "Virna Jandiroba",
    "display_b": "Mackenzie Dern",
-   "p_lr": 0.6387157213253319,
-   "p_xgb": 0.7187793850898743,
+   "p_lr": 0.6602582121246068,
+   "p_xgb": 0.7471663355827332,
    "actual_winner": "MackenzieDern"
   },
   {
@@ -3362,8 +3362,8 @@
    "fighter_b": "LouieSutherland",
    "display_a": "Valter Walker",
    "display_b": "Louie Sutherland",
-   "p_lr": 0.6487461290359625,
-   "p_xgb": 0.7449042797088623,
+   "p_lr": 0.6612691539187865,
+   "p_xgb": 0.7186654210090637,
    "actual_winner": "ValterWalker"
   },
   {
@@ -3373,8 +3373,8 @@
    "fighter_b": "MarioBautista",
    "display_a": "Umar Nurmagomedov",
    "display_b": "Mario Bautista",
-   "p_lr": 0.75293525677046,
-   "p_xgb": 0.728032112121582,
+   "p_lr": 0.7076363010803205,
+   "p_xgb": 0.7244974374771118,
    "actual_winner": "UmarNurmagomedov"
   },
   {
@@ -3384,8 +3384,8 @@
    "fighter_b": "JoseDelgado",
    "display_a": "Nathaniel Wood",
    "display_b": "Jose Delgado",
-   "p_lr": 0.41763282907847704,
-   "p_xgb": 0.25381895899772644,
+   "p_lr": 0.3184122413013739,
+   "p_xgb": 0.3712541162967682,
    "actual_winner": "NathanielWood"
   },
   {
@@ -3395,8 +3395,8 @@
    "fighter_b": "QuillanSalkilld",
    "display_a": "Nasrat Haqparast",
    "display_b": "Quillan Salkilld",
-   "p_lr": 0.3594763124475976,
-   "p_xgb": 0.4453270733356476,
+   "p_lr": 0.42426836192077566,
+   "p_xgb": 0.4950687885284424,
    "actual_winner": "QuillanSalkilld"
   },
   {
@@ -3406,8 +3406,8 @@
    "fighter_b": "MateuszRebecki",
    "display_a": "Ludovit Klein",
    "display_b": "Mateusz Rebecki",
-   "p_lr": 0.6849853935226097,
-   "p_xgb": 0.6539085507392883,
+   "p_lr": 0.706824939834774,
+   "p_xgb": 0.5316087603569031,
    "actual_winner": "LudovitKlein"
   },
   {
@@ -3417,8 +3417,8 @@
    "fighter_b": "Mizuki",
    "display_a": "Jaqueline Amorim",
    "display_b": "Mizuki",
-   "p_lr": 0.7600259441711,
-   "p_xgb": 0.8089091777801514,
+   "p_lr": 0.8796586898870983,
+   "p_xgb": 0.902728796005249,
    "actual_winner": "Mizuki"
   },
   {
@@ -3428,8 +3428,8 @@
    "fighter_b": "ChrisBarnett",
    "display_a": "Hamdy Abdelwahab",
    "display_b": "Chris Barnett",
-   "p_lr": 0.8077582351665193,
-   "p_xgb": 0.9035779237747192,
+   "p_lr": 0.7216949444645171,
+   "p_xgb": 0.8387846350669861,
    "actual_winner": "HamdyAbdelwahab"
   },
   {
@@ -3439,8 +3439,8 @@
    "fighter_b": "MitchRaposo",
    "display_a": "Azat Maksum",
    "display_b": "Mitch Raposo",
-   "p_lr": 0.4786866373636918,
-   "p_xgb": 0.4223685562610626,
+   "p_lr": 0.42928444057363935,
+   "p_xgb": 0.3993282616138458,
    "actual_winner": "MitchRaposo"
   },
   {
@@ -3450,8 +3450,8 @@
    "fighter_b": "JailtonAlmeida",
    "display_a": "Alexander Volkov",
    "display_b": "Jailton Almeida",
-   "p_lr": 0.46604973535549976,
-   "p_xgb": 0.5500743389129639,
+   "p_lr": 0.4864278924909774,
+   "p_xgb": 0.6321606040000916,
    "actual_winner": "AlexanderVolkov"
   },
   {
@@ -3461,8 +3461,8 @@
    "fighter_b": "AzamatMurzakanov",
    "display_a": "Aleksandar Rakic",
    "display_b": "Azamat Murzakanov",
-   "p_lr": 0.34356083270531174,
-   "p_xgb": 0.37408798933029175,
+   "p_lr": 0.36909593464612644,
+   "p_xgb": 0.4432324767112732,
    "actual_winner": "AzamatMurzakanov"
   },
   {
@@ -3472,8 +3472,8 @@
    "fighter_b": "JunYongPark",
    "display_a": "Ikram Aliskerov",
    "display_b": "Jun Yong Park",
-   "p_lr": 0.6370310404304873,
-   "p_xgb": 0.6270669102668762,
+   "p_lr": 0.574993124938164,
+   "p_xgb": 0.42126795649528503,
    "actual_winner": "IkramAliskerov"
   },
   {
@@ -3483,8 +3483,8 @@
    "fighter_b": "SeokhyeonKo",
    "display_a": "Phil Rowe",
    "display_b": "Seokhyeon Ko",
-   "p_lr": 0.33001713399422006,
-   "p_xgb": 0.21176478266716003,
+   "p_lr": 0.3174604305437829,
+   "p_xgb": 0.35203853249549866,
    "actual_winner": "SeokhyeonKo"
   },
   {
@@ -3494,8 +3494,8 @@
    "fighter_b": "AnteDelija",
    "display_a": "Waldo Cortes Acosta",
    "display_b": "Ante Delija",
-   "p_lr": 0.754607073441572,
-   "p_xgb": 0.7926821708679199,
+   "p_lr": 0.62100875595225,
+   "p_xgb": 0.7456344962120056,
    "actual_winner": "WaldoCortesAcosta"
   },
   {
@@ -3505,8 +3505,8 @@
    "fighter_b": "ChangHoLee",
    "display_a": "Timmy Cuamba",
    "display_b": "Chang Ho Lee",
-   "p_lr": 0.47989790354269635,
-   "p_xgb": 0.5858466625213623,
+   "p_lr": 0.69608175034607,
+   "p_xgb": 0.7223355174064636,
    "actual_winner": "TimmyCuamba"
   },
   {
@@ -3516,8 +3516,8 @@
    "fighter_b": "ArianeCarnelossi",
    "display_a": "Talita Alencar",
    "display_b": "Ariane Carnelossi",
-   "p_lr": 0.7574645405045086,
-   "p_xgb": 0.4818403422832489,
+   "p_lr": 0.5839197562678367,
+   "p_xgb": 0.6084370613098145,
    "actual_winner": "TalitaAlencar"
   },
   {
@@ -3527,8 +3527,8 @@
    "fighter_b": "DavidOnama",
    "display_a": "Steve Garcia",
    "display_b": "David Onama",
-   "p_lr": 0.5020313691039284,
-   "p_xgb": 0.5849208235740662,
+   "p_lr": 0.650755486161606,
+   "p_xgb": 0.6658572554588318,
    "actual_winner": "SteveGarcia"
   },
   {
@@ -3538,8 +3538,8 @@
    "fighter_b": "ThembaGorimbo",
    "display_a": "Jeremiah Wells",
    "display_b": "Themba Gorimbo",
-   "p_lr": 0.44970120695847743,
-   "p_xgb": 0.5931021571159363,
+   "p_lr": 0.4373073597428631,
+   "p_xgb": 0.456947922706604,
    "actual_winner": "JeremiahWells"
   },
   {
@@ -3549,8 +3549,8 @@
    "fighter_b": "NormaDumont",
    "display_a": "Ketlen Vieira",
    "display_b": "Norma Dumont",
-   "p_lr": 0.45974603487153165,
-   "p_xgb": 0.43328484892845154,
+   "p_lr": 0.295691314195936,
+   "p_xgb": 0.43538880348205566,
    "actual_winner": "NormaDumont"
   },
   {
@@ -3560,8 +3560,8 @@
    "fighter_b": "SedriquesDumas",
    "display_a": "Donte Johnson",
    "display_b": "Sedriques Dumas",
-   "p_lr": 0.5917481211480489,
-   "p_xgb": 0.5628348588943481,
+   "p_lr": 0.6090193639614049,
+   "p_xgb": 0.6278010606765747,
    "actual_winner": "DonteJohnson"
   },
   {
@@ -3571,8 +3571,8 @@
    "fighter_b": "DanielFrunza",
    "display_a": "Charles Radtke",
    "display_b": "Daniel Frunza",
-   "p_lr": 0.7495591138902132,
-   "p_xgb": 0.7286468148231506,
+   "p_lr": 0.7091291872426226,
+   "p_xgb": 0.8109654784202576,
    "actual_winner": "CharlesRadtke"
   },
   {
@@ -3582,8 +3582,8 @@
    "fighter_b": "KevinChristian",
    "display_a": "Billy Elekana",
    "display_b": "Kevin Christian",
-   "p_lr": 0.5812774581292296,
-   "p_xgb": 0.6588783860206604,
+   "p_lr": 0.588664910147942,
+   "p_xgb": 0.6685362458229065,
    "actual_winner": "BillyElekana"
   },
   {
@@ -3593,8 +3593,8 @@
    "fighter_b": "CodyDurden",
    "display_a": "Allan Nascimento",
    "display_b": "Cody Durden",
-   "p_lr": 0.7255503129777726,
-   "p_xgb": 0.6772192120552063,
+   "p_lr": 0.7275017061879476,
+   "p_xgb": 0.7698617577552795,
    "actual_winner": "AllanNascimento"
   },
   {
@@ -3604,8 +3604,8 @@
    "fighter_b": "MontserratConejoRuiz",
    "display_a": "Alice Ardelean",
    "display_b": "Montserrat Conejo Ruiz",
-   "p_lr": 0.8788023328807115,
-   "p_xgb": 0.7556944489479065,
+   "p_lr": 0.819031417090366,
+   "p_xgb": 0.7725051045417786,
    "actual_winner": "AliceArdelean"
   },
   {
@@ -3615,8 +3615,8 @@
    "fighter_b": "YadierdelValle",
    "display_a": "Isaac Dulgarian",
    "display_b": "Yadierdel Valle",
-   "p_lr": 0.5262320375179769,
-   "p_xgb": 0.4361482262611389,
+   "p_lr": 0.4451571893379086,
+   "p_xgb": 0.3085747957229614,
    "actual_winner": "YadierdelValle"
   },
   {
@@ -3626,8 +3626,8 @@
    "fighter_b": "JacquelineCavalcanti",
    "display_a": "Mayra Bueno Silva",
    "display_b": "Jacqueline Cavalcanti",
-   "p_lr": 0.34220109592317793,
-   "p_xgb": 0.48101019859313965,
+   "p_lr": 0.2585437139228157,
+   "p_xgb": 0.4217141568660736,
    "actual_winner": "JacquelineCavalcanti"
   },
   {
@@ -3637,8 +3637,8 @@
    "fighter_b": "JacksonMcVey",
    "display_a": "Zach Reese",
    "display_b": "Jackson Mc Vey",
-   "p_lr": 0.6715077984731767,
-   "p_xgb": 0.6004815697669983,
+   "p_lr": 0.5012154418645965,
+   "p_xgb": 0.49501222372055054,
    "actual_winner": "ZachReese"
   },
   {
@@ -3648,8 +3648,8 @@
    "fighter_b": "DeniseGomes",
    "display_a": "Tecia Pennington",
    "display_b": "Denise Gomes",
-   "p_lr": 0.2802436260711301,
-   "p_xgb": 0.3183627128601074,
+   "p_lr": 0.36998536597295567,
+   "p_xgb": 0.3476678729057312,
    "actual_winner": "DeniseGomes"
   },
   {
@@ -3659,8 +3659,8 @@
    "fighter_b": "RaoniBarcelos",
    "display_a": "Ricky Simon",
    "display_b": "Raoni Barcelos",
-   "p_lr": 0.6397861512275319,
-   "p_xgb": 0.5551488399505615,
+   "p_lr": 0.6193608072141432,
+   "p_xgb": 0.5820196866989136,
    "actual_winner": "RaoniBarcelos"
   },
   {
@@ -3670,8 +3670,8 @@
    "fighter_b": "UrosMedic",
    "display_a": "Muslim Salikhov",
    "display_b": "Uros Medic",
-   "p_lr": 0.5436729701086787,
-   "p_xgb": 0.5768008232116699,
+   "p_lr": 0.6004489713150585,
+   "p_xgb": 0.7299731969833374,
    "actual_winner": "UrosMedic"
   },
   {
@@ -3681,8 +3681,8 @@
    "fighter_b": "DanielMarcos",
    "display_a": "Miles Johns",
    "display_b": "Daniel Marcos",
-   "p_lr": 0.4679052119952557,
-   "p_xgb": 0.3301647901535034,
+   "p_lr": 0.5235461137089349,
+   "p_xgb": 0.5456302762031555,
    "actual_winner": "DanielMarcos"
   },
   {
@@ -3692,8 +3692,8 @@
    "fighter_b": "JamallEmmers",
    "display_a": "Hyder Amil",
    "display_b": "Jamall Emmers",
-   "p_lr": 0.6379157926502884,
-   "p_xgb": 0.7751511335372925,
+   "p_lr": 0.6634203051350184,
+   "p_xgb": 0.7497527003288269,
    "actual_winner": "JamallEmmers"
   },
   {
@@ -3703,8 +3703,8 @@
    "fighter_b": "JosephMorales",
    "display_a": "Matt Schnell",
    "display_b": "Joseph Morales",
-   "p_lr": 0.3063942618204552,
-   "p_xgb": 0.336234986782074,
+   "p_lr": 0.2371762341086205,
+   "p_xgb": 0.21549561619758606,
    "actual_winner": "JosephMorales"
   },
   {
@@ -3714,8 +3714,8 @@
    "fighter_b": "MaxGimenis",
    "display_a": "Josh Hokit",
    "display_b": "Max Gimenis",
-   "p_lr": 0.5422942122474268,
-   "p_xgb": 0.5273774266242981,
+   "p_lr": 0.5543483785269745,
+   "p_xgb": 0.5154816508293152,
    "actual_winner": "JoshHokit"
   },
   {
@@ -3725,8 +3725,8 @@
    "fighter_b": "RandyBrown",
    "display_a": "Gabriel Bonfim",
    "display_b": "Randy Brown",
-   "p_lr": 0.6729726257125261,
-   "p_xgb": 0.6816848516464233,
+   "p_lr": 0.6695390709286241,
+   "p_xgb": 0.6979066729545593,
    "actual_winner": "GabrielBonfim"
   },
   {
@@ -3736,8 +3736,8 @@
    "fighter_b": "MarcoTulio",
    "display_a": "Christian Leroy Duncan",
    "display_b": "Marco Tulio",
-   "p_lr": 0.6150575119172148,
-   "p_xgb": 0.43297329545021057,
+   "p_lr": 0.5900799797698942,
+   "p_xgb": 0.4691660404205322,
    "actual_winner": "ChristianLeroyDuncan"
   },
   {
@@ -3747,8 +3747,8 @@
    "fighter_b": "IsmaelBonfim",
    "display_a": "Chris Padilla",
    "display_b": "Ismael Bonfim",
-   "p_lr": 0.603216160480299,
-   "p_xgb": 0.5185539126396179,
+   "p_lr": 0.5844124933871412,
+   "p_xgb": 0.5327176451683044,
    "actual_winner": "ChrisPadilla"
   },
   {
@@ -3758,8 +3758,8 @@
    "fighter_b": "ChepeMariscal",
    "display_a": "Pat Sabatini",
    "display_b": "Chepe Mariscal",
-   "p_lr": 0.4879496068877262,
-   "p_xgb": 0.3244321942329407,
+   "p_lr": 0.38980253623335204,
+   "p_xgb": 0.3373154103755951,
    "actual_winner": "PatSabatini"
   },
   {
@@ -3769,8 +3769,8 @@
    "fighter_b": "GregoryRodrigues",
    "display_a": "Roman Kopylov",
    "display_b": "Gregory Rodrigues",
-   "p_lr": 0.570236568308947,
-   "p_xgb": 0.61141437292099,
+   "p_lr": 0.5268588738045212,
+   "p_xgb": 0.539893388748169,
    "actual_winner": "GregoryRodrigues"
   },
   {
@@ -3780,8 +3780,8 @@
    "fighter_b": "ZhangWeili",
    "display_a": "Valentina Shevchenko",
    "display_b": "Zhang Weili",
-   "p_lr": 0.6108119645107574,
-   "p_xgb": 0.512427031993866,
+   "p_lr": 0.6079844431940759,
+   "p_xgb": 0.6066907644271851,
    "actual_winner": "ValentinaShevchenko"
   },
   {
@@ -3791,8 +3791,8 @@
    "fighter_b": "MatheusCamilo",
    "display_a": "Viacheslav Borshchev",
    "display_b": "Matheus Camilo",
-   "p_lr": 0.31790908253086014,
-   "p_xgb": 0.24113710224628448,
+   "p_lr": 0.3395406890572666,
+   "p_xgb": 0.1989671140909195,
    "actual_winner": "MatheusCamilo"
   },
   {
@@ -3802,8 +3802,8 @@
    "fighter_b": "EthynEwing",
    "display_a": "Malcolm Wellmaker",
    "display_b": "Ethyn Ewing",
-   "p_lr": 0.6198488302617514,
-   "p_xgb": 0.7479321956634521,
+   "p_lr": 0.6259489291787861,
+   "p_xgb": 0.7595568299293518,
    "actual_winner": "EthynEwing"
   },
   {
@@ -3813,8 +3813,8 @@
    "fighter_b": "MichaelMorales",
    "display_a": "Sean Brady",
    "display_b": "Michael Morales",
-   "p_lr": 0.4275256781182028,
-   "p_xgb": 0.2514527440071106,
+   "p_lr": 0.37709454058769964,
+   "p_xgb": 0.259832501411438,
    "actual_winner": "MichaelMorales"
   },
   {
@@ -3824,8 +3824,8 @@
    "fighter_b": "CarlosPrates",
    "display_a": "Leon Edwards",
    "display_b": "Carlos Prates",
-   "p_lr": 0.3208629986195456,
-   "p_xgb": 0.21551832556724548,
+   "p_lr": 0.43297833252718393,
+   "p_xgb": 0.3343351185321808,
    "actual_winner": "CarlosPrates"
   },
   {
@@ -3835,8 +3835,8 @@
    "fighter_b": "EricMcConico",
    "display_a": "Baisangur Susurkaev",
    "display_b": "Eric Mc Conico",
-   "p_lr": 0.9398144484180971,
-   "p_xgb": 0.8547656536102295,
+   "p_lr": 0.9160746125991861,
+   "p_xgb": 0.8374239206314087,
    "actual_winner": "BaisangurSusurkaev"
   },
   {
@@ -3846,8 +3846,8 @@
    "fighter_b": "IslamMakhachev",
    "display_a": "Jack Della Maddalena",
    "display_b": "Islam Makhachev",
-   "p_lr": 0.4849739164953721,
-   "p_xgb": 0.4986444115638733,
+   "p_lr": 0.4262859147435876,
+   "p_xgb": 0.5631389617919922,
    "actual_winner": "IslamMakhachev"
   },
   {
@@ -3857,8 +3857,8 @@
    "fighter_b": "TracyCortez",
    "display_a": "Erin Blanchfield",
    "display_b": "Tracy Cortez",
-   "p_lr": 0.7367378553294625,
-   "p_xgb": 0.7869411706924438,
+   "p_lr": 0.7707285326866746,
+   "p_xgb": 0.7914581298828125,
    "actual_winner": "ErinBlanchfield"
   },
   {
@@ -3868,8 +3868,8 @@
    "fighter_b": "RodolfoVieira",
    "display_a": "Bo Nickal",
    "display_b": "Rodolfo Vieira",
-   "p_lr": 0.48583908753923327,
-   "p_xgb": 0.6039592027664185,
+   "p_lr": 0.6492564023217936,
+   "p_xgb": 0.7758883237838745,
    "actual_winner": "BoNickal"
   },
   {
@@ -3879,8 +3879,8 @@
    "fighter_b": "BenoitSaintDenis",
    "display_a": "Beneil Dariush",
    "display_b": "Benoit Saint Denis",
-   "p_lr": 0.31136541822726777,
-   "p_xgb": 0.22927553951740265,
+   "p_lr": 0.4132402659118962,
+   "p_xgb": 0.42486563324928284,
    "actual_winner": "BenoitSaintDenis"
   },
   {
@@ -3890,8 +3890,8 @@
    "fighter_b": "FatimaKline",
    "display_a": "Angela Hill",
    "display_b": "Fatima Kline",
-   "p_lr": 0.37495933224224176,
-   "p_xgb": 0.35020682215690613,
+   "p_lr": 0.2736101765792853,
+   "p_xgb": 0.34075993299484253,
    "actual_winner": "FatimaKline"
   },
   {
@@ -3901,8 +3901,8 @@
    "fighter_b": "GeraldMeerschaert",
    "display_a": "Kyle Daukaus",
    "display_b": "Gerald Meerschaert",
-   "p_lr": 0.7287978538213242,
-   "p_xgb": 0.6751821637153625,
+   "p_lr": 0.6830863658800673,
+   "p_xgb": 0.6837181448936462,
    "actual_winner": "KyleDaukaus"
   },
   {
@@ -3912,8 +3912,8 @@
    "fighter_b": "ShamilGaziev",
    "display_a": "Waldo Cortes Acosta",
    "display_b": "Shamil Gaziev",
-   "p_lr": 0.6545724849339457,
-   "p_xgb": 0.8322534561157227,
+   "p_lr": 0.6010147553510387,
+   "p_xgb": 0.7406240105628967,
    "actual_winner": "WaldoCortesAcosta"
   },
   {
@@ -3923,8 +3923,8 @@
    "fighter_b": "DenzelFreeman",
    "display_a": "Marek Bujlo",
    "display_b": "Denzel Freeman",
-   "p_lr": 0.572360952661912,
-   "p_xgb": 0.5748740434646606,
+   "p_lr": 0.5803637035698753,
+   "p_xgb": 0.5424463748931885,
    "actual_winner": "DenzelFreeman"
   },
   {
@@ -3934,8 +3934,8 @@
    "fighter_b": "AlonzoMenifield",
    "display_a": "Volkan Oezdemir",
    "display_b": "Alonzo Menifield",
-   "p_lr": 0.659569635966842,
-   "p_xgb": 0.7448481321334839,
+   "p_lr": 0.6174148644778149,
+   "p_xgb": 0.7507558465003967,
    "actual_winner": "VolkanOezdemir"
   },
   {
@@ -3945,8 +3945,8 @@
    "fighter_b": "KyojiHoriguchi",
    "display_a": "Tagir Ulanbekov",
    "display_b": "Kyoji Horiguchi",
-   "p_lr": 0.8395798290581917,
-   "p_xgb": 0.7141488790512085,
+   "p_lr": 0.7989553223682431,
+   "p_xgb": 0.6746410131454468,
    "actual_winner": "KyojiHoriguchi"
   },
   {
@@ -3956,8 +3956,8 @@
    "fighter_b": "ShemRock",
    "display_a": "Nurullo Aliev",
    "display_b": "Shem Rock",
-   "p_lr": 0.6666299495512485,
-   "p_xgb": 0.8185455799102783,
+   "p_lr": 0.6943258214768153,
+   "p_xgb": 0.7992594242095947,
    "actual_winner": "NurulloAliev"
   },
   {
@@ -3967,8 +3967,8 @@
    "fighter_b": "SaygidIzagakhmaev",
    "display_a": "Nicolas Dalby",
    "display_b": "Saygid Izagakhmaev",
-   "p_lr": 0.5566093207326218,
-   "p_xgb": 0.6620563268661499,
+   "p_lr": 0.49132342670134166,
+   "p_xgb": 0.7368115782737732,
    "actual_winner": "NicolasDalby"
   },
   {
@@ -3978,8 +3978,8 @@
    "fighter_b": "MyktybekOrolbai",
    "display_a": "Jack Hermansson",
    "display_b": "Myktybek Orolbai",
-   "p_lr": 0.3621775136494748,
-   "p_xgb": 0.2932735085487366,
+   "p_lr": 0.3777635693740862,
+   "p_xgb": 0.25464582443237305,
    "actual_winner": "MyktybekOrolbai"
   },
   {
@@ -3989,8 +3989,8 @@
    "fighter_b": "RafaelCerqueira",
    "display_a": "Abdul Rakhman Yakhyaev",
    "display_b": "Rafael Cerqueira",
-   "p_lr": 0.7400785762412387,
-   "p_xgb": 0.7447514533996582,
+   "p_lr": 0.75800531632411,
+   "p_xgb": 0.7604014873504639,
    "actual_winner": "AbdulRakhmanYakhyaev"
   },
   {
@@ -4000,8 +4000,8 @@
    "fighter_b": "LukeRiley",
    "display_a": "Bogdan Grad",
    "display_b": "Luke Riley",
-   "p_lr": 0.5663000124926775,
-   "p_xgb": 0.5967198014259338,
+   "p_lr": 0.5781563253364177,
+   "p_xgb": 0.6558024883270264,
    "actual_winner": "LukeRiley"
   },
   {
@@ -4011,8 +4011,8 @@
    "fighter_b": "IanMachadoGarry",
    "display_a": "Belal Muhammad",
    "display_b": "Ian Machado Garry",
-   "p_lr": 0.4058131458908386,
-   "p_xgb": 0.39974308013916016,
+   "p_lr": 0.3845953979029173,
+   "p_xgb": 0.15812154114246368,
    "actual_winner": "IanMachadoGarry"
   },
   {
@@ -4022,8 +4022,8 @@
    "fighter_b": "AleksandreTopuria",
    "display_a": "Bekzat Almakhan",
    "display_b": "Aleksandre Topuria",
-   "p_lr": 0.40404359620129354,
-   "p_xgb": 0.4405113458633423,
+   "p_lr": 0.44148046803684043,
+   "p_xgb": 0.5101965069770813,
    "actual_winner": "AleksandreTopuria"
   },
   {
@@ -4033,8 +4033,8 @@
    "fighter_b": "DanHooker",
    "display_a": "Arman Tsarukyan",
    "display_b": "Dan Hooker",
-   "p_lr": 0.8167004722481677,
-   "p_xgb": 0.7972978353500366,
+   "p_lr": 0.8341711681422156,
+   "p_xgb": 0.8693909645080566,
    "actual_winner": "ArmanTsarukyan"
   },
   {
@@ -4044,8 +4044,8 @@
    "fighter_b": "AsuAlmabayev",
    "display_a": "Alex Perez",
    "display_b": "Asu Almabayev",
-   "p_lr": 0.3207167080365539,
-   "p_xgb": 0.32938531041145325,
+   "p_lr": 0.3515648760281317,
+   "p_xgb": 0.32206466794013977,
    "actual_winner": "AsuAlmabayev"
   },
   {
@@ -4055,8 +4055,8 @@
    "fighter_b": "RyanLoder",
    "display_a": "Ismail Naurdiev",
    "display_b": "Ryan Loder",
-   "p_lr": 0.6548385877798019,
-   "p_xgb": 0.6401728987693787,
+   "p_lr": 0.7231843406315361,
+   "p_xgb": 0.8604657053947449,
    "actual_winner": "IsmailNaurdiev"
   },
   {
@@ -4066,8 +4066,8 @@
    "fighter_b": "FaresZiam",
    "display_a": "Nazim Sadykhov",
    "display_b": "Fares Ziam",
-   "p_lr": 0.38411056383638426,
-   "p_xgb": 0.2277757227420807,
+   "p_lr": 0.37987399599787713,
+   "p_xgb": 0.2796476483345032,
    "actual_winner": "FaresZiam"
   },
   {
@@ -4077,8 +4077,8 @@
    "fighter_b": "MaironSantos",
    "display_a": "Muhammad Naimov",
    "display_b": "Mairon Santos",
-   "p_lr": 0.6169615815432685,
-   "p_xgb": 0.5279810428619385,
+   "p_lr": 0.6377557826103056,
+   "p_xgb": 0.6419854164123535,
    "actual_winner": "MaironSantos"
   },
   {
@@ -4088,8 +4088,8 @@
    "fighter_b": "PetrYan",
    "display_a": "Merab Dvalishvili",
    "display_b": "Petr Yan",
-   "p_lr": 0.7471471425851777,
-   "p_xgb": 0.813490629196167,
+   "p_lr": 0.8501396073066825,
+   "p_xgb": 0.825474739074707,
    "actual_winner": "PetrYan"
   },
   {
@@ -4099,8 +4099,8 @@
    "fighter_b": "KarineSilva",
    "display_a": "Maycee Barber",
    "display_b": "Karine Silva",
-   "p_lr": 0.6582066792954346,
-   "p_xgb": 0.7624267339706421,
+   "p_lr": 0.7247021873305414,
+   "p_xgb": 0.6846784353256226,
    "actual_winner": "MayceeBarber"
   },
   {
@@ -4110,8 +4110,8 @@
    "fighter_b": "BrunnoFerreira",
    "display_a": "Marvin Vettori",
    "display_b": "Brunno Ferreira",
-   "p_lr": 0.4265726281479139,
-   "p_xgb": 0.2858065664768219,
+   "p_lr": 0.4890690489573566,
+   "p_xgb": 0.43337345123291016,
    "actual_winner": "BrunnoFerreira"
   },
   {
@@ -4121,8 +4121,8 @@
    "fighter_b": "AntonioTrocoli",
    "display_a": "Mansur Abdul- Malik",
    "display_b": "Antonio Trocoli",
-   "p_lr": 0.846905323174338,
-   "p_xgb": 0.9138898849487305,
+   "p_lr": 0.7870948557991087,
+   "p_xgb": 0.8338561058044434,
    "actual_winner": "MansurAbdul-Malik"
   },
   {
@@ -4132,8 +4132,8 @@
    "fighter_b": "PaytonTalbott",
    "display_a": "Henry Cejudo",
    "display_b": "Payton Talbott",
-   "p_lr": 0.36261376681668844,
-   "p_xgb": 0.3142332136631012,
+   "p_lr": 0.4602568982424838,
+   "p_xgb": 0.3228726089000702,
    "actual_winner": "PaytonTalbott"
   },
   {
@@ -4143,8 +4143,8 @@
    "fighter_b": "IboAslan",
    "display_a": "Iwo Baraniewski",
    "display_b": "Ibo Aslan",
-   "p_lr": 0.5361336675781458,
-   "p_xgb": 0.5817161798477173,
+   "p_lr": 0.5401993833224804,
+   "p_xgb": 0.6097469329833984,
    "actual_winner": "IwoBaraniewski"
   },
   {
@@ -4154,8 +4154,8 @@
    "fighter_b": "ManuelTorres",
    "display_a": "Grant Dawson",
    "display_b": "Manuel Torres",
-   "p_lr": 0.6827147359498145,
-   "p_xgb": 0.8078573346138,
+   "p_lr": 0.7388909315230677,
+   "p_xgb": 0.7958766222000122,
    "actual_winner": "ManuelTorres"
   },
   {
@@ -4165,8 +4165,8 @@
    "fighter_b": "JalinTurner",
    "display_a": "Edson Barboza",
    "display_b": "Jalin Turner",
-   "p_lr": 0.3416534355002007,
-   "p_xgb": 0.3211683928966522,
+   "p_lr": 0.36169232340733504,
+   "p_xgb": 0.40752995014190674,
    "actual_winner": "JalinTurner"
   },
   {
@@ -4176,8 +4176,8 @@
    "fighter_b": "TatsuroTaira",
    "display_a": "Brandon Moreno",
    "display_b": "Tatsuro Taira",
-   "p_lr": 0.4362727785454006,
-   "p_xgb": 0.21802423894405365,
+   "p_lr": 0.46066895745900044,
+   "p_xgb": 0.3512116074562073,
    "actual_winner": "TatsuroTaira"
   },
   {
@@ -4187,8 +4187,8 @@
    "fighter_b": "JoshuaVan",
    "display_a": "Alexandre Pantoja",
    "display_b": "Joshua Van",
-   "p_lr": 0.44827240182833084,
-   "p_xgb": 0.4367949664592743,
+   "p_lr": 0.4595483177601,
+   "p_xgb": 0.3735767602920532,
    "actual_winner": "JoshuaVan"
   },
   {
@@ -4198,8 +4198,8 @@
    "fighter_b": "ChrisDuncan",
    "display_a": "Terrance Mc Kinney",
    "display_b": "Chris Duncan",
-   "p_lr": 0.5748667528791223,
-   "p_xgb": 0.6990678906440735,
+   "p_lr": 0.5214414635756183,
+   "p_xgb": 0.5781639814376831,
    "actual_winner": "ChrisDuncan"
   },
   {
@@ -4209,8 +4209,8 @@
    "fighter_b": "BogdanGuskov",
    "display_a": "Jan Blachowicz",
    "display_b": "Bogdan Guskov",
-   "p_lr": 0.5214789733640055,
-   "p_xgb": 0.4531435966491699,
+   "p_lr": 0.4451364772662149,
+   "p_xgb": 0.3852211534976959,
    "actual_winner": "BogdanGuskov"
   },
   {
@@ -4220,8 +4220,8 @@
    "fighter_b": "StevenAsplund",
    "display_a": "Sean Sharaf",
    "display_b": "Steven Asplund",
-   "p_lr": 0.42199194105562304,
-   "p_xgb": 0.537928581237793,
+   "p_lr": 0.42472129916995655,
+   "p_xgb": 0.5120562314987183,
    "actual_winner": "StevenAsplund"
   },
   {
@@ -4231,8 +4231,8 @@
    "fighter_b": "LanceGibsonJr.",
    "display_a": "King Green",
    "display_b": "Lance Gibson Jr.",
-   "p_lr": 0.566506175757345,
-   "p_xgb": 0.5797317624092102,
+   "p_lr": 0.6116371631197213,
+   "p_xgb": 0.7018117308616638,
    "actual_winner": "KingGreen"
   },
   {
@@ -4242,8 +4242,8 @@
    "fighter_b": "YaroslavAmosov",
    "display_a": "Neil Magny",
    "display_b": "Yaroslav Amosov",
-   "p_lr": 0.6680697149799901,
-   "p_xgb": 0.7520744204521179,
+   "p_lr": 0.6459829824380718,
+   "p_xgb": 0.8150418400764465,
    "actual_winner": "YaroslavAmosov"
   },
   {
@@ -4253,8 +4253,8 @@
    "fighter_b": "MorganCharriere",
    "display_a": "Melquizael Costa",
    "display_b": "Morgan Charriere",
-   "p_lr": 0.5970334584368322,
-   "p_xgb": 0.670454740524292,
+   "p_lr": 0.6163592785940317,
+   "p_xgb": 0.6881378293037415,
    "actual_winner": "MelquizaelCosta"
   },
   {
@@ -4264,8 +4264,8 @@
    "fighter_b": "MarcusBuchecha",
    "display_a": "Kennedy Nzechukwu",
    "display_b": "Marcus Buchecha",
-   "p_lr": 0.5707304496413161,
-   "p_xgb": 0.5930067300796509,
+   "p_lr": 0.40726978106370243,
+   "p_xgb": 0.6317455768585205,
    "actual_winner": "MarcusBuchecha"
   },
   {
@@ -4275,8 +4275,8 @@
    "fighter_b": "LuanaSantos",
    "display_a": "Melissa Croden",
    "display_b": "Luana Santos",
-   "p_lr": 0.38015522241223915,
-   "p_xgb": 0.3765460252761841,
+   "p_lr": 0.368602474624377,
+   "p_xgb": 0.23565618693828583,
    "actual_winner": "LuanaSantos"
   },
   {
@@ -4286,8 +4286,8 @@
    "fighter_b": "TerezaBleda",
    "display_a": "Jamey- Lyn Horth",
    "display_b": "Tereza Bleda",
-   "p_lr": 0.29141741098158486,
-   "p_xgb": 0.44376280903816223,
+   "p_lr": 0.3295704418775862,
+   "p_xgb": 0.27369844913482666,
    "actual_winner": "Jamey-LynHorth"
   },
   {
@@ -4297,8 +4297,8 @@
    "fighter_b": "KevinVallejos",
    "display_a": "Giga Chikadze",
    "display_b": "Kevin Vallejos",
-   "p_lr": 0.30378936682457947,
-   "p_xgb": 0.18343667685985565,
+   "p_lr": 0.3696214172021746,
+   "p_xgb": 0.27390143275260925,
    "actual_winner": "KevinVallejos"
   },
   {
@@ -4308,8 +4308,8 @@
    "fighter_b": "CezaryOleksiejczuk",
    "display_a": "Cesar Almeida",
    "display_b": "Cezary Oleksiejczuk",
-   "p_lr": 0.5306510045849858,
-   "p_xgb": 0.6585841774940491,
+   "p_lr": 0.5426483355504483,
+   "p_xgb": 0.7193111777305603,
    "actual_winner": "CezaryOleksiejczuk"
   },
   {
@@ -4319,8 +4319,8 @@
    "fighter_b": "ManelKape",
    "display_a": "Brandon Royval",
    "display_b": "Manel Kape",
-   "p_lr": 0.4186755702101642,
-   "p_xgb": 0.3802356421947479,
+   "p_lr": 0.43245934064210984,
+   "p_xgb": 0.4522344470024109,
    "actual_winner": "ManelKape"
   },
   {
@@ -4330,8 +4330,8 @@
    "fighter_b": "GuilhermePat",
    "display_a": "Allen Frye Jr.",
    "display_b": "Guilherme Pat",
-   "p_lr": 0.595014872831854,
-   "p_xgb": 0.5744883418083191,
+   "p_lr": 0.6087040159225554,
+   "p_xgb": 0.5646302103996277,
    "actual_winner": "GuilhermePat"
   },
   {
@@ -4341,8 +4341,8 @@
    "fighter_b": "IsaacThomson",
    "display_a": "Joanderson Brito",
    "display_b": "Isaac Thomson",
-   "p_lr": 0.6212235823671535,
-   "p_xgb": 0.7058021426200867,
+   "p_lr": 0.5576781335699148,
+   "p_xgb": 0.6840793490409851,
    "actual_winner": "JoandersonBrito"
   },
   {
@@ -4352,8 +4352,8 @@
    "fighter_b": "DerrickLewis",
    "display_a": "Waldo Cortes Acosta",
    "display_b": "Derrick Lewis",
-   "p_lr": 0.8137082568836685,
-   "p_xgb": 0.9192070364952087,
+   "p_lr": 0.7756213025668064,
+   "p_xgb": 0.8631086945533752,
    "actual_winner": "WaldoCortesAcosta"
   },
   {
@@ -4363,8 +4363,8 @@
    "fighter_b": "DeivesonFigueiredo",
    "display_a": "Umar Nurmagomedov",
    "display_b": "Deiveson Figueiredo",
-   "p_lr": 0.8471414272126124,
-   "p_xgb": 0.8135553002357483,
+   "p_lr": 0.8560103522408153,
+   "p_xgb": 0.8869366645812988,
    "actual_winner": "UmarNurmagomedov"
   },
   {
@@ -4374,8 +4374,8 @@
    "fighter_b": "SongYadong",
    "display_a": "Sean O' Malley",
    "display_b": "Song Yadong",
-   "p_lr": 0.5484375063040673,
-   "p_xgb": 0.5617425441741943,
+   "p_lr": 0.5714813113649516,
+   "p_xgb": 0.572285532951355,
    "actual_winner": "SeanO'Malley"
   },
   {
@@ -4385,8 +4385,8 @@
    "fighter_b": "ModestasBukauskas",
    "display_a": "Nikita Krylov",
    "display_b": "Modestas Bukauskas",
-   "p_lr": 0.43327544860501266,
-   "p_xgb": 0.17238761484622955,
+   "p_lr": 0.5001929074484983,
+   "p_xgb": 0.37306511402130127,
    "actual_winner": "NikitaKrylov"
   },
   {
@@ -4396,8 +4396,8 @@
    "fighter_b": "RoseNamajunas",
    "display_a": "Natalia Silva",
    "display_b": "Rose Namajunas",
-   "p_lr": 0.6015716812502064,
-   "p_xgb": 0.6424175500869751,
+   "p_lr": 0.6994775800615346,
+   "p_xgb": 0.6210572719573975,
    "actual_winner": "NataliaSilva"
   },
   {
@@ -4407,8 +4407,8 @@
    "fighter_b": "PaddyPimblett",
    "display_a": "Justin Gaethje",
    "display_b": "Paddy Pimblett",
-   "p_lr": 0.46878594034592785,
-   "p_xgb": 0.38430914282798767,
+   "p_lr": 0.4038760676631108,
+   "p_xgb": 0.3405909538269043,
    "actual_winner": "JustinGaethje"
   },
   {
@@ -4418,8 +4418,8 @@
    "fighter_b": "DenzelFreeman",
    "display_a": "Josh Hokit",
    "display_b": "Denzel Freeman",
-   "p_lr": 0.5075802861314882,
-   "p_xgb": 0.8225793242454529,
+   "p_lr": 0.6389377599788695,
+   "p_xgb": 0.6999807953834534,
    "actual_winner": "JoshHokit"
   },
   {
@@ -4429,8 +4429,8 @@
    "fighter_b": "AndreyPulyaev",
    "display_a": "Ateba Gautier",
    "display_b": "Andrey Pulyaev",
-   "p_lr": 0.6945532881905627,
-   "p_xgb": 0.7293422222137451,
+   "p_lr": 0.6124508177275071,
+   "p_xgb": 0.7115423679351807,
    "actual_winner": "AtebaGautier"
   },
   {
@@ -4440,8 +4440,8 @@
    "fighter_b": "JeanSilva",
    "display_a": "Arnold Allen",
    "display_b": "Jean Silva",
-   "p_lr": 0.458577275484864,
-   "p_xgb": 0.4240160584449768,
+   "p_lr": 0.5107582899167808,
+   "p_xgb": 0.4748881757259369,
    "actual_winner": "JeanSilva"
   },
   {
@@ -4451,8 +4451,8 @@
    "fighter_b": "CharlesJohnson",
    "display_a": "Alex Perez",
    "display_b": "Charles Johnson",
-   "p_lr": 0.4422908039733177,
-   "p_xgb": 0.5160300731658936,
+   "p_lr": 0.47871990255164937,
+   "p_xgb": 0.4431576728820801,
    "actual_winner": "AlexPerez"
   },
   {
@@ -4462,8 +4462,8 @@
    "fighter_b": "TyMiller",
    "display_a": "Adam Fugitt",
    "display_b": "Ty Miller",
-   "p_lr": 0.5255933837447512,
-   "p_xgb": 0.45206817984580994,
+   "p_lr": 0.5131014213467169,
+   "p_xgb": 0.42675864696502686,
    "actual_winner": "TyMiller"
   },
   {
@@ -4473,8 +4473,8 @@
    "fighter_b": "TallisonTeixeira",
    "display_a": "Tai Tuivasa",
    "display_b": "Tallison Teixeira",
-   "p_lr": 0.3730849262518243,
-   "p_xgb": 0.2838224768638611,
+   "p_lr": 0.340793770339112,
+   "p_xgb": 0.25130730867385864,
    "actual_winner": "TallisonTeixeira"
   },
   {
@@ -4484,8 +4484,8 @@
    "fighter_b": "LawrenceLui",
    "display_a": "Sulangrangbo",
    "display_b": "Lawrence Lui",
-   "p_lr": 0.5254603681210909,
-   "p_xgb": 0.43538784980773926,
+   "p_lr": 0.5252378751856793,
+   "p_xgb": 0.41680553555488586,
    "actual_winner": "LawrenceLui"
   },
   {
@@ -4495,8 +4495,8 @@
    "fighter_b": "DomMarFan",
    "display_a": "Sangwook Kim",
    "display_b": "Dom Mar Fan",
-   "p_lr": 0.5383861721458143,
-   "p_xgb": 0.5033231377601624,
+   "p_lr": 0.537575276860169,
+   "p_xgb": 0.44661447405815125,
    "actual_winner": "DomMarFan"
   },
   {
@@ -4506,8 +4506,8 @@
    "fighter_b": "MauricioRuffy",
    "display_a": "Rafael Fiziev",
    "display_b": "Mauricio Ruffy",
-   "p_lr": 0.5149070442552413,
-   "p_xgb": 0.34523576498031616,
+   "p_lr": 0.5244966772922703,
+   "p_xgb": 0.3834071457386017,
    "actual_winner": "MauricioRuffy"
   },
   {
@@ -4517,8 +4517,8 @@
    "fighter_b": "JamieMullarkey",
    "display_a": "Quillan Salkilld",
    "display_b": "Jamie Mullarkey",
-   "p_lr": 0.8185436705759245,
-   "p_xgb": 0.7870369553565979,
+   "p_lr": 0.8453781375174262,
+   "p_xgb": 0.8018007874488831,
    "actual_winner": "QuillanSalkilld"
   },
   {
@@ -4528,8 +4528,8 @@
    "fighter_b": "SebastianSzalay",
    "display_a": "Keiichiro Nakamura",
    "display_b": "Sebastian Szalay",
-   "p_lr": 0.5868673647150512,
-   "p_xgb": 0.563786506652832,
+   "p_lr": 0.5816348336981855,
+   "p_xgb": 0.4973863661289215,
    "actual_winner": "KeiichiroNakamura"
   },
   {
@@ -4539,8 +4539,8 @@
    "fighter_b": "DiegoLopes",
    "display_a": "Alexander Volkanovski",
    "display_b": "Diego Lopes",
-   "p_lr": 0.4760892212761213,
-   "p_xgb": 0.49169594049453735,
+   "p_lr": 0.6166121981997094,
+   "p_xgb": 0.5449841022491455,
    "actual_winner": "AlexanderVolkanovski"
   },
   {
@@ -4550,8 +4550,8 @@
    "fighter_b": "BillyElekana",
    "display_a": "Junior Tafa",
    "display_b": "Billy Elekana",
-   "p_lr": 0.41641372650046693,
-   "p_xgb": 0.43881919980049133,
+   "p_lr": 0.40512832568437573,
+   "p_xgb": 0.488937109708786,
    "actual_winner": "BillyElekana"
   },
   {
@@ -4561,8 +4561,8 @@
    "fighter_b": "ObanElliott",
    "display_a": "Jonathan Micallef",
    "display_b": "Oban Elliott",
-   "p_lr": 0.5908596144725888,
-   "p_xgb": 0.7689931988716125,
+   "p_lr": 0.6596871950715076,
+   "p_xgb": 0.6402206420898438,
    "actual_winner": "JonathanMicallef"
   },
   {
@@ -4572,8 +4572,8 @@
    "fighter_b": "TorrezFinney",
    "display_a": "Jacob Malkoun",
    "display_b": "Torrez Finney",
-   "p_lr": 0.6055779213653579,
-   "p_xgb": 0.35059675574302673,
+   "p_lr": 0.6223654946802593,
+   "p_xgb": 0.5630202293395996,
    "actual_winner": "JacobMalkoun"
   },
   {
@@ -4583,8 +4583,8 @@
    "fighter_b": "BenoitSaintDenis",
    "display_a": "Dan Hooker",
    "display_b": "Benoit Saint Denis",
-   "p_lr": 0.26392787253153505,
-   "p_xgb": 0.1812528669834137,
+   "p_lr": 0.26051415835491354,
+   "p_xgb": 0.25504520535469055,
    "actual_winner": "BenoitSaintDenis"
   },
   {
@@ -4594,8 +4594,8 @@
    "fighter_b": "CodyBrundage",
    "display_a": "Cam Rowston",
    "display_b": "Cody Brundage",
-   "p_lr": 0.7602582057135026,
-   "p_xgb": 0.6950360536575317,
+   "p_lr": 0.5295882327945448,
+   "p_xgb": 0.6786144971847534,
    "actual_winner": "CamRowston"
   },
   {
@@ -4605,8 +4605,8 @@
    "fighter_b": "Yizha",
    "display_a": "Kaan Ofli",
    "display_b": "Yizha",
-   "p_lr": 0.599139397799058,
-   "p_xgb": 0.6201066374778748,
+   "p_lr": 0.5410176613551333,
+   "p_xgb": 0.6677204370498657,
    "actual_winner": "KaanOfli"
   },
   {
@@ -4616,8 +4616,8 @@
    "fighter_b": "ViniciusOliveira",
    "display_a": "Mario Bautista",
    "display_b": "Vinicius Oliveira",
-   "p_lr": 0.4851854728429277,
-   "p_xgb": 0.35058245062828064,
+   "p_lr": 0.4112803901168722,
+   "p_xgb": 0.34207701683044434,
    "actual_winner": "MarioBautista"
   },
   {
@@ -4627,8 +4627,8 @@
    "fighter_b": "EduardaMoura",
    "display_a": "Wang Cong",
    "display_b": "Eduarda Moura",
-   "p_lr": 0.45308025778378375,
-   "p_xgb": 0.6531331539154053,
+   "p_lr": 0.5192091044130273,
+   "p_xgb": 0.4522061049938202,
    "actual_winner": "WangCong"
   },
   {
@@ -4638,8 +4638,8 @@
    "fighter_b": "NikoPrice",
    "display_a": "Nikolay Veretennikov",
    "display_b": "Niko Price",
-   "p_lr": 0.6213530914868853,
-   "p_xgb": 0.6415703296661377,
+   "p_lr": 0.6068333381282013,
+   "p_xgb": 0.5714117288589478,
    "actual_winner": "NikolayVeretennikov"
   },
   {
@@ -4649,8 +4649,8 @@
    "fighter_b": "JakubWiklacz",
    "display_a": "Muin Gafurov",
    "display_b": "Jakub Wiklacz",
-   "p_lr": 0.7840727345506187,
-   "p_xgb": 0.5780573487281799,
+   "p_lr": 0.8173758433139299,
+   "p_xgb": 0.6818530559539795,
    "actual_winner": "JakubWiklacz"
   },
   {
@@ -4660,8 +4660,8 @@
    "fighter_b": "Marc-AndreBarriault",
    "display_a": "Michal Oleksiejczuk",
    "display_b": "Marc- Andre Barriault",
-   "p_lr": 0.8569580211343735,
-   "p_xgb": 0.8631235361099243,
+   "p_lr": 0.8310071698294018,
+   "p_xgb": 0.8581166863441467,
    "actual_winner": "MichalOleksiejczuk"
   },
   {
@@ -4671,8 +4671,8 @@
    "fighter_b": "PriscilaCachoeira",
    "display_a": "Klaudia Sygula",
    "display_b": "Priscila Cachoeira",
-   "p_lr": 0.8016990277406446,
-   "p_xgb": 0.7490099668502808,
+   "p_lr": 0.8301803465751442,
+   "p_xgb": 0.8046047687530518,
    "actual_winner": "KlaudiaSygula"
   },
   {
@@ -4682,8 +4682,8 @@
    "fighter_b": "DaniilDonchenko",
    "display_a": "Alex Morono",
    "display_b": "Daniil Donchenko",
-   "p_lr": 0.10587879734564447,
-   "p_xgb": 0.11239450424909592,
+   "p_lr": 0.1114447068030409,
+   "p_xgb": 0.1734761893749237,
    "actual_winner": "DaniilDonchenko"
   },
   {
@@ -4693,8 +4693,8 @@
    "fighter_b": "GianniVazquez",
    "display_a": "Javid Basharat",
    "display_b": "Gianni Vazquez",
-   "p_lr": 0.5569862646293752,
-   "p_xgb": 0.5012915730476379,
+   "p_lr": 0.5710407699406181,
+   "p_xgb": 0.6011133790016174,
    "actual_winner": "JavidBasharat"
   },
   {
@@ -4704,8 +4704,8 @@
    "fighter_b": "RizvanKuniev",
    "display_a": "Jailton Almeida",
    "display_b": "Rizvan Kuniev",
-   "p_lr": 0.8301130711808872,
-   "p_xgb": 0.7000251412391663,
+   "p_lr": 0.8317628566529718,
+   "p_xgb": 0.7702436447143555,
    "actual_winner": "RizvanKuniev"
   },
   {
@@ -4715,8 +4715,8 @@
    "fighter_b": "JuliusWalker",
    "display_a": "Dustin Jacoby",
    "display_b": "Julius Walker",
-   "p_lr": 0.28864489438397223,
-   "p_xgb": 0.26653122901916504,
+   "p_lr": 0.2544326548855128,
+   "p_xgb": 0.27819427847862244,
    "actual_winner": "DustinJacoby"
   },
   {
@@ -4726,8 +4726,8 @@
    "fighter_b": "KetlenSouza",
    "display_a": "Bruna Brasil",
    "display_b": "Ketlen Souza",
-   "p_lr": 0.5931079992853051,
-   "p_xgb": 0.6809306740760803,
+   "p_lr": 0.5990032436687756,
+   "p_xgb": 0.6983464360237122,
    "actual_winner": "KetlenSouza"
   },
   {
@@ -4737,8 +4737,8 @@
    "fighter_b": "KyojiHoriguchi",
    "display_a": "Amir Albazi",
    "display_b": "Kyoji Horiguchi",
-   "p_lr": 0.5091057725402437,
-   "p_xgb": 0.7250746488571167,
+   "p_lr": 0.5332478146807725,
+   "p_xgb": 0.685141921043396,
    "actual_winner": "KyojiHoriguchi"
   },
   {
@@ -4748,8 +4748,8 @@
    "fighter_b": "FaridBasharat",
    "display_a": "Jean Matsumoto",
    "display_b": "Farid Basharat",
-   "p_lr": 0.3757682241067987,
-   "p_xgb": 0.37591859698295593,
+   "p_lr": 0.37112686943699397,
+   "p_xgb": 0.3645178973674774,
    "actual_winner": "FaridBasharat"
   },
   {
@@ -4759,8 +4759,8 @@
    "fighter_b": "MichelPereira",
    "display_a": "Zach Reese",
    "display_b": "Michel Pereira",
-   "p_lr": 0.5576067383415204,
-   "p_xgb": 0.449271559715271,
+   "p_lr": 0.518244695515716,
+   "p_xgb": 0.43506619334220886,
    "actual_winner": "MichelPereira"
   },
   {
@@ -4770,8 +4770,8 @@
    "fighter_b": "AnteDelija",
    "display_a": "Serghei Spivac",
    "display_b": "Ante Delija",
-   "p_lr": 0.7568475500393594,
-   "p_xgb": 0.7862259745597839,
+   "p_lr": 0.6742931346036524,
+   "p_xgb": 0.7371214628219604,
    "actual_winner": "SergheiSpivac"
   },
   {
@@ -4781,8 +4781,8 @@
    "fighter_b": "AnthonyHernandez",
    "display_a": "Sean Strickland",
    "display_b": "Anthony Hernandez",
-   "p_lr": 0.1988768146568249,
-   "p_xgb": 0.2591611444950104,
+   "p_lr": 0.22884548896827955,
+   "p_xgb": 0.33743536472320557,
    "actual_winner": "SeanStrickland"
   },
   {
@@ -4792,8 +4792,8 @@
    "fighter_b": "PunaheleSoriano",
    "display_a": "Ramiz Brahimaj",
    "display_b": "Punahele Soriano",
-   "p_lr": 0.5528222321091354,
-   "p_xgb": 0.4528175890445709,
+   "p_lr": 0.5209972352946021,
+   "p_xgb": 0.36865153908729553,
    "actual_winner": "PunaheleSoriano"
   },
   {
@@ -4803,8 +4803,8 @@
    "fighter_b": "Jean-PaulLebosnoyani",
    "display_a": "Phil Rowe",
    "display_b": "Jean- Paul Lebosnoyani",
-   "p_lr": 0.6746823285444956,
-   "p_xgb": 0.6826480031013489,
+   "p_lr": 0.6151462408188195,
+   "p_xgb": 0.6315956115722656,
    "actual_winner": "Jean-PaulLebosnoyani"
   },
   {
@@ -4814,8 +4814,8 @@
    "fighter_b": "JoselyneEdwards",
    "display_a": "Nora Cornolle",
    "display_b": "Joselyne Edwards",
-   "p_lr": 0.4254619495595819,
-   "p_xgb": 0.5250160694122314,
+   "p_lr": 0.4119344188685321,
+   "p_xgb": 0.40622255206108093,
    "actual_winner": "JoselyneEdwards"
   },
   {
@@ -4825,8 +4825,8 @@
    "fighter_b": "CarliJudice",
    "display_a": "Juliana Miller",
    "display_b": "Carli Judice",
-   "p_lr": 0.30265931866807066,
-   "p_xgb": 0.40007203817367554,
+   "p_lr": 0.29110769912878215,
+   "p_xgb": 0.2755638062953949,
    "actual_winner": "CarliJudice"
   },
   {
@@ -4836,8 +4836,8 @@
    "fighter_b": "JosiahHarrell",
    "display_a": "Jacobe Smith",
    "display_b": "Josiah Harrell",
-   "p_lr": 0.6541050773440743,
-   "p_xgb": 0.6855348348617554,
+   "p_lr": 0.6602393367164361,
+   "p_xgb": 0.7570615410804749,
    "actual_winner": "JacobeSmith"
   },
   {
@@ -4847,8 +4847,8 @@
    "fighter_b": "UrosMedic",
    "display_a": "Geoff Neal",
    "display_b": "Uros Medic",
-   "p_lr": 0.6467586165315514,
-   "p_xgb": 0.6539289951324463,
+   "p_lr": 0.6299050042045938,
+   "p_xgb": 0.47608351707458496,
    "actual_winner": "UrosMedic"
   },
   {
@@ -4858,8 +4858,8 @@
    "fighter_b": "MelquizaelCosta",
    "display_a": "Dan Ige",
    "display_b": "Melquizael Costa",
-   "p_lr": 0.285048469937827,
-   "p_xgb": 0.29637736082077026,
+   "p_lr": 0.25272450650593437,
+   "p_xgb": 0.3604210913181305,
    "actual_winner": "MelquizaelCosta"
   },
   {
@@ -4869,8 +4869,8 @@
    "fighter_b": "CarlosLeal",
    "display_a": "Chidi Njokuani",
    "display_b": "Carlos Leal",
-   "p_lr": 0.5472182413536748,
-   "p_xgb": 0.4681674838066101,
+   "p_lr": 0.4830096213530158,
+   "p_xgb": 0.4426991939544678,
    "actual_winner": "CarlosLeal"
   },
   {
@@ -4880,8 +4880,8 @@
    "fighter_b": "LuisGurule",
    "display_a": "Alden Coria",
    "display_b": "Luis Gurule",
-   "p_lr": 0.7792858646183732,
-   "p_xgb": 0.8014132976531982,
+   "p_lr": 0.7966559358538001,
+   "p_xgb": 0.7863537669181824,
    "actual_winner": "AldenCoria"
   },
   {
@@ -4891,8 +4891,8 @@
    "fighter_b": "YadierdelValle",
    "display_a": "Jordan Leavitt",
    "display_b": "Yadierdel Valle",
-   "p_lr": 0.4733865234066474,
-   "p_xgb": 0.3215358257293701,
+   "p_lr": 0.387049134325395,
+   "p_xgb": 0.3200109601020813,
    "actual_winner": "JordanLeavitt"
   },
   {
@@ -4902,8 +4902,8 @@
    "fighter_b": "FrancisMarshall",
    "display_a": "Erik Silva",
    "display_b": "Francis Marshall",
-   "p_lr": 0.2608985617365586,
-   "p_xgb": 0.23745936155319214,
+   "p_lr": 0.2892399453037348,
+   "p_xgb": 0.41205570101737976,
    "actual_winner": "FrancisMarshall"
   },
   {
@@ -4913,8 +4913,8 @@
    "fighter_b": "JoseDanielMedina",
    "display_a": "Ryan Gandra",
    "display_b": "Jose Daniel Medina",
-   "p_lr": 0.6455194844189991,
-   "p_xgb": 0.6274927854537964,
+   "p_lr": 0.640625685890792,
+   "p_xgb": 0.6777724623680115,
    "actual_winner": "RyanGandra"
   },
   {
@@ -4924,8 +4924,8 @@
    "fighter_b": "AngelPacheco",
    "display_a": "Santiago Luna",
    "display_b": "Angel Pacheco",
-   "p_lr": 0.9460593425746489,
-   "p_xgb": 0.9558866620063782,
+   "p_lr": 0.9318779646711093,
+   "p_xgb": 0.9567848443984985,
    "actual_winner": "SantiagoLuna"
   },
   {
@@ -4935,8 +4935,8 @@
    "fighter_b": "DavidMartinez",
    "display_a": "Marlon Vera",
    "display_b": "David Martinez",
-   "p_lr": 0.5003202387762796,
-   "p_xgb": 0.2653348445892334,
+   "p_lr": 0.3474745620977482,
+   "p_xgb": 0.4665713608264923,
    "actual_winner": "DavidMartinez"
   },
   {
@@ -4946,8 +4946,8 @@
    "fighter_b": "KevinBorjas",
    "display_a": "Imanol Rodriguez",
    "display_b": "Kevin Borjas",
-   "p_lr": 0.5842624722987502,
-   "p_xgb": 0.5916541814804077,
+   "p_lr": 0.5897845826895084,
+   "p_xgb": 0.6091746687889099,
    "actual_winner": "ImanolRodriguez"
   },
   {
@@ -4957,8 +4957,8 @@
    "fighter_b": "FelipeBunes",
    "display_a": "Edgar Chairez",
    "display_b": "Felipe Bunes",
-   "p_lr": 0.6558186475651053,
-   "p_xgb": 0.6190179586410522,
+   "p_lr": 0.6760576734111106,
+   "p_xgb": 0.6275840997695923,
    "actual_winner": "EdgarChairez"
   },
   {
@@ -4968,8 +4968,8 @@
    "fighter_b": "ErnestaKareckaite",
    "display_a": "Regina Tarin",
    "display_b": "Ernesta Kareckaite",
-   "p_lr": 0.5744980634882857,
-   "p_xgb": 0.5419472455978394,
+   "p_lr": 0.5455711179123757,
+   "p_xgb": 0.5296769738197327,
    "actual_winner": "ReginaTarin"
   },
   {
@@ -4979,8 +4979,8 @@
    "fighter_b": "KingGreen",
    "display_a": "Daniel Zellhuber",
    "display_b": "King Green",
-   "p_lr": 0.7502503468838093,
-   "p_xgb": 0.7552459836006165,
+   "p_lr": 0.6086683495328097,
+   "p_xgb": 0.6679986715316772,
    "actual_winner": "KingGreen"
   },
   {
@@ -4990,8 +4990,8 @@
    "fighter_b": "WesSchultz",
    "display_a": "Damian Pinas",
    "display_b": "Wes Schultz",
-   "p_lr": 0.5723575798866601,
-   "p_xgb": 0.5014657974243164,
+   "p_lr": 0.569216835107343,
+   "p_xgb": 0.45753854513168335,
    "actual_winner": "DamianPinas"
   },
   {
@@ -5001,8 +5001,8 @@
    "fighter_b": "KrisMoutinho",
    "display_a": "Cristian Quinonez",
    "display_b": "Kris Moutinho",
-   "p_lr": 0.868009349081036,
-   "p_xgb": 0.8395919799804688,
+   "p_lr": 0.806681210750062,
+   "p_xgb": 0.7991542816162109,
    "actual_winner": "CristianQuinonez"
   },
   {
@@ -5012,8 +5012,8 @@
    "fighter_b": "Lone'erKavanagh",
    "display_a": "Brandon Moreno",
    "display_b": "Lone'er Kavanagh",
-   "p_lr": 0.5561234779078328,
-   "p_xgb": 0.6926643252372742,
+   "p_lr": 0.5893609662013302,
+   "p_xgb": 0.8412858843803406,
    "actual_winner": "Lone'erKavanagh"
   },
   {
@@ -5023,8 +5023,8 @@
    "fighter_b": "MacyChiasson",
    "display_a": "Ailin Perez",
    "display_b": "Macy Chiasson",
-   "p_lr": 0.7050834377677878,
-   "p_xgb": 0.6321956515312195,
+   "p_lr": 0.7395126549027872,
+   "p_xgb": 0.6066665053367615,
    "actual_winner": "AilinPerez"
   },
   {
@@ -5034,8 +5034,8 @@
    "fighter_b": "JavierReyes",
    "display_a": "Douglas Silvade Andrade",
    "display_b": "Javier Reyes",
-   "p_lr": 0.49306452267091294,
-   "p_xgb": 0.32605376839637756,
+   "p_lr": 0.42039952162037664,
+   "p_xgb": 0.30046936869621277,
    "actual_winner": "JavierReyes"
   },
   {
@@ -5045,8 +5045,8 @@
    "fighter_b": "JesusAguilar",
    "display_a": "Sumudaerji",
    "display_b": "Jesus Aguilar",
-   "p_lr": 0.6427487140816632,
-   "p_xgb": 0.7207809090614319,
+   "p_lr": 0.6620145630423913,
+   "p_xgb": 0.7202042937278748,
    "actual_winner": "Sumudaerji"
   },
   {
@@ -5056,8 +5056,8 @@
    "fighter_b": "RaulRosasJr.",
    "display_a": "Rob Font",
    "display_b": "Raul Rosas Jr.",
-   "p_lr": 0.3294515276703172,
-   "p_xgb": 0.4052780866622925,
+   "p_lr": 0.33739548184897,
+   "p_xgb": 0.5578018426895142,
    "actual_winner": "RaulRosasJr."
   },
   {
@@ -5067,8 +5067,8 @@
    "fighter_b": "AlbertoMontes",
    "display_a": "Ricky Turcios",
    "display_b": "Alberto Montes",
-   "p_lr": 0.48733687357042393,
-   "p_xgb": 0.414256751537323,
+   "p_lr": 0.4864086410084438,
+   "p_xgb": 0.45791754126548767,
    "actual_winner": "AlbertoMontes"
   },
   {
@@ -5078,8 +5078,8 @@
    "fighter_b": "DiyarNurgozhay",
    "display_a": "Rafael Tobias",
    "display_b": "Diyar Nurgozhay",
-   "p_lr": 0.6165361516412114,
-   "p_xgb": 0.5535861253738403,
+   "p_lr": 0.5934601542093827,
+   "p_xgb": 0.5582218170166016,
    "actual_winner": "DiyarNurgozhay"
   },
   {
@@ -5089,8 +5089,8 @@
    "fighter_b": "CharlesOliveira",
    "display_a": "Max Holloway",
    "display_b": "Charles Oliveira",
-   "p_lr": 0.6576430241451071,
-   "p_xgb": 0.87876296043396,
+   "p_lr": 0.7499460883762282,
+   "p_xgb": 0.8000488877296448,
    "actual_winner": "CharlesOliveira"
   },
   {
@@ -5100,8 +5100,8 @@
    "fighter_b": "RodolfoBellato",
    "display_a": "Luke Fernandez",
    "display_b": "Rodolfo Bellato",
-   "p_lr": 0.5218135987229461,
-   "p_xgb": 0.5462837219238281,
+   "p_lr": 0.5596250798568813,
+   "p_xgb": 0.6378856897354126,
    "actual_winner": "RodolfoBellato"
   },
   {
@@ -5111,8 +5111,8 @@
    "fighter_b": "MichaelJohnson",
    "display_a": "Drew Dober",
    "display_b": "Michael Johnson",
-   "p_lr": 0.5343174264348144,
-   "p_xgb": 0.5801043510437012,
+   "p_lr": 0.47611515791115483,
+   "p_xgb": 0.5209395289421082,
    "actual_winner": "DrewDober"
   },
   {
@@ -5122,8 +5122,8 @@
    "fighter_b": "CodyBrundage",
    "display_a": "Donte Johnson",
    "display_b": "Cody Brundage",
-   "p_lr": 0.8585160651003734,
-   "p_xgb": 0.7873556017875671,
+   "p_lr": 0.8125104687627784,
+   "p_xgb": 0.7608763575553894,
    "actual_winner": "DonteJohnson"
   },
   {
@@ -5133,8 +5133,8 @@
    "fighter_b": "XiaoLong",
    "display_a": "Cody Garbrandt",
    "display_b": "Xiao Long",
-   "p_lr": 0.4639020734897904,
-   "p_xgb": 0.4148190915584564,
+   "p_lr": 0.4644419086710001,
+   "p_xgb": 0.36357980966567993,
    "actual_winner": "CodyGarbrandt"
   },
   {
@@ -5144,8 +5144,8 @@
    "fighter_b": "NyamjargalTumendemberel",
    "display_a": "Cody Durden",
    "display_b": "Nyamjargal Tumendemberel",
-   "p_lr": 0.24472941146523966,
-   "p_xgb": 0.3039276599884033,
+   "p_lr": 0.277693803350645,
+   "p_xgb": 0.29267245531082153,
    "actual_winner": "NyamjargalTumendemberel"
   },
   {
@@ -5155,8 +5155,8 @@
    "fighter_b": "ReinierdeRidder",
    "display_a": "Caio Borralho",
    "display_b": "Reinierde Ridder",
-   "p_lr": 0.5539694621996285,
-   "p_xgb": 0.4563978910446167,
+   "p_lr": 0.5258664793789842,
+   "p_xgb": 0.5267161726951599,
    "actual_winner": "CaioBorralho"
   },
   {
@@ -5166,8 +5166,8 @@
    "fighter_b": "BrunnoFerreira",
    "display_a": "Gregory Rodrigues",
    "display_b": "Brunno Ferreira",
-   "p_lr": 0.5850463390668204,
-   "p_xgb": 0.47523581981658936,
+   "p_lr": 0.6275988773304693,
+   "p_xgb": 0.5108848810195923,
    "actual_winner": "GregoryRodrigues"
   },
   {
@@ -5177,8 +5177,8 @@
    "fighter_b": "OumarSy",
    "display_a": "Ion Cutelaba",
    "display_b": "Oumar Sy",
-   "p_lr": 0.3255479566801139,
-   "p_xgb": 0.42356276512145996,
+   "p_lr": 0.34531014192452586,
+   "p_xgb": 0.3468301296234131,
    "actual_winner": "IonCutelaba"
   },
   {
@@ -5188,8 +5188,8 @@
    "fighter_b": "StevenAsplund",
    "display_a": "Vitor Petrino",
    "display_b": "Steven Asplund",
-   "p_lr": 0.861870061662831,
-   "p_xgb": 0.6510318517684937,
+   "p_lr": 0.746399189664717,
+   "p_xgb": 0.541419267654419,
    "actual_winner": "VitorPetrino"
   },
   {
@@ -5199,8 +5199,8 @@
    "fighter_b": "SamHughes",
    "display_a": "Piera Rodriguez",
    "display_b": "Sam Hughes",
-   "p_lr": 0.5726972351265304,
-   "p_xgb": 0.5091267228126526,
+   "p_lr": 0.5979340893918834,
+   "p_xgb": 0.5424054265022278,
    "actual_winner": "PieraRodriguez"
   },
   {
@@ -5210,8 +5210,8 @@
    "fighter_b": "HarryHardwick",
    "display_a": "Marwan Rahiki",
    "display_b": "Harry Hardwick",
-   "p_lr": 0.5727772511476574,
-   "p_xgb": 0.4999472498893738,
+   "p_lr": 0.5663782776386701,
+   "p_xgb": 0.5119624137878418,
    "actual_winner": "MarwanRahiki"
   },
   {
@@ -5221,8 +5221,8 @@
    "fighter_b": "HecherSosa",
    "display_a": "Luan Lacerda",
    "display_b": "Hecher Sosa",
-   "p_lr": 0.5422940759835577,
-   "p_xgb": 0.4718559980392456,
+   "p_lr": 0.5208567636599877,
+   "p_xgb": 0.4479735791683197,
    "actual_winner": "HecherSosa"
   },
   {
@@ -5232,8 +5232,8 @@
    "fighter_b": "KevinVallejos",
    "display_a": "Josh Emmett",
    "display_b": "Kevin Vallejos",
-   "p_lr": 0.18835658257963742,
-   "p_xgb": 0.08401040732860565,
+   "p_lr": 0.1583041021850605,
+   "p_xgb": 0.07413017749786377,
    "actual_winner": "KevinVallejos"
   },
   {
@@ -5243,8 +5243,8 @@
    "fighter_b": "SuYoungYou",
    "display_a": "Elijah Smith",
    "display_b": "Su Young You",
-   "p_lr": 0.5813676467719329,
-   "p_xgb": 0.570297360420227,
+   "p_lr": 0.43404761876202497,
+   "p_xgb": 0.4223331809043884,
    "actual_winner": "ElijahSmith"
   },
   {
@@ -5254,8 +5254,8 @@
    "fighter_b": "GillianRobertson",
    "display_a": "Amanda Lemos",
    "display_b": "Gillian Robertson",
-   "p_lr": 0.3997074789468711,
-   "p_xgb": 0.3790559470653534,
+   "p_lr": 0.3945947037777502,
+   "p_xgb": 0.4100111424922943,
    "actual_winner": "GillianRobertson"
   },
   {
@@ -5265,8 +5265,8 @@
    "fighter_b": "BrunoSilva",
    "display_a": "Charles Johnson",
    "display_b": "Bruno Silva",
-   "p_lr": 0.6661006475760105,
-   "p_xgb": 0.7665354013442993,
+   "p_lr": 0.7026003630442154,
+   "p_xgb": 0.7810516357421875,
    "actual_winner": "CharlesJohnson"
   },
   {
@@ -5276,8 +5276,8 @@
    "fighter_b": "ErykAnders",
    "display_a": "Brad Tavares",
    "display_b": "Eryk Anders",
-   "p_lr": 0.33301192896379017,
-   "p_xgb": 0.3131607472896576,
+   "p_lr": 0.4752748041100073,
+   "p_xgb": 0.4533083438873291,
    "actual_winner": "ErykAnders"
   },
   {
@@ -5287,8 +5287,8 @@
    "fighter_b": "ManoelSousa",
    "display_a": "Bolaji Oki",
    "display_b": "Manoel Sousa",
-   "p_lr": 0.5555166176098691,
-   "p_xgb": 0.4337559640407562,
+   "p_lr": 0.584635556974411,
+   "p_xgb": 0.5753087401390076,
    "actual_winner": "ManoelSousa"
   },
   {
@@ -5298,8 +5298,8 @@
    "fighter_b": "MontseRendon",
    "display_a": "Bia Mesquita",
    "display_b": "Montse Rendon",
-   "p_lr": 0.7734841662564051,
-   "p_xgb": 0.7541532516479492,
+   "p_lr": 0.6851687879341001,
+   "p_xgb": 0.6975278854370117,
    "actual_winner": "BiaMesquita"
   },
   {
@@ -5309,8 +5309,8 @@
    "fighter_b": "JoseDelgado",
    "display_a": "Andre Fili",
    "display_b": "Jose Delgado",
-   "p_lr": 0.2277705625406749,
-   "p_xgb": 0.2947796881198883,
+   "p_lr": 0.19660438804019392,
+   "p_xgb": 0.3202924430370331,
    "actual_winner": "JoseDelgado"
   },
   {
@@ -5320,8 +5320,8 @@
    "fighter_b": "MyktybekOrolbai",
    "display_a": "Chris Curtis",
    "display_b": "Myktybek Orolbai",
-   "p_lr": 0.28235139291076816,
-   "p_xgb": 0.27608197927474976,
+   "p_lr": 0.3166284893469405,
+   "p_xgb": 0.24641640484333038,
    "actual_winner": "MyktybekOrolbai"
   },
   {
@@ -5331,8 +5331,8 @@
    "fighter_b": "LeroneMurphy",
    "display_a": "Movsar Evloev",
    "display_b": "Lerone Murphy",
-   "p_lr": 0.7031856493555445,
-   "p_xgb": 0.7628095149993896,
+   "p_lr": 0.6681837461050295,
+   "p_xgb": 0.7174832224845886,
    "actual_winner": "MovsarEvloev"
   },
   {
@@ -5342,8 +5342,8 @@
    "fighter_b": "RavenaOliveira",
    "display_a": "Shanelle Dyer",
    "display_b": "Ravena Oliveira",
-   "p_lr": 0.6026245854888086,
-   "p_xgb": 0.5769737958908081,
+   "p_lr": 0.6094924836757201,
+   "p_xgb": 0.6099509000778198,
    "actual_winner": "ShanelleDyer"
   },
   {
@@ -5353,8 +5353,8 @@
    "fighter_b": "ChristianLeroyDuncan",
    "display_a": "Roman Dolidze",
    "display_b": "Christian Leroy Duncan",
-   "p_lr": 0.23475197817309867,
-   "p_xgb": 0.18378576636314392,
+   "p_lr": 0.28474539137722144,
+   "p_xgb": 0.18255063891410828,
    "actual_winner": "ChristianLeroyDuncan"
   },
   {
@@ -5364,8 +5364,8 @@
    "fighter_b": "LoseneKeita",
    "display_a": "Nathaniel Wood",
    "display_b": "Losene Keita",
-   "p_lr": 0.6593842631530219,
-   "p_xgb": 0.6787393689155579,
+   "p_lr": 0.6901739002794541,
+   "p_xgb": 0.755520224571228,
    "actual_winner": "NathanielWood"
   },
   {
@@ -5375,8 +5375,8 @@
    "fighter_b": "Abdul-KareemAl-Selwady",
    "display_a": "Shem Rock",
    "display_b": "Abdul- Kareem Al- Selwady",
-   "p_lr": 0.6662080096409211,
-   "p_xgb": 0.6653382778167725,
+   "p_lr": 0.6341642723511584,
+   "p_xgb": 0.5949468016624451,
    "actual_winner": "Abdul-KareemAl-Selwady"
   },
   {
@@ -5386,8 +5386,8 @@
    "fighter_b": "SamPatterson",
    "display_a": "Michael Page",
    "display_b": "Sam Patterson",
-   "p_lr": 0.52885353763602,
-   "p_xgb": 0.5004557967185974,
+   "p_lr": 0.598941743716161,
+   "p_xgb": 0.4613052010536194,
    "actual_winner": "MichaelPage"
   },
   {
@@ -5397,8 +5397,8 @@
    "fighter_b": "MichaelAswellJr.",
    "display_a": "Luke Riley",
    "display_b": "Michael Aswell Jr.",
-   "p_lr": 0.6045453803312604,
-   "p_xgb": 0.5194904208183289,
+   "p_lr": 0.4565459318800427,
+   "p_xgb": 0.2848984897136688,
    "actual_winner": "LukeRiley"
   },
   {
@@ -5408,8 +5408,8 @@
    "fighter_b": "FelipeFranco",
    "display_a": "Mario Pinto",
    "display_b": "Felipe Franco",
-   "p_lr": 0.785530548673807,
-   "p_xgb": 0.7698138356208801,
+   "p_lr": 0.778766158226215,
+   "p_xgb": 0.7216092348098755,
    "actual_winner": "MarioPinto"
   },
   {
@@ -5419,8 +5419,8 @@
    "fighter_b": "AntonioTrocoli",
    "display_a": "Mantas Kondratavicius",
    "display_b": "Antonio Trocoli",
-   "p_lr": 0.6046350250727062,
-   "p_xgb": 0.5750837922096252,
+   "p_lr": 0.6014895153558695,
+   "p_xgb": 0.637387752532959,
    "actual_winner": "MantasKondratavicius"
   },
   {
@@ -5430,8 +5430,8 @@
    "fighter_b": "BrandoPericic",
    "display_a": "Louie Sutherland",
    "display_b": "Brando Pericic",
-   "p_lr": 0.5140739542082057,
-   "p_xgb": 0.2747358977794647,
+   "p_lr": 0.4354696861580507,
+   "p_xgb": 0.43025606870651245,
    "actual_winner": "BrandoPericic"
   },
   {
@@ -5441,8 +5441,8 @@
    "fighter_b": "DannySilva",
    "display_a": "Kurtis Campbell",
    "display_b": "Danny Silva",
-   "p_lr": 0.5426185673465255,
-   "p_xgb": 0.614734411239624,
+   "p_lr": 0.5714481441466949,
+   "p_xgb": 0.6588099598884583,
    "actual_winner": "DannySilva"
   },
   {
@@ -5452,8 +5452,8 @@
    "fighter_b": "AustenLane",
    "display_a": "Iwo Baraniewski",
    "display_b": "Austen Lane",
-   "p_lr": 0.8301880541767227,
-   "p_xgb": 0.8352300524711609,
+   "p_lr": 0.7148913019113333,
+   "p_xgb": 0.7607108950614929,
    "actual_winner": "IwoBaraniewski"
   },
   {
@@ -5463,8 +5463,8 @@
    "fighter_b": "AxelSola",
    "display_a": "Mason Jones",
    "display_b": "Axel Sola",
-   "p_lr": 0.6622464587677922,
-   "p_xgb": 0.45611754059791565,
+   "p_lr": 0.4496499871610037,
+   "p_xgb": 0.46013393998146057,
    "actual_winner": "MasonJones"
   },
   {
@@ -5474,8 +5474,8 @@
    "fighter_b": "KyleNelson",
    "display_a": "Terrance Mc Kinney",
    "display_b": "Kyle Nelson",
-   "p_lr": 0.6160001630880169,
-   "p_xgb": 0.6347440481185913,
+   "p_lr": 0.6044607196414632,
+   "p_xgb": 0.48386016488075256,
    "actual_winner": "TerranceMcKinney"
   },
   {
@@ -5485,8 +5485,8 @@
    "fighter_b": "AdrianYanez",
    "display_a": "Ricky Simon",
    "display_b": "Adrian Yanez",
-   "p_lr": 0.7483112308074894,
-   "p_xgb": 0.6800834536552429,
+   "p_lr": 0.7052729075703413,
+   "p_xgb": 0.6254721283912659,
    "actual_winner": "AdrianYanez"
   },
   {
@@ -5496,8 +5496,8 @@
    "fighter_b": "BrunoLopes",
    "display_a": "Navajo Stirling",
    "display_b": "Bruno Lopes",
-   "p_lr": 0.8192556210066831,
-   "p_xgb": 0.7681213021278381,
+   "p_lr": 0.7203648216872288,
+   "p_xgb": 0.7558015584945679,
    "actual_winner": "NavajoStirling"
   },
   {
@@ -5507,8 +5507,8 @@
    "fighter_b": "TyrellFortune",
    "display_a": "Marcin Tybura",
    "display_b": "Tyrell Fortune",
-   "p_lr": 0.6196597199175653,
-   "p_xgb": 0.6698660254478455,
+   "p_lr": 0.5792353179209405,
+   "p_xgb": 0.7073162198066711,
    "actual_winner": "TyrellFortune"
   },
   {
@@ -5518,8 +5518,8 @@
    "fighter_b": "YousriBelgaroui",
    "display_a": "Mansur Abdul- Malik",
    "display_b": "Yousri Belgaroui",
-   "p_lr": 0.5741304234346907,
-   "p_xgb": 0.7360684275627136,
+   "p_lr": 0.5317074311688362,
+   "p_xgb": 0.7303301095962524,
    "actual_winner": "YousriBelgaroui"
   },
   {
@@ -5529,8 +5529,8 @@
    "fighter_b": "LerryanDouglas",
    "display_a": "Julian Erosa",
    "display_b": "Lerryan Douglas",
-   "p_lr": 0.5953695283699294,
-   "p_xgb": 0.5365505814552307,
+   "p_lr": 0.5385110197766045,
+   "p_xgb": 0.5228820443153381,
    "actual_winner": "LerryanDouglas"
   },
   {
@@ -5540,8 +5540,8 @@
    "fighter_b": "NikoPrice",
    "display_a": "Michael Chiesa",
    "display_b": "Niko Price",
-   "p_lr": 0.8327741221402312,
-   "p_xgb": 0.764985203742981,
+   "p_lr": 0.8315705143743934,
+   "p_xgb": 0.819251298904419,
    "actual_winner": "MichaelChiesa"
   },
   {
@@ -5551,8 +5551,8 @@
    "fighter_b": "TofiqMusayev",
    "display_a": "Ignacio Bahamondes",
    "display_b": "Tofiq Musayev",
-   "p_lr": 0.7963257212082628,
-   "p_xgb": 0.7904991507530212,
+   "p_lr": 0.7752420312175958,
+   "p_xgb": 0.8119466304779053,
    "actual_winner": "TofiqMusayev"
   },
   {
@@ -5562,8 +5562,8 @@
    "fighter_b": "LanceGibsonJr.",
    "display_a": "Chase Hooper",
    "display_b": "Lance Gibson Jr.",
-   "p_lr": 0.6083425792828591,
-   "p_xgb": 0.4740334749221802,
+   "p_lr": 0.5786161219508383,
+   "p_xgb": 0.36120015382766724,
    "actual_winner": "LanceGibsonJr."
   },
   {
@@ -5573,8 +5573,8 @@
    "fighter_b": "GabriellaFernandes",
    "display_a": "Casey O' Neill",
    "display_b": "Gabriella Fernandes",
-   "p_lr": 0.636634498394701,
-   "p_xgb": 0.5664233565330505,
+   "p_lr": 0.7131747689544264,
+   "p_xgb": 0.5925669074058533,
    "actual_winner": "CaseyO'Neill"
   },
   {
@@ -5584,8 +5584,8 @@
    "fighter_b": "BrunaBrasil",
    "display_a": "Alexia Thainara",
    "display_b": "Bruna Brasil",
-   "p_lr": 0.7728597960224874,
-   "p_xgb": 0.6117039322853088,
+   "p_lr": 0.822274261619527,
+   "p_xgb": 0.8242841362953186,
    "actual_winner": "AlexiaThainara"
   },
   {
@@ -5595,8 +5595,8 @@
    "fighter_b": "MayceeBarber",
    "display_a": "Alexa Grasso",
    "display_b": "Maycee Barber",
-   "p_lr": 0.29935396789227037,
-   "p_xgb": 0.2894943654537201,
+   "p_lr": 0.26775506300595575,
+   "p_xgb": 0.19047363102436066,
    "actual_winner": "AlexaGrasso"
   },
   {
@@ -5606,8 +5606,8 @@
    "fighter_b": "JoePyfer",
    "display_a": "Israel Adesanya",
    "display_b": "Joe Pyfer",
-   "p_lr": 0.4161406636466804,
-   "p_xgb": 0.3123844265937805,
+   "p_lr": 0.4727138980372963,
+   "p_xgb": 0.4483563303947449,
    "actual_winner": "JoePyfer"
   },
   {
@@ -5617,8 +5617,8 @@
    "fighter_b": "ChrisDuncan",
    "display_a": "Renato Moicano",
    "display_b": "Chris Duncan",
-   "p_lr": 0.5388606717333704,
-   "p_xgb": 0.4481692612171173,
+   "p_lr": 0.46497525610978596,
+   "p_xgb": 0.3040865957736969,
    "actual_winner": "RenatoMoicano"
   },
   {
@@ -5628,8 +5628,8 @@
    "fighter_b": "DarriusFlowers",
    "display_a": "Lando Vannata",
    "display_b": "Darrius Flowers",
-   "p_lr": 0.5808106832048089,
-   "p_xgb": 0.4665326178073883,
+   "p_lr": 0.5693633899048793,
+   "p_xgb": 0.36969542503356934,
    "actual_winner": "DarriusFlowers"
   },
   {
@@ -5639,8 +5639,8 @@
    "fighter_b": "DakotaHope",
    "display_a": "Kai Kamaka I I I",
    "display_b": "Dakota Hope",
-   "p_lr": 0.4480743913610471,
-   "p_xgb": 0.4902285039424896,
+   "p_lr": 0.46706813111937545,
+   "p_xgb": 0.5002121329307556,
    "actual_winner": "KaiKamakaIII"
   },
   {
@@ -5650,8 +5650,8 @@
    "fighter_b": "RobertRuchala",
    "display_a": "Jose Delano",
    "display_b": "Robert Ruchala",
-   "p_lr": 0.5580586382636747,
-   "p_xgb": 0.501487135887146,
+   "p_lr": 0.5607403743998175,
+   "p_xgb": 0.5675351619720459,
    "actual_winner": "JoseDelano"
   },
   {
@@ -5661,8 +5661,8 @@
    "fighter_b": "ThomasPetersen",
    "display_a": "Guilherme Pat",
    "display_b": "Thomas Petersen",
-   "p_lr": 0.38862826213578433,
-   "p_xgb": 0.6116264462471008,
+   "p_lr": 0.5960270183528077,
+   "p_xgb": 0.6067866086959839,
    "actual_winner": "ThomasPetersen"
   },
   {
@@ -5672,8 +5672,8 @@
    "fighter_b": "TreseanGore",
    "display_a": "Azamat Bekoev",
    "display_b": "Tresean Gore",
-   "p_lr": 0.7616776045823325,
-   "p_xgb": 0.7597176432609558,
+   "p_lr": 0.776971027296691,
+   "p_xgb": 0.7627683281898499,
    "actual_winner": "TreseanGore"
   },
   {
@@ -5683,8 +5683,8 @@
    "fighter_b": "MelissaGatto",
    "display_a": "Dione Barbosa",
    "display_b": "Melissa Gatto",
-   "p_lr": 0.4847950926200677,
-   "p_xgb": 0.6203539967536926,
+   "p_lr": 0.4489144883067845,
+   "p_xgb": 0.5753406882286072,
    "actual_winner": "DioneBarbosa"
   },
   {
@@ -5694,8 +5694,8 @@
    "fighter_b": "HaileyCowan",
    "display_a": "Alice Pereira",
    "display_b": "Hailey Cowan",
-   "p_lr": 0.620314359129523,
-   "p_xgb": 0.8755430579185486,
+   "p_lr": 0.8077093098421696,
+   "p_xgb": 0.7752759456634521,
    "actual_winner": "AlicePereira"
   },
   {
@@ -5705,8 +5705,8 @@
    "fighter_b": "StewartNicoll",
    "display_a": "Alessandro Costa",
    "display_b": "Stewart Nicoll",
-   "p_lr": 0.5339892434049763,
-   "p_xgb": 0.6450304388999939,
+   "p_lr": 0.5457020153755192,
+   "p_xgb": 0.5202744007110596,
    "actual_winner": "AlessandroCosta"
   },
   {
@@ -5716,8 +5716,8 @@
    "fighter_b": "BrendsonRibeiro",
    "display_a": "Abdul Rakhman Yakhyaev",
    "display_b": "Brendson Ribeiro",
-   "p_lr": 0.7325867744981862,
-   "p_xgb": 0.7336071133613586,
+   "p_lr": 0.7038942824451874,
+   "p_xgb": 0.709926962852478,
    "actual_winner": "AbdulRakhmanYakhyaev"
   },
   {
@@ -5727,8 +5727,8 @@
    "fighter_b": "ManoloZecchini",
    "display_a": "Tommy Mc Millen",
    "display_b": "Manolo Zecchini",
-   "p_lr": 0.6821889580589118,
-   "p_xgb": 0.6953887343406677,
+   "p_lr": 0.6663497680055103,
+   "p_xgb": 0.759760856628418,
    "actual_winner": "TommyMcMillen"
   },
   {
@@ -5738,8 +5738,8 @@
    "fighter_b": "RafaelEstevam",
    "display_a": "Ethyn Ewing",
    "display_b": "Rafael Estevam",
-   "p_lr": 0.47017988511132053,
-   "p_xgb": 0.6888041496276855,
+   "p_lr": 0.5304622514820134,
+   "p_xgb": 0.6131535768508911,
    "actual_winner": "EthynEwing"
   },
   {
@@ -5749,8 +5749,8 @@
    "fighter_b": "TabathaRicci",
    "display_a": "Virna Jandiroba",
    "display_b": "Tabatha Ricci",
-   "p_lr": 0.5379923404782327,
-   "p_xgb": 0.4629344940185547,
+   "p_lr": 0.5233720233790733,
+   "p_xgb": 0.3102310001850128,
    "actual_winner": "VirnaJandiroba"
   }
  ],
@@ -5772,7 +5772,8 @@
   "test_first": "2025-04-05",
   "test_last": "2026-04-05",
   "train_years": 8,
-  "blend_weight_xgb": 0.5,
-  "generated_at": "2026-04-14T00:59:37.112347+00:00"
+  "blend_weight_xgb": 0.0,
+  "feature_stack": "mma_ai_v7 + elo(6) + tier1c_recency(3) + tier2b_style(2)",
+  "generated_at": "2026-04-23T00:32:51.765680+00:00"
  }
 }
