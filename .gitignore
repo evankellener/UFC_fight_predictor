@@ -77,6 +77,8 @@ data/sqlite_db/*_pre_*.db
 
 # Exception: blend model artifacts need to ship to deployment
 !app/models/blend/*.pkl
+# Exception: predictor_v2 artifacts (202-feat LR+Elo+Style) ship to deployment
+!app/models/blend_v2/*.pkl
 
 # AutoGluon and CatBoost training artifacts
 AutogluonModels/

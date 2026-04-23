@@ -14,11 +14,12 @@ from run_threshold_sweep_both_elos import load_base_both_elos, apply_threshold, 
 p2 = PredictorV2(verbose=True)
 base = load_base_both_elos()
 df = apply_threshold(base, 3)
-test = df[(df["DATE"] >= TEST_FIRST) & (df["DATE"] <= TEST_LAST)]
+# Use full base (including post-test-window fights like UFC 324)
+test = df[df["DATE"] >= pd.Timestamp("2024-05-04")]
 
-# Pick a specific mismatch — Geoff Neal vs Rafael dos Anjos 2024-10-26
-mask = (test["DATE"] == pd.Timestamp("2024-10-26")) & (
-    test["jfighter"].isin(["GeoffNeal", "RafaelDosAnjos"]))
+# UFC 324 — Justin Gaethje vs Paddy Pimblett (2026-01-24)
+mask = (test["DATE"] == pd.Timestamp("2026-01-24")) & (
+    test["jfighter"].isin(["JustinGaethje", "PaddyPimblett"]))
 rows = test[mask]
 if len(rows) == 0:
     print("No matching row"); sys.exit(1)

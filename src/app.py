@@ -18,10 +18,20 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 import math
 
-# Blend predictor (LR + XGB, walk-forward 67.9% acc / 0.6206 LL)
-# lives in the sibling app/ dir; import if available and prefer it.
+# Predictor v2 (LR + Elo(UFC+Exp) + Tier 1c + Style Elo — 202 features).
+# Verified parity with training path (mean abs prob diff 0.0009 on 420 test fights).
+# Falls back to BlendPredictor (LR+XGB 67.9% acc), then LR+CB ensemble.
 _BLEND_PATH = Path(__file__).parent.parent / "app"
 sys.path.insert(0, str(_BLEND_PATH))
+
+try:
+    from predictor_v2 import PredictorV2
+    _V2_AVAILABLE = True
+except Exception as _e:
+    print(f"[src/app] PredictorV2 unavailable, will try BlendPredictor: {_e}")
+    PredictorV2 = None
+    _V2_AVAILABLE = False
+
 try:
     from blend_predictor import BlendPredictor
     _BLEND_AVAILABLE = True
@@ -103,7 +113,19 @@ model_state = {}
 
 def init_model():
     """Train the MMA-AI pipeline model on all available data. Called once at startup."""
-    # ── Try loading the pre-trained LR+XGB blend first (fast: ~3s vs 60s+) ──
+    # ── Try loading PredictorV2 (202-feat LR+Elo+Style, verified training parity) ──
+    if _V2_AVAILABLE:
+        try:
+            print("Loading PredictorV2 (LR+Elo+Style, 202 features)...")
+            model_state["v2"] = PredictorV2(verbose=True)
+            print("PredictorV2 ready.")
+        except Exception as e:
+            print(f"PredictorV2 load failed: {e} — falling back to blend")
+            model_state["v2"] = None
+    else:
+        model_state["v2"] = None
+
+    # ── Try loading the pre-trained LR+XGB blend (legacy fallback) ──
     if _BLEND_AVAILABLE:
         try:
             print("Loading LR+XGB blend predictor (walk-forward 67.9% acc)...")
@@ -594,16 +616,65 @@ def _build_blend_row(fighter_a, fighter_b, event_date):
     return row, f1, f2
 
 
+def _prior_ufc_fights(v2, jf, evt_ts):
+    """Count prior UFC bouts for a fighter as-of event date (from v2's wl_history)."""
+    if v2 is None:
+        return None
+    try:
+        h = v2._wl_history.get(_norm_jf(jf), []) or v2._wl_history.get(jf, [])
+        evt64 = np.datetime64(pd.to_datetime(evt_ts))
+        return int(sum(1 for d, _ in h if d < evt64))
+    except Exception:
+        return None
+
+
 def _predict(fighter_a, fighter_b, event_date):
-    """LR+XGB blend prediction with proper live-mode feature construction.
+    """Predict cascade: PredictorV2 → BlendPredictor → LR+CB ensemble.
 
-    Falls back to LR+CB ensemble if blend artifacts missing or fighter
-    absolute stats not found.
+    PredictorV2 is the 202-feature LR with Elo (UFC+expanded) + Tier 1c recency
+    + Style Elos. Verified parity with training (0.0009 mean abs prob diff on
+    420 test fights, 100% sign agreement).
 
-    Returns a dict shaped like predict_fight_mmaai():
-      { prob_a, prob_b, winner, confidence, model, f1, f2, name_a, name_b,
-        prob_f1, lr_prob, xgb_prob }
+    Returns a dict with {prob_a, prob_b, winner, confidence, model, f1, f2,
+    name_a, name_b, prob_f1, [lr_prob, xgb_prob, prior_f1, prior_f2,
+    edge_bucket]}.
     """
+    # ── Tier 1: PredictorV2 ──────────────────────────────────────────────
+    v2 = model_state.get("v2")
+    if v2 is not None:
+        try:
+            r = v2.predict(fighter_a, fighter_b, event_date=event_date)
+            if r.get("success"):
+                p_a = float(r["p_fighter_a"])
+                p_b = 1.0 - p_a
+                # Confidence signals from prior-fight counts (below 3 = noisier
+                # regime per finding_threshold_matters.md).
+                evt_ts = pd.to_datetime(event_date)
+                prior_a = _prior_ufc_fights(v2, fighter_a, evt_ts)
+                prior_b = _prior_ufc_fights(v2, fighter_b, evt_ts)
+                return {
+                    "prob_a":     p_a,
+                    "prob_b":     p_b,
+                    "winner":     fighter_a if p_a >= 0.5 else fighter_b,
+                    "confidence": max(p_a, p_b),
+                    "model":      "LR + Elo + Style v2 (202 features, verified)",
+                    # Drivers contract — v2 treats caller's fighter_a as f1, no flip
+                    "f1":      fighter_a,
+                    "f2":      fighter_b,
+                    "name_a":  fighter_a,
+                    "name_b":  fighter_b,
+                    "prob_f1": p_a,
+                    # Quality-of-life signals
+                    "prior_f1": prior_a,
+                    "prior_f2": prior_b,
+                    "low_confidence": (prior_a is not None and prior_a < 3) or
+                                      (prior_b is not None and prior_b < 3),
+                    "n_features_filled": r.get("n_features_filled"),
+                }
+        except Exception as e:
+            print(f"[_predict] PredictorV2 failed, falling back to blend: {e}")
+
+    # ── Tier 2: LR+XGB BlendPredictor (legacy) ───────────────────────────
     bp = model_state.get("blend")
     if bp is not None:
         built = _build_blend_row(fighter_a, fighter_b, event_date)
@@ -675,9 +746,21 @@ def index():
 
 @app.route("/api/health")
 def health():
+    # Which predictor tier is active (v2 preferred, then blend, then LR+CB)
+    if model_state.get("v2") is not None:
+        active = "v2 (LR + Elo + Style, 202 features)"
+    elif model_state.get("blend") is not None:
+        active = "blend (LR + XGB)"
+    elif "models" in model_state:
+        active = "LR+CB ensemble"
+    else:
+        active = "none"
     return jsonify({
         "status": "ok",
         "model_loaded": "models" in model_state,
+        "active_predictor": active,
+        "v2_loaded": model_state.get("v2") is not None,
+        "blend_loaded": model_state.get("blend") is not None,
         "fighters": len(model_state.get("fighter_list", [])),
     })
 
@@ -918,6 +1001,25 @@ def predict():
         zscores_a = _compute_fighter_zscores(fighter_a)
         zscores_b = _compute_fighter_zscores(fighter_b)
 
+        # ── Edge vs Vegas + bucket (per finding_ev_slice_analysis.md) ──
+        # Mid-edge (5-10pp) was the goldmine (+34.74% ROI p<0.001); big-edge
+        # (>=10pp) was noise; <2.5pp no-bet. Surface to caller for honest UX.
+        edge_pp = None
+        edge_bucket = "no_vegas"
+        if vegas.get("implied_prob_a") is not None:
+            model_fav_p = max(result["prob_a"], 1 - result["prob_a"])
+            vegas_p_of_model_fav = (vegas["implied_prob_a"] if result["prob_a"] >= 0.5
+                                     else vegas["implied_prob_b"])
+            edge_pp = round((model_fav_p - vegas_p_of_model_fav) * 100, 2)
+            if edge_pp < 2.5:
+                edge_bucket = "no_bet"
+            elif edge_pp < 5.0:
+                edge_bucket = "low_edge"
+            elif edge_pp < 10.0:
+                edge_bucket = "mid_edge_goldmine"
+            else:
+                edge_bucket = "big_edge_noise"
+
         response = {
             "fighter_a": fighter_a,
             "fighter_b": fighter_b,
@@ -935,6 +1037,12 @@ def predict():
             "drivers": drivers,
             "zscores_a": zscores_a,
             "zscores_b": zscores_b,
+            # Quality-of-life signals (PredictorV2 only; None from legacy paths)
+            "prior_fights_a": result.get("prior_f1"),
+            "prior_fights_b": result.get("prior_f2"),
+            "low_confidence": bool(result.get("low_confidence", False)),
+            "edge_pp": edge_pp,
+            "edge_bucket": edge_bucket,
         }
         return jsonify(response)
 
