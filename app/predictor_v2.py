@@ -123,26 +123,69 @@ class PredictorV2:
 
     # ── Public API ──────────────────────────────────────────────────────
     def predict(self, fighter_a: str, fighter_b: str, event_date: str | pd.Timestamp,
-                scheduled_rounds: int = 3) -> dict:
+                scheduled_rounds: int = 3, symmetrize: bool = True) -> dict:
         """Predict P(fighter_a wins) on given event_date.
+
+        symmetrize=True (default) averages both argument orderings to eliminate
+        asymmetry from features that depend on f1 specifically
+        (days_since_last_fight_f1, age_ratio_diff). Training used a fixed
+        orientation (red-corner=f1); at inference the caller provides arbitrary
+        order, so without symmetrization p(A|a,b) != 1-p(B|b,a).
 
         Returns:
             {
               "fighter_a": str, "fighter_b": str,
               "p_fighter_a": float, "p_fighter_b": float,
               "predicted_winner": str, "confidence": float,
-              "feature_row": dict (debugging), "n_features_filled": int
+              "feature_row": dict (orientation A, for debugging),
+              "n_features_filled": int,
+              "p_orient_a": float (raw p(a) with a=f1),
+              "p_orient_b": float (1 - p(b=f1))
             }
         """
+        # Oriented prediction (raw, without symmetrization)
+        r_a = self._predict_oriented(fighter_a, fighter_b, event_date, scheduled_rounds)
+        if not r_a.get("success"):
+            return r_a
+
+        if not symmetrize:
+            return r_a
+
+        # Flip and combine
+        r_b = self._predict_oriented(fighter_b, fighter_a, event_date, scheduled_rounds)
+        if not r_b.get("success"):
+            return r_a  # fall back to one-sided if flip fails
+
+        p_a_orient_a = r_a["p_fighter_a"]       # p(a) with a=f1
+        p_a_orient_b = 1.0 - r_b["p_fighter_a"] # p(a) with b=f1
+        p_a = 0.5 * (p_a_orient_a + p_a_orient_b)
+        p_b = 1.0 - p_a
+
+        return {
+            "success": True,
+            "fighter_a": fighter_a,
+            "fighter_b": fighter_b,
+            "p_fighter_a": round(p_a, 4),
+            "p_fighter_b": round(p_b, 4),
+            "predicted_winner": fighter_a if p_a >= 0.5 else fighter_b,
+            "confidence": round(max(p_a, p_b), 4),
+            "event_date": r_a["event_date"],
+            "feature_row": r_a["feature_row"],
+            "n_features_filled": r_a["n_features_filled"],
+            "p_orient_a": round(p_a_orient_a, 4),
+            "p_orient_b": round(p_a_orient_b, 4),
+            "asymmetry_pp": round(abs(p_a_orient_a - p_a_orient_b) * 100, 2),
+        }
+
+    def _predict_oriented(self, fighter_a: str, fighter_b: str,
+                          event_date: str | pd.Timestamp,
+                          scheduled_rounds: int = 3) -> dict:
+        """Single-orientation prediction (treats fighter_a as f1). Used internally
+        by the symmetrizing predict()."""
         jf_a = _to_jf(fighter_a); jf_b = _to_jf(fighter_b)
         evt_ts = pd.to_datetime(event_date)
 
-        # NOTE: Training convention is red-corner = f1, NOT alphabetical. The
-        # `jfighter` column in mmaai_features.csv is always the red corner
-        # (parsed from BOUT string by load_base_data). Caller passes
-        # fighter_a as the "we want P(a wins)" perspective — so treat
-        # jf_a = f1 for feature construction. The LR was trained with this
-        # orientation. No flip needed.
+        # Caller's fighter_a = f1 (matches training red-corner convention).
         jf1, jf2, flip = jf_a, jf_b, False
 
         row = self._build_feature_row(jf1, jf2, evt_ts, scheduled_rounds)
@@ -150,7 +193,6 @@ class PredictorV2:
             return {"success": False,
                     "error": f"Missing data for {fighter_a} or {fighter_b}"}
 
-        # Predict
         X = np.array([[row.get(c, 0.0) for c in self.feat_cols]], dtype=float)
         X = np.nan_to_num(X, nan=0.0, posinf=1e6, neginf=-1e6)
         X_imp = self.imputer.transform(X)
