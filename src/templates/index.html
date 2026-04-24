@@ -200,6 +200,42 @@
   .bet-rec-row .v.a { color: var(--green, #22c55e); }
   .bet-rec-row .v.b { color: var(--red, #f87171); }
 
+  /* Warning flags (low-confidence, cross-division) */
+  .flag-badge {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.03em;
+    padding: 0.25rem 0.5rem; border-radius: 4px;
+    white-space: nowrap; cursor: help;
+  }
+  .flag-low-conf {
+    background: rgba(251,146,60,0.12); color: #fb923c;
+    border: 1px solid rgba(251,146,60,0.35);
+  }
+  .flag-cross-div {
+    background: rgba(168,85,247,0.10); color: #a855f7;
+    border: 1px solid rgba(168,85,247,0.32);
+  }
+  .bet-rec-warning {
+    margin: 0.5rem 0 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid #fb923c;
+    background: rgba(251,146,60,0.06);
+    color: var(--text);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    border-radius: 4px;
+  }
+  .bet-rec-warning.warning-mild {
+    border-left-color: #a855f7;
+    background: rgba(168,85,247,0.06);
+  }
+  .bet-rec-warning code {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 0.78rem;
+    background: rgba(255,255,255,0.06);
+    padding: 0.05rem 0.25rem;
+    border-radius: 3px;
+  }
+
   input, select {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -2138,6 +2174,29 @@ function renderResults(data) {
         </div>`;
     }
 
+    // Confidence flags — fire regardless of whether odds were provided
+    const priorA = p.prior_fights_a;
+    const priorB = p.prior_fights_b;
+    const hasLowConf = !!p.low_confidence;
+    const hasCrossDiv = !!p.cross_division_flag;
+    let flagBadges = '';
+    if (hasLowConf) {
+      const thin = [
+        priorA != null && priorA < 3 ? `${p.display_a.split(' ').pop()} ${priorA}` : null,
+        priorB != null && priorB < 3 ? `${p.display_b.split(' ').pop()} ${priorB}` : null,
+      ].filter(Boolean).join(', ');
+      flagBadges += `<span class="flag-badge flag-low-conf"
+                           title="Model less reliable: ${thin} priors. Consider half stake or skip.">
+                       ⚠ LOW CONF
+                     </span>`;
+    }
+    if (hasCrossDiv) {
+      flagBadges += `<span class="flag-badge flag-cross-div"
+                           title="Cross-division fight — one fighter is moving up/down from their usual weight class.">
+                       ⇅ X-DIV
+                     </span>`;
+    }
+
     // Bet recommendation (only if user supplied odds on this row)
     let betRecHtml = '';
     let betBadge = '';
@@ -2155,6 +2214,22 @@ function renderResults(data) {
              BET ${pickName.toUpperCase()} · $${br.stake_suggestion.toFixed(0)}
            </span>`
         : `<span class="bet-badge bet-badge-no">PASS</span>`;
+      // If confidence is low, downgrade any BET recommendation visually
+      // with an inline warning note inside the bet-rec block.
+      const lowConfNote = (isBet && hasLowConf)
+        ? `<div class="bet-rec-warning">
+             ⚠ Low-confidence prediction (a fighter has &lt;3 UFC priors).
+             Even if the edge looks real, consider half stake or skip. Per
+             <code>finding_threshold_matters.md</code>, ROI signal is concentrated
+             in veteran-vs-veteran matchups.
+           </div>`
+        : '';
+      const crossDivNote = (isBet && hasCrossDiv)
+        ? `<div class="bet-rec-warning warning-mild">
+             ⇅ Cross-division fight. Verify the actual weight class of the
+             scheduled bout — a fighter is outside their usual division.
+           </div>`
+        : '';
       betRecHtml = `
         <div class="bet-rec ${recClass}">
           <div class="bet-rec-headline">
@@ -2162,6 +2237,8 @@ function renderResults(data) {
             ${isBet ? `on <span class="${pickClass}">${pickName}</span>` : ''}
             <span class="bet-rec-edge">${br.edge_pp >= 0 ? '+' : ''}${br.edge_pp.toFixed(1)}pp edge</span>
           </div>
+          ${lowConfNote}
+          ${crossDivNote}
           <div class="bet-rec-details">
             <div class="bet-rec-row">
               <span class="k">Your odds</span>
@@ -2181,6 +2258,11 @@ function renderResults(data) {
                 ${evSign}$${br.ev_per_dollar.toFixed(3)}
               </span>
             </div>
+            ${priorA != null && priorB != null ? `
+            <div class="bet-rec-row">
+              <span class="k">Prior UFC fights</span>
+              <span class="v">${p.display_a.split(' ').pop()}: ${priorA} &middot; ${p.display_b.split(' ').pop()}: ${priorB}</span>
+            </div>` : ''}
             ${isBet ? `
             <div class="bet-rec-row">
               <span class="k">Suggested stake</span>
@@ -2206,6 +2288,7 @@ function renderResults(data) {
                   onclick="event.stopPropagation(); window.location='/fighter/${p.fighter_b}'">${p.display_b}</span>
           </div>
           <div class="result-actions">
+            ${flagBadges}
             ${betBadge}
             <button class="btn-small" onclick="event.stopPropagation(); openShare(${shareData.replace(/"/g, '&quot;')})" title="Share">Share</button>
             <span class="confidence-badge">${conf}%</span>

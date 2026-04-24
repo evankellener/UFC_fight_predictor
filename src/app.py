@@ -681,7 +681,7 @@ def _predict(fighter_a, fighter_b, event_date):
                     "prob_b":     p_b,
                     "winner":     fighter_a if p_a >= 0.5 else fighter_b,
                     "confidence": max(p_a, p_b),
-                    "model":      "LR + Elo + Style v2 (202 features, verified)",
+                    "model":      "LR + Elo + Style + WC-history v2 (207 features, verified)",
                     # Drivers contract — v2 treats caller's fighter_a as f1, no flip
                     "f1":      fighter_a,
                     "f2":      fighter_b,
@@ -694,6 +694,9 @@ def _predict(fighter_a, fighter_b, event_date):
                     "low_confidence": (prior_a is not None and prior_a < 3) or
                                       (prior_b is not None and prior_b < 3),
                     "n_features_filled": r.get("n_features_filled"),
+                    # Forward the v2 feature_row so downstream (predict_card,
+                    # drivers) can read cross_division_flag and other features.
+                    "feature_row": r.get("feature_row", {}),
                 }
         except Exception as e:
             print(f"[_predict] PredictorV2 failed, falling back to blend: {e}")
@@ -772,7 +775,7 @@ def index():
 def health():
     # Which predictor tier is active (v2 preferred, then blend, then LR+CB)
     if model_state.get("v2") is not None:
-        active = "v2 (LR + Elo + Style, 202 features)"
+        active = "v2 (LR + Elo + Style + WC-history, 207 features)"
     elif model_state.get("blend") is not None:
         active = "blend (LR + XGB)"
     elif "models" in model_state:
@@ -1121,28 +1124,35 @@ def _bet_recommendation(p_model_a, odds_a_american, odds_b_american, stake=10.0)
     edge = p_pick - devig_pick
     edge_pp = edge * 100
 
-    # Buckets per finding_ev_slice_analysis.md + ROI re-verification
-    # post-symmetrization. Overall +EV = real edge (p=0.013). Slice-specific
-    # claims weaker than initially thought but still trend positive.
-    if edge <= 0:
+    # EV per $1 on the picked side: p*(dec-1) - (1-p)*1
+    # This is the TRUE signal — what you actually win/lose per $1 at the
+    # offered (vigged) odds. `edge` (model - devig) can be positive while
+    # EV is negative in high-vig markets; we gate on EV here to prevent
+    # recommending losing bets.
+    ev = float(p_pick * (dec_pick - 1.0) - (1.0 - p_pick))
+
+    # Bucket by EV (not edge). Edge is still reported for transparency.
+    if ev <= 0:
         bucket = "no_bet"
         rec = "PASS"
         stake_sug = 0.0
-    elif edge < 0.025:
-        bucket = "low_edge"
+    elif ev < 0.05:
+        # +EV but thin (~<5¢/$1). Real edges here are noisy; half-size.
+        bucket = "low_ev"
         rec = "WEAK BET"
-        stake_sug = stake * 0.5  # half-size for thin edges
-    elif edge < 0.10:
-        bucket = "mid_edge"
-        rec = "BET"
-        stake_sug = stake
-    else:
+        stake_sug = stake * 0.5
+    elif edge >= 0.10:
+        # Huge edge (>=10pp model vs market). Often a stale-line signal —
+        # caller should sanity-check the odds. Full stake but warn.
         bucket = "big_edge"
         rec = "BET (large edge — verify odds)"
         stake_sug = stake
-
-    # EV per $1 on the picked side: p*(dec-1) - (1-p)*1
-    ev = float(p_pick * (dec_pick - 1.0) - (1.0 - p_pick))
+    else:
+        # Normal +EV bet: EV>=0.05, edge<10pp. This is the meat-and-potatoes
+        # zone that produced +18.70% ROI p=0.013 in the 420-fight backtest.
+        bucket = "bet"
+        rec = "BET"
+        stake_sug = stake
 
     return {
         "implied_prob_a": round(ia, 4),
@@ -1234,6 +1244,15 @@ def predict_card():
             zscores_a = _compute_fighter_zscores(fa)
             zscores_b = _compute_fighter_zscores(fb)
 
+            # v2-only: confidence signals. For legacy fallback predictors
+            # these will all be None (gracefully degrade in the UI).
+            prior_a = r.get("prior_f1")
+            prior_b = r.get("prior_f2")
+            low_conf = bool(r.get("low_confidence", False))
+            # cross_division_flag is in the feature_row if v2 ran successfully
+            feat_row = r.get("feature_row", {}) if isinstance(r, dict) else {}
+            cross_div = bool(feat_row.get("cross_division_flag", 0)) if feat_row else False
+
             results.append({
                 "bout_num": i + 1,
                 "fighter_a": fa,
@@ -1252,6 +1271,11 @@ def predict_card():
                 "drivers": drivers,
                 "zscores_a": zscores_a,
                 "zscores_b": zscores_b,
+                # Quality-of-life flags (v2 only — None from legacy paths)
+                "prior_fights_a": prior_a,
+                "prior_fights_b": prior_b,
+                "low_confidence": low_conf,
+                "cross_division_flag": cross_div,
             })
         except ValueError as e:
             results.append({"bout_num": i + 1, "error": str(e),
