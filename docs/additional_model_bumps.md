@@ -23,6 +23,7 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 | 7 | λ sweep + diagnostic | `b4a0af9` | diagnostic | — | Best λ trends upward with fold recency (drift fingerprint) |
 | 8 | Ship λ=1.20 (aggressive recency) | `f118fcc` | fold_4 +3.2pp | fold_4 +13pp | Trades old-fold accuracy for recent |
 | 9 | **Era-rolling 2yr WC baselines** | `3c118ae` | **+2.0pp** | **+6.5pp** | Biggest single fix. Halves cross-fold variance. |
+| 10 | **λ-ensemble** (LR(λ=0.13) + LR(λ=1.20)) | (this commit) | **+0.17pp** | **+2.61pp** | Averages calibrated probs from both models. Beats either single model on every metric in walk-forward. Hedges the era-drift bet. |
 
 ---
 
@@ -43,8 +44,8 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 | **Cardio Elo** (R3+/R1 output ratio as Elo) | 2 hr | +0.3-0.5pp | Currently a feature, not an Elo. Opp-adjusted version captures "fade vs maintain" career-long |
 | **Style-matchup flags** (southpaw×orthodox, wrestler×striker) | 1-2 hr | +0.2-0.5pp | Commentators cite these; under-tested in the model |
 | **Damage-absorbed Elo** (inverse of strikes taken) | 2 hr | +0.2pp | "Durability" signal; distinct from offensive Elo |
-| **Window-size sweep on era-rolling** (1yr/2yr/3yr/4yr) | 1 hr | ±0.3pp | Currently 2yr by intuition, not tuned |
-| **Model ensemble** (LR λ=0.13 avg LR λ=1.20) | 30 min | +0.2-0.4pp | Hedges era-drift bet; simple to try |
+| ~~**Window-size sweep on era-rolling**~~ | tested 2026-04-24 | (running) | TBD — early result: 1yr ≈ 2yr |
+| ~~**Model ensemble** (LR λ=0.13 + LR λ=1.20)~~ | **shipped** 2026-04-24 | **Tier B win** | Pooled +EV ROI 11.47% → **14.08%** (+2.61pp), accuracy 71.61% → 71.78%, LL 0.5971 → 0.5880. See Shipped #10. |
 
 ### Tier C — expensive, speculative
 

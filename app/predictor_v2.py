@@ -169,6 +169,34 @@ class PredictorV2:
                     print(f"[PredictorV2] calibrator load failed: {e}")
                 self._cal_apply = None
 
+        # Optional ENSEMBLE companion model (λ=0.13). When present, predict()
+        # averages probabilities from this model with the main λ=1.20 model.
+        # Walk-forward (commit pending) showed ensemble beats either single
+        # model on accuracy, LL, Brier, AND +EV ROI vs Vegas. See
+        # docs/additional_model_bumps.md.
+        comp_lr = self.dir / "lr_013.pkl"
+        self.lr_companion = None
+        self._comp_cal_apply = None
+        if comp_lr.exists():
+            try:
+                with open(comp_lr, "rb") as f:
+                    self.lr_companion = pickle.load(f)
+                # Companion uses the same scaler+imputer as main (same
+                # training rows), so we don't load separate ones.
+                comp_cal_path = self.dir / "calibrator_013.pkl"
+                if comp_cal_path.exists():
+                    with open(comp_cal_path, "rb") as f:
+                        cp = pickle.load(f)
+                    self._comp_cal_apply = _build_calibrator(
+                        cp.get("method", "uncalibrated"), cp.get("params", {}))
+                if self.verbose:
+                    print(f"[PredictorV2] loaded ensemble companion lr_013.pkl — "
+                          f"predict() will average both models")
+            except Exception as e:
+                if self.verbose:
+                    print(f"[PredictorV2] companion load failed: {e}")
+                self.lr_companion = None
+
         # Caches
         self.mma_hist = pd.read_parquet(self.dir / "fighter_mma_history.parquet")
         self.mma_hist["DATE"] = pd.to_datetime(self.mma_hist["DATE"])
@@ -301,12 +329,22 @@ class PredictorV2:
         X_s = self.scaler.transform(X_imp)
         p_f1_raw = float(self.lr.predict_proba(X_s)[0, 1])
 
-        # Apply post-hoc calibrator if available (order-preserving for temperature
-        # scaling, so winner & ranking are unchanged; probability values shift).
+        # Apply post-hoc calibrator (main λ=1.20 model).
         if self._cal_apply is not None:
-            p_f1 = float(self._cal_apply(np.array([p_f1_raw]))[0])
+            p_main = float(self._cal_apply(np.array([p_f1_raw]))[0])
         else:
-            p_f1 = p_f1_raw
+            p_main = p_f1_raw
+
+        # If companion model loaded, average with main for ENSEMBLE prediction.
+        if self.lr_companion is not None:
+            p_comp_raw = float(self.lr_companion.predict_proba(X_s)[0, 1])
+            if self._comp_cal_apply is not None:
+                p_comp = float(self._comp_cal_apply(np.array([p_comp_raw]))[0])
+            else:
+                p_comp = p_comp_raw
+            p_f1 = 0.5 * p_main + 0.5 * p_comp
+        else:
+            p_f1 = p_main
 
         p_a = (1 - p_f1) if flip else p_f1
         p_b = 1 - p_a

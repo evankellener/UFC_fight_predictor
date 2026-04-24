@@ -126,7 +126,9 @@ def init_model():
                              "fighter_elo_ufc.json", "fighter_elo_exp.json",
                              "fighter_style_elo.json", "fighter_bios.json",
                              "fighter_winlossko.json", "fighter_wc_history.json",
-                             "calibrator.pkl"]
+                             "calibrator.pkl",
+                             # Ensemble companion (Tier B win, shipped 2026-04-24)
+                             "lr_013.pkl", "calibrator_013.pkl"]
             for _f in _files_needed:
                 _p = _art / _f
                 if not _p.exists():
