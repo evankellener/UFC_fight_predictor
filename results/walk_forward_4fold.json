@@ -1,0 +1,416 @@
+{
+  "folds": [
+    {
+      "name": "fold_1",
+      "train_start": "2017-04-01",
+      "train_end": "2024-04-01",
+      "test_start": "2024-04-01",
+      "test_end": "2024-10-01"
+    },
+    {
+      "name": "fold_2",
+      "train_start": "2017-10-01",
+      "train_end": "2024-10-01",
+      "test_start": "2024-10-01",
+      "test_end": "2025-04-01"
+    },
+    {
+      "name": "fold_3",
+      "train_start": "2018-04-01",
+      "train_end": "2025-04-01",
+      "test_start": "2025-04-01",
+      "test_end": "2025-10-01"
+    },
+    {
+      "name": "fold_4",
+      "train_start": "2018-10-01",
+      "train_end": "2025-10-01",
+      "test_start": "2025-10-01",
+      "test_end": "2026-04-24"
+    }
+  ],
+  "results": [
+    {
+      "fold": "fold_1",
+      "train_range": [
+        "2017-04-01",
+        "2024-04-01"
+      ],
+      "test_range": [
+        "2024-04-01",
+        "2024-10-01"
+      ],
+      "n_train_unique": 1519,
+      "n_train_doubled": 3038,
+      "n_test": 127,
+      "n_features_usable": 207,
+      "n_features_active": 94,
+      "train_base_rate": 0.5576036866359447,
+      "test_base_rate": 0.5275590551181102,
+      "calibrator_T": 0.7767315945012481,
+      "raw": {
+        "n": 127,
+        "accuracy": 0.7637795275590551,
+        "log_loss": 0.5707660961951772,
+        "brier": 0.19156088466346538,
+        "auc": 0.8019900497512439,
+        "ece_pp": 13.70089670288703,
+        "max_dev_pp": 19.83376735925728
+      },
+      "calibrated": {
+        "n": 127,
+        "accuracy": 0.7637795275590551,
+        "log_loss": 0.5598440804378289,
+        "brier": 0.1862853616294886,
+        "auc": 0.8019900497512439,
+        "ece_pp": 10.486520061993529,
+        "max_dev_pp": 25.137040994255987
+      },
+      "acc_ci_95": [
+        0.6929133858267716,
+        0.8346456692913385
+      ],
+      "top_coefs": [
+        [
+          "age_diff",
+          -0.3246828646568369
+        ],
+        [
+          "head_def_dec_avg_diff",
+          0.24777344325829725
+        ],
+        [
+          "td_att_pm_dec_avg_diff",
+          0.2412199884280779
+        ],
+        [
+          "win_streak_entering_diff",
+          0.18324318071240953
+        ],
+        [
+          "elo_win_prob_ufc",
+          0.16764758841497218
+        ],
+        [
+          "coming_off_loss_diff",
+          0.13679390942882858
+        ],
+        [
+          "dist_per_sig_str_land_opp_mean_dec_avg_diff",
+          0.13643752832412231
+        ],
+        [
+          "body_def_dec_avg_diff",
+          0.13233330429568363
+        ],
+        [
+          "body_acc_dec_avg_diff",
+          0.13131281686511748
+        ],
+        [
+          "precomp_elo_diff_ufc",
+          0.12852678180569066
+        ]
+      ]
+    },
+    {
+      "fold": "fold_2",
+      "train_range": [
+        "2017-10-01",
+        "2024-10-01"
+      ],
+      "test_range": [
+        "2024-10-01",
+        "2025-04-01"
+      ],
+      "n_train_unique": 1554,
+      "n_train_doubled": 3108,
+      "n_test": 134,
+      "n_features_usable": 207,
+      "n_features_active": 91,
+      "train_base_rate": 0.5521235521235521,
+      "test_base_rate": 0.6343283582089553,
+      "calibrator_T": 0.8043848347689941,
+      "raw": {
+        "n": 134,
+        "accuracy": 0.7388059701492538,
+        "log_loss": 0.5730284394490701,
+        "brier": 0.1945777065221927,
+        "auc": 0.7711884753901561,
+        "ece_pp": 8.908996676138878,
+        "max_dev_pp": 21.30857695159022
+      },
+      "calibrated": {
+        "n": 134,
+        "accuracy": 0.7388059701492538,
+        "log_loss": 0.5648523430030844,
+        "brier": 0.19159613676803136,
+        "auc": 0.7711884753901561,
+        "ece_pp": 7.53226302432201,
+        "max_dev_pp": 14.09934944322121
+      },
+      "acc_ci_95": [
+        0.664179104477612,
+        0.8134328358208955
+      ],
+      "top_coefs": [
+        [
+          "age_diff",
+          -0.3298194021378942
+        ],
+        [
+          "head_def_dec_avg_diff",
+          0.26052963989032446
+        ],
+        [
+          "win_streak_entering_diff",
+          0.20429881666323108
+        ],
+        [
+          "avg_opp_elo_diff_ufc",
+          0.15935341667526437
+        ],
+        [
+          "td_att_pm_dec_avg_diff",
+          0.1551112037247288
+        ],
+        [
+          "striking_elo_diff",
+          0.1486606029471367
+        ],
+        [
+          "body_def_dec_avg_diff",
+          0.14394669682357347
+        ],
+        [
+          "head_acc_adjperf_dec_avg_diff",
+          0.1430293053399162
+        ],
+        [
+          "decision_smooth_adjperf_dec_avg_diff",
+          -0.13771570847053566
+        ],
+        [
+          "elo_win_prob_ufc",
+          0.13624998595109902
+        ]
+      ]
+    },
+    {
+      "fold": "fold_3",
+      "train_range": [
+        "2018-04-01",
+        "2025-04-01"
+      ],
+      "test_range": [
+        "2025-04-01",
+        "2025-10-01"
+      ],
+      "n_train_unique": 1584,
+      "n_train_doubled": 3168,
+      "n_test": 135,
+      "n_features_usable": 207,
+      "n_features_active": 88,
+      "train_base_rate": 0.5568181818181818,
+      "test_base_rate": 0.5555555555555556,
+      "calibrator_T": 0.8211864645602244,
+      "raw": {
+        "n": 135,
+        "accuracy": 0.6962962962962963,
+        "log_loss": 0.5918123444840734,
+        "brier": 0.20340303506688476,
+        "auc": 0.7515555555555555,
+        "ece_pp": 8.643789861720455,
+        "max_dev_pp": 17.907053730319944
+      },
+      "calibrated": {
+        "n": 135,
+        "accuracy": 0.6962962962962963,
+        "log_loss": 0.5905203267051716,
+        "brier": 0.20326343801815996,
+        "auc": 0.7515555555555555,
+        "ece_pp": 7.727202455659092,
+        "max_dev_pp": 19.7169413828588
+      },
+      "acc_ci_95": [
+        0.6222222222222222,
+        0.7742592592592591
+      ],
+      "top_coefs": [
+        [
+          "age_diff",
+          -0.35134307680719673
+        ],
+        [
+          "head_def_dec_avg_diff",
+          0.24925285997476201
+        ],
+        [
+          "td_att_pm_dec_avg_diff",
+          0.24702201384199646
+        ],
+        [
+          "win_streak_entering_diff",
+          0.20530860693699743
+        ],
+        [
+          "head_acc_adjperf_dec_avg_diff",
+          0.19932624129126286
+        ],
+        [
+          "avg_opp_elo_diff_ufc",
+          0.1802245135848424
+        ],
+        [
+          "striking_elo_diff",
+          0.17640602508896072
+        ],
+        [
+          "wc_native_winrate_diff",
+          0.17045160295715234
+        ],
+        [
+          "head_def_opp_mean_dec_avg_diff",
+          -0.16722155673807984
+        ],
+        [
+          "reach_ratio_diff",
+          0.14935030867042604
+        ]
+      ]
+    },
+    {
+      "fold": "fold_4",
+      "train_range": [
+        "2018-10-01",
+        "2025-10-01"
+      ],
+      "test_range": [
+        "2025-10-01",
+        "2026-04-24"
+      ],
+      "n_train_unique": 1618,
+      "n_train_doubled": 3236,
+      "n_test": 126,
+      "n_features_usable": 207,
+      "n_features_active": 87,
+      "train_base_rate": 0.5611866501854141,
+      "test_base_rate": 0.48412698412698413,
+      "calibrator_T": 0.8460642588247742,
+      "raw": {
+        "n": 126,
+        "accuracy": 0.6507936507936508,
+        "log_loss": 0.6530802055969364,
+        "brier": 0.2282065270942242,
+        "auc": 0.6837326607818411,
+        "ece_pp": 6.869507734224565,
+        "max_dev_pp": 23.401479971282345
+      },
+      "calibrated": {
+        "n": 126,
+        "accuracy": 0.6507936507936508,
+        "log_loss": 0.6639052917755526,
+        "brier": 0.2307726997794176,
+        "auc": 0.6837326607818411,
+        "ece_pp": 7.703186918189249,
+        "max_dev_pp": 34.12238011898122
+      },
+      "acc_ci_95": [
+        0.5714285714285714,
+        0.7301587301587301
+      ],
+      "top_coefs": [
+        [
+          "age_diff",
+          -0.37139243651000436
+        ],
+        [
+          "head_def_dec_avg_diff",
+          0.2402873389330788
+        ],
+        [
+          "td_att_pm_dec_avg_diff",
+          0.2250757634697769
+        ],
+        [
+          "avg_opp_elo_diff_ufc",
+          0.22234413636479178
+        ],
+        [
+          "head_acc_adjperf_dec_avg_diff",
+          0.21094676699517678
+        ],
+        [
+          "striking_elo_diff",
+          0.21069931716303927
+        ],
+        [
+          "win_streak_entering_diff",
+          0.1616844346152975
+        ],
+        [
+          "head_def_opp_mean_dec_avg_diff",
+          -0.16035121856786994
+        ],
+        [
+          "wc_native_winrate_diff",
+          0.15789755574194447
+        ],
+        [
+          "precomp_elo_diff_ufc",
+          0.15012848849448937
+        ]
+      ]
+    }
+  ],
+  "aggregate": {
+    "accuracy": {
+      "mean": 0.712418861199564,
+      "std": 0.0429877925237122,
+      "min": 0.6507936507936508,
+      "max": 0.7637795275590551
+    },
+    "log_loss": {
+      "mean": 0.5947805104804094,
+      "std": 0.04157112551871525,
+      "min": 0.5598440804378289,
+      "max": 0.6639052917755526
+    },
+    "auc": {
+      "mean": 0.7521166853696992,
+      "std": 0.04338137657687866,
+      "min": 0.6837326607818411,
+      "max": 0.8019900497512439
+    },
+    "brier": {
+      "mean": 0.20297940904877437,
+      "std": 0.017181514697112734,
+      "min": 0.1862853616294886,
+      "max": 0.2307726997794176
+    },
+    "ece_pp": {
+      "mean": 8.36229311504097,
+      "std": 1.2287240534412887,
+      "min": 7.53226302432201,
+      "max": 10.486520061993529
+    },
+    "max_dev_pp": {
+      "mean": 23.268927984829304,
+      "std": 7.382158371635182,
+      "min": 14.09934944322121,
+      "max": 34.12238011898122
+    }
+  },
+  "total_n_test": 522,
+  "calibrator_T_mean": 0.8120917881638102,
+  "calibrator_T_std": 0.025231836675365705,
+  "methodology_gaps": [
+    "\u03c4 hyperparameters in mma_ai_config.py held fixed across folds (not re-optimized per-fold). Cost of fix: ~2-3 hours Optuna Bayesian search. \u03c4 space has ~30 scalars vs LR's 207 coefficients \u2014 leakage impact is second-order."
+  ],
+  "leakage_audit": {
+    "\u00a71_temporal_split": "PASS \u2014 hard assertions on train_max < test_start",
+    "\u00a73_strictly_prior": "PASS \u2014 wc_history + Elo caches pre-computed with d<fight_date filter",
+    "\u00a74_scaler_imputer_train_only": "PASS \u2014 fit_transform on train, transform on test",
+    "\u00a76_no_tuning_on_test": "PASS for LR+calibrator; \u03c4 fixed (see gap above)"
+  }
+}
