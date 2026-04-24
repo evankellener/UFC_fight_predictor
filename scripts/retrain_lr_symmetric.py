@@ -44,6 +44,76 @@ WC_SHRINK_ALPHA = 3.0
 LAM_WC = 0.13
 DAYS_SINCE_NEVER = 9999
 
+# Recent-form features (docs/additional_model_bumps.md — Tier A shipped)
+# Look at fighter's last 3 strictly-prior UFC bouts and compute:
+# - win rate (wins/3)
+# - finish rate ((ko + subw)/3)
+# - avg fight duration (minutes)
+RECENT_FORM_DIFF_COLS = ["last3_win_rate_diff", "last3_finish_rate_diff",
+                          "last3_avg_fight_time_diff"]
+RECENT_N = 3
+
+
+def load_recent_form_from_db():
+    """Returns {jfighter: [(np.datetime64, win, ko, subw, fight_time_min), ...]}"""
+    conn = sqlite3.connect("data/sqlite_db/sqlite_scrapper.db")
+    hist = pd.read_sql("""
+        SELECT w.jfighter, e.DATE, w.win, w.ko, w.subw, w.fight_time_minutes
+        FROM ufc_winlossko w
+        JOIN ufc_event_details e ON e.jevent = w.jevent
+    """, conn)
+    conn.close()
+    hist["DATE"] = pd.to_datetime(hist["DATE"])
+    hist = hist.dropna(subset=["DATE"])
+    for c in ("win", "ko", "subw"): hist[c] = hist[c].fillna(0).astype(int)
+    hist["fight_time_minutes"] = hist["fight_time_minutes"].fillna(0).astype(float)
+    hist = hist.sort_values(["jfighter", "DATE"])
+    out = {}
+    for jf, grp in hist.groupby("jfighter"):
+        out[jf] = [(np.datetime64(d), int(w), int(k), int(s), float(t))
+                    for d, w, k, s, t in zip(
+                        grp["DATE"], grp["win"], grp["ko"],
+                        grp["subw"], grp["fight_time_minutes"])]
+    return out
+
+
+def recent_form_state(jf, evt_ts, rf_hist):
+    """Compute last-3-fight averages for win rate, finish rate, fight time.
+    Strictly-prior (d < evt_ts) per LEAKAGE_REFERENCE.md §3. Returns dict."""
+    h = rf_hist.get(jf, [])
+    evt64 = np.datetime64(evt_ts)
+    prior = [(d, w, k, s, t) for (d, w, k, s, t) in h if d < evt64]
+    if not prior:
+        # No UFC history — neutral priors
+        return dict(win_rate=0.5, finish_rate=0.0, avg_fight_time=15.0)
+    recent = prior[-RECENT_N:]  # last N bouts (may be fewer if new fighter)
+    n = len(recent)
+    wins = sum(w for _, w, _, _, _ in recent)
+    finishes = sum(k + s for _, _, k, s, _ in recent)
+    times = [t for _, _, _, _, t in recent if t > 0]
+    return dict(
+        win_rate=wins / n,
+        finish_rate=finishes / n,
+        avg_fight_time=(sum(times) / len(times)) if times else 15.0,
+    )
+
+
+def add_recent_form_features(df, rf_hist):
+    """Add 3 recent-form diff columns to df. Uses each row's DATE as evt_ts
+    and strictly-prior bouts (< DATE) for each fighter."""
+    out_cols = {c: [] for c in RECENT_FORM_DIFF_COLS}
+    for _, r in df.iterrows():
+        jf1, jf2 = r["jfighter"], r["opp_jfighter"]
+        evt = r["DATE"]
+        s1 = recent_form_state(jf1, evt, rf_hist)
+        s2 = recent_form_state(jf2, evt, rf_hist)
+        out_cols["last3_win_rate_diff"].append(s1["win_rate"] - s2["win_rate"])
+        out_cols["last3_finish_rate_diff"].append(s1["finish_rate"] - s2["finish_rate"])
+        out_cols["last3_avg_fight_time_diff"].append(s1["avg_fight_time"] - s2["avg_fight_time"])
+    for c, vals in out_cols.items():
+        df[c] = vals
+    return df
+
 
 def load_wc_history_from_db():
     """Same query as scripts/build_wc_history_cache.py. Returns:
@@ -222,6 +292,12 @@ def main():
     wc_hist = load_wc_history_from_db()
     print(f"  wc_history: {len(wc_hist):,} fighters")
     df = add_wc_features(df, wc_hist)
+
+    # NOTE: recent-form (last-3) features were tested 2026-04-24 and all 3
+    # coefs got zeroed by ElasticNet — dec_avg + win_streak_entering_diff
+    # already capture this signal. Helpers kept (load_recent_form_from_db,
+    # add_recent_form_features) for future variants (e.g. weighted last-5,
+    # per-fight form deltas). See docs/additional_model_bumps.md.
     # Report coverage of new features
     n_zero_fights = int((df["wc_native_fights_diff"] == 0).sum())
     n_cross = int(df["cross_division_flag"].sum())

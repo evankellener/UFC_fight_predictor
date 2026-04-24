@@ -31,7 +31,10 @@ from scipy.optimize import minimize_scalar
 
 from predictor_v2 import PredictorV2
 from run_threshold_sweep_both_elos import load_base_both_elos, apply_threshold, TEST_FIRST, TEST_LAST
-from retrain_lr_symmetric import load_wc_history_from_db, add_wc_features
+from retrain_lr_symmetric import (
+    load_wc_history_from_db, add_wc_features,
+    load_recent_form_from_db, add_recent_form_features,
+)
 
 EPS = 1e-6
 OUT = Path("app/models/blend_v2")
@@ -175,6 +178,7 @@ def main():
     df = apply_threshold(base, 3)
     wc_hist = load_wc_history_from_db()
     df = add_wc_features(df, wc_hist)
+    # recent-form features tried & rejected — see retrain_lr_symmetric.py notes
     test = df[(df["DATE"] >= TEST_FIRST) & (df["DATE"] <= TEST_LAST)].copy()
 
     X = v2.imputer.transform(test[v2.feat_cols].values)

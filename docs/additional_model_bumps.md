@@ -32,7 +32,7 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 
 | Idea | Cost | Expected | Why promising |
 |---|---|---|---|
-| **Recent-form features (last 3 fights)** | 1-2 hr | +0.5-1pp acc | `dec_avg` is career-wide with slow decay; explicit last-3-fights stats surface current form (camp changes, injuries, weight cuts) |
+| ~~Recent-form features (last 3 fights)~~ | tried 2026-04-24 | **Rejected** — see Rejected list. All 3 coefs zeroed. |
 | **ElasticNet C sweep** | 30 min | +0.3-0.7pp LL | Current C=0.05 aggressively shrinks coefs toward 0. Looser regularization may close the structural LL/Brier gap to Vegas. |
 | **Finishing Elo** (KO+sub rate, opp-adjusted) | 2 hr | +0.3-0.8pp acc | Current striking Elo rewards volume, not power. Distinct signal. |
 
@@ -74,6 +74,7 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 | LR×0.8 + XGB×0.2 blend | (prior session) | tiny LL gain, ROI −3pp | Discrimination > calibration for betting (`finding_blend_hurts_roi.md`) |
 | τ re-optimization per fold | 2026-04-23 | never completed | 3hr compute; analysis showed drift isn't from τ staleness |
 | Pure `edge > 0` bet threshold | 2026-04-23 | flagged −EV bets as WEAK BET | Changed to `ev > 0` threshold in `_bet_recommendation` |
+| **Recent-form features** (last3_win_rate_diff, last3_finish_rate_diff, last3_avg_fight_time_diff) | 2026-04-24 | All 3 ElasticNet coefs **= 0.00000**. Walk-forward identical to 4 decimal places vs era-rolling baseline. | Existing `dec_avg`-derived features (`win_streak_entering_diff`, `finish_rate_dec_avg_diff`, etc.) already capture this signal. Hard-cutoff last-3 added redundancy without new info. **Helpers kept** (`load_recent_form_from_db`, `add_recent_form_features`, `fighter_recent_form.json` cache) for future variants like weighted last-5 or per-fight form deltas. |
 
 ---
 

@@ -48,8 +48,9 @@ from scipy.optimize import minimize_scalar
 from run_threshold_sweep_both_elos import load_base_both_elos, apply_threshold, LAM
 from retrain_lr_symmetric import (
     load_wc_history_from_db, add_wc_features,
+    load_recent_form_from_db, add_recent_form_features,
     flip_row_dataframe, RATIO_OF_FIGHTERS,
-    WC_HIST_DIFF_COLS, WC_PAIR_COLS,
+    WC_HIST_DIFF_COLS, WC_PAIR_COLS, RECENT_FORM_DIFF_COLS,
 )
 
 FILTER_THRESHOLD = 3
@@ -290,11 +291,12 @@ def main():
     print("Leakage audit: LEAKAGE_REFERENCE.md §1/§3/§4/§6")
     print("=" * 76)
 
-    print("\nLoading base features + wc_history (one-time, re-used across folds)...")
+    print("\nLoading base features + wc_history (one-time, reused across folds)...")
     base = load_base_both_elos()
     df = apply_threshold(base, FILTER_THRESHOLD)
     wc_hist = load_wc_history_from_db()
     df = add_wc_features(df, wc_hist)
+    # recent-form features tried & rejected — see retrain_lr_symmetric.py
     feats = select_features(df)
     print(f"  Total rows: {len(df):,}")
     print(f"  Feature columns candidates: {len(feats)}")

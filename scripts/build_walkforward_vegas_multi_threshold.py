@@ -20,7 +20,10 @@ elo_feature.DB_PATH = Path("data/sqlite_db/sqlite_scrapper.db")
 warnings.filterwarnings("ignore")
 
 from run_threshold_sweep_both_elos import load_base_both_elos, apply_threshold, american_to_decimal
-from retrain_lr_symmetric import load_wc_history_from_db, add_wc_features
+from retrain_lr_symmetric import (
+    load_wc_history_from_db, add_wc_features,
+    load_recent_form_from_db, add_recent_form_features,
+)
 from walk_forward_4fold import FOLDS, select_features
 from build_walkforward_vegas_comparison import run_fold_with_vegas, fold_metrics
 
@@ -193,13 +196,14 @@ def _run_fold_rich(df, fold, feats):
     return merged
 
 
-def run_for_threshold(threshold, base, wc_hist):
+def run_for_threshold(threshold, base, wc_hist, rf_hist=None):
     print(f"\n{'='*72}")
     print(f"Threshold = {threshold} prior UFC fights on both sides")
     print(f"{'='*72}")
 
     df = apply_threshold(base, threshold)
     df = add_wc_features(df, wc_hist)
+    # recent-form features tried & rejected — see retrain_lr_symmetric.py
     feats = select_features(df)
 
     per_fold_raw = {}
@@ -245,7 +249,7 @@ def run_for_threshold(threshold, base, wc_hist):
 
 
 def main():
-    print("Loading base features + wc_history (one-time, re-used across thresholds)...")
+    print("Loading base features + wc_history...")
     base = load_base_both_elos()
     wc_hist = load_wc_history_from_db()
 
