@@ -179,69 +179,140 @@ def beta_binomial_smooth(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
-    # Compute WC rates for each binary stat
+    # Binary rate stats (ko, win, decision) — use era-rolling mean as prior.
+    # Previously this was df.groupby("weightindex")[stat].mean() — all-time,
+    # which leaked era info across fights. LEAKAGE_REFERENCE.md §1/§3.
     for stat, tau_key in [("ko", "ko"), ("win", "win"), ("decision", "decision")]:
-        # WC rate = fraction of fights with this outcome
-        wc_rates = df.groupby("weightindex")[stat].mean().to_dict()
-        global_rate = df[stat].mean()
+        rolling_rate = _era_rolling_mean(df, stat)
+        global_rate = df[stat].mean()  # fallback when rolling window is empty
 
-        def _smooth(row):
+        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
+
+        def _smooth(row, _stat=stat, _tau_key=tau_key):
             wc = row["weightindex"]
-            tau = BB_TAU_GLOBAL[tau_key]
-            # Check per-WC override
-            if wc in BB_TAU_WC_OVERRIDES and tau_key in BB_TAU_WC_OVERRIDES[wc]:
-                tau = BB_TAU_WC_OVERRIDES[wc][tau_key]
-            rate_prior = wc_rates.get(wc, global_rate)
-            successes = row[stat]
+            tau = BB_TAU_GLOBAL[_tau_key]
+            if wc in BB_TAU_WC_OVERRIDES and _tau_key in BB_TAU_WC_OVERRIDES[wc]:
+                tau = BB_TAU_WC_OVERRIDES[wc][_tau_key]
+            rate_prior = row[f"_rate_prior_{_stat}"]
+            successes = row[_stat]
             attempts = 1
             return (rate_prior * tau + successes) / (tau + attempts)
 
         df[f"{stat}_smooth"] = df.apply(_smooth, axis=1)
+        df.drop(columns=[f"_rate_prior_{stat}"], inplace=True)
 
-    # sub_land: successes = sub_land (need to compute), attempts = sub_att
-    # sub_land isn't directly in our data — derive from subw (submission win)
-    # Actually, sub_att is attempts, and we need sub_land = successful submissions
-    # For simplicity: sub_land ≈ subw (submission wins) since a sub_land that doesn't end the fight is rare
+    # sub_land = successful submissions (≈ subw). Rate = sub_land / sub_att.
     df["sub_land"] = df["subw"].fillna(0)
-
-    wc_sub_rates = df.groupby("weightindex").apply(
-        lambda g: g["sub_land"].sum() / max(g["sub_att"].sum(), 1)
-    ).to_dict()
+    rolling_sub_rate = _era_rolling_ratio(df, "sub_land", "sub_att", eps=1.0)
     global_sub_rate = df["sub_land"].sum() / max(df["sub_att"].sum(), 1)
+    df["_rate_prior_sub"] = rolling_sub_rate.fillna(global_sub_rate)
 
     def _smooth_sub(row):
         wc = row["weightindex"]
         tau = BB_TAU_GLOBAL["sub_land"]
         if wc in BB_TAU_WC_OVERRIDES and "sub_land" in BB_TAU_WC_OVERRIDES[wc]:
             tau = BB_TAU_WC_OVERRIDES[wc]["sub_land"]
-        rate_prior = wc_sub_rates.get(wc, global_sub_rate)
+        rate_prior = row["_rate_prior_sub"]
         successes = row["sub_land"]
         attempts = max(row["sub_att"], 1)
         return (rate_prior * tau + successes) / (tau + attempts)
 
     df["sub_land_smooth"] = df.apply(_smooth_sub, axis=1)
+    df.drop(columns=["_rate_prior_sub"], inplace=True)
 
-    # ctrl: time-share model (seconds)
-    wc_ctrl_rates = df.groupby("weightindex").apply(
-        lambda g: g["ctrl_sec"].sum() / max(g["time_minutes"].sum() * 60, 1)
-    ).to_dict()
+    # ctrl: time-share (seconds). Rate = ctrl_sec / (time_minutes * 60).
+    # We compute the ratio on a derived "time_seconds" column so the rolling
+    # ratio helper works cleanly.
+    df["_time_seconds"] = (df["time_minutes"] * 60).clip(lower=1)
+    rolling_ctrl_rate = _era_rolling_ratio(df, "ctrl_sec", "_time_seconds", eps=1.0)
     global_ctrl_rate = df["ctrl_sec"].sum() / max(df["time_minutes"].sum() * 60, 1)
+    df["_rate_prior_ctrl"] = rolling_ctrl_rate.fillna(global_ctrl_rate)
 
     def _smooth_ctrl(row):
         wc = row["weightindex"]
         tau = BB_TAU_GLOBAL["ctrl"]
         if wc in BB_TAU_WC_OVERRIDES and "ctrl" in BB_TAU_WC_OVERRIDES[wc]:
             tau = BB_TAU_WC_OVERRIDES[wc]["ctrl"]
-        rate_prior = wc_ctrl_rates.get(wc, global_ctrl_rate)
+        rate_prior = row["_rate_prior_ctrl"]
         total_sec = max(row["time_minutes"] * 60, 1)
         ctrl_sec = row["ctrl_sec"]
         p_post = (rate_prior * tau * 60 + ctrl_sec) / (tau * 60 + total_sec)
         return p_post * total_sec
 
     df["ctrl_smooth"] = df.apply(_smooth_ctrl, axis=1)
+    df.drop(columns=["_rate_prior_ctrl", "_time_seconds"], inplace=True)
 
-    print(f"  Beta-Binomial smoothing: ko, win, decision, sub_land, ctrl")
+    print(f"  Beta-Binomial smoothing (era-rolling 2yr priors): ko, win, decision, sub_land, ctrl")
     return df
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ERA-ROLLING WEIGHT-CLASS BASELINES
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# Historically this pipeline computed per-WC shrinkage priors as the mean of a
+# stat across ALL fights in that weight class, cross-era. That's a leakage
+# issue (§1 / §3: a 2017 fight's prior includes 2026 data) and a drift issue
+# (a 2026 fighter gets smoothed toward a weight-class mean that was partly
+# defined by 2017-era fighters throwing 27% fewer strikes per minute).
+#
+# Fix: per-row rolling baseline over [DATE - ERA_WINDOW_DAYS, DATE),
+# restricted to same weightindex, using pandas groupby-rolling with
+# closed='left' so the current row and any same-date fights are excluded.
+#
+# All rolling baselines are STRICTLY PRIOR to the current row — conforms to
+# LEAKAGE_REFERENCE.md §1 (temporal splits) and §3 (career aggregates).
+
+ERA_WINDOW_DAYS = 730  # 2-year rolling window
+
+
+def _era_rolling_mean(df, col, window_days=ERA_WINDOW_DAYS):
+    """Per-row 2yr rolling mean of `col` within the same weightindex.
+    Excludes the current row (closed='left'). Returns a Series aligned
+    to df's index. NaN where no prior fights exist in the window OR
+    where weightindex/DATE is missing on the row.
+    """
+    tmp = df[["DATE", "weightindex", col]].copy()
+    tmp["_orig_idx"] = df.index
+    # Rolling needs valid weightindex and DATE; NaNs in those get dropped
+    # by groupby silently — handle explicitly so lengths stay consistent.
+    valid = tmp.dropna(subset=["weightindex", "DATE"]).copy()
+    valid = valid.sort_values(["weightindex", "DATE"]).reset_index(drop=True)
+    if len(valid) == 0:
+        return pd.Series(float("nan"), index=df.index)
+    rolled = (valid.groupby("weightindex")
+                   .rolling(f"{window_days}D", on="DATE", closed="left", min_periods=1)[col]
+                   .mean()
+                   .reset_index(level=0, drop=True))
+    valid["_baseline"] = rolled.values
+    # Map back using the original index we stashed
+    lookup = valid.set_index("_orig_idx")["_baseline"]
+    return df.index.to_series().map(lookup)
+
+
+def _era_rolling_ratio(df, numer_col, denom_col, window_days=ERA_WINDOW_DAYS,
+                       eps=0.1):
+    """Per-row 2yr rolling ratio sum(numer) / sum(denom) within the same wc.
+    Used for rate-style priors (e.g. total KOs / total fight minutes).
+    Excludes the current row; returns Series aligned to df.index.
+    """
+    tmp = df[["DATE", "weightindex", numer_col, denom_col]].copy()
+    tmp["_orig_idx"] = df.index
+    valid = tmp.dropna(subset=["weightindex", "DATE"]).copy()
+    valid = valid.sort_values(["weightindex", "DATE"]).reset_index(drop=True)
+    if len(valid) == 0:
+        return pd.Series(float("nan"), index=df.index)
+    num = (valid.groupby("weightindex")
+                .rolling(f"{window_days}D", on="DATE", closed="left", min_periods=1)[numer_col]
+                .sum()
+                .reset_index(level=0, drop=True))
+    den = (valid.groupby("weightindex")
+                .rolling(f"{window_days}D", on="DATE", closed="left", min_periods=1)[denom_col]
+                .sum()
+                .reset_index(level=0, drop=True))
+    valid["_ratio"] = num.values / den.values.clip(min=eps)
+    lookup = valid.set_index("_orig_idx")["_ratio"]
+    return df.index.to_series().map(lookup)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -252,54 +323,55 @@ def poisson_gamma_smooth(df: pd.DataFrame) -> pd.DataFrame:
     """Apply Poisson-Gamma smoothing to count statistics."""
     df = df.copy()
 
-    # Full-fight stats
+    # Full-fight stats: era-rolling ratio = rolling_sum(stat) / rolling_sum(time)
+    # Replaces the all-time ratio computed from the whole df (§1/§3 leakage).
     for stat, tau_val in PG_TAU_GLOBAL.items():
         if stat not in df.columns:
             continue
 
-        # WC rate = total counts / total minutes
-        wc_rates = df.groupby("weightindex").apply(
-            lambda g: g[stat].sum() / max(g["time_minutes"].sum(), 0.1)
-        ).to_dict()
+        rolling_rate = _era_rolling_ratio(df, stat, "time_minutes", eps=0.1)
         global_rate = df[stat].sum() / max(df["time_minutes"].sum(), 0.1)
+        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
 
-        def _smooth_pg(row, _stat=stat, _tau=tau_val, _wc_rates=wc_rates, _global=global_rate):
+        def _smooth_pg(row, _stat=stat, _tau=tau_val):
             wc = row["weightindex"]
             tau = _tau
             if wc in PG_TAU_WC_OVERRIDES and _stat in PG_TAU_WC_OVERRIDES[wc]:
                 tau = PG_TAU_WC_OVERRIDES[wc][_stat]
-            rate_prior = _wc_rates.get(wc, _global)
+            rate_prior = row[f"_rate_prior_{_stat}"]
             t = max(row["time_minutes"], 0.01)
             observed = row[_stat]
             lambda_post = (rate_prior * tau + observed) / (tau + t)
             return t * lambda_post
 
         df[f"{stat}_smooth"] = df.apply(_smooth_pg, axis=1)
+        df.drop(columns=[f"_rate_prior_{stat}"], inplace=True)
 
-    # Round 1 stats
+    # Round 1 stats — same treatment
     for stat, tau_val in PG_TAU_RD1.items():
         if stat not in df.columns:
             continue
 
-        wc_rates = df.dropna(subset=[stat]).groupby("weightindex").apply(
-            lambda g: g[stat].sum() / max(g["time_minutes_rd1"].sum(), 0.1)
-        ).to_dict()
+        rolling_rate = _era_rolling_ratio(df, stat, "time_minutes_rd1", eps=0.1)
         global_rate = df[stat].sum() / max(df["time_minutes_rd1"].sum(), 0.1)
+        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
 
-        def _smooth_rd1(row, _stat=stat, _tau=tau_val, _wc_rates=wc_rates, _global=global_rate):
+        def _smooth_rd1(row, _stat=stat, _tau=tau_val):
             wc = row["weightindex"]
             tau = _tau
             if wc in PG_TAU_WC_OVERRIDES and _stat in PG_TAU_WC_OVERRIDES[wc]:
                 tau = PG_TAU_WC_OVERRIDES[wc][_stat]
-            rate_prior = _wc_rates.get(wc, _global)
+            rate_prior = row[f"_rate_prior_{_stat}"]
             t = max(row.get("time_minutes_rd1", 0) or 0, 0.01)
             observed = row.get(_stat, 0) or 0
             lambda_post = (rate_prior * tau + observed) / (tau + t)
             return t * lambda_post
 
         df[f"{stat}_smooth"] = df.apply(_smooth_rd1, axis=1)
+        df.drop(columns=[f"_rate_prior_{stat}"], inplace=True)
 
-    print(f"  Poisson-Gamma smoothing: {len(PG_TAU_GLOBAL)} full-fight + {len(PG_TAU_RD1)} R1 stats")
+    print(f"  Poisson-Gamma smoothing (era-rolling 2yr priors): "
+          f"{len(PG_TAU_GLOBAL)} full-fight + {len(PG_TAU_RD1)} R1 stats")
     return df
 
 
