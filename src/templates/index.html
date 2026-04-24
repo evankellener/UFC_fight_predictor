@@ -674,6 +674,22 @@ html.light {
   text-align: center;
   padding: 1.5rem 1rem;
 }
+/* Stacked column of feature-family nodes (section 01) */
+.mi-arch-families {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.mi-arch-family {
+  padding: 0.7rem 1rem;
+}
+.mi-arch-family .mi-arch-node-name {
+  font-size: 0.95rem;
+  margin-bottom: 0.1rem;
+}
+.mi-arch-family .mi-arch-node-meta {
+  font-size: 0.62rem;
+}
 .mi-arch-blend .mi-arch-node-name { color: var(--mi-accent); }
 .mi-arch-output {
   text-align: center;
@@ -1499,7 +1515,10 @@ html.light {
   <div class="tab-content active" id="tab-insights">
 <h1 class="mi-title">How the model <em>thinks</em>.</h1>
 <p class="mi-sub">
-  A 50/50 blend of logistic regression and gradient-boosted trees trained on thousands of UFC fights.
+  A logistic regression on <strong>207 engineered features</strong> — MMA-AI per-fight averages,
+  Elo from two sources, recency, style, and weight-class history — trained
+  <strong>symmetrically</strong> (each fight appears as both orientations) to eliminate
+  red-corner bias. 71.19% test accuracy over 420 held-out fights (2024-05 → 2025-11).
   Below: the architecture, the validation, and tools to interrogate any of it yourself.
 </p>
 <div class="mi-meta" id="miMetaCaption">
@@ -1513,113 +1532,75 @@ html.light {
     <h2 class="mi-section-title">Architecture</h2>
   </div>
   <p class="mi-section-desc">
-    Two independently trained models, averaged. Click either to inspect.
+    One logistic regression, five feature families, trained symmetrically. Click any node to inspect.
   </p>
 
   <div class="mi-arch-diagram">
+    <!-- Feature families column → LR node → output -->
     <div class="mi-arch-flow">
-      <div class="mi-arch-node" data-arch="lr" onclick="miShowArch('lr')">
-        <div class="mi-arch-node-name">Logistic <em>Regression</em></div>
-        <div class="mi-arch-node-meta">
-          <span id="archLrFeats">—</span> features · elastic net
+      <div class="mi-arch-families">
+        <div class="mi-arch-node mi-arch-family" data-arch="mmaai" onclick="miShowArch('mmaai')">
+          <div class="mi-arch-node-name">MMA-AI <em>dec_avg</em></div>
+          <div class="mi-arch-node-meta">185 features · adjperf + opp_mean</div>
+        </div>
+        <div class="mi-arch-node mi-arch-family" data-arch="elo" onclick="miShowArch('elo')">
+          <div class="mi-arch-node-name">Elo</div>
+          <div class="mi-arch-node-meta">12 features · UFC + Expanded</div>
+        </div>
+        <div class="mi-arch-node mi-arch-family" data-arch="recency" onclick="miShowArch('recency')">
+          <div class="mi-arch-node-name">Tier 1c <em>recency</em></div>
+          <div class="mi-arch-node-meta">3 features · streak, layoff</div>
+        </div>
+        <div class="mi-arch-node mi-arch-family" data-arch="style" onclick="miShowArch('style')">
+          <div class="mi-arch-node-name">Style <em>Elo</em></div>
+          <div class="mi-arch-node-meta">2 features · striking + grappling</div>
+        </div>
+        <div class="mi-arch-node mi-arch-family" data-arch="wc" onclick="miShowArch('wc')">
+          <div class="mi-arch-node-name">WC <em>history</em></div>
+          <div class="mi-arch-node-meta">5 features · native winrate, cross-div flag</div>
         </div>
       </div>
       <div class="mi-arch-arrow">→</div>
-      <div class="mi-arch-node mi-arch-blend" data-arch="blend" onclick="miShowArch('blend')">
-        <div class="mi-arch-node-name">Blend</div>
-        <div class="mi-arch-node-meta">avg(p_lr, p_xgb)</div>
+      <div class="mi-arch-node mi-arch-blend" data-arch="lr" onclick="miShowArch('lr')">
+        <div class="mi-arch-node-name">Logistic <em>Regression</em></div>
+        <div class="mi-arch-node-meta">
+          <span id="archLrFeats">207</span> feats · 90 active · elastic net
+        </div>
       </div>
     </div>
+    <!-- Second row: symmetrization wrapper → output -->
     <div class="mi-arch-flow">
-      <div class="mi-arch-node" data-arch="xgb" onclick="miShowArch('xgb')">
-        <div class="mi-arch-node-name">XGBoost</div>
-        <div class="mi-arch-node-meta">
-          <span id="archXgbFeats">—</span> features · 1,200 trees
-        </div>
+      <div class="mi-arch-node" data-arch="symmetric" onclick="miShowArch('symmetric')">
+        <div class="mi-arch-node-name">Symmetric <em>training</em></div>
+        <div class="mi-arch-node-meta">both orientations per fight</div>
+      </div>
+      <div class="mi-arch-arrow">→</div>
+      <div class="mi-arch-node" data-arch="symavg" onclick="miShowArch('symavg')">
+        <div class="mi-arch-node-name">Infer. <em>average</em></div>
+        <div class="mi-arch-node-meta">½·p(a,b) + ½·p(b,a)</div>
       </div>
       <div class="mi-arch-arrow">→</div>
       <div class="mi-arch-output">P(A wins)</div>
     </div>
 
     <div class="mi-arch-detail" id="archDetail">
-      <h4 id="archDetailTitle">Click a model to inspect</h4>
+      <h4 id="archDetailTitle">Click a node to inspect</h4>
       <p id="archDetailDesc" class="mi-arch-detail-desc">—</p>
       <div class="mi-arch-specs" id="archDetailSpecs"></div>
     </div>
   </div>
 
   <p class="mi-fine-print">
-    Trained <span id="archTrainStart">—</span> → <span id="archTrainEnd">—</span> ·
-    <span id="archTrainRows">—</span> rows · blend <span id="archBlendW">—</span>
+    Trained <span id="archTrainStart">2016-01-01</span> → <span id="archTrainEnd">2024-05-04</span> ·
+    <span id="archTrainRows">3,594</span> training rows (1,797 fights × 2 orientations).
+    No XGBoost. No blend weight — a single LR serves every prediction, then inference averages
+    both argument orders as a safety net.
+    <span id="archBlendW" style="display:none;"></span>
   </p>
 </section>
 
-<!-- ─── 02. Blend weight slider ──────────────────────────────── -->
-<section class="mi-section">
-  <div class="mi-section-header">
-    <span class="mi-section-num">02</span>
-    <h2 class="mi-section-title">Why <em>50/50</em>?</h2>
-  </div>
-  <p class="mi-section-desc">
-    Drag the slider to change the blend weight. Watch the metrics update.
-    Both models alone cap out around 65% accuracy; the blend is measurably better.
-  </p>
-
-  <div class="mi-slider-card">
-    <div class="mi-slider-header">
-      <div class="mi-slider-readout">
-        <span class="mi-lr-w">LR <span class="mi-num" id="lrPct">50%</span></span>
-        &nbsp;·&nbsp;
-        <span class="mi-xgb-w">XGB <span class="mi-num" id="xgbPct">50%</span></span>
-      </div>
-      <div class="mi-slider-n" id="sliderN">n=— test bouts</div>
-    </div>
-
-    <div class="mi-slider-track-wrap">
-      <div class="mi-slider-track" id="sliderTrack">
-        <div class="mi-slider-marker" style="left:0%"></div>
-        <div class="mi-slider-marker mi-optimal" id="sliderOptimalMarker" style="left:50%"></div>
-        <div class="mi-slider-marker" style="left:100%"></div>
-        <div class="mi-slider-track-fill" id="sliderFill" style="width:50%"></div>
-        <div class="mi-slider-thumb" id="sliderThumb" style="left:50%"></div>
-      </div>
-      <div class="mi-slider-labels">
-        <span>LR only</span>
-        <span class="mi-optimal-label">optimal</span>
-        <span>XGB only</span>
-      </div>
-    </div>
-
-    <div class="mi-metric-grid">
-      <div class="mi-metric-cell">
-        <div class="mi-metric-label">Accuracy</div>
-        <div class="mi-metric-value mi-num" id="mAcc">—</div>
-        <div class="mi-metric-delta mi-num" id="dAcc">—</div>
-      </div>
-      <div class="mi-metric-cell">
-        <div class="mi-metric-label">Log Loss</div>
-        <div class="mi-metric-value mi-num" id="mLL">—</div>
-        <div class="mi-metric-delta mi-num" id="dLL">—</div>
-      </div>
-      <div class="mi-metric-cell">
-        <div class="mi-metric-label">Brier</div>
-        <div class="mi-metric-value mi-num" id="mBrier">—</div>
-        <div class="mi-metric-delta mi-num" id="dBrier">—</div>
-      </div>
-      <div class="mi-metric-cell">
-        <div class="mi-metric-label">AUC</div>
-        <div class="mi-metric-value mi-num" id="mAUC">—</div>
-        <div class="mi-metric-delta mi-num" id="dAUC">—</div>
-      </div>
-    </div>
-
-    <div class="mi-takeaway" id="sliderTakeaway">
-      <strong>50/50 is the sweet spot.</strong>
-      LR finds linear effects (Elo, age, reach); XGBoost captures interactions
-      (age × Elo, form × layoff). Their errors are uncorrelated, so averaging cancels both biases.
-    </div>
-  </div>
-</section>
+<!-- ─── 02. (removed) — was "Why 50/50?" blend-weight slider, deprecated
+       when the v2 single-LR replaced the LR+XGB blend architecture. ─── -->
 
 <!-- ─── 03. Walk-forward folds ───────────────────────────────── -->
 <section class="mi-section">
@@ -1836,8 +1817,10 @@ html.light {
     <h2 class="mi-section-title">Top features</h2>
   </div>
   <p class="mi-section-desc">
-    The most influential features in the LR component. "Diff" means Fighter A minus Fighter B.
-    Green: a higher diff favors A. Red: favors B.
+    The features with the largest |coefficient| in the deployed LR. "Diff" means
+    Fighter A minus Fighter B; coefficients apply to standardized inputs so they're
+    directly comparable. Green: higher diff favors A. Red: favors B.
+    ElasticNet zeros ~57% of features; only the survivors appear in the rankings you interact with.
   </p>
 
   <div class="mi-features-container">
@@ -2681,7 +2664,8 @@ async function miLoadAll() {
   // Load in parallel; each handler is defensive
   miLoadSummary();
   miLoadFeatureImportance();
-  miLoadBlendSweep();
+  // miLoadBlendSweep() removed — section 02 (blend-weight slider) retired
+  // when the v2 single-LR replaced the LR+XGB blend.
   miLoadFolds();
   miLoadCalibration();
   miLoadVegasComparison();
@@ -2728,11 +2712,64 @@ async function miLoadSummary() {
     // Store for architecture detail panel
     window._miSummary = d;
     window._miArchData = {
-      lr: {
-        title: `Logistic Regression · ${Math.round((1-(pm.blend_weight_xgb ?? 0.5))*100)}% weight`,
-        desc: 'Trained on standardized "diff" features (Fighter A minus Fighter B for each stat). Elastic net penalty zeros out roughly half the coefficients; survivors are calibrated. Directly optimizes log loss, so its probabilities are honest.',
+      mmaai: {
+        title: 'MMA-AI per-fight averages · 185 features',
+        desc: 'Decayed-average striking, grappling, control, takedown, and finishing stats from each fighter\'s prior bouts. Includes opponent-adjusted (adjperf) and opponent-mean (opp_mean) variants that control for strength of schedule. λ = 0.13/yr decay.',
         specs: [
-          ['Features', pm.lr_features ?? '—'],
+          ['Count', '185'],
+          ['Source', 'final_features_fast'],
+          ['Decay λ', '0.13/yr'],
+          ['Prior filter', 'strictly prior to event'],
+          ['Active after L1', '~85']
+        ]
+      },
+      elo: {
+        title: 'Elo · UFC-only + Expanded · 12 features',
+        desc: 'Two parallel Elo systems: one from UFC bouts only, one including non-UFC pre-UFC fights. Each contributes 6 features (precomp, win_prob, momentum, peak, avg-opp, consistency). KO ×1.80, sub ×1.20 multipliers, sigmoid inactivity decay.',
+        specs: [
+          ['Count', '12 (6 UFC + 6 Expanded)'],
+          ['K', '20'],
+          ['KO mult', '1.80'],
+          ['Sub mult', '1.20'],
+          ['Decay', 'sigmoid, 730d midpoint'],
+          ['Active after L1', '5']
+        ]
+      },
+      recency: {
+        title: 'Tier 1c recency · 3 features',
+        desc: 'Win streak entering the fight, 1 if coming off a loss, and count of fights in last 12 months. Strictly prior, no outcome leakage. Drives some of the largest coefficients in the model.',
+        specs: [
+          ['Count', '3'],
+          ['Source', 'ufc_winlossko'],
+          ['Filter', 'strictly prior (d < event)'],
+          ['Active after L1', '1']
+        ]
+      },
+      style: {
+        title: 'Style Elo · striking + grappling · 2 features',
+        desc: 'Separate Elo trajectories tracking striking quality and grappling quality per fighter, computed from per-bout per-round striking differential and grappling dominance metrics. K=20, scale=400.',
+        specs: [
+          ['Count', '2'],
+          ['Striking from', 'sig_str land diff per round'],
+          ['Grappling from', 'td + ctrl/60 + 0.3·sub'],
+          ['Active after L1', '2']
+        ]
+      },
+      wc: {
+        title: 'Weight-class history · 5 features',
+        desc: 'Division-specific performance: decayed winrate at current WC (Beta-shrunk α=3), count of prior bouts at current WC, decayed KO rate there, days since last bout at WC, and a cross-division flag if either fighter\'s career modal division differs from the current. Targets cases like a LHW moving up to HW. Full methodology: docs/feature_wc_history.md',
+        specs: [
+          ['Count', '5'],
+          ['Shrinkage α', '3 (Beta-Binomial)'],
+          ['Flag definition', 'modal prior ≠ current'],
+          ['Active after L1', '2 of 5']
+        ]
+      },
+      lr: {
+        title: 'Logistic Regression · the single predictor',
+        desc: 'No blend, no ensemble. One LR fit on all 207 features with elastic-net regularization (C=0.05, l1_ratio=0.5, saga solver). Trained symmetrically — each fight contributes two training rows (original and flipped). ElasticNet zeros ~57% of features; survivors are calibrated.',
+        specs: [
+          ['Features', pm.lr_features ?? '207'],
           ['Active', d.active_features ?? '—'],
           ['Penalty', 'Elastic Net'],
           ['C', '0.05'],
@@ -2740,32 +2777,27 @@ async function miLoadSummary() {
           ['Solver', 'saga']
         ]
       },
-      xgb: {
-        title: `XGBoost · ${Math.round((pm.blend_weight_xgb ?? 0.5)*100)}% weight`,
-        desc: 'Gradient-boosted trees on the LR feature set plus 10 contextual, 7 strength-of-schedule, and 18 hand-engineered interactions (age × Elo, reach × stance, form × layoff). Captures the non-linear lift LR cannot.',
+      symmetric: {
+        title: 'Symmetric training',
+        desc: 'The data foundation has two rows per fight (one per corner), but the legacy feature pipeline collapsed it to one. That gave the LR a red-corner bias (57.4% win rate baseline in training, asymmetric coefficients). Fix: double the training set so each fight appears as (f1,f2,y) AND (f2,f1,1−y) with features correctly sign-flipped. Coefficients are now orientation-invariant by construction.',
         specs: [
-          ['Features', pm.xgb_features ?? '—'],
-          ['Trees', '1,200'],
-          ['Max depth', '4'],
-          ['Learning rate', '0.015'],
-          ['λ (reg)', '4'],
-          ['Subsample', '0.7']
+          ['Fights in train', '1,797'],
+          ['Training rows', '3,594 (×2 symmetric)'],
+          ['Raw asymmetry', 'was 11.5pp avg, now 0.06pp'],
+          ['Flip transforms', '_diff × −1; ratios -r/(r+1); elo_win_prob 1−p']
         ]
       },
-      blend: {
-        title: 'Blend · 50/50 average',
-        desc: 'Final prediction = (P_lr + P_xgb) / 2. The two models make uncorrelated errors — averaging cancels both biases. Beats either alone on log-loss in 8/8 walk-forward folds. See section 02 to test other weights.',
+      symavg: {
+        title: 'Inference-time averaging (belt-and-suspenders)',
+        desc: 'Even though the LR is symmetric by construction, /api/predict still runs both argument orders and averages the probabilities. This catches any residual asymmetry (e.g., in days_since_last_fight_f1 which is f1-absolute) and eliminates the possibility of order-dependent UI answers.',
         specs: [
-          ['Test bouts', d.metrics.test_fights ?? '—'],
-          ['Accuracy', d.metrics.accuracy ?? '—'],
-          ['Log Loss', d.metrics.log_loss ?? '—'],
-          ['Brier', d.metrics.brier ?? '—'],
-          ['AUC', d.metrics.auc ?? '—'],
-          ['Past-yr ROI', d.metrics.roi_past_year ? String(d.metrics.roi_past_year).match(/([+-]?\d+(\.\d+)?%)/)?.[1] ?? '—' : '—']
+          ['Per-request cost', '2x LR forward passes'],
+          ['Symmetry gap post-avg', '< 1e-6'],
+          ['Trigger', 'predict(a,b) and predict(b,a)']
         ]
       }
     };
-    miShowArch('blend'); // default
+    miShowArch('lr'); // default
 
     // Section 05 tier list (from summary's confidence_tiers)
     if (d.confidence_tiers) {

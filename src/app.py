@@ -1706,11 +1706,16 @@ def _feat_display_name(feat):
 def feature_importance():
     """Return top features by absolute LR coefficient weight.
 
-    Prefers the BLEND's LR (the model actually serving predictions).
-    Falls back to the LR+CB ensemble's LR if blend not loaded.
+    Prefers PredictorV2's LR (the model actually serving predictions post
+    the v2 cutover). Falls back to BlendPredictor, then LR+CB ensemble.
     """
+    v2 = model_state.get("v2")
     bp = model_state.get("blend")
-    if bp is not None:
+    if v2 is not None:
+        features = v2.feat_cols
+        coef = v2.lr.coef_[0]
+        source = "LR (v2, 207-feature symmetric, elastic net on standardized features)"
+    elif bp is not None:
         features = bp.lr_cols
         coef = bp.lr.coef_[0]
         source = "LR (blend component, elastic net, trained on standardized features)"
@@ -1720,7 +1725,7 @@ def feature_importance():
             return jsonify({"error": "Model not loaded"}), 503
         features = models["feat_cols"]
         coef = models["lr"].coef_[0]
-        source = "LR+CB ensemble (blend artifact unavailable)"
+        source = "LR+CB ensemble (blend/v2 artifact unavailable)"
 
     items = []
     for i, feat in enumerate(features):
@@ -1745,11 +1750,16 @@ def feature_importance():
 def model_summary():
     """Return model stats for the insights page.
 
-    Reports on the BLEND's LR when available (that's what serves predictions).
+    Reports on PredictorV2's LR (207 features, symmetric) when available —
+    that's what serves predictions. Falls back to blend, then LR+CB.
     """
+    v2 = model_state.get("v2")
     bp = model_state.get("blend")
     models = model_state.get("models")
-    if bp is not None:
+    if v2 is not None:
+        feat_cols = v2.feat_cols
+        coef = v2.lr.coef_[0]
+    elif bp is not None:
         feat_cols = bp.lr_cols
         coef = bp.lr.coef_[0]
     elif models is not None:
@@ -1759,15 +1769,30 @@ def model_summary():
         return jsonify({"error": "Model not loaded"}), 503
     active = int(sum(1 for c in coef if c != 0))
 
-    # Categorize features
+    # Categorize features — updated for v2 feature families.
     def categorize(f):
-        if 'elo' in f or 'peak' in f: return 'Elo Rating'
-        if f in ['striking_matchup','grappling_matchup','wrestling_matchup',
-                 'power_matchup','sub_matchup','style_distance']: return 'Style Matchup'
+        # Elo features: both _ufc/_exp suffixes and striking/grappling elo
+        if f.endswith(('_ufc', '_exp')) or 'striking_elo' in f or 'grappling_elo' in f:
+            return 'Elo (UFC+Expanded+Style)'
+        # Weight-class history (new this session)
+        if f in ('wc_native_winrate_diff', 'wc_native_fights_diff',
+                 'wc_native_ko_rate_diff', 'days_since_this_wc_diff',
+                 'cross_division_flag'):
+            return 'Weight-Class History'
+        # Tier 1c recency
+        if f in ('win_streak_entering_diff', 'coming_off_loss_diff',
+                 'fights_last_12m_diff'):
+            return 'Recency (Tier 1c)'
+        # Style/matchup (legacy blend-era, kept if present)
+        if f in ('striking_matchup','grappling_matchup','wrestling_matchup',
+                 'power_matchup','sub_matchup','style_distance'):
+            return 'Style Matchup'
         if 'adjperf' in f: return 'Opponent-Adjusted Stats'
         if 'opp_mean' in f: return 'Opponent History'
-        if f in ['age_diff','ufc_age_diff','days_since_last_fight_diff',
-                 'WEIGHT_diff','age_dec_avg_diff','days_since_last_fight_f1']: return 'Demographics'
+        if f in ('age_diff','ufc_age_diff','days_since_last_fight_diff',
+                 'WEIGHT_diff','age_dec_avg_diff','days_since_last_fight_f1',
+                 'age_ratio_diff','reach_ratio_diff'):
+            return 'Demographics'
         if 'rd1' in f: return 'Round 1 Stats'
         if 'weightclass' in f or 'scheduled' in f: return 'Fight Context'
         return 'Fight Stats'
@@ -1798,14 +1823,29 @@ def model_summary():
                 "peak": round(peak),
             })
 
-    # Model provenance: is the blend actually loaded and serving?
-    blend_info = {"available": False}
-    bp = model_state.get("blend")
-    if bp is not None:
+    # Primary-model provenance. When v2 is serving, report v2 stats.
+    # Legacy `blend` field kept for any old UI code that reads it.
+    primary = {"available": False}
+    if v2 is not None:
+        primary = {
+            "available": True,
+            "lr_features": len(v2.feat_cols),
+            "xgb_features": None,   # v2 has no XGB component
+            "blend_weight_xgb": None,  # no blend
+            "train_start": "2016-01-01",
+            "train_end":   "2024-05-04",
+            "trained_on_rows": 3594,   # 1,797 fights × 2 orientations (symmetric)
+            "architecture": ("LR (elastic net, C=0.05, l1_ratio=0.5) on 207 features, "
+                             "trained symmetrically on doubled data (each fight as both "
+                             "orientations). Inference averages both argument orders as "
+                             "belt-and-suspenders redundancy."),
+            "symmetric": True,
+        }
+    elif bp is not None:
         try:
             import json as _json, pathlib as _pl
             _meta = _json.loads((_pl.Path(bp.blend_dir) / "feat_lists.json").read_text())
-            blend_info = {
+            primary = {
                 "available": True,
                 "lr_features": len(bp.lr_cols),
                 "xgb_features": len(bp.xgb_cols),
@@ -1813,10 +1853,35 @@ def model_summary():
                 "train_start": _meta.get("train_start"),
                 "train_end":   _meta.get("train_end"),
                 "trained_on_rows": _meta.get("trained_on_rows"),
-                "architecture": "LR (elastic net, C=0.05, l1_ratio=0.5) + XGBoost (depth=4, 1200 trees) blended 50/50",
+                "architecture": ("LR (elastic net, C=0.05, l1_ratio=0.5) + XGBoost "
+                                 "(depth=4, 1200 trees) blended 50/50 [LEGACY]"),
+                "symmetric": False,
             }
         except Exception as e:
-            blend_info = {"available": True, "error": str(e)}
+            primary = {"available": True, "error": str(e)}
+
+    # Metrics: v2 post-symmetrization numbers when serving, else legacy blend.
+    if v2 is not None:
+        metrics = {
+            "accuracy": "71.19%",
+            "log_loss": "0.5926",
+            "brier":    "0.2023",
+            "auc":      "0.7592",
+            "test_fights": 420,
+            "eval_method": ("Single-shot symmetric LR, held-out 420 test fights "
+                             "(2024-05 → 2025-11)"),
+            "roi_past_year": "+18.70% / 176 bets at +EV flat, p=0.013 (symmetric LR)",
+        }
+    else:
+        metrics = {
+            "accuracy": "67.9%",
+            "log_loss": "0.6206",
+            "brier":    "0.2154",
+            "auc":      "0.7080",
+            "test_fights": 517,
+            "eval_method": "Walk-forward 8 folds × 1.5 mo (blend), past year 2025-04 → 2026-04",
+            "roi_past_year": "+4.04% / 165 bets at favorite + edge > 0%",
+        }
 
     return jsonify({
         "total_features": len(feat_cols),
@@ -1825,17 +1890,8 @@ def model_summary():
         "training_fights": len(model_state.get("df_trained", [])),
         "categories": categories,
         "elo_rankings": elo_rankings,
-        # Walk-forward validated metrics (past-year, 8 folds × ~1.5 mo)
-        "metrics": {
-            "accuracy": "67.9%",
-            "log_loss": "0.6206",
-            "brier": "0.2154",
-            "auc": "0.7080",
-            "test_fights": 517,
-            "eval_method": "Walk-forward 8 folds × 1.5 mo (blend), past year 2025-04 → 2026-04",
-            "roi_past_year": "+4.04% / 165 bets at favorite + edge > 0%",
-        },
-        "primary_model": blend_info,
+        "metrics": metrics,
+        "primary_model": primary,
         "confidence_tiers": [
             {"range": "50-55%", "label": "Toss-up", "fights": 50, "accuracy": "56%"},
             {"range": "55-65%", "label": "Lean", "fights": 144, "accuracy": "59%"},
