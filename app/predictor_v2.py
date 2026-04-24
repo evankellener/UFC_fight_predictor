@@ -58,6 +58,15 @@ ELO_COLS_BASE = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
 TIER_1C = ["win_streak_entering_diff", "coming_off_loss_diff", "fights_last_12m_diff"]
 STYLE_COLS = ["striking_elo_diff", "grappling_elo_diff"]
 
+# Weight-class history features (docs/feature_wc_history.md)
+WC_HIST_COLS = ["wc_native_winrate_diff", "wc_native_fights_diff",
+                "wc_native_ko_rate_diff", "days_since_this_wc_diff"]
+# Non-diff flag on the fight as a whole (symmetric under swap)
+WC_PAIR_COLS = ["cross_division_flag"]
+WC_SHRINK_ALPHA = 3.0     # Beta-Binomial shrinkage strength
+LAM_WC = 0.13             # Decay per year (matches pipeline convention)
+DAYS_SINCE_NEVER = 9999   # Sentinel when never fought at this wc
+
 
 def _sigmoid_decay(days_inactive):
     """Sigmoid decay fraction applied to (elo - 1500).
@@ -129,6 +138,23 @@ class PredictorV2:
         else:
             # Fallback: live DB query (won't work on Render with slim DB)
             self._wl_history = self._load_winlossko_history()
+
+        # Weight-class history cache (docs/feature_wc_history.md)
+        # {jf: [(np.datetime64, weightindex_int, win_int, ko_int), ...]}
+        wc_json = self.dir / "fighter_wc_history.json"
+        if wc_json.exists():
+            raw = json.loads(wc_json.read_text())
+            self._wc_history = {
+                jf: [(np.datetime64(d), int(wc), int(w), int(k))
+                     for d, wc, w, k in entries]
+                for jf, entries in raw.items()
+            }
+            if self.verbose:
+                print(f"[PredictorV2] loaded wc history cache ({len(self._wc_history)} fighters)")
+        else:
+            self._wc_history = {}
+            if self.verbose:
+                print(f"[PredictorV2] no wc history cache found — wc features will be 0/neutral")
 
         if self.verbose:
             print(f"[PredictorV2] loaded {len(self.feat_cols)} features, "
@@ -330,9 +356,38 @@ class PredictorV2:
         if "weightclass_encoded" in self.feat_cols:
             # Use the most recent known weightindex for f1 (training convention
             # took fighter1's weightindex).
-            row["weightclass_encoded"] = float(a1.get("weightindex", 0) or 0)
+            _wc = a1.get("weightindex", 0)
+            try:
+                row["weightclass_encoded"] = 0.0 if _wc is None or (
+                    isinstance(_wc, float) and math.isnan(_wc)) else float(_wc)
+            except (TypeError, ValueError):
+                row["weightclass_encoded"] = 0.0
         if "scheduled_rounds" in self.feat_cols:
             row["scheduled_rounds"] = float(scheduled_rounds)
+
+        # ── Weight-class history features (docs/feature_wc_history.md) ───
+        # Infer the fight's weight class from f1's most-recent division
+        # (same convention as weightclass_encoded). Default 0 if unknown.
+        raw_wc = a1.get("weightindex", 0)
+        try:
+            current_wc = 0 if raw_wc is None or (isinstance(raw_wc, float) and math.isnan(raw_wc)) else int(raw_wc)
+        except (TypeError, ValueError):
+            current_wc = 0
+        wc1 = self._wc_history_state(jf1, evt_ts, current_wc)
+        wc2 = self._wc_history_state(jf2, evt_ts, current_wc)
+        if "wc_native_winrate_diff" in self.feat_cols:
+            row["wc_native_winrate_diff"] = float(wc1["winrate"] - wc2["winrate"])
+        if "wc_native_fights_diff" in self.feat_cols:
+            row["wc_native_fights_diff"] = float(wc1["fights"] - wc2["fights"])
+        if "wc_native_ko_rate_diff" in self.feat_cols:
+            row["wc_native_ko_rate_diff"] = float(wc1["ko_rate"] - wc2["ko_rate"])
+        if "days_since_this_wc_diff" in self.feat_cols:
+            row["days_since_this_wc_diff"] = float(wc1["days_since"] - wc2["days_since"])
+        if "cross_division_flag" in self.feat_cols:
+            # 1 if either fighter's most-recent-prior-division != current_wc
+            crossed = int((wc1["modal_wc"] not in (0, current_wc))
+                          or (wc2["modal_wc"] not in (0, current_wc)))
+            row["cross_division_flag"] = float(crossed)
 
         # Fill any missing cols with 0 (imputer will handle if still NaN)
         for c in self.feat_cols:
@@ -537,6 +592,66 @@ class PredictorV2:
         if not prior: return 365.0  # matches training default
         last = pd.Timestamp(prior[-1])
         return max(0.0, float((evt_ts - last).days))
+
+    # ── Weight-class history (docs/feature_wc_history.md) ──────────────
+    def _wc_history_state(self, jf: str, evt_ts: pd.Timestamp,
+                          current_wc: int) -> dict:
+        """Division-specific history for jf as-of evt_ts.
+
+        Returns dict with:
+          winrate    — Beta-shrunk decayed win rate at current_wc
+          fights     — count of prior bouts at current_wc
+          ko_rate    — decayed KO rate at current_wc (shrunk toward 0)
+          days_since — days since last bout at current_wc (or DAYS_SINCE_NEVER)
+          modal_wc   — most recent prior division (0 if no priors)
+        """
+        h = self._wc_history.get(jf, [])
+        evt64 = np.datetime64(evt_ts)
+        # All strictly-prior bouts (any division)
+        prior_all = [(d, wc, w, k) for d, wc, w, k in h if d < evt64]
+        if not prior_all:
+            return dict(winrate=0.5, fights=0, ko_rate=0.0,
+                        days_since=DAYS_SINCE_NEVER, modal_wc=0)
+
+        # Modal (most-frequent) prior division — captures career-level home
+        # division. Used for cross_division_flag. E.g. Spann has 12 LHW + 2 HW,
+        # modal=LHW; a HW fight flags cross-division.
+        from collections import Counter
+        modal_wc = int(Counter(wc for _, wc, _, _ in prior_all).most_common(1)[0][0])
+
+        # Filter to bouts at current_wc
+        prior_wc = [(d, w, k) for d, wc, w, k in prior_all if wc == current_wc]
+        if not prior_wc:
+            return dict(winrate=0.5, fights=0, ko_rate=0.0,
+                        days_since=DAYS_SINCE_NEVER, modal_wc=modal_wc)
+
+        # Decay weights: exp(-λ * years_ago)
+        evt_ts_pd = pd.Timestamp(evt_ts)
+        weights = np.array([
+            math.exp(-LAM_WC * (evt_ts_pd - pd.Timestamp(d)).days / 365.25)
+            for d, _, _ in prior_wc
+        ])
+        wins = np.array([w for _, w, _ in prior_wc], dtype=float)
+        kos = np.array([k for _, _, k in prior_wc], dtype=float)
+        w_sum = float(weights.sum())
+
+        if w_sum <= 0:
+            return dict(winrate=0.5, fights=len(prior_wc), ko_rate=0.0,
+                        days_since=DAYS_SINCE_NEVER, modal_wc=modal_wc)
+
+        # Beta-Binomial shrinkage:
+        #   winrate_smooth = (Σw*y + 0.5*α) / (Σw + α)
+        decayed_win_num = float((weights * wins).sum())
+        decayed_ko_num  = float((weights * kos).sum())
+        winrate = (decayed_win_num + 0.5 * WC_SHRINK_ALPHA) / (w_sum + WC_SHRINK_ALPHA)
+        ko_rate = decayed_ko_num / (w_sum + WC_SHRINK_ALPHA)  # prior 0 for KO
+
+        last_at_wc = pd.Timestamp(prior_wc[-1][0])
+        days_since = float((evt_ts_pd - last_at_wc).days)
+
+        return dict(winrate=winrate, fights=len(prior_wc),
+                    ko_rate=ko_rate, days_since=days_since,
+                    modal_wc=modal_wc)
 
 
 # ── Smoke test ──────────────────────────────────────────────────────────

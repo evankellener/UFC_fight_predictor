@@ -200,5 +200,10 @@
   "coming_off_loss_diff",
   "fights_last_12m_diff",
   "striking_elo_diff",
-  "grappling_elo_diff"
+  "grappling_elo_diff",
+  "wc_native_winrate_diff",
+  "wc_native_fights_diff",
+  "wc_native_ko_rate_diff",
+  "days_since_this_wc_diff",
+  "cross_division_flag"
 ]

@@ -125,7 +125,7 @@ def init_model():
                              "feat_cols.json", "fighter_mma_history.parquet",
                              "fighter_elo_ufc.json", "fighter_elo_exp.json",
                              "fighter_style_elo.json", "fighter_bios.json",
-                             "fighter_winlossko.json"]
+                             "fighter_winlossko.json", "fighter_wc_history.json"]
             for _f in _files_needed:
                 _p = _art / _f
                 if not _p.exists():
