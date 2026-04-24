@@ -104,8 +104,12 @@ def wc_state(jf, evt_ts, current_wc, wc_hist):
 
 
 def add_wc_features(df, wc_hist):
-    """Add 5 wc-history columns to df, keyed on (DATE, jfighter, opp_jfighter, weightindex).
-    Uses each row's own weightindex as current_wc (training convention)."""
+    """Add 5 wc-history columns to df.
+    Uses each row's own weightindex as current_wc (training convention).
+
+    NOTE: `cross_division_x_weight_diff` interaction was tested and reverted —
+    coefficient survived ElasticNet (+0.0058) but accuracy dropped 71.19→70.71
+    on the 420-fight test (noise, but no lift). See commit log for details."""
     out_rows = {c: [] for c in WC_HIST_DIFF_COLS + WC_PAIR_COLS}
     for _, r in df.iterrows():
         jf1, jf2 = r["jfighter"], r["opp_jfighter"]
@@ -293,20 +297,29 @@ def main():
     eval_set(test_doubled.iloc[mid:], test_doubled.iloc[mid:]["win"].astype(int).values,
              "test (doubled, flip half)")
 
-    # Reference: deployed (asymmetric) LR on same test set, for comparison
-    print("\n=== Reference: current deployed LR (asymmetric) ===")
-    lr_old = pickle.load(open(OUT / "lr.pkl", "rb"))
-    sc_old = pickle.load(open(OUT / "lr_scaler.pkl", "rb"))
-    imp_old = pickle.load(open(OUT / "lr_imputer.pkl", "rb"))
-    feats_old = json.loads((OUT / "feat_cols.json").read_text())
-    X_o = imp_old.transform(test[feats_old])
-    X_o = sc_old.transform(X_o)
-    p_o = lr_old.predict_proba(X_o)[:, 1]
-    y_o = test["win"].astype(int).values
-    print(f"  deployed on test (single-orient)  n={len(y_o)}  "
-          f"acc={accuracy_score(y_o, (p_o>=0.5).astype(int)):.4f}  "
-          f"ll={log_loss(y_o, np.clip(p_o,0.02,0.98)):.4f}  "
-          f"auc={roc_auc_score(y_o, p_o):.4f}")
+    # Reference: previously-saved LR on same test set. Skip gracefully if
+    # feat_cols on disk don't match current test columns (e.g. reverted feature).
+    print("\n=== Reference: previously-saved LR ===")
+    try:
+        lr_old = pickle.load(open(OUT / "lr.pkl", "rb"))
+        sc_old = pickle.load(open(OUT / "lr_scaler.pkl", "rb"))
+        imp_old = pickle.load(open(OUT / "lr_imputer.pkl", "rb"))
+        feats_old = json.loads((OUT / "feat_cols.json").read_text())
+        missing = [c for c in feats_old if c not in test.columns]
+        if missing:
+            print(f"  (skipping — stale feat_cols references {len(missing)} "
+                  f"missing cols: {missing[:3]}...)")
+            raise RuntimeError("stale feat_cols")
+        X_o = imp_old.transform(test[feats_old])
+        X_o = sc_old.transform(X_o)
+        p_o = lr_old.predict_proba(X_o)[:, 1]
+        y_o = test["win"].astype(int).values
+        print(f"  deployed on test (single-orient)  n={len(y_o)}  "
+              f"acc={accuracy_score(y_o, (p_o>=0.5).astype(int)):.4f}  "
+              f"ll={log_loss(y_o, np.clip(p_o,0.02,0.98)):.4f}  "
+              f"auc={roc_auc_score(y_o, p_o):.4f}")
+    except Exception as _e:
+        pass  # reference comparison optional
 
     # Save new artifacts
     pickle.dump(lr,  open(OUT / "lr.pkl",         "wb"))

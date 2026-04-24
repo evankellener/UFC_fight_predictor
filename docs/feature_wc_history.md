@@ -80,6 +80,30 @@ Best guess: +0.1 to +0.5pp test accuracy. Larger lift if cross-division fights a
 - **Buchecha vs Spann 2026-04-23**: `wc_native_winrate` for Buchecha at HW shrinks from 0% → 30% (α=3); for Spann at HW = 0 fights → 50% neutral prior. `cross_division_flag = 1` (Spann's modal division LHW ≠ current). The model should de-weight the raw `WEIGHT_diff` dominance and pull the prediction down from 80.4% somewhat.
 - Fighters with long stable careers at one division (Sterling at BW, Jones at LHW/HW): no change, both `cross_division_flag=0` and `wc_native_winrate_diff ≈ overall win rate diff`.
 
+## What didn't work (audited & reverted)
+
+Tested and removed in the same session:
+
+**`cross_division_x_weight_diff` interaction** — product of `cross_division_flag` × `WEIGHT_diff`. Rationale: catch the Buchecha-Spann size asymmetry that appears only in cross-division fights.
+
+Result on 420-fight test set:
+- Coefficient after ElasticNet: +0.0058 (active, rank 83/208)
+- Accuracy: 71.19% (without) → 70.71% (with). **Dropped by 2 fights.**
+- Log loss / AUC / Brier: essentially unchanged.
+
+Interpretation: the feature fires in ~1% of training fights and carries a tiny coefficient. Adding it flipped 2 borderline decisions on the test set, probably noise, but no measurable lift. Reverted.
+
+## ElasticNet survival in final 207-feature model
+
+Of the 5 added features:
+- `wc_native_winrate_diff`: **active**, rank 63/207, coef +0.0245 (intuitive direction)
+- `wc_native_fights_diff`: **active**, rank 62/207, coef −0.0245 (subtle; captures late-career-at-division penalty after age features soak up the main signal)
+- `wc_native_ko_rate_diff`: **zeroed**
+- `days_since_this_wc_diff`: **zeroed**
+- `cross_division_flag`: **zeroed**
+
+The +0.24pp accuracy lift is essentially all from the two winrate/fights features. The flag and the other two are computed but contribute nothing at the current regularization (C=0.05, l1_ratio=0.5). They remain in the feature set for transparency and to allow future regularization tuning to reactivate them if the training set grows.
+
 ## Cost of the change
 
 - One new JSON artifact (`fighter_wc_history.json`, ~250-400 KB).

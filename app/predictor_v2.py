@@ -63,6 +63,10 @@ WC_HIST_COLS = ["wc_native_winrate_diff", "wc_native_fights_diff",
                 "wc_native_ko_rate_diff", "days_since_this_wc_diff"]
 # Non-diff flag on the fight as a whole (symmetric under swap)
 WC_PAIR_COLS = ["cross_division_flag"]
+# NOTE: previously tried `cross_division_x_weight_diff` interaction — tested +0.0058
+# coefficient but accuracy on 420-fight test dropped from 71.19% → 70.71%.
+# Reverted. Left a comment here so future work doesn't re-propose it without first
+# checking `docs/feature_wc_history.md` § "What didn't work."
 WC_SHRINK_ALPHA = 3.0     # Beta-Binomial shrinkage strength
 LAM_WC = 0.13             # Decay per year (matches pipeline convention)
 DAYS_SINCE_NEVER = 9999   # Sentinel when never fought at this wc
@@ -384,7 +388,7 @@ class PredictorV2:
         if "days_since_this_wc_diff" in self.feat_cols:
             row["days_since_this_wc_diff"] = float(wc1["days_since"] - wc2["days_since"])
         if "cross_division_flag" in self.feat_cols:
-            # 1 if either fighter's most-recent-prior-division != current_wc
+            # 1 if either fighter's modal-prior-division != current_wc
             crossed = int((wc1["modal_wc"] not in (0, current_wc))
                           or (wc2["modal_wc"] not in (0, current_wc)))
             row["cross_division_flag"] = float(crossed)
