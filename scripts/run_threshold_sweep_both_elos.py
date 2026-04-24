@@ -48,7 +48,14 @@ TRAIN_START = pd.Timestamp("2016-01-01")
 TRAIN_ERA_FLOOR = pd.Timestamp("2016-01-01")
 TRAIN_YEARS = 8
 N_FOLDS = 3
-LAM = 0.13
+# LAM changed 0.13 → 1.20 on 2026-04-24 based on the 4-fold walk-forward
+# diagnostic (scripts/lambda_sweep_4fold.py). At λ=1.20, fold_4's +EV ROI
+# flipped from -8.62% to +4.35%, and fold_4 accuracy improved 65.08 → 68.25%.
+# Older folds lose some accuracy / ROI but those are historical (cannot
+# be bet again) — fold_4 is the only fold that predicts future behavior.
+# Ship accepted with the understanding that periodic retraining (every
+# 3-6 months) is needed to keep up with ongoing era drift.
+LAM = 1.20
 LOGISTIC_SCALE = 449.205
 
 ELO_COLS_BASE = ["precomp_elo_diff", "elo_win_prob", "elo_momentum_diff",
