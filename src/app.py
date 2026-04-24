@@ -2268,7 +2268,78 @@ def vegas_comparison():
     The walk-forward JSON is produced by
     scripts/build_walkforward_vegas_comparison.py.
     """
-    # ── Prefer v2 walk-forward comparison ───────────────────────────────
+    # ── Prefer v2 walk-forward MULTI-THRESHOLD comparison ──────────────
+    # Query param ?threshold=1|2|3 selects which view to serve (default 3).
+    mt_path = Path(__file__).parent.parent / "results" / "walkforward_vegas_multi_threshold.json"
+    if mt_path.exists():
+        try:
+            import json as _json
+            mt = _json.loads(mt_path.read_text())
+            req_t = request.args.get("threshold", "3")
+            if req_t not in mt.get("by_threshold", {}):
+                req_t = "3"
+            sel = mt["by_threshold"][req_t]
+            def remap_fold(m, idx):
+                return {
+                    "fold":       idx,
+                    "test_start": m.get("test_start"),
+                    "test_end":   m.get("test_end"),
+                    "n":          m.get("n_matched", 0),
+                    "n_total":    m.get("n_total", 0),
+                    "acc_model":  m["acc_model"],
+                    "acc_vegas":  m["acc_vegas"],
+                    "ll_model":   m["ll_model"],
+                    "ll_vegas":   m["ll_vegas"],
+                    "br_model":   m["brier_model"],
+                    "br_vegas":   m["brier_vegas"],
+                    "roi_flat":   m["roi_flat_model"],
+                    "n_edge":     m.get("n_pos_ev", 0),
+                    "roi_edge":   m.get("roi_pos_ev"),
+                    "vig_mean":   (m.get("vig_mean_pct") or 0) / 100.0,
+                }
+            per_fold = [remap_fold(f, i + 1) for i, f in enumerate(sel["folds"])]
+            pooled = remap_fold(sel["pooled"], 0)
+            pooled["test_start"] = sel["folds"][0].get("test_start")
+            pooled["test_end"]   = sel["folds"][-1].get("test_end")
+            # Summary across all 3 thresholds (for the toggle UI)
+            thresh_summary = {}
+            for t_str, bucket in mt["by_threshold"].items():
+                p = bucket["pooled"]
+                thresh_summary[t_str] = {
+                    "n_matched": p.get("n_matched"),
+                    "acc_model": p.get("acc_model"),
+                    "acc_vegas": p.get("acc_vegas"),
+                    "roi_flat":  p.get("roi_flat_model"),
+                    "roi_edge":  p.get("roi_pos_ev"),
+                    "n_edge":    p.get("n_pos_ev"),
+                }
+            return jsonify({
+                "coverage": {
+                    "matched":    pooled["n"],
+                    "total":      pooled["n_total"],
+                    "pct":        round(pooled["n"] / max(pooled["n_total"], 1), 4),
+                    "odds_start": sel["folds"][0].get("test_start"),
+                    "odds_end":   sel["folds"][-1].get("test_end"),
+                },
+                "pooled":   pooled,
+                "per_fold": per_fold,
+                "decomposition": {"agree": {"n": 0}, "disagree": {"n": 0},
+                                   "picks_favorite": {"n": 0}, "picks_underdog": {"n": 0},
+                                   "vegas_pick_roi": sel["pooled"].get("roi_flat_vegas_pick")},
+                "config": {
+                    "model_architecture":     "v2 symmetric LR, 4-fold walk-forward",
+                    "threshold":              int(req_t),
+                    "available_thresholds":   mt.get("thresholds", [1, 2, 3]),
+                    "methodology":            mt.get("methodology", ""),
+                    "odds_source":            "data/tmp/odds_table.csv (multi-book, order-independent pair-key match)",
+                },
+                "source": f"v2 walk-forward (4 folds × 6mo, t≥{req_t})",
+                "threshold_summary": thresh_summary,
+            })
+        except Exception as _e:
+            print(f"[vegas_comparison] multi-threshold file failed to parse: {_e}")
+
+    # ── Fallback: single-threshold walk-forward JSON ────────────────────
     wf_path = Path(__file__).parent.parent / "results" / "walkforward_vegas_comparison.json"
     if wf_path.exists():
         try:

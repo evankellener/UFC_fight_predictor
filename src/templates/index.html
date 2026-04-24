@@ -1037,6 +1037,45 @@ html.light {
 }
 
 /* ── Vegas comparison ────────────────────────────────────── */
+/* Threshold toggle for Vs.-the-market section */
+.mi-thresh-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--mi-accent-bg);
+  border: 1px solid var(--mi-accent);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.mi-thresh-label { color: var(--muted); margin-right: 0.5rem; }
+.mi-thresh-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--mi-font-mono);
+}
+.mi-thresh-btn:hover { border-color: var(--mi-accent); }
+.mi-thresh-btn.mi-thresh-active {
+  background: var(--mi-accent);
+  color: #fff;
+  border-color: var(--mi-accent);
+  font-weight: 600;
+}
+.mi-thresh-compact {
+  margin-left: auto;
+  color: var(--muted);
+  font-family: var(--mi-font-mono);
+  font-size: 0.78rem;
+}
+
 .mi-vegas-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -1666,9 +1705,19 @@ html.light {
     <h2 class="mi-section-title">Vs. the <em>market</em></h2>
   </div>
   <p class="mi-section-desc">
-    Per-fold comparison against multi-book consensus odds (devig'd, clamped to ±100).
-    Accuracy / log loss / Brier vs the market, plus flat-bet ROI at market prices.
+    Per-fold comparison against multi-book consensus odds (devig'd).
+    Accuracy / log loss / Brier vs the market, plus flat-bet ROI and +EV-only ROI at market prices.
+    Toggle prior-fight threshold to see how rookie-noise tradeoffs affect the edge.
   </p>
+
+  <!-- Prior-fights threshold toggle -->
+  <div class="mi-thresh-toggle" id="threshToggle">
+    <span class="mi-thresh-label">Require each fighter have at least:</span>
+    <button class="mi-thresh-btn" data-thresh="1" onclick="miSetThreshold(1)">1 prior fight</button>
+    <button class="mi-thresh-btn" data-thresh="2" onclick="miSetThreshold(2)">2 prior fights</button>
+    <button class="mi-thresh-btn mi-thresh-active" data-thresh="3" onclick="miSetThreshold(3)">3 prior fights (prod default)</button>
+    <span class="mi-thresh-compact" id="threshSideBySide">—</span>
+  </div>
 
   <div class="mi-vegas-card" id="vegasCard">
     <div class="mi-empty" id="vegasEmpty">Loading Vegas comparison…</div>
@@ -3186,12 +3235,13 @@ function miDrawCalibration() {
 // ──────────────────────────────────────────────────────────────────────
 // ★ VS. THE MARKET (endpoint: GET /api/model/vegas_comparison)
 // ──────────────────────────────────────────────────────────────────────
-async function miLoadVegasComparison() {
+async function miLoadVegasComparison(threshold) {
   const emptyEl = document.getElementById('vegasEmpty');
   const contentEl = document.getElementById('vegasContent');
   if (!emptyEl || !contentEl) return;
+  const t = threshold || 3;
   try {
-    const res = await fetch('/api/model/vegas_comparison');
+    const res = await fetch(`/api/model/vegas_comparison?threshold=${t}`);
     if (!res.ok) {
       emptyEl.textContent = 'Market comparison unavailable.';
       return;
@@ -3202,12 +3252,31 @@ async function miLoadVegasComparison() {
       return;
     }
     miRenderVegas(d);
+    miRenderThresholdSummary(d);
     emptyEl.style.display = 'none';
     contentEl.style.display = 'block';
   } catch (e) {
     console.error('miLoadVegasComparison failed:', e);
     emptyEl.textContent = 'Failed to load market comparison.';
   }
+}
+
+function miRenderThresholdSummary(d) {
+  const s = d.threshold_summary;
+  const el = document.getElementById('threshSideBySide');
+  if (!el) return;
+  if (!s) { el.textContent = ''; return; }
+  const parts = Object.entries(s).map(([t, v]) => {
+    const roi = v.roi_edge == null ? '—' : `${v.roi_edge >= 0 ? '+' : ''}${v.roi_edge.toFixed(1)}%`;
+    return `t=${t}: +EV ${roi} on ${v.n_edge} bets of ${v.n_matched}`;
+  });
+  el.textContent = parts.join(' · ');
+}
+
+function miSetThreshold(t) {
+  document.querySelectorAll('.mi-thresh-btn').forEach(b => b.classList.remove('mi-thresh-active'));
+  document.querySelector(`.mi-thresh-btn[data-thresh="${t}"]`)?.classList.add('mi-thresh-active');
+  miLoadVegasComparison(t);
 }
 
 function miFmtPct(v, digits = 1) {
