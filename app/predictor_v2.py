@@ -88,6 +88,40 @@ def _to_jf(name: str) -> str:
     return "".join(str(name).split())
 
 
+def _build_calibrator(method: str, params: dict):
+    """Reconstruct a calibrator from saved params. Returns a callable
+    (np.ndarray → np.ndarray) or None."""
+    eps = 1e-6
+    if method == "temperature":
+        T = float(params["T"])
+        def apply_temp(p):
+            p = np.clip(p, eps, 1 - eps)
+            logit = np.log(p / (1 - p))
+            return 1.0 / (1.0 + np.exp(-logit / T))
+        return apply_temp
+    if method == "platt":
+        A = float(params["A"]); B = float(params["B"])
+        def apply_platt(p):
+            p = np.clip(p, eps, 1 - eps)
+            logit = np.log(p / (1 - p))
+            return 1.0 / (1.0 + np.exp(-(A * logit + B)))
+        return apply_platt
+    if method == "beta":
+        a = float(params["a"]); b = float(params["b"]); c = float(params["c"])
+        def apply_beta(p):
+            p = np.clip(p, eps, 1 - eps)
+            z = a * np.log(p) + b * (-np.log(1 - p)) + c
+            return 1.0 / (1.0 + np.exp(-z))
+        return apply_beta
+    if method == "isotonic":
+        X_ = np.array(params["X_"]); y_ = np.array(params["y_"])
+        def apply_iso(p):
+            return np.interp(p, X_, y_)
+        return apply_iso
+    # uncalibrated or unknown
+    return None
+
+
 class PredictorV2:
     """Clean inference for the 202-feature LR model.
 
@@ -109,6 +143,31 @@ class PredictorV2:
         with open(self.dir / "lr_imputer.pkl", "rb") as f:
             self.imputer = pickle.load(f)
         self.feat_cols: list[str] = json.loads((self.dir / "feat_cols.json").read_text())
+
+        # Post-hoc probability calibrator (temperature scaling by default).
+        # Applied to raw LR output before returning. Order-preserving for
+        # temperature + Platt + Beta: fighter rankings never change.
+        # Stored as a portable {method, params} dict so it loads without a
+        # class dependency. See scripts/calibrate_v2_lr.py.
+        cal_path = self.dir / "calibrator.pkl"
+        self._cal_apply = None     # callable: np.ndarray -> np.ndarray
+        self.calibrator_method = None
+        if cal_path.exists():
+            try:
+                with open(cal_path, "rb") as f:
+                    cal_payload = pickle.load(f)
+                method = cal_payload.get("method", "uncalibrated")
+                params = cal_payload.get("params", {})
+                self.calibrator_method = method
+                self._cal_apply = _build_calibrator(method, params)
+                if self.verbose:
+                    print(f"[PredictorV2] loaded {method} calibrator "
+                          f"(trained on n={cal_payload.get('n_train', '?')})  "
+                          f"params={params}")
+            except Exception as e:
+                if self.verbose:
+                    print(f"[PredictorV2] calibrator load failed: {e}")
+                self._cal_apply = None
 
         # Caches
         self.mma_hist = pd.read_parquet(self.dir / "fighter_mma_history.parquet")
@@ -240,7 +299,14 @@ class PredictorV2:
         X = np.nan_to_num(X, nan=0.0, posinf=1e6, neginf=-1e6)
         X_imp = self.imputer.transform(X)
         X_s = self.scaler.transform(X_imp)
-        p_f1 = float(self.lr.predict_proba(X_s)[0, 1])
+        p_f1_raw = float(self.lr.predict_proba(X_s)[0, 1])
+
+        # Apply post-hoc calibrator if available (order-preserving for temperature
+        # scaling, so winner & ranking are unchanged; probability values shift).
+        if self._cal_apply is not None:
+            p_f1 = float(self._cal_apply(np.array([p_f1_raw]))[0])
+        else:
+            p_f1 = p_f1_raw
 
         p_a = (1 - p_f1) if flip else p_f1
         p_b = 1 - p_a

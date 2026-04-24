@@ -125,7 +125,8 @@ def init_model():
                              "feat_cols.json", "fighter_mma_history.parquet",
                              "fighter_elo_ufc.json", "fighter_elo_exp.json",
                              "fighter_style_elo.json", "fighter_bios.json",
-                             "fighter_winlossko.json", "fighter_wc_history.json"]
+                             "fighter_winlossko.json", "fighter_wc_history.json",
+                             "calibrator.pkl"]
             for _f in _files_needed:
                 _p = _art / _f
                 if not _p.exists():
@@ -2024,6 +2025,9 @@ def _get_v2_test_predictions():
         X = v2.imputer.transform(X)
         X = v2.scaler.transform(X)
         p_v2 = v2.lr.predict_proba(X)[:, 1]
+        # Apply calibrator if available — matches what v2.predict() serves.
+        if v2._cal_apply is not None:
+            p_v2 = v2._cal_apply(p_v2)
 
         out = pd.DataFrame({
             "DATE":     test["DATE"].values,
