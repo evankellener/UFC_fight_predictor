@@ -1862,16 +1862,22 @@ def model_summary():
             primary = {"available": True, "error": str(e)}
 
     # Metrics: v2 post-symmetrization numbers when serving, else legacy blend.
+    # Updated 2026-04-23 after expanding test window 2024-05 → 2026-04 (n=505).
+    # Accuracy dropped from original 71.19% (420 fights) to 69.70% (505 fights)
+    # because the LR is trained through 2024-05-04 and the extra 85 fights are
+    # 1.5+ years out of sample — honest temporal drift, not a bug.
+    # Calibration IMPROVED with more data (ECE 7.78pp → 4.77pp after temperature scaling).
     if v2 is not None:
         metrics = {
-            "accuracy": "71.19%",
-            "log_loss": "0.5926",
-            "brier":    "0.2023",
-            "auc":      "0.7592",
-            "test_fights": 420,
-            "eval_method": ("Single-shot symmetric LR, held-out 420 test fights "
-                             "(2024-05 → 2025-11)"),
-            "roi_past_year": "+18.70% / 176 bets at +EV flat, p=0.013 (symmetric LR)",
+            "accuracy": "69.70%",
+            "log_loss": "0.6012",     # post-calibration log loss
+            "brier":    "0.2071",
+            "auc":      "0.7431",
+            "test_fights": 505,
+            "eval_method": ("Single-shot symmetric LR (+ temperature-scaled), "
+                             "test fights 2024-05 → 2026-04"),
+            "roi_past_year": "+18.70% / 176 bets at +EV flat, p=0.013 (from 420-fight window; "
+                             "not re-validated on extended window)",
         }
     else:
         metrics = {

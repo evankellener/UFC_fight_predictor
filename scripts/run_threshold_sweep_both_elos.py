@@ -39,7 +39,11 @@ DT = Path("data/tmp")
 DB = "data/sqlite_db/slim_scrapper.db"
 SCRAPER_DB = "data/sqlite_db/sqlite_scrapper.db"
 TEST_FIRST = pd.Timestamp("2024-05-04")
-TEST_LAST  = pd.Timestamp("2025-11-08")
+# TEST_LAST was originally 2025-11-08. Extended to 2026-04-23 on 2026-04-23 to
+# pull in ~85 extra fights across 14 events, bringing the test set from 420 → 505.
+# Training window unchanged (ends 2024-05-04), so this is purely additive
+# out-of-sample data. Populates the high-confidence calibration buckets better.
+TEST_LAST  = pd.Timestamp("2026-04-23")
 TRAIN_START = pd.Timestamp("2016-01-01")
 TRAIN_ERA_FLOOR = pd.Timestamp("2016-01-01")
 TRAIN_YEARS = 8
