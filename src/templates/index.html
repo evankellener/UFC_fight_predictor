@@ -1623,7 +1623,10 @@ html.light {
   A logistic regression on <strong>207 engineered features</strong> — MMA-AI per-fight averages,
   Elo from two sources, recency, style, and weight-class history — trained
   <strong>symmetrically</strong> (each fight appears as both orientations) to eliminate
-  red-corner bias. 71.19% test accuracy over 420 held-out fights (2024-05 → 2025-11).
+  red-corner bias. Recency-weighted training (λ=1.20/yr) and
+  <strong>2-year rolling weight-class baselines</strong> keep the model honest against
+  era drift. Walk-forward accuracy <strong>71.6%</strong> over 522 out-of-sample fights
+  (2024-04 → 2026-04), with <strong>+14.0% ROI</strong> on +EV bets vs Vegas odds.
   Below: the architecture, the validation, and tools to interrogate any of it yourself.
 </p>
 <div class="mi-meta" id="miMetaCaption">
@@ -2853,12 +2856,13 @@ async function miLoadSummary() {
     window._miArchData = {
       mmaai: {
         title: 'MMA-AI per-fight averages · 185 features',
-        desc: 'Decayed-average striking, grappling, control, takedown, and finishing stats from each fighter\'s prior bouts. Includes opponent-adjusted (adjperf) and opponent-mean (opp_mean) variants that control for strength of schedule. λ = 0.13/yr decay.',
+        desc: 'Decayed-average striking, grappling, control, takedown, and finishing stats from each fighter\'s prior bouts. Includes opponent-adjusted (adjperf) and opponent-mean (opp_mean) variants. Beta-Binomial + Poisson-Gamma shrinkage priors now use a 2-year rolling weight-class window (not all-time) — neutralizes era drift and satisfies §1/§3 strict-prior leakage guarantees. Recency weight λ = 1.20/yr on training (shipped 2026-04-24).',
         specs: [
           ['Count', '185'],
           ['Source', 'final_features_fast'],
-          ['Decay λ', '0.13/yr'],
-          ['Prior filter', 'strictly prior to event'],
+          ['Prior filter', 'strictly prior (d < fight_date)'],
+          ['Shrinkage baseline', '2yr rolling window per WC'],
+          ['Training recency λ', '1.20/yr'],
           ['Active after L1', '~85']
         ]
       },
