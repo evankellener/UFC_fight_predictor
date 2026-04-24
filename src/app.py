@@ -1992,26 +1992,84 @@ def model_folds():
     })
 
 
+def _get_v2_test_predictions():
+    """Compute (and cache) v2's predictions on the 420-fight single-shot test
+    window. Uses the training-path feature DF directly (verified identical to
+    v2.predict() end-to-end for these rows), so this is fast: one LR transform
+    on the full test set. Results cached in model_state on first call.
+    """
+    if "v2_test_predictions" in model_state:
+        return model_state["v2_test_predictions"]
+    v2 = model_state.get("v2")
+    if v2 is None:
+        return None
+    try:
+        # Build the same test DF the retrain script used. Heavy — only do it once.
+        import sys as _sys
+        _sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+        from run_threshold_sweep_both_elos import (
+            load_base_both_elos, apply_threshold,
+            TEST_FIRST, TEST_LAST,
+        )
+        from retrain_lr_symmetric import (
+            load_wc_history_from_db, add_wc_features,
+        )
+        base = load_base_both_elos()
+        df = apply_threshold(base, 3)
+        wc_hist = load_wc_history_from_db()
+        df = add_wc_features(df, wc_hist)
+        test = df[(df["DATE"] >= TEST_FIRST) & (df["DATE"] <= TEST_LAST)].copy()
+
+        X = test[v2.feat_cols].values
+        X = v2.imputer.transform(X)
+        X = v2.scaler.transform(X)
+        p_v2 = v2.lr.predict_proba(X)[:, 1]
+
+        out = pd.DataFrame({
+            "DATE":     test["DATE"].values,
+            "jfighter": test["jfighter"].values,
+            "opp_jfighter": test["opp_jfighter"].values,
+            "y":        test["win"].astype(int).values,
+            "p_v2":     p_v2,
+        })
+        model_state["v2_test_predictions"] = out
+        return out
+    except Exception as e:
+        print(f"[_get_v2_test_predictions] failed: {e}")
+        return None
+
+
 @app.route("/api/model/calibration")
 def calibration():
     """Bucket predictions by MODEL CONFIDENCE (max(p_a, p_b)) in 5% bins from
-    50% to 100%. For each bucket return pred_avg, actual win rate, count."""
-    bt = model_state.get("backtest")
-    if not bt:
-        return jsonify({"error": _BT_MISSING_MSG}), 503
+    50% to 100%. For each bucket return pred_avg, actual win rate, count.
 
-    df = bt["df"].copy()
+    Prefers v2's predictions on the 420-fight single-shot test set when v2 is
+    serving. Falls back to backtest_predictions.json (blend walk-forward) if
+    v2 isn't loaded.
+    """
+    v2_preds = _get_v2_test_predictions()
+    if v2_preds is not None:
+        df = v2_preds.copy()
+        p_col = "p_v2"
+        source = "v2 LR on 420-fight single-shot test (2024-05 → 2025-11)"
+    else:
+        bt = model_state.get("backtest")
+        if not bt:
+            return jsonify({"error": _BT_MISSING_MSG}), 503
+        df = bt["df"].copy()
+        p_col = "p_blend"
+        source = "LR+XGB blend walk-forward backtest"
+
     # Model confidence in whoever it picks, and whether that pick was correct
-    df["conf"] = df["p_blend"].where(df["p_blend"] >= 0.5, 1.0 - df["p_blend"])
-    predicted_a = df["p_blend"] >= 0.5
+    df["conf"] = df[p_col].where(df[p_col] >= 0.5, 1.0 - df[p_col])
+    predicted_a = df[p_col] >= 0.5
     df["correct"] = ((predicted_a & (df["y"] == 1)) |
                      (~predicted_a & (df["y"] == 0))).astype(int)
 
     edges = np.arange(0.50, 1.0001, 0.05)
     buckets = []
     for lo, hi in zip(edges[:-1], edges[1:]):
-        # Include upper edge only for the last bucket (85-90% excludes 0.90,
-        # but 95-100% includes 1.0)
         if hi == edges[-1]:
             mask = (df["conf"] >= lo) & (df["conf"] <= hi)
         else:
@@ -2026,9 +2084,18 @@ def calibration():
             "n":        int(len(sub)),
         })
 
+    # Max deviation between predicted and actual rates across populated buckets
+    max_dev_pp = max(
+        (abs(b["pred_avg"] - b["actual"]) * 100
+         for b in buckets if b["pred_avg"] is not None and b["actual"] is not None),
+        default=0.0,
+    )
+
     return jsonify({
         "buckets": buckets,
         "n_total": int(len(df)),
+        "source": source,
+        "max_deviation_pp": round(max_dev_pp, 1),
     })
 
 

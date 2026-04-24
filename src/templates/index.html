@@ -3076,13 +3076,45 @@ async function miLoadCalibration() {
     window._miCalib = d.buckets;
     miDrawCalibration();
 
-    // Takeaway: find largest deviation from diagonal
-    const maxDev = d.buckets.reduce((m, b) => Math.max(m, Math.abs(b.actual - b.pred_avg)), 0);
-    const pts = (maxDev * 100).toFixed(1);
+    // Populated buckets only (ignore empties for takeaway math)
+    const populated = d.buckets.filter(b =>
+      b.pred_avg != null && b.actual != null && b.n > 0);
+    // Weighted signed deviation: positive = under-confident (actual > predicted),
+    // negative = over-confident. Weighted by n to discount tiny-sample buckets.
+    const nSum = populated.reduce((s, b) => s + b.n, 0) || 1;
+    const weightedSignedDev = populated.reduce((s, b) =>
+      s + b.n * (b.actual - b.pred_avg) * 100, 0) / nSum;
+    const ptsNum = (d.max_deviation_pp != null)
+      ? d.max_deviation_pp
+      : populated.reduce((m, b) =>
+          Math.max(m, Math.abs(b.actual - b.pred_avg) * 100), 0);
+    const pts = ptsNum.toFixed(1);
+    const nTotal = d.n_total || 0;
+    let message;
+    if (ptsNum < 7) {
+      message = "Well-calibrated: predicted and actual rates agree within ~7pp everywhere. " +
+        "When the model says 70%, fighters in that bucket win close to 70% of the time.";
+    } else if (weightedSignedDev > 2) {
+      message = `Systematically <em>under-confident</em> on a weighted basis ` +
+        `(actual rates run ~${weightedSignedDev.toFixed(1)}pp higher than predicted). ` +
+        `That means true win rates are higher than the model's probabilities — favorable ` +
+        `for betting at +EV picks, since you'll realize more EV than the displayed edge suggests. ` +
+        `Larger-N buckets are more reliable than the ${pts}pp worst-bucket number.`;
+    } else if (weightedSignedDev < -2) {
+      message = `Systematically <em>over-confident</em> on a weighted basis ` +
+        `(actual rates run ~${Math.abs(weightedSignedDev).toFixed(1)}pp lower than predicted). ` +
+        `Bet sizes informed by raw probabilities may be too aggressive — halve Kelly stakes, or ` +
+        `wait for a proper post-calibration pass.`;
+    } else {
+      message = `Mixed miscalibration across buckets. Worst bucket deviates ${pts}pp, ` +
+        `but weighted-average deviation is only ${weightedSignedDev.toFixed(1)}pp. ` +
+        `Single-fight probabilities should be treated as approximate (±5-10pp).`;
+    }
+    const sourceNote = d.source
+      ? `<span style="color:var(--muted);font-size:0.78rem;">Source: ${d.source} · n=${nTotal} fights</span>`
+      : '';
     document.getElementById('calibTakeaway').innerHTML =
-      `<strong>Calibrated within ${pts} points across all confidence buckets.</strong> ` +
-      `The model ${maxDev < 0.05 ? "isn't systematically over- or under-confident" : "drifts slightly from the diagonal in some buckets"} — ` +
-      `when it says 70%, fighters in that bucket win close to 70% of the time.`;
+      `<strong>Worst-bucket deviation: ${pts}pp.</strong> ${message}<br>${sourceNote}`;
   } catch (e) {
     console.error('miLoadCalibration failed:', e);
     miShowCalibEmpty();
@@ -3128,19 +3160,25 @@ function miDrawCalibration() {
   html += `<text x="${pad.left + cw/2}" y="${H - 10}" font-family="Inter Tight, sans-serif" font-size="11" fill="${textColor}" text-anchor="middle">Predicted probability</text>`;
   html += `<text x="15" y="${pad.top + ch/2}" font-family="Inter Tight, sans-serif" font-size="11" fill="${textColor}" text-anchor="middle" transform="rotate(-90 15 ${pad.top + ch/2})">Actual win rate</text>`;
 
-  // Model line
-  const sorted = buckets.slice().sort((a, b) => a.pred_avg - b.pred_avg);
-  let pathD = '';
-  sorted.forEach((d, i) => {
-    pathD += (i === 0 ? 'M' : 'L') + ' ' + xs(d.pred_avg) + ' ' + ys(d.actual) + ' ';
-  });
-  html += `<path d="${pathD}" stroke="${accent}" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
+  // Model line — filter out empty buckets (pred_avg/actual are null when
+  // no fights fell into that bin). Without this, the path includes NaN
+  // coordinates and draws artifacts near the axes.
+  const populated = buckets.filter(b =>
+    b.pred_avg != null && b.actual != null && b.n > 0);
+  const sorted = populated.slice().sort((a, b) => a.pred_avg - b.pred_avg);
+  if (sorted.length > 0) {
+    let pathD = '';
+    sorted.forEach((d, i) => {
+      pathD += (i === 0 ? 'M' : 'L') + ' ' + xs(d.pred_avg) + ' ' + ys(d.actual) + ' ';
+    });
+    html += `<path d="${pathD}" stroke="${accent}" stroke-width="2" fill="none" stroke-linejoin="round"/>`;
 
-  // Points sized by n
-  sorted.forEach(d => {
-    const r = Math.max(3, Math.sqrt(d.n) * 0.6);
-    html += `<circle cx="${xs(d.pred_avg)}" cy="${ys(d.actual)}" r="${r}" fill="${accent}" fill-opacity="0.25" stroke="${accent}" stroke-width="1.5"><title>${d.range || (d.pred_avg*100).toFixed(0)+'%'}: ${d.n} bouts, actual ${(d.actual*100).toFixed(1)}%</title></circle>`;
-  });
+    // Points sized by n
+    sorted.forEach(d => {
+      const r = Math.max(3, Math.sqrt(d.n) * 0.6);
+      html += `<circle cx="${xs(d.pred_avg)}" cy="${ys(d.actual)}" r="${r}" fill="${accent}" fill-opacity="0.25" stroke="${accent}" stroke-width="1.5"><title>${d.range || (d.pred_avg*100).toFixed(0)+'%'}: ${d.n} bouts, actual ${(d.actual*100).toFixed(1)}%</title></circle>`;
+    });
+  }
 
   svg.innerHTML = html;
 }
