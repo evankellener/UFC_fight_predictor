@@ -34,7 +34,7 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 |---|---|---|---|
 | ~~Recent-form features (last 3 fights)~~ | tried 2026-04-24 | **Rejected** — see Rejected list. All 3 coefs zeroed. |
 | ~~ElasticNet C sweep~~ | tried 2026-04-24 | **No improvement** — C=0.05 already optimal on every metric. See Rejected list. |
-| **Finishing Elo** (KO+sub rate, opp-adjusted) | 2 hr | +0.3-0.8pp acc | Current striking Elo rewards volume, not power. Distinct signal. |
+| ~~Finishing Elo~~ | tried 2026-04-24 | **Rejected** — coef zeroed AND displaced grappling_elo. See Rejected list. |
 
 ### Tier B — medium cost, uncertain
 
@@ -76,6 +76,7 @@ Live tracker for model-improvement experiments. Every idea goes in **Future cand
 | Pure `edge > 0` bet threshold | 2026-04-23 | flagged −EV bets as WEAK BET | Changed to `ev > 0` threshold in `_bet_recommendation` |
 | **Recent-form features** (last3_win_rate_diff, last3_finish_rate_diff, last3_avg_fight_time_diff) | 2026-04-24 | All 3 ElasticNet coefs **= 0.00000**. Walk-forward identical to 4 decimal places vs era-rolling baseline. | Existing `dec_avg`-derived features (`win_streak_entering_diff`, `finish_rate_dec_avg_diff`, etc.) already capture this signal. Hard-cutoff last-3 added redundancy without new info. **Helpers kept** (`load_recent_form_from_db`, `add_recent_form_features`, `fighter_recent_form.json` cache) for future variants like weighted last-5 or per-fight form deltas. |
 | **ElasticNet C sweep** (C ∈ {0.02, 0.05, 0.10, 0.20, 0.50, 1.0, 3.0}) | 2026-04-24 | C=0.05 (current) wins every metric on 4-fold mean: acc 71.61%, LL 0.6003, Brier 0.2062, AUC 0.7492. Closest competitor C=0.10 (LL 0.6042, acc 69.92%). | The structural ~0.033 LL gap vs Vegas (0.60 vs 0.57) is NOT a regularization problem. Vegas aggregates info we don't have (line movement, public consensus, sharp money). Tighter C under-fits (only 12 active features → 68% acc). Looser C overfits and accuracy collapses. Don't propose C tuning again. Script kept at `scripts/c_sweep_4fold.py` and results at `results/c_sweep_4fold.json` for reference. |
+| **Finishing Elo** (KO+sub actual, K=20, SCALE=400) | 2026-04-24 | Coef zeroed (= 0.00000). Worse: displaced `grappling_elo_diff` which had been an active feature — now also zeroed. Pooled t=3 acc dropped 71.62% → 71.43% (-0.19pp), pooled +EV ROI dropped 13.99% → 12.93% (-1.06pp). | Finishing rate is correlated with grappling Elo (many finishes via submission/control). Adding finishing as a separate feature confused ElasticNet — it dropped both. Existing `finish_rate_dec_avg_diff` + `ko_dec_avg_diff` features already capture finishing tendency. **`build_finishing_elo()` kept as dead code** in `run_threshold_sweep_both_elos.py` for reference. |
 
 ---
 

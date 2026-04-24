@@ -67,6 +67,7 @@ ELO_PARAMS = dict(K=48.0, ko_mult=1.80, sub_mult=1.20, decay_lambda=0.923,
                   champ_mult=1.2)
 TIER_1C = ["win_streak_entering_diff", "coming_off_loss_diff", "fights_last_12m_diff"]
 STYLE_COLS = ["striking_elo_diff", "grappling_elo_diff"]
+FINISHING_COLS = ["finishing_elo_diff"]
 RNG = np.random.default_rng(42)
 
 
@@ -92,6 +93,71 @@ def compute_elo_suffixed(bout_file, suffix):
     # Rename Elo cols with suffix
     elo = elo.rename(columns={c: f"{c}_{suffix}" for c in ELO_COLS_BASE})
     return elo
+
+
+def build_finishing_elo():
+    """Per-bout 'finishing' Elo: rewards KOing/submitting opponents.
+    Actual_f1 = 1.0 if f1 finishes f2 (ko or subw), 0.0 if f2 finishes f1,
+    0.5 for decisions/no-finish. Strictly orthogonal to volume-based
+    striking Elo.
+
+    Output: per-bout (DATE, jbout, jfighter, finishing_elo_diff) where
+    diff = (this fighter's pre-fight finishing Elo) - (opponent's pre-fight).
+    Same K=20, SCALE=400 as style Elos.
+    """
+    conn = sqlite3.connect(SCRAPER_DB)
+    wlk = pd.read_sql("""
+        SELECT w.jevent, w.jbout, w.jfighter, w.win, w.ko, w.subw, e.DATE
+        FROM ufc_winlossko w
+        JOIN ufc_event_details e ON e.jevent = w.jevent
+    """, conn)
+    conn.close()
+    wlk["DATE"] = pd.to_datetime(wlk["DATE"])
+    wlk = wlk.dropna(subset=["DATE"])
+
+    # Bring in elo_bouts to get f1/f2 ordering convention
+    ufc = pd.read_csv(DT / "elo_bouts.csv", parse_dates=["DATE"])
+    bouts = ufc[["jevent", "jbout", "DATE", "f1", "f2"]].copy()
+
+    # Get f1's and f2's outcome rows
+    f1 = wlk.merge(bouts, left_on=["jevent", "jbout", "jfighter"],
+                   right_on=["jevent", "jbout", "f1"], how="inner")[
+        ["jevent", "jbout", "DATE_x", "f1", "f2", "ko", "subw"]
+    ].rename(columns={"DATE_x": "DATE", "ko": "f1_ko", "subw": "f1_sub"})
+    f2 = wlk.merge(bouts, left_on=["jevent", "jbout", "jfighter"],
+                   right_on=["jevent", "jbout", "f2"], how="inner")[
+        ["jevent", "jbout", "ko", "subw"]
+    ].rename(columns={"ko": "f2_ko", "subw": "f2_sub"})
+    m = f1.merge(f2, on=["jevent", "jbout"], how="inner")
+    m = m.sort_values(["DATE", "jevent", "jbout"]).reset_index(drop=True)
+
+    # Actual finishing outcome: 1 if f1 finishes, 0 if f2 finishes, 0.5 decision
+    f1_fin = (m["f1_ko"].fillna(0).astype(int) + m["f1_sub"].fillna(0).astype(int)) > 0
+    f2_fin = (m["f2_ko"].fillna(0).astype(int) + m["f2_sub"].fillna(0).astype(int)) > 0
+    m["fin_actual_f1"] = np.where(f1_fin, 1.0, np.where(f2_fin, 0.0, 0.5))
+
+    # Run Elo update
+    finish = defaultdict(lambda: 1500.0)
+    K = 20.0
+    SCALE = 400.0
+    def exp_sc(a, b): return 1.0 / (1.0 + 10 ** ((b - a) / SCALE))
+
+    rows = []
+    for r in m.itertuples():
+        f1_pre, f2_pre = finish[r.f1], finish[r.f2]
+        # Emit pre-fight diff for BOTH fighters (mirroring per-fighter rows
+        # in mmaai_features) so the merge into base aligns regardless of
+        # which side jfighter is on.
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f1,
+                         finishing_elo_diff=f1_pre - f2_pre))
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f2,
+                         finishing_elo_diff=f2_pre - f1_pre))
+        # Update Elo
+        if not (np.isnan(r.fin_actual_f1)):
+            e1 = exp_sc(f1_pre, f2_pre)
+            finish[r.f1] = f1_pre + K * (r.fin_actual_f1 - e1)
+            finish[r.f2] = f2_pre + K * ((1 - r.fin_actual_f1) - (1 - e1))
+    return pd.DataFrame(rows)
 
 
 def build_style_elos():
@@ -208,6 +274,10 @@ def load_base_both_elos():
     se["DATE"] = pd.to_datetime(se["DATE"])
     df = df.merge(se, on=["DATE", "jbout", "jfighter"], how="left")
     for c in STYLE_COLS: df[c] = df[c].fillna(0.0)
+
+    # Finishing Elo tried & rejected 2026-04-24: coef zeroed AND displaced
+    # grappling_elo_diff (both became 0), dropping pooled +EV from 13.99% →
+    # 12.93%. build_finishing_elo() kept as dead code for reference.
 
     df = df.drop_duplicates(subset=["DATE", "jbout", "jfighter"]).reset_index(drop=True)
     return df
