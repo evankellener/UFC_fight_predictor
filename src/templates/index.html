@@ -3319,31 +3319,79 @@ function miRenderVegas(d) {
       <div class="mi-vegas-decomp-row"><span class="mi-vegas-k">ROI</span><span class="mi-vegas-v ${roiSign}">${miFmtSigned(b.roi, 2)}</span></div>
     </div>`;
   };
-  document.getElementById('vegasDecomp').innerHTML = [
-    decCard('Agree with Vegas', dec.agree, false),
-    decCard('Disagree with Vegas', dec.disagree, true),
-    decCard('Picks Favorite', dec.picks_favorite, false),
-    decCard('Picks Underdog', dec.picks_underdog, false),
-  ].join('');
+  // Only render decomposition if the backend populated it (legacy blend path).
+  // The v2 walk-forward endpoint omits decomposition — hide the section.
+  const hasDec = dec && dec.agree && (dec.agree.n || 0) > 0;
+  const decEl = document.getElementById('vegasDecomp');
+  const decHeader = decEl.previousElementSibling;  // the "Where the ROI comes from" h3
+  if (hasDec) {
+    decEl.innerHTML = [
+      decCard('Agree with Vegas', dec.agree, false),
+      decCard('Disagree with Vegas', dec.disagree, true),
+      decCard('Picks Favorite', dec.picks_favorite, false),
+      decCard('Picks Underdog', dec.picks_underdog, false),
+    ].join('');
+    if (decHeader) decHeader.style.display = '';
+    decEl.style.display = '';
+  } else {
+    decEl.innerHTML = '';
+    if (decHeader) decHeader.style.display = 'none';
+    decEl.style.display = 'none';
+  }
 
   // ── Takeaway + footnote ────────────────────────────────────
   const tk = document.getElementById('vegasTakeaway');
-  const vegasBaselineSign = miSignClass(dec.vegas_pick_roi);
-  const modelRoiSign      = miSignClass(p.roi_flat);
+  const modelRoiSign = miSignClass(p.roi_flat);
+  const vegasBaselineRoi = dec.vegas_pick_roi;
+  const accDeltaPP = (p.acc_model - p.acc_vegas) * 100;
+  const isWalkForward = /walk-forward|4 folds/i.test(d.source || d.config?.model_architecture || '');
+
+  // Per-fold drift summary (walk-forward only)
+  let driftNote = '';
+  if (d.per_fold && d.per_fold.length >= 3) {
+    const accs = d.per_fold.map(f => f.acc_model);
+    const rois = d.per_fold.map(f => f.roi_flat);
+    const accFirst = (accs[0] * 100).toFixed(1);
+    const accLast  = (accs[accs.length-1] * 100).toFixed(1);
+    const driftPP = (accs[0] - accs[accs.length-1]) * 100;
+    const roiFirst = rois[0].toFixed(1);
+    const roiLast  = rois[rois.length-1].toFixed(1);
+    driftNote = `
+      <br><br>
+      <strong>Temporal drift:</strong> model accuracy trends from
+      <strong>${accFirst}%</strong> in the first fold
+      to <strong>${accLast}%</strong> in the most recent fold
+      (Δ ${driftPP >= 0 ? '−' : '+'}${Math.abs(driftPP).toFixed(1)}pp).
+      Per-fold flat ROI: ${roiFirst}% → ${roiLast}%.
+      The edge was most real when the model was freshly trained;
+      it erodes on recent fights as the sport drifts from the training distribution.
+    `;
+  }
+
+  const vegasBaselineNote = vegasBaselineRoi !== null && vegasBaselineRoi !== undefined
+    ? `<strong>Vegas-picks baseline:</strong> blindly betting every Vegas favorite returns
+       <strong class="${miSignClass(vegasBaselineRoi)}">${miFmtSigned(vegasBaselineRoi, 2)}</strong>
+       ROI on these ${p.n} bouts.`
+    : '';
   tk.innerHTML = `
-    <strong>Baseline:</strong> blindly betting every Vegas favorite at market odds returns
-    <strong class="${vegasBaselineSign}">${miFmtSigned(dec.vegas_pick_roi, 2)}</strong>
-    ROI on these same ${p.n} bouts. The model clears
-    <strong class="${modelRoiSign}">${miFmtSigned(p.roi_flat, 2)}</strong>
-    by selectively deviating — most of that comes from picking underdogs it thinks
-    the market has priced too low.
+    <strong>Head-to-head vs Vegas:</strong> accuracy
+    <strong>${(p.acc_model * 100).toFixed(2)}%</strong> (Vegas ${(p.acc_vegas * 100).toFixed(2)}%,
+    ${accDeltaPP >= 0 ? '+' : ''}${accDeltaPP.toFixed(2)}pp),
+    log loss <strong>${p.ll_model.toFixed(4)}</strong> vs ${p.ll_vegas.toFixed(4)},
+    Brier <strong>${p.br_model.toFixed(4)}</strong> vs ${p.br_vegas.toFixed(4)}.
+    Flat-model ROI <strong class="${modelRoiSign}">${miFmtSigned(p.roi_flat, 2)}</strong>
+    on ${p.n} matched fights.
+    ${p.roi_edge !== null ? `+EV-only subset: <strong class="${miSignClass(p.roi_edge)}">${miFmtSigned(p.roi_edge, 2)}</strong> on ${p.n_edge} bets.` : ''}
+    ${vegasBaselineNote}
+    ${driftNote}
   `;
 
   const ft = document.getElementById('vegasFootnote');
-  ft.textContent = `Coverage ${miFmtPct(cov.pct, 1)} (${cov.matched}/${cov.total}) · ` +
-    `odds ${cov.odds_start} → ${cov.odds_end} · ` +
-    `clamp ${d.config.odds_clamp} · edge threshold ${d.config.edge_threshold_pp}pp · ` +
-    `vig avg ${miFmtPct(p.vig_mean, 1)}`;
+  const method = d.config && d.config.methodology ? d.config.methodology : '';
+  const srcLabel = d.source || (d.config && d.config.model_architecture) || 'unknown';
+  ft.textContent = `Coverage ${(cov.pct * 100).toFixed(1)}% (${cov.matched}/${cov.total}) · ` +
+    `odds ${cov.odds_start || '—'} → ${cov.odds_end || '—'} · ` +
+    `vig avg ${miFmtPct(p.vig_mean, 1)} · source: ${srcLabel}`;
 }
 
 // ──────────────────────────────────────────────────────────────────────

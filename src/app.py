@@ -1861,24 +1861,62 @@ def model_summary():
         except Exception as e:
             primary = {"available": True, "error": str(e)}
 
-    # Metrics: v2 post-symmetrization numbers when serving, else legacy blend.
-    # Updated 2026-04-23 after expanding test window 2024-05 → 2026-04 (n=505).
-    # Accuracy dropped from original 71.19% (420 fights) to 69.70% (505 fights)
-    # because the LR is trained through 2024-05-04 and the extra 85 fights are
-    # 1.5+ years out of sample — honest temporal drift, not a bug.
-    # Calibration IMPROVED with more data (ECE 7.78pp → 4.77pp after temperature scaling).
+    # Metrics: prefer v2 WALK-FORWARD aggregate (4 folds, refit per fold) when
+    # the walk-forward results artifact is available. This is the honest
+    # out-of-sample benchmark — each fight was predicted by an LR that had
+    # never seen it during training. Falls back to single-shot eval if the
+    # walk-forward file is missing.
     if v2 is not None:
-        metrics = {
-            "accuracy": "69.70%",
-            "log_loss": "0.6012",     # post-calibration log loss
-            "brier":    "0.2071",
-            "auc":      "0.7431",
-            "test_fights": 505,
-            "eval_method": ("Single-shot symmetric LR (+ temperature-scaled), "
-                             "test fights 2024-05 → 2026-04"),
-            "roi_past_year": "+18.70% / 176 bets at +EV flat, p=0.013 (from 420-fight window; "
-                             "not re-validated on extended window)",
-        }
+        import json as _json
+        from pathlib import Path as _Path
+        wf_path = _Path(__file__).parent.parent / "results" / "walk_forward_4fold.json"
+        wf_v_path = _Path(__file__).parent.parent / "results" / "walkforward_vegas_comparison.json"
+        if wf_path.exists():
+            try:
+                wf = _json.loads(wf_path.read_text())
+                agg = wf["aggregate"]
+                total_n = wf.get("total_n_test", 0)
+                # ROI: pull from walkforward_vegas_comparison.json pooled +EV
+                roi_str = "+18.70% / 176 bets (single-shot on 420-fight window)"
+                if wf_v_path.exists():
+                    wfv = _json.loads(wf_v_path.read_text())
+                    pooled_v = wfv.get("pooled", {})
+                    if pooled_v.get("roi_pos_ev") is not None:
+                        roi_str = (f"+{pooled_v['roi_pos_ev']:.2f}% / {pooled_v['n_pos_ev']} bets, "
+                                   f"{pooled_v['ev_win_rate']:.1f}% win rate "
+                                   f"(walk-forward +EV at Vegas odds)")
+                # Calibrated metrics where available; raw otherwise
+                metrics = {
+                    "accuracy": f"{agg['accuracy']['mean']*100:.2f}%",
+                    "log_loss": f"{agg['log_loss']['mean']:.4f}",
+                    "brier":    f"{agg['brier']['mean']:.4f}",
+                    "auc":      f"{agg['auc']['mean']:.4f}",
+                    "test_fights": total_n,
+                    "eval_method": (f"Walk-forward 4 folds × 6mo test "
+                                     f"(2024-04 → 2026-04), "
+                                     f"7yr training, LR refit per fold. "
+                                     f"Per-fold range: "
+                                     f"{agg['accuracy']['min']*100:.1f}% → "
+                                     f"{agg['accuracy']['max']*100:.1f}%"),
+                    "roi_past_year": roi_str,
+                    # Drift diagnostic: fold 1 vs fold 4 accuracy spread
+                    "drift_pp": round((agg['accuracy']['max'] - agg['accuracy']['min']) * 100, 2),
+                }
+            except Exception as _e:
+                print(f"[model_summary] walk-forward parse failed: {_e}")
+                metrics = {  # fallback — single-shot
+                    "accuracy": "69.70%", "log_loss": "0.6012", "brier": "0.2071",
+                    "auc": "0.7431", "test_fights": 505,
+                    "eval_method": "Single-shot symmetric LR, 2024-05 → 2026-04",
+                    "roi_past_year": "+18.70% / 176 bets (backtest, not re-validated)",
+                }
+        else:
+            metrics = {
+                "accuracy": "69.70%", "log_loss": "0.6012", "brier": "0.2071",
+                "auc": "0.7431", "test_fights": 505,
+                "eval_method": "Single-shot symmetric LR, 2024-05 → 2026-04",
+                "roi_past_year": "+18.70% / 176 bets (backtest, not re-validated)",
+            }
     else:
         metrics = {
             "accuracy": "67.9%",
@@ -2219,19 +2257,78 @@ def tier_bouts():
 
 @app.route("/api/model/vegas_comparison")
 def vegas_comparison():
-    """Per-fold + pooled comparison of the blended model against the market.
+    """Per-fold + pooled comparison of the served model against the market.
 
-    Source: app/models/blend/backtest_predictions.json merged with the
-    multi-book devig'd odds at data/tmp/odds_table.csv (American odds in
-    [-110, +110] are clamped to ±100 — matches the notebook pipeline).
+    Prefers results/walkforward_vegas_comparison.json when available —
+    that's the honest v2 walk-forward (4 folds × 6mo test, LR refit per
+    fold) matched against devig'd multi-book Vegas odds. Falls back to
+    the legacy LR+XGB blend walk-forward data if the v2 comparison file
+    is missing.
 
-    Returns:
-      coverage       : {matched, total, pct, odds_start, odds_end}
-      pooled         : metrics across all matched bouts
-      per_fold       : list of metrics per walk-forward fold
-      decomposition  : agree/disagree with Vegas, favorite/underdog picks
-      config         : {blend_weight_xgb, edge_threshold_pp, odds_clamp}
+    The walk-forward JSON is produced by
+    scripts/build_walkforward_vegas_comparison.py.
     """
+    # ── Prefer v2 walk-forward comparison ───────────────────────────────
+    wf_path = Path(__file__).parent.parent / "results" / "walkforward_vegas_comparison.json"
+    if wf_path.exists():
+        try:
+            import json as _json
+            wf = _json.loads(wf_path.read_text())
+            # Remap to the shape the frontend expects
+            def remap_fold(m, idx):
+                return {
+                    "fold":       idx,
+                    "test_start": m.get("test_start"),
+                    "test_end":   m.get("test_end"),
+                    "n":          m.get("n_matched", m.get("n", 0)),
+                    "n_total":    m.get("n_total", m.get("n_matched", m.get("n", 0))),
+                    "acc_model":  m["acc_model"],
+                    "acc_vegas":  m["acc_vegas"],
+                    "ll_model":   m["ll_model"],
+                    "ll_vegas":   m["ll_vegas"],
+                    "br_model":   m["brier_model"],
+                    "br_vegas":   m["brier_vegas"],
+                    "roi_flat":   m["roi_flat_model"],
+                    "n_edge":     m.get("n_pos_ev", 0),
+                    "roi_edge":   m.get("roi_pos_ev"),
+                    "vig_mean":   (m.get("vig_mean_pct") or 0) / 100.0,
+                }
+            per_fold = [remap_fold(f, i + 1) for i, f in enumerate(wf["folds"])]
+            pooled = remap_fold(wf["pooled"], 0)
+            pooled["test_start"] = wf["folds"][0].get("test_start")
+            pooled["test_end"]   = wf["folds"][-1].get("test_end")
+            return jsonify({
+                "coverage": {
+                    "matched":    pooled["n"],
+                    "total":      pooled["n_total"],
+                    "pct":        round(pooled["n"] / max(pooled["n_total"], 1), 4),
+                    "odds_start": wf["folds"][0].get("test_start"),
+                    "odds_end":   wf["folds"][-1].get("test_end"),
+                },
+                "pooled":   pooled,
+                "per_fold": per_fold,
+                # Empty decomposition — UI renders "no data" gracefully
+                "decomposition": {
+                    "agree":          {"n": 0},
+                    "disagree":       {"n": 0},
+                    "picks_favorite": {"n": 0},
+                    "picks_underdog": {"n": 0},
+                    "vegas_pick_roi":  wf["pooled"].get("roi_flat_vegas_pick"),
+                    "vegas_pick_win_rate": None,
+                },
+                "config": {
+                    "model_architecture": "v2 symmetric LR, 4-fold walk-forward",
+                    "edge_threshold":     "EV > 0 at vigged odds",
+                    "odds_source":        "ufc_fight_odds (multi-book avg, devig'd)",
+                    "methodology":        wf.get("methodology", ""),
+                },
+                "source": "v2 walk-forward (4 folds × 6mo test)",
+            })
+        except Exception as _e:
+            print(f"[vegas_comparison] v2 walk-forward file found but failed to parse: {_e}")
+            # Fall through to legacy path
+
+    # ── Legacy path: blend walk-forward ─────────────────────────────────
     v = model_state.get("vegas")
     if not v:
         return jsonify({"error": "Vegas odds not loaded (see startup logs)"}), 503
