@@ -2006,6 +2006,42 @@ def blend_sweep():
     })
 
 
+@app.route("/api/model/lambda_sweep")
+def lambda_sweep():
+    """Serve the 4-fold × 6-λ recency-weight sweep for visualization.
+
+    Produced by scripts/lambda_sweep_4fold.py. Each cell is test-set
+    accuracy when the LR is trained with that λ recency weight on that
+    fold's training window.
+    """
+    from pathlib import Path as _P
+    import json as _json
+    path = _P(__file__).parent.parent / "results" / "lambda_sweep_4fold.json"
+    if not path.exists():
+        return jsonify({"error": "lambda sweep results not found"}), 503
+    data = _json.loads(path.read_text())
+    # Flatten into a cleaner shape for the frontend
+    folds_out = []
+    for fold_name in [f for f in data["folds"] if f in data["results"]]:
+        row = {"fold": fold_name, "lambdas": []}
+        for lam in data["lambdas"]:
+            m = data["results"][fold_name].get(str(lam)) or data["results"][fold_name].get(lam)
+            row["lambdas"].append({
+                "lam":       lam,
+                "accuracy":  m["accuracy"],
+                "log_loss":  m["log_loss"],
+                "auc":       m["auc"],
+                "brier":     m["brier"],
+                "eff_n_pct": m["eff_n_pct"],
+            })
+        folds_out.append(row)
+    return jsonify({
+        "lambdas":  data["lambdas"],
+        "folds":    folds_out,
+        "best_lam_per_fold": data["best_lam_per_fold"],
+    })
+
+
 @app.route("/api/model/folds")
 def model_folds():
     """Per-fold metrics at the production blend weight (0.5)."""

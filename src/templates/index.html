@@ -1037,6 +1037,72 @@ html.light {
 }
 
 /* ── Vegas comparison ────────────────────────────────────── */
+/* λ sweep (section 03b) */
+.mi-lam-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.mi-lam-grid-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.mi-lam-grid {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  font-family: var(--mi-font-mono);
+  font-size: 0.82rem;
+}
+.mi-lam-grid th, .mi-lam-grid td {
+  padding: 0.55rem 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.mi-lam-grid th {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--bg);
+}
+.mi-lam-grid td.mi-lam-rowlabel {
+  text-align: left;
+  color: var(--text);
+  font-weight: 600;
+  background: var(--bg);
+  min-width: 90px;
+}
+.mi-lam-cell {
+  position: relative;
+  transition: transform 0.15s;
+  cursor: default;
+}
+.mi-lam-cell:hover { transform: scale(1.05); z-index: 2; }
+.mi-lam-best {
+  outline: 2px solid var(--mi-accent);
+  outline-offset: -2px;
+  font-weight: 700;
+}
+.mi-lam-grid tr:last-child td { border-bottom: none; }
+.mi-lam-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+}
+.mi-lam-legend-gradient {
+  width: 140px; height: 10px;
+  background: linear-gradient(to right,
+    rgba(244,63,94,0.25), rgba(230,230,218,0.4), rgba(34,197,94,0.35));
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
 /* Threshold toggle for Vs.-the-market section */
 .mi-thresh-toggle {
   display: flex;
@@ -1671,6 +1737,29 @@ html.light {
         <div class="mi-fold-detail-meta" id="foldMeta">—</div>
       </div>
       <div class="mi-fold-detail-stats" id="foldStats"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 03b. λ (recency-weight) sweep ─────────────────────────── -->
+<section class="mi-section">
+  <div class="mi-section-header">
+    <span class="mi-section-num">03b</span>
+    <h2 class="mi-section-title">λ <em>sweep</em> — era drift</h2>
+  </div>
+  <p class="mi-section-desc">
+    Training samples are weighted by <code>exp(−λ × years_ago)</code>. Lower λ = treat
+    old fights as nearly-equal to recent ones; higher λ = aggressively down-weight the past.
+    If the optimal λ drifts with the fold, that's a fingerprint of era-specific feature drift.
+    <strong>Best λ is monotonically increasing with fold recency — that's exactly what drift looks like.</strong>
+  </p>
+
+  <div class="mi-lam-card" id="lamSweepCard">
+    <div class="mi-empty" id="lamSweepEmpty">Loading λ sweep…</div>
+    <div id="lamSweepContent" style="display:none;">
+      <!-- Heatmap grid rendered by JS into this element -->
+      <div id="lamGrid"></div>
+      <div class="mi-takeaway" id="lamTakeaway"></div>
     </div>
   </div>
 </section>
@@ -2719,6 +2808,7 @@ async function miLoadAll() {
   miLoadCalibration();
   miLoadVegasComparison();
   miLoadTiers();
+  miLoadLambdaSweep();
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -3271,6 +3361,92 @@ function miRenderThresholdSummary(d) {
     return `t=${t}: +EV ${roi} on ${v.n_edge} bets of ${v.n_matched}`;
   });
   el.textContent = parts.join(' · ');
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// 03b. λ SWEEP (endpoint: GET /api/model/lambda_sweep)
+// ──────────────────────────────────────────────────────────────────────
+async function miLoadLambdaSweep() {
+  const emptyEl = document.getElementById('lamSweepEmpty');
+  const contentEl = document.getElementById('lamSweepContent');
+  if (!emptyEl || !contentEl) return;
+  try {
+    const res = await fetch('/api/model/lambda_sweep');
+    if (!res.ok) { emptyEl.textContent = 'λ sweep unavailable.'; return; }
+    const d = await res.json();
+    if (d.error) { emptyEl.textContent = d.error; return; }
+    miRenderLambdaSweep(d);
+    emptyEl.style.display = 'none';
+    contentEl.style.display = 'block';
+  } catch (e) {
+    console.error('miLoadLambdaSweep failed:', e);
+    emptyEl.textContent = 'Failed to load λ sweep.';
+  }
+}
+
+function miRenderLambdaSweep(d) {
+  const grid = document.getElementById('lamGrid');
+  const lambdas = d.lambdas;
+  const folds = d.folds;
+  // Compute color scale over all accuracy values in the grid
+  const allAccs = folds.flatMap(f => f.lambdas.map(x => x.accuracy));
+  const minAcc = Math.min(...allAccs), maxAcc = Math.max(...allAccs);
+  const cellColor = (acc) => {
+    // Linear interpolation from red (low) → neutral → green (high)
+    const norm = (acc - minAcc) / Math.max(maxAcc - minAcc, 1e-9);
+    if (norm > 0.5) {
+      const t = (norm - 0.5) * 2;
+      return `rgba(34, 197, 94, ${0.12 + 0.28 * t})`;
+    } else {
+      const t = 1 - norm * 2;
+      return `rgba(244, 63, 94, ${0.06 + 0.22 * t})`;
+    }
+  };
+
+  // Best λ per fold (from API) for highlighting
+  const best = d.best_lam_per_fold || {};
+
+  let html = '<div class="mi-lam-grid-wrap"><table class="mi-lam-grid">';
+  html += '<thead><tr><th class="mi-lam-rowlabel">Fold</th>';
+  lambdas.forEach(l => { html += `<th>λ = ${l}</th>`; });
+  html += '</tr></thead><tbody>';
+  folds.forEach(f => {
+    html += `<tr><td class="mi-lam-rowlabel">${f.fold}</td>`;
+    f.lambdas.forEach(cell => {
+      const isBest = Math.abs(best[f.fold] - cell.lam) < 1e-9;
+      const bg = cellColor(cell.accuracy);
+      const cls = isBest ? 'mi-lam-cell mi-lam-best' : 'mi-lam-cell';
+      const tooltip = `λ=${cell.lam} · acc=${(cell.accuracy*100).toFixed(2)}% · ` +
+                      `ll=${cell.log_loss.toFixed(4)} · eff_n=${cell.eff_n_pct.toFixed(1)}%`;
+      html += `<td class="${cls}" style="background:${bg};" title="${tooltip}">`
+            + `${(cell.accuracy*100).toFixed(1)}%</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  html += `<div class="mi-lam-legend">
+    <span>Low accuracy</span>
+    <span class="mi-lam-legend-gradient"></span>
+    <span>High accuracy</span>
+    <span style="margin-left:1rem;">Outlined cell = best λ per fold</span>
+  </div>`;
+  grid.innerHTML = html;
+
+  // Takeaway: describe the trend
+  const takeaway = document.getElementById('lamTakeaway');
+  const bestByFold = Object.entries(best);
+  // Sort by fold name (fold_1..fold_4) to get chronological
+  bestByFold.sort();
+  const trendStr = bestByFold.map(([f, l]) => `${f.replace('fold_','f')}: λ=${l}`).join(' → ');
+  takeaway.innerHTML = `
+    <strong>Best λ per fold (chronological):</strong> ${trendStr}.
+    The monotone rise from λ=0.13 on older folds to λ=1.20 on the most recent fold confirms
+    era drift — recent-era fights want heavier recency weighting. But even at λ=1.20, fold_4
+    only recovers to ${(folds[3].lambdas.slice(-1)[0].accuracy*100).toFixed(1)}%, still
+    ${((folds[0].lambdas[0].accuracy - folds[3].lambdas.slice(-1)[0].accuracy)*100).toFixed(1)}pp
+    below fold_1's baseline. Recency weighting alone can't close the drift; the real fix is
+    era-normalized feature baselines (separate feature-pipeline work, TBD).
+  `;
 }
 
 function miSetThreshold(t) {
