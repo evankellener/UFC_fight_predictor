@@ -68,6 +68,9 @@ ELO_PARAMS = dict(K=48.0, ko_mult=1.80, sub_mult=1.20, decay_lambda=0.923,
 TIER_1C = ["win_streak_entering_diff", "coming_off_loss_diff", "fights_last_12m_diff"]
 STYLE_COLS = ["striking_elo_diff", "grappling_elo_diff"]
 FINISHING_COLS = ["finishing_elo_diff"]
+CARDIO_COLS  = ["cardio_elo_diff"]
+DEFENSE_COLS = ["damage_absorbed_elo_diff"]
+STYLE_MATCH_COLS = ["stance_clash_diff", "style_clash_diff"]
 RNG = np.random.default_rng(42)
 
 
@@ -160,6 +163,138 @@ def build_finishing_elo():
     return pd.DataFrame(rows)
 
 
+def _load_per_fight_striking():
+    """Shared helper: returns DataFrame with per-bout per-fighter total &
+    round-specific sig strikes, joined with jevent/jbout/jfighter and DATE."""
+    conn = sqlite3.connect(SCRAPER_DB)
+    rounds = pd.read_sql("""
+        SELECT EVENT, BOUT, ROUND, FIGHTER, "SIG.STR." as sig_str
+        FROM ufc_fight_stats
+    """, conn)
+    wlk = pd.read_sql("""
+        SELECT EVENT, BOUT, jevent, jbout, jfighter, fight_time_minutes
+        FROM ufc_winlossko
+    """, conn)
+    conn.close()
+
+    def _parse_landed(s):
+        if not isinstance(s, str): return 0
+        try: return int(s.split(" of ")[0].strip())
+        except (ValueError, IndexError): return 0
+    rounds["landed"] = rounds["sig_str"].apply(_parse_landed)
+    # ROUND is "Round 1", "Round 2", etc. Extract trailing integer.
+    rounds["round_int"] = rounds["ROUND"].astype(str).str.extract(r"(\d+)", expand=False)
+    rounds["round_int"] = pd.to_numeric(rounds["round_int"], errors="coerce")
+    rounds = rounds.dropna(subset=["round_int"])
+    rounds["round_int"] = rounds["round_int"].astype(int)
+
+    # Simple aggregation: r1, r3plus, total landed per (EVENT, BOUT, FIGHTER)
+    r1 = rounds[rounds["round_int"] == 1].groupby(
+        ["EVENT", "BOUT", "FIGHTER"])["landed"].sum().rename("r1")
+    r3p = rounds[rounds["round_int"] >= 3].groupby(
+        ["EVENT", "BOUT", "FIGHTER"])["landed"].sum().rename("r3plus")
+    tot = rounds.groupby(["EVENT", "BOUT", "FIGHTER"])["landed"].sum().rename("total")
+    agg = pd.concat([r1, r3p, tot], axis=1).fillna(0).reset_index()
+
+    # Join with winlossko to get jevent/jbout/jfighter (normalized names) + time.
+    # ufc_winlossko.BOUT has DOUBLE spaces around "vs." ("Frank Hamaker  vs. Thaddeus Luster")
+    # while ufc_fight_stats.BOUT has single spaces. Normalize whitespace on both sides.
+    # FIGHTER in ufc_fight_stats has spaces; winlossko's jfighter is space-stripped.
+    agg["jfighter"] = agg["FIGHTER"].apply(lambda s: "".join(str(s).split()))
+    agg["BOUT_n"] = agg["BOUT"].apply(lambda s: " ".join(str(s).split()))
+    wlk = wlk.copy()
+    wlk["BOUT_n"] = wlk["BOUT"].apply(lambda s: " ".join(str(s).split()))
+    joined = agg.merge(
+        wlk[["EVENT", "BOUT_n", "jevent", "jbout", "jfighter", "fight_time_minutes"]],
+        on=["EVENT", "BOUT_n", "jfighter"], how="inner")
+    # Attach DATE from elo_bouts
+    ufc = pd.read_csv(DT / "elo_bouts.csv", parse_dates=["DATE"])
+    joined = joined.merge(ufc[["jevent", "jbout", "DATE", "f1", "f2"]],
+                          on=["jevent", "jbout"], how="inner")
+    return joined
+
+
+def _pivot_to_bouts(joined, cols):
+    """Turn per-fighter per-bout rows into per-bout rows with f1_*/f2_* cols."""
+    ufc = pd.read_csv(DT / "elo_bouts.csv", parse_dates=["DATE"])
+    bouts = ufc[["jevent", "jbout", "DATE", "f1", "f2"]].drop_duplicates().copy()
+    f1 = bouts.merge(joined[["jevent", "jbout", "jfighter"] + cols],
+                     left_on=["jevent", "jbout", "f1"],
+                     right_on=["jevent", "jbout", "jfighter"], how="inner")
+    f1 = f1[["jevent", "jbout", "DATE", "f1", "f2"] + cols].rename(
+        columns={c: f"f1_{c}" for c in cols})
+    f2 = bouts.merge(joined[["jevent", "jbout", "jfighter"] + cols],
+                     left_on=["jevent", "jbout", "f2"],
+                     right_on=["jevent", "jbout", "jfighter"], how="inner")
+    f2 = f2[["jevent", "jbout"] + cols].rename(
+        columns={c: f"f2_{c}" for c in cols})
+    m = f1.merge(f2, on=["jevent", "jbout"], how="inner").sort_values(
+        ["DATE", "jevent", "jbout"]).reset_index(drop=True)
+    return m
+
+
+def build_cardio_elo():
+    """Cardio Elo: rewards maintaining output in late rounds.
+    actual_f1 = sigmoid((f1_r3plus_share) - (f2_r3plus_share), scale=0.15)
+    where r3plus_share = r3plus_landed / total_landed (0..1).
+    """
+    try:
+        joined = _load_per_fight_striking()
+    except Exception as e:
+        raise RuntimeError(f"_load_per_fight_striking failed: {e}")
+    m = _pivot_to_bouts(joined, ["r3plus", "total"])
+    m["f1_share"] = m["f1_r3plus"] / m["f1_total"].clip(lower=1)
+    m["f2_share"] = m["f2_r3plus"] / m["f2_total"].clip(lower=1)
+    m["fight_went_r3plus"] = (m["f1_total"] + m["f2_total"] > 0) & \
+                              (m["f1_r3plus"] + m["f2_r3plus"] > 0)
+
+    cardio = defaultdict(lambda: 1500.0)
+    K = 20.0; SCALE = 400.0
+    def exp_sc(a, b): return 1.0 / (1.0 + 10 ** ((b - a) / SCALE))
+    rows = []
+    for r in m.itertuples():
+        f1_pre, f2_pre = cardio[r.f1], cardio[r.f2]
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f1,
+                         cardio_elo_diff=f1_pre - f2_pre))
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f2,
+                         cardio_elo_diff=f2_pre - f1_pre))
+        if r.fight_went_r3plus:
+            actual = 1.0 / (1.0 + np.exp(-(r.f1_share - r.f2_share) / 0.15))
+            e1 = exp_sc(f1_pre, f2_pre)
+            cardio[r.f1] = f1_pre + K * (actual - e1)
+            cardio[r.f2] = f2_pre + K * ((1 - actual) - (1 - e1))
+    return pd.DataFrame(rows)
+
+
+def build_damage_absorbed_elo():
+    """Damage-absorbed Elo: rewards fighters who get hit less per minute.
+    actual_f1 = sigmoid((f2_landed_pm) - (f1_landed_pm), scale=2.0)
+    (positive = f1 absorbed less = f1 is winning defensively)
+    """
+    joined = _load_per_fight_striking()
+    joined["landed_pm"] = joined["total"] / joined["fight_time_minutes"].clip(lower=0.1)
+    m = _pivot_to_bouts(joined, ["landed_pm"])
+    # absorbed = opponent's landed_pm
+    m["f1_absorbed"] = m["f2_landed_pm"]
+    m["f2_absorbed"] = m["f1_landed_pm"]
+
+    defense = defaultdict(lambda: 1500.0)
+    K = 20.0; SCALE = 400.0
+    def exp_sc(a, b): return 1.0 / (1.0 + 10 ** ((b - a) / SCALE))
+    rows = []
+    for r in m.itertuples():
+        f1_pre, f2_pre = defense[r.f1], defense[r.f2]
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f1,
+                         damage_absorbed_elo_diff=f1_pre - f2_pre))
+        rows.append(dict(DATE=r.DATE, jbout=r.jbout, jfighter=r.f2,
+                         damage_absorbed_elo_diff=f2_pre - f1_pre))
+        actual = 1.0 / (1.0 + np.exp(-(r.f2_absorbed - r.f1_absorbed) / 2.0))
+        e1 = exp_sc(f1_pre, f2_pre)
+        defense[r.f1] = f1_pre + K * (actual - e1)
+        defense[r.f2] = f2_pre + K * ((1 - actual) - (1 - e1))
+    return pd.DataFrame(rows)
+
+
 def build_style_elos():
     conn = sqlite3.connect(SCRAPER_DB)
     stats = pd.read_sql("""
@@ -203,6 +338,46 @@ def build_style_elos():
             grapple[r.f1] = gf1 + K*(r.grp_actual_f1 - e_g)
             grapple[r.f2] = gf2 + K*((1-r.grp_actual_f1) - (1-e_g))
     return pd.DataFrame(rows)
+
+
+def build_style_matchup_features(df):
+    """Adds two style-matchup features:
+      stance_clash_diff: signed flag — +1 if f1 is southpaw and f2 is orthodox,
+        −1 if reverse, 0 if same stance or unknown. Captures the historical
+        southpaw-vs-orthodox edge as a single direction-aware signal.
+      style_clash_diff: continuous interaction
+        td_att_pm_adjperf_dec_avg_diff * sig_str_land_pm_adjperf_dec_avg_diff.
+        NEGATIVE = wrestler-vs-striker style mismatch (one fighter high-TD, other
+        high-strike). POSITIVE = both wrestlers or both strikers. ElasticNet can
+        pick the sign (likely negative coef = mismatch favors the wrestler).
+
+    Both features use only pre-fight info (bios are static; dec_avg diffs are
+    leakage-clean per pipeline contract). No new joins on fight outcomes.
+    """
+    import json as _json
+    bios = _json.load(open("app/models/blend_v2/fighter_bios.json"))
+    def _stance(j):
+        b = bios.get(j) or {}
+        s = (b.get("stance") or "").lower()
+        if "southpaw" in s: return "southpaw"
+        if "orthodox" in s: return "orthodox"
+        return "unknown"
+
+    f1_st = df["jfighter"].map(_stance)
+    f2_st = df["opp_jfighter"].map(_stance)
+    clash = pd.Series(0, index=df.index, dtype=float)
+    clash[(f1_st == "southpaw") & (f2_st == "orthodox")] = 1.0
+    clash[(f1_st == "orthodox") & (f2_st == "southpaw")] = -1.0
+    df["stance_clash_diff"] = clash
+
+    # Style interaction — multiply two existing pre-fight diff features
+    td = df.get("td_att_pm_adjperf_dec_avg_diff")
+    ss = df.get("sig_str_land_pm_adjperf_dec_avg_diff")
+    if td is None or ss is None:
+        df["style_clash_diff"] = 0.0
+    else:
+        df["style_clash_diff"] = (td.fillna(0.0) * ss.fillna(0.0)).astype(float)
+    return df
 
 
 def load_base_both_elos():
@@ -275,9 +450,20 @@ def load_base_both_elos():
     df = df.merge(se, on=["DATE", "jbout", "jfighter"], how="left")
     for c in STYLE_COLS: df[c] = df[c].fillna(0.0)
 
-    # Finishing Elo tried & rejected 2026-04-24: coef zeroed AND displaced
-    # grappling_elo_diff (both became 0), dropping pooled +EV from 13.99% →
-    # 12.93%. build_finishing_elo() kept as dead code for reference.
+    # Tier-A/B experiments tried & rejected 2026-04-24:
+    #   - Finishing Elo: coef zeroed AND displaced grappling_elo_diff
+    #     (both → 0), dropping pooled +EV 13.99% → 12.93%.
+    #   - Cardio Elo (R3+/total striking output, opp-adjusted): coef = 0.000000.
+    #     Pooled t=3 metrics IDENTICAL to baseline (71.62% / +13.99%).
+    #   - Damage-absorbed Elo (per-minute strikes absorbed, opp-adjusted):
+    #     coef = 0.000000. No metric change.
+    #   - Style-matchup flags (stance_clash_diff, style_clash_diff
+    #     = td_att_pm_diff * sig_str_land_pm_diff): both coefs = 0.000000.
+    #     t=3 metrics IDENTICAL to baseline.
+    # Builders kept as dead code (build_finishing_elo, build_cardio_elo,
+    # build_damage_absorbed_elo, build_style_matchup_features) for reference.
+    # Helpers _load_per_fight_striking and _pivot_to_bouts also kept — useful
+    # for future striking-derived features.
 
     df = df.drop_duplicates(subset=["DATE", "jbout", "jfighter"]).reset_index(drop=True)
     return df

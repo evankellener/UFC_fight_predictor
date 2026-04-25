@@ -241,6 +241,12 @@ def flip_row_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         else:
             out[c] = -df[c].values
 
+    # Symmetric-by-construction `_diff` columns (product of two _diff features
+    # → invariant under f1↔f2 swap because both factors negate). Preserve.
+    for c in ("style_clash_diff",):
+        if c in out.columns:
+            out[c] = df[c].values
+
     # Ratio-of-fighters transform: r → -r / (r+1), guarding against r = -1
     for c in RATIO_OF_FIGHTERS:
         if c in out.columns:
