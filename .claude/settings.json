@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 scripts/*)",
+      "Bash(python3 -c *)",
+      "Bash(python3 -u scripts/*)",
+      "Bash(PYTHONUNBUFFERED=1 python3 *)",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(sqlite3 data/sqlite_db/*)",
+      "Bash(cat /tmp/*)",
+      "Bash(tail /tmp/*)",
+      "Bash(head /tmp/*)",
+      "Bash(grep *)",
+      "Bash(ls *)",
+      "Bash(git *)",
+      "Bash(echo *)",
+      "Bash(find *)",
+      "Bash(wc *)",
+      "Bash(sed -n *)",
+      "Bash(awk *)"
+    ]
+  }
+}

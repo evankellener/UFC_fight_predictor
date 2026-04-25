@@ -30,6 +30,12 @@ from sklearn.metrics import accuracy_score, log_loss, roc_auc_score, brier_score
 
 OUT = Path("app/models/blend_v2")
 
+# Training window: 4 years prior to TEST_FIRST (verified better than 7-yr in
+# 8-fold × 3-mo walk-forward — see docs/additional_model_bumps.md, commit
+# pending). Older fights even at λ=1.20 weight contribute marginal noise.
+TRAIN_YEARS = 4
+TRAIN_FIRST = TEST_FIRST - pd.DateOffset(years=TRAIN_YEARS)
+
 # Feature columns that are ratios of (f1/f2) rather than diffs of per-fighter ratios.
 # Under swap, r = (f1/f2)-1 → r_new = (f2/f1)-1 = -r/(r+1).
 # These are enumerated from mma_ai_pipeline.py: age_ratio_diff and reach_ratio_diff
@@ -310,9 +316,10 @@ def main():
     print(f"  wc_native_fights_diff == 0 (both fighters have same count at wc): {n_zero_fights:,}/{len(df):,}")
     print(f"  cross_division_flag == 1: {n_cross:,}/{len(df):,}  ({n_cross/len(df)*100:.1f}%)")
 
-    train = df[df["DATE"] < TEST_FIRST].copy()
+    train = df[(df["DATE"] >= TRAIN_FIRST) & (df["DATE"] < TEST_FIRST)].copy()
     test  = df[(df["DATE"] >= TEST_FIRST) & (df["DATE"] <= TEST_LAST)].copy()
-    print(f"\nTrain fights (single-orient): {len(train):,}")
+    print(f"\nTrain window: {TRAIN_FIRST.date()} → {TEST_FIRST.date()} ({TRAIN_YEARS}yr)")
+    print(f"Train fights (single-orient): {len(train):,}")
     print(f"Test fights (single-orient):  {len(test):,}")
 
     # Double the training set

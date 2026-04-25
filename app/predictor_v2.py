@@ -197,6 +197,35 @@ class PredictorV2:
                     print(f"[PredictorV2] companion load failed: {e}")
                 self.lr_companion = None
 
+        # Parlay-strategy LR (λ=1.50, 4-yr training). Used ONLY by
+        # parlay_predict() — separate from the general predict() ensemble.
+        # See docs/additional_model_bumps.md / parlay strategy section.
+        parlay_lr = self.dir / "lr_150.pkl"
+        self.lr_parlay = None
+        self._parlay_scaler = None
+        self._parlay_imputer = None
+        self._parlay_cal_apply = None
+        if parlay_lr.exists():
+            try:
+                with open(parlay_lr, "rb") as f:
+                    self.lr_parlay = pickle.load(f)
+                with open(self.dir / "lr_scaler_150.pkl", "rb") as f:
+                    self._parlay_scaler = pickle.load(f)
+                with open(self.dir / "lr_imputer_150.pkl", "rb") as f:
+                    self._parlay_imputer = pickle.load(f)
+                pcp = self.dir / "calibrator_150.pkl"
+                if pcp.exists():
+                    with open(pcp, "rb") as f:
+                        cp = pickle.load(f)
+                    self._parlay_cal_apply = _build_calibrator(
+                        cp.get("method", "uncalibrated"), cp.get("params", {}))
+                if self.verbose:
+                    print(f"[PredictorV2] loaded parlay-strategy LR (λ=1.50, 4-yr)")
+            except Exception as e:
+                if self.verbose:
+                    print(f"[PredictorV2] parlay LR load failed: {e}")
+                self.lr_parlay = None
+
         # Caches
         self.mma_hist = pd.read_parquet(self.dir / "fighter_mma_history.parquet")
         self.mma_hist["DATE"] = pd.to_datetime(self.mma_hist["DATE"])
@@ -306,6 +335,69 @@ class PredictorV2:
             "p_orient_b": round(p_a_orient_b, 4),
             "asymmetry_pp": round(abs(p_a_orient_a - p_a_orient_b) * 100, 2),
         }
+
+    def parlay_predict(self, fighter_a: str, fighter_b: str,
+                       event_date: str | pd.Timestamp,
+                       scheduled_rounds: int = 3, symmetrize: bool = True) -> dict:
+        """Parlay-strategy prediction using the dedicated λ=1.50 / 4-yr LR.
+
+        Use this for the PARLAY-2 edge≥5pp top-2 by edge strategy. The parlay
+        model has steeper recency bias which extracts bigger edges (validated
+        in walk-forward 8-fold × 3-mo: pooled ROI +36% vs +27% at λ=1.20).
+
+        Returns the same shape as predict() but probabilities come from the
+        parlay LR alone — NO ensemble averaging.
+
+        Falls back to predict() if the parlay LR is not loaded.
+        """
+        if self.lr_parlay is None:
+            return self.predict(fighter_a, fighter_b, event_date,
+                                scheduled_rounds=scheduled_rounds, symmetrize=symmetrize)
+        r_a = self._predict_oriented_parlay(fighter_a, fighter_b, event_date, scheduled_rounds)
+        if not r_a.get("success") or not symmetrize:
+            return r_a
+        r_b = self._predict_oriented_parlay(fighter_b, fighter_a, event_date, scheduled_rounds)
+        if not r_b.get("success"):
+            return r_a
+        p_a_orient_a = r_a["p_fighter_a"]
+        p_a_orient_b = 1.0 - r_b["p_fighter_a"]
+        p_a = 0.5 * (p_a_orient_a + p_a_orient_b)
+        p_b = 1.0 - p_a
+        return {
+            "success": True, "model": "parlay_lr_150",
+            "fighter_a": fighter_a, "fighter_b": fighter_b,
+            "p_fighter_a": round(p_a, 4), "p_fighter_b": round(p_b, 4),
+            "predicted_winner": fighter_a if p_a >= 0.5 else fighter_b,
+            "confidence": round(max(p_a, p_b), 4),
+            "event_date": r_a["event_date"],
+            "p_orient_a": round(p_a_orient_a, 4),
+            "p_orient_b": round(p_a_orient_b, 4),
+            "asymmetry_pp": round(abs(p_a_orient_a - p_a_orient_b) * 100, 2),
+        }
+
+    def _predict_oriented_parlay(self, fighter_a, fighter_b, event_date, scheduled_rounds=3):
+        """Single-orientation parlay-model prediction (no ensembling)."""
+        jf1, jf2 = _to_jf(fighter_a), _to_jf(fighter_b)
+        evt_ts = pd.to_datetime(event_date)
+        row = self._build_feature_row(jf1, jf2, evt_ts, scheduled_rounds)
+        if row is None:
+            return {"success": False,
+                    "error": f"Missing data for {fighter_a} or {fighter_b}"}
+        X = np.array([[row.get(c, 0.0) for c in self.feat_cols]], dtype=float)
+        X = np.nan_to_num(X, nan=0.0, posinf=1e6, neginf=-1e6)
+        X_imp = self._parlay_imputer.transform(X)
+        X_s = self._parlay_scaler.transform(X_imp)
+        p_raw = float(self.lr_parlay.predict_proba(X_s)[0, 1])
+        if self._parlay_cal_apply is not None:
+            p_f1 = float(self._parlay_cal_apply(np.array([p_raw]))[0])
+        else:
+            p_f1 = p_raw
+        p_a = p_f1; p_b = 1 - p_a
+        return {"success": True, "fighter_a": fighter_a, "fighter_b": fighter_b,
+                "p_fighter_a": round(p_a, 4), "p_fighter_b": round(p_b, 4),
+                "predicted_winner": fighter_a if p_a >= 0.5 else fighter_b,
+                "confidence": round(max(p_a, p_b), 4),
+                "event_date": str(evt_ts.date())}
 
     def _predict_oriented(self, fighter_a: str, fighter_b: str,
                           event_date: str | pd.Timestamp,
