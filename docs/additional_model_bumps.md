@@ -2,11 +2,20 @@
 
 Live tracker for model-improvement experiments. Every idea goes in **Future candidates** with an estimate. When tried, it moves to either **Shipped** (with metrics vs baseline) or **Rejected** (with reason).
 
-**Current production baseline** (commit `ce70c68`):
-- **Walk-forward accuracy:** 71.6% pooled across 4 folds × 6mo test (n=522)
-- **Walk-forward +EV ROI:** +14.0% on 213 bets vs Vegas odds at t=3
-- **LL / Brier:** 0.600 / 0.206 (Vegas: 0.568 / 0.192 — structural calibration gap)
-- **Architecture:** 207-feature LR, ElasticNet (C=0.05, l1=0.5), symmetric training (doubled rows), λ=1.20 recency weight, 2yr rolling WC baselines, temperature calibrator
+**Current production baseline** (commit `b075af2` — λ-ensemble shipped):
+- **Walk-forward accuracy:** **71.78%** pooled across 4 folds × 6mo test (n=522)
+- **Walk-forward +EV ROI:** **+14.08%** on **256 bets** vs Vegas odds at t=3 ★
+- **LL / Brier:** 0.5880 / 0.2030 (Vegas: 0.568 / 0.192 — structural calibration gap)
+- **Architecture:** **λ-ensemble** averaging two LRs:
+  - λ=1.20 single-model alone: 71.61% acc, +11.47% +EV ROI (228 bets), LL 0.5973
+  - λ=0.13 single-model alone: 69.87% acc, +10.32% +EV ROI (300 bets), LL 0.6056
+  - **ENSEMBLE (50/50 calibrated avg):** 71.78% / +14.08% / 256 bets / LL 0.5880 ★
+- Each LR: 207 features, ElasticNet (C=0.05, l1=0.5), symmetric training (doubled rows),
+  2yr rolling WC baselines, temperature calibrator
+- **Single-LR ablation baseline** (used for A-vs-A+feature tests because companion
+  isn't retrained per ablation): 71.62% acc / +13.99% +EV ROI / 213 bets / LL 0.6004.
+  An experiment must clear the **ensemble baseline (+14.08%, 256 bets)** to ship,
+  not just the single-LR baseline.
 
 ---
 
