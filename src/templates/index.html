@@ -149,6 +149,58 @@
   }
   .bet-summary-label { font-weight: 500; }
 
+  /* ── Parlay strategy panel (λ=1.50 model) ─────────────────────── */
+  .parlay-panel {
+    padding: 1rem 1.2rem; margin: 0.5rem 0 1.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .parlay-fires {
+    background: linear-gradient(135deg, rgba(168,85,247,0.10), rgba(34,197,94,0.08));
+    border: 1px solid rgba(168,85,247,0.4);
+    color: #f0abfc;
+  }
+  .parlay-no-fire {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .parlay-header {
+    font-size: 0.95rem; font-weight: 700; letter-spacing: 0.04em;
+    color: #f0abfc; margin-bottom: 0.25rem;
+  }
+  .parlay-no-fire .parlay-header { color: var(--muted); }
+  .parlay-subhead {
+    font-size: 0.8rem; color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .parlay-legs {
+    display: grid; gap: 0.5rem; margin: 0.6rem 0;
+  }
+  .parlay-leg {
+    display: grid; grid-template-columns: 1fr 2fr 1.5fr;
+    gap: 0.75rem; align-items: baseline;
+    padding: 0.55rem 0.75rem;
+    background: rgba(0,0,0,0.25); border-radius: 6px;
+    border: 1px solid rgba(168,85,247,0.2);
+  }
+  .leg-label {
+    font-size: 0.72rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.04em; font-weight: 600;
+  }
+  .leg-pick {
+    font-size: 1.05rem; font-weight: 600; color: #fff;
+  }
+  .leg-edge {
+    font-size: 0.78rem; color: #4ade80; text-align: right;
+    font-family: ui-monospace, Menlo, monospace;
+  }
+  .parlay-foot {
+    font-size: 0.75rem; color: var(--muted);
+    margin-top: 0.55rem; padding-top: 0.5rem;
+    border-top: 1px dashed rgba(168,85,247,0.2);
+  }
+
   .bet-badge {
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
     padding: 0.3rem 0.6rem; border-radius: 4px;
@@ -2253,12 +2305,58 @@ function renderResults(data) {
         </span>
       </div>`;
   }
+
+  // PARLAY STRATEGY panel — λ=1.50 model, men-only, edge≥5pp top-2 by edge
+  let parlayHtml = '';
+  if (data.parlay_strategy) {
+    const ps = data.parlay_strategy;
+    if (ps.fires) {
+      parlayHtml = `
+        <div class="parlay-panel parlay-fires">
+          <div class="parlay-header">★ PARLAY STRATEGY FIRES</div>
+          <div class="parlay-subhead">${ps.strategy}</div>
+          <div class="parlay-legs">
+            <div class="parlay-leg">
+              <span class="leg-label">Leg 1 · Bout #${ps.leg_1.bout_num}</span>
+              <span class="leg-pick">${ps.leg_1.display}</span>
+              <span class="leg-edge">edge +${ps.leg_1.edge_pp}pp · EV +${ps.leg_1.ev_pct}%</span>
+            </div>
+            <div class="parlay-leg">
+              <span class="leg-label">Leg 2 · Bout #${ps.leg_2.bout_num}</span>
+              <span class="leg-pick">${ps.leg_2.display}</span>
+              <span class="leg-edge">edge +${ps.leg_2.edge_pp}pp · EV +${ps.leg_2.ev_pct}%</span>
+            </div>
+          </div>
+          <div class="parlay-foot">
+            Suggested stake: ${ps.suggested_stake_pct} ·
+            Backtest expected ROI: ${ps.expected_roi_backtest}
+          </div>
+        </div>`;
+    } else if (ps.n_qualifying === 1) {
+      parlayHtml = `
+        <div class="parlay-panel parlay-no-fire">
+          <div class="parlay-header">PARLAY STRATEGY: only 1 qualifying pick</div>
+          <div class="parlay-subhead">
+            Need 2 legs to fire. Single +EV pick: <b>${ps.single_pick}</b> (Bout #${ps.single_pick_bout},
+            edge +${ps.single_pick_edge_pp}pp, EV +${ps.single_pick_ev_pct}%) — bet straight or skip.
+          </div>
+        </div>`;
+    } else {
+      parlayHtml = `
+        <div class="parlay-panel parlay-no-fire">
+          <div class="parlay-header">PARLAY STRATEGY: no qualifying picks</div>
+          <div class="parlay-subhead">${ps.reason}</div>
+        </div>`;
+    }
+  }
+
   let html = `
     <div class="event-title">
       <h2>${data.event_name}</h2>
       <div class="date">${data.event_date}</div>
     </div>
     ${summaryHtml}
+    ${parlayHtml}
   `;
   data.predictions.forEach((p, idx) => {
     if (p.error) {

@@ -1174,6 +1174,86 @@ def _bet_recommendation(p_model_a, odds_a_american, odds_b_american, stake=10.0)
     }
 
 
+@app.route("/api/parlay-predict", methods=["POST"])
+def parlay_predict():
+    """Parlay-strategy prediction using the dedicated λ=1.50 / 4-yr LR model.
+
+    Returns the parlay model's pick, edge vs Vegas devigged probs, EV%,
+    and a `qualifies_for_parlay` flag (True if ev>0 AND edge≥5pp).
+
+    Backtest evidence (8-fold × 3-mo walk-forward, men-only):
+      Pooled ROI: +37.30% on n=59 parlays
+      F8 (latest quarter): +52.2%
+      6/8 folds positive
+    See docs/additional_model_bumps.md for details.
+
+    POST JSON: {"fighter_a": "...", "fighter_b": "...", "event_date": "YYYY-MM-DD"}
+    """
+    data = request.get_json()
+    if not data or "fighter_a" not in data or "fighter_b" not in data:
+        return jsonify({"error": "Provide fighter_a and fighter_b"}), 400
+    fighter_a = data["fighter_a"]
+    fighter_b = data["fighter_b"]
+    event_date = data.get("event_date", pd.Timestamp.now().strftime("%Y-%m-%d"))
+
+    v2 = model_state.get("v2")
+    if v2 is None or not hasattr(v2, "parlay_predict"):
+        return jsonify({"error": "Parlay model not loaded"}), 503
+
+    try:
+        r = v2.parlay_predict(fighter_a, fighter_b, event_date)
+        if not r.get("success"):
+            return jsonify({"error": r.get("error", "prediction failed")}), 400
+        p_a = float(r["p_fighter_a"])
+        p_b = 1.0 - p_a
+
+        # Vegas devigged probs + edge/EV math
+        odds = _get_odds(fighter_a, fighter_b)
+        edge = ev = None
+        pick_label = fighter_a if p_a >= 0.5 else fighter_b
+        dec_pick = None
+        edge_pp = None
+        qualifies = False
+        if odds and odds.get("odds_a") is not None and odds.get("odds_b") is not None:
+            ia = _american_to_implied(odds["odds_a"])
+            ib = _american_to_implied(odds["odds_b"])
+            if ia and ib:
+                total = ia + ib
+                devig_a = ia / total
+                devig_b = ib / total
+                from math import isfinite
+                # decimal odds
+                def amer_dec(ml):
+                    return 1.0 + (ml/100.0 if ml > 0 else 100.0/abs(ml))
+                dec_a = amer_dec(odds["odds_a"])
+                dec_b = amer_dec(odds["odds_b"])
+                if p_a >= 0.5:
+                    p_pick, dec_pick, p_v_pick = p_a, dec_a, devig_a
+                else:
+                    p_pick, dec_pick, p_v_pick = p_b, dec_b, devig_b
+                edge = float(p_pick - p_v_pick)
+                edge_pp = round(edge * 100, 2)
+                ev = round(float(p_pick * dec_pick - 1.0) * 100, 2)
+                qualifies = bool(ev > 0 and edge_pp >= 5.0)
+        return jsonify({
+            "model": "parlay_lr_150 (λ=1.50, 4-yr training)",
+            "fighter_a": fighter_a,
+            "fighter_b": fighter_b,
+            "p_fighter_a": round(p_a, 4),
+            "p_fighter_b": round(p_b, 4),
+            "predicted_winner": pick_label,
+            "confidence": round(max(p_a, p_b), 4),
+            "vegas_dec_pick": round(dec_pick, 3) if dec_pick else None,
+            "edge_pp": edge_pp,
+            "ev_pct": ev,
+            "qualifies_for_parlay": qualifies,
+            "strategy": "PARLAY-2 edge≥5pp top-2 by edge per card, MEN-ONLY",
+            "event_date": event_date,
+        })
+    except Exception as e:
+        return jsonify({"error": f"parlay_predict failed: {e}"}), 500
+
+
 @app.route("/api/predict_card", methods=["POST"])
 def predict_card():
     """
@@ -1256,6 +1336,47 @@ def predict_card():
             feat_row = r.get("feature_row", {}) if isinstance(r, dict) else {}
             cross_div = bool(feat_row.get("cross_division_flag", 0)) if feat_row else False
 
+            # Parlay-strategy prediction (λ=1.50 4-yr model). Independent of
+            # the ensemble — used by the men-only PARLAY-2 edge≥5pp top-2 by
+            # edge strategy.
+            parlay = None
+            v2 = model_state.get("v2")
+            if v2 is not None and hasattr(v2, "parlay_predict"):
+                try:
+                    pr = v2.parlay_predict(fa, fb, event_date)
+                    if pr.get("success"):
+                        p_a_par = float(pr["p_fighter_a"])
+                        # Determine sex from feat_row weightindex (1-4 = women's)
+                        wi = feat_row.get("weightclass_encoded") if feat_row else None
+                        is_women = bool(wi is not None and 1 <= wi <= 4)
+                        # Edge / EV vs Vegas
+                        edge_pp_par = ev_pct_par = None
+                        qualifies = False
+                        if vegas.get("implied_prob_a") is not None:
+                            v_a = vegas["implied_prob_a"]; v_b = vegas["implied_prob_b"]
+                            def _amer_dec(ml):
+                                return 1.0 + (ml/100.0 if ml > 0 else 100.0/abs(ml))
+                            dec_a = _amer_dec(odds["odds_a"])
+                            dec_b = _amer_dec(odds["odds_b"])
+                            if p_a_par >= 0.5:
+                                p_pick, dec_pick, p_v_pick = p_a_par, dec_a, v_a
+                            else:
+                                p_pick, dec_pick, p_v_pick = 1 - p_a_par, dec_b, v_b
+                            edge_pp_par = round((p_pick - p_v_pick) * 100, 2)
+                            ev_pct_par = round((p_pick * dec_pick - 1) * 100, 2)
+                            qualifies = bool(ev_pct_par > 0 and edge_pp_par >= 5.0
+                                             and not is_women)
+                        parlay = {
+                            "p_fighter_a": round(p_a_par, 4),
+                            "predicted_winner": pr["predicted_winner"],
+                            "edge_pp": edge_pp_par,
+                            "ev_pct": ev_pct_par,
+                            "is_women": is_women,
+                            "qualifies": qualifies,
+                        }
+                except Exception as e:
+                    print(f"[predict_card] parlay_predict failed for {fa} vs {fb}: {e}")
+
             results.append({
                 "bout_num": i + 1,
                 "fighter_a": fa,
@@ -1279,6 +1400,8 @@ def predict_card():
                 "prior_fights_b": prior_b,
                 "low_confidence": low_conf,
                 "cross_division_flag": cross_div,
+                # Parlay-strategy (λ=1.50, 4-yr) — null if parlay model not loaded
+                "parlay": parlay,
             })
         except ValueError as e:
             results.append({"bout_num": i + 1, "error": str(e),
@@ -1289,6 +1412,44 @@ def predict_card():
     total_stake = sum(x["bet_rec"]["stake_suggestion"] for x in results
                       if x.get("bet_rec") and x["bet_rec"]["recommendation"] != "PASS")
 
+    # PARLAY STRATEGY summary: men-only, edge≥5pp, top-2 by edge per card
+    parlay_qual = sorted(
+        [x for x in results
+         if x.get("parlay") and x["parlay"].get("qualifies")],
+        key=lambda x: -x["parlay"]["edge_pp"]
+    )
+    parlay_strategy = None
+    if len(parlay_qual) >= 2:
+        leg1, leg2 = parlay_qual[0], parlay_qual[1]
+        parlay_strategy = {
+            "fires": True,
+            "leg_1": {"display": _format_fighter_name(leg1["parlay"]["predicted_winner"]),
+                       "bout_num": leg1["bout_num"],
+                       "edge_pp": leg1["parlay"]["edge_pp"],
+                       "ev_pct": leg1["parlay"]["ev_pct"]},
+            "leg_2": {"display": _format_fighter_name(leg2["parlay"]["predicted_winner"]),
+                       "bout_num": leg2["bout_num"],
+                       "edge_pp": leg2["parlay"]["edge_pp"],
+                       "ev_pct": leg2["parlay"]["ev_pct"]},
+            "n_qualifying": len(parlay_qual),
+            "strategy": "PARLAY-2 edge≥5pp top-2 by edge — men-only, λ=1.50 model",
+            "expected_roi_backtest": "+15-25% (drift-adjusted from +37.30% pooled)",
+            "suggested_stake_pct": "1-2% of bankroll",
+        }
+    elif len(parlay_qual) == 1:
+        parlay_strategy = {
+            "fires": False,
+            "reason": "Only 1 qualifying pick — parlay strategy needs 2 legs",
+            "single_pick": _format_fighter_name(parlay_qual[0]["parlay"]["predicted_winner"]),
+            "single_pick_bout": parlay_qual[0]["bout_num"],
+            "single_pick_edge_pp": parlay_qual[0]["parlay"]["edge_pp"],
+            "single_pick_ev_pct": parlay_qual[0]["parlay"]["ev_pct"],
+            "n_qualifying": 1,
+        }
+    else:
+        parlay_strategy = {"fires": False, "n_qualifying": 0,
+                           "reason": "No qualifying picks (need ev>0 AND edge≥5pp on a men's fight)"}
+
     return jsonify({
         "event_name": event_name,
         "event_date": event_date,
@@ -1298,6 +1459,7 @@ def predict_card():
             "recommended_bets": n_bets,
             "total_stake": round(total_stake, 2),
         },
+        "parlay_strategy": parlay_strategy,
     })
 
 
