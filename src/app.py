@@ -1373,8 +1373,16 @@ def predict_card():
                             v_a = vegas["implied_prob_a"]; v_b = vegas["implied_prob_b"]
                             def _amer_dec(ml):
                                 return 1.0 + (ml/100.0 if ml > 0 else 100.0/abs(ml))
-                            dec_a = _amer_dec(odds["odds_a"])
-                            dec_b = _amer_dec(odds["odds_b"])
+                            # Read odds from vegas (populated from DB OR user
+                            # odds — see fallback above). The original `odds`
+                            # variable from _get_odds() is {} for fights not in
+                            # the historical DB, which would KeyError here.
+                            ml_a = vegas.get("odds_a")
+                            ml_b = vegas.get("odds_b")
+                            if ml_a is None or ml_b is None:
+                                raise KeyError("vegas dict missing odds")
+                            dec_a = _amer_dec(float(ml_a))
+                            dec_b = _amer_dec(float(ml_b))
                             if p_a_par >= 0.5:
                                 p_pick, dec_pick, p_v_pick = p_a_par, dec_a, v_a
                             else:
