@@ -135,21 +135,34 @@ class PredictorV2:
         self.dir = Path(artifact_dir)
         self.verbose = verbose
 
-        # Trained model
-        with open(self.dir / "lr.pkl", "rb") as f:
-            self.lr = pickle.load(f)
-        with open(self.dir / "lr_scaler.pkl", "rb") as f:
-            self.scaler = pickle.load(f)
-        with open(self.dir / "lr_imputer.pkl", "rb") as f:
-            self.imputer = pickle.load(f)
+        # Prefer LIVE-trained model (uses ALL data through today, no test
+        # cutoff) over the validation-cutoff model (which holds out 2024-05+
+        # for honest walk-forward measurement). Falls back to validation
+        # model if `_live` artifacts don't exist yet.
+        # See scripts/retrain_live.py.
+        def _pick(live_name, prod_name):
+            live = self.dir / live_name; prod = self.dir / prod_name
+            return live if live.exists() else prod
+
+        lr_path     = _pick("lr_live.pkl",        "lr.pkl")
+        scaler_path = _pick("lr_scaler_live.pkl", "lr_scaler.pkl")
+        imp_path    = _pick("lr_imputer_live.pkl","lr_imputer.pkl")
+        self._main_is_live = lr_path.name.endswith("_live.pkl")
+
+        with open(lr_path, "rb") as f:     self.lr = pickle.load(f)
+        with open(scaler_path, "rb") as f: self.scaler = pickle.load(f)
+        with open(imp_path, "rb") as f:    self.imputer = pickle.load(f)
         self.feat_cols: list[str] = json.loads((self.dir / "feat_cols.json").read_text())
+        if self.verbose:
+            tag = "LIVE (all data through today)" if self._main_is_live else "VALIDATION (test-cutoff)"
+            print(f"[PredictorV2] main LR loaded: {lr_path.name}  [{tag}]")
 
         # Post-hoc probability calibrator (temperature scaling by default).
         # Applied to raw LR output before returning. Order-preserving for
         # temperature + Platt + Beta: fighter rankings never change.
         # Stored as a portable {method, params} dict so it loads without a
         # class dependency. See scripts/calibrate_v2_lr.py.
-        cal_path = self.dir / "calibrator.pkl"
+        cal_path = _pick("calibrator_live.pkl", "calibrator.pkl")
         self._cal_apply = None     # callable: np.ndarray -> np.ndarray
         self.calibrator_method = None
         if cal_path.exists():
@@ -160,10 +173,12 @@ class PredictorV2:
                 params = cal_payload.get("params", {})
                 self.calibrator_method = method
                 self._cal_apply = _build_calibrator(method, params)
+                self.train_through = cal_payload.get("train_through")
                 if self.verbose:
-                    print(f"[PredictorV2] loaded {method} calibrator "
-                          f"(trained on n={cal_payload.get('n_train', '?')})  "
-                          f"params={params}")
+                    src = "LIVE" if cal_path.name.endswith("_live.pkl") else "VALIDATION"
+                    through = f" through {self.train_through}" if self.train_through else ""
+                    print(f"[PredictorV2] loaded {method} calibrator [{src}{through}] "
+                          f"(n_train={cal_payload.get('n_train', '?')}, params={params})")
             except Exception as e:
                 if self.verbose:
                     print(f"[PredictorV2] calibrator load failed: {e}")
@@ -174,7 +189,7 @@ class PredictorV2:
         # Walk-forward (commit pending) showed ensemble beats either single
         # model on accuracy, LL, Brier, AND +EV ROI vs Vegas. See
         # docs/additional_model_bumps.md.
-        comp_lr = self.dir / "lr_013.pkl"
+        comp_lr = _pick("lr_013_live.pkl", "lr_013.pkl")
         self.lr_companion = None
         self._comp_cal_apply = None
         if comp_lr.exists():
@@ -183,14 +198,15 @@ class PredictorV2:
                     self.lr_companion = pickle.load(f)
                 # Companion uses the same scaler+imputer as main (same
                 # training rows), so we don't load separate ones.
-                comp_cal_path = self.dir / "calibrator_013.pkl"
+                comp_cal_path = _pick("calibrator_013_live.pkl", "calibrator_013.pkl")
                 if comp_cal_path.exists():
                     with open(comp_cal_path, "rb") as f:
                         cp = pickle.load(f)
                     self._comp_cal_apply = _build_calibrator(
                         cp.get("method", "uncalibrated"), cp.get("params", {}))
                 if self.verbose:
-                    print(f"[PredictorV2] loaded ensemble companion lr_013.pkl — "
+                    src = "LIVE" if comp_lr.name.endswith("_live.pkl") else "VALIDATION"
+                    print(f"[PredictorV2] loaded ensemble companion {comp_lr.name} [{src}] — "
                           f"predict() will average both models")
             except Exception as e:
                 if self.verbose:
@@ -200,7 +216,10 @@ class PredictorV2:
         # Parlay-strategy LR (λ=1.50, 4-yr training). Used ONLY by
         # parlay_predict() — separate from the general predict() ensemble.
         # See docs/additional_model_bumps.md / parlay strategy section.
-        parlay_lr = self.dir / "lr_150.pkl"
+        parlay_lr      = _pick("lr_150_live.pkl",         "lr_150.pkl")
+        parlay_scaler  = _pick("lr_scaler_150_live.pkl",  "lr_scaler_150.pkl")
+        parlay_imputer = _pick("lr_imputer_150_live.pkl", "lr_imputer_150.pkl")
+        parlay_cal     = _pick("calibrator_150_live.pkl", "calibrator_150.pkl")
         self.lr_parlay = None
         self._parlay_scaler = None
         self._parlay_imputer = None
@@ -209,18 +228,19 @@ class PredictorV2:
             try:
                 with open(parlay_lr, "rb") as f:
                     self.lr_parlay = pickle.load(f)
-                with open(self.dir / "lr_scaler_150.pkl", "rb") as f:
+                with open(parlay_scaler, "rb") as f:
                     self._parlay_scaler = pickle.load(f)
-                with open(self.dir / "lr_imputer_150.pkl", "rb") as f:
+                with open(parlay_imputer, "rb") as f:
                     self._parlay_imputer = pickle.load(f)
-                pcp = self.dir / "calibrator_150.pkl"
-                if pcp.exists():
-                    with open(pcp, "rb") as f:
+                if parlay_cal.exists():
+                    with open(parlay_cal, "rb") as f:
                         cp = pickle.load(f)
                     self._parlay_cal_apply = _build_calibrator(
                         cp.get("method", "uncalibrated"), cp.get("params", {}))
                 if self.verbose:
-                    print(f"[PredictorV2] loaded parlay-strategy LR (λ=1.50, 4-yr)")
+                    src = "LIVE" if parlay_lr.name.endswith("_live.pkl") else "VALIDATION"
+                    print(f"[PredictorV2] loaded parlay-strategy LR {parlay_lr.name} "
+                          f"[{src}, λ=1.50, 4-yr]")
             except Exception as e:
                 if self.verbose:
                     print(f"[PredictorV2] parlay LR load failed: {e}")
