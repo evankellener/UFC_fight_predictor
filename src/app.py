@@ -193,9 +193,25 @@ def init_model():
     model_state["elo_extra"] = extra
     model_state["elo_full_df"] = elo_full_df
 
-    # Fighter list from MMA-AI pipeline stats
+    # Fighter list from MMA-AI pipeline stats. We also pull UFC fight counts
+    # from ufc_winlossko so the autocomplete UI can flag rookies (<3 priors —
+    # see finding_threshold_matters.md). Falls back gracefully if DB query
+    # fails (slim DB on Render may have different schema).
+    fight_counts = {}
+    try:
+        with sqlite3.connect(DB_PATH) as _conn:
+            _df = pd.read_sql_query(
+                "SELECT jfighter, COUNT(*) as n FROM ufc_winlossko GROUP BY jfighter",
+                _conn)
+            fight_counts = dict(zip(_df["jfighter"], _df["n"].astype(int)))
+        print(f"  Loaded UFC fight counts for {len(fight_counts)} fighters")
+    except Exception as _e:
+        print(f"  Fight-count load failed (autocomplete won't show counts): {_e}")
     model_state["fighter_list"] = [
-        {"jfighter": name, "last_fight": str(stats.get("DATE", ""))}
+        {"jfighter": name,
+         "last_fight": str(stats.get("DATE", "")),
+         "ufc_fights": int(fight_counts.get(name, 0)),
+         "is_rookie": int(fight_counts.get(name, 0) < 3)}
         for name, stats in data["fighter_stats"].items()
     ]
 
