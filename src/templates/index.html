@@ -218,6 +218,16 @@
     border: 1px solid rgba(245,158,11,0.3); border-radius: 4px;
     font-size: 0.78rem;
   }
+  .model-badge {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 0.2rem 0.45rem; border-radius: 3px;
+    text-transform: uppercase; vertical-align: middle;
+    margin-right: 0.4rem;
+  }
+  .model-badge-parlay {
+    background: rgba(168,85,247,0.12); color: #a855f7;
+    border: 1px solid rgba(168,85,247,0.4);
+  }
 
   .bet-badge {
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
@@ -2392,12 +2402,25 @@ function renderResults(data) {
         </div>`;
       return;
     }
-    const aWins = p.prob_a >= 0.5;
+    // PRIMARY display uses the parlay model (λ=1.50) when available — that's
+    // the model the betting strategy acts on, so it's the source of truth for
+    // the headline pick + percentage. Falls back to ensemble if parlay model
+    // isn't loaded. Ensemble probabilities are still shown in expanded details
+    // for transparency.
+    const useParlay = !!(p.parlay && typeof p.parlay.p_fighter_a === 'number');
+    const probA = useParlay ? p.parlay.p_fighter_a : p.prob_a;
+    const probB = 1 - probA;
+    const aWins = probA >= 0.5;
     const aClass = aWins ? 'winner' : 'loser';
     const bClass = aWins ? 'loser' : 'winner';
-    const pctA = (p.prob_a * 100).toFixed(1);
-    const pctB = (p.prob_b * 100).toFixed(1);
-    const conf = (p.confidence * 100).toFixed(1);
+    const pctA = (probA * 100).toFixed(1);
+    const pctB = (probB * 100).toFixed(1);
+    const conf = (Math.max(probA, probB) * 100).toFixed(1);
+    const ensemblePctA = (p.prob_a * 100).toFixed(1);
+    const ensemblePctB = (p.prob_b * 100).toFixed(1);
+    const modelBadge = useParlay
+      ? `<span class="model-badge model-badge-parlay" title="Headline = parlay model (λ=1.50). Ensemble shown in expanded details.">PARLAY MODEL</span>`
+      : '';
     let vegasHtml = '';
     if (p.vegas && p.vegas.implied_prob_a != null) {
       const vA = (p.vegas.implied_prob_a * 100).toFixed(1);
@@ -2489,9 +2512,14 @@ function renderResults(data) {
               <span class="v">${(br.devig_prob_a*100).toFixed(1)}% / ${(br.devig_prob_b*100).toFixed(1)}%</span>
             </div>
             <div class="bet-rec-row">
-              <span class="k">Our model</span>
+              <span class="k">${useParlay ? 'Parlay model (λ=1.50)' : 'Our model'}</span>
               <span class="v">${pctA}% / ${pctB}%</span>
             </div>
+            ${useParlay ? `
+            <div class="bet-rec-row" style="opacity:0.7;">
+              <span class="k">Ensemble (general)</span>
+              <span class="v">${ensemblePctA}% / ${ensemblePctB}%</span>
+            </div>` : ''}
             <div class="bet-rec-row">
               <span class="k">EV per $1</span>
               <span class="v ${br.ev_per_dollar >= 0 ? 'ev-pos' : 'ev-neg'}">
@@ -2511,40 +2539,26 @@ function renderResults(data) {
             ${(() => {
               if (!p.parlay) return '';
               const par = p.parlay;
-              const parlayPickIsA = par.predicted_winner === p.fighter_a;
-              const parlayPickName = parlayPickIsA ? p.display_a : p.display_b;
-              const parlayPickClass = parlayPickIsA ? 'a' : 'b';
-              const parPctA = (par.p_fighter_a * 100).toFixed(1);
-              const parPctB = ((1 - par.p_fighter_a) * 100).toFixed(1);
-              const ensembleAgrees = (parlayPickName === pickName);
               const edgeStr = par.edge_pp != null ? `${par.edge_pp >= 0 ? '+' : ''}${par.edge_pp.toFixed(1)}pp` : '—';
               const evStr   = par.ev_pct  != null ? `${par.ev_pct  >= 0 ? '+' : ''}${par.ev_pct .toFixed(1)}%` : '—';
               const qualifyBadge = par.qualifies
                 ? `<span class="parlay-qual-yes">QUALIFIES ★</span>`
                 : (par.is_women
                     ? `<span class="parlay-qual-no" title="Strategy filters women's fights — see backtest">women's fight (filtered)</span>`
-                    : `<span class="parlay-qual-no">does not qualify (need ev>0 AND edge≥5pp)</span>`);
-              const disagreeNote = !ensembleAgrees
-                ? `<div class="parlay-disagree">⚠ Parlay model disagrees with ensemble — picks <span class="${parlayPickClass}">${parlayPickName}</span></div>`
-                : '';
+                    : `<span class="parlay-qual-no">does not qualify (need ev>0 AND edge≥5pp on a men's fight)</span>`);
               return `
                 <div class="bet-rec-row parlay-divider">
-                  <span class="k" style="font-weight:600;">Parlay model (λ=1.50)</span>
-                  <span class="v"><span class="${parlayPickClass}">${parlayPickName}</span> ${parPctA}% / ${parPctB}%</span>
-                </div>
-                <div class="bet-rec-row">
-                  <span class="k">Parlay edge</span>
+                  <span class="k">Parlay edge vs Vegas</span>
                   <span class="v ${par.edge_pp != null && par.edge_pp >= 5 ? 'ev-pos' : ''}">${edgeStr}</span>
                 </div>
                 <div class="bet-rec-row">
-                  <span class="k">Parlay EV</span>
+                  <span class="k">Parlay EV / $1</span>
                   <span class="v ${par.ev_pct != null && par.ev_pct >= 0 ? 'ev-pos' : 'ev-neg'}">${evStr}</span>
                 </div>
                 <div class="bet-rec-row">
                   <span class="k">Parlay status</span>
                   <span class="v">${qualifyBadge}</span>
                 </div>
-                ${disagreeNote}
               `;
             })()}
           </div>
@@ -2567,6 +2581,7 @@ function renderResults(data) {
                   onclick="event.stopPropagation(); window.location='/fighter/${p.fighter_b}'">${p.display_b}</span>
           </div>
           <div class="result-actions">
+            ${modelBadge}
             ${flagBadges}
             ${betBadge}
             <button class="btn-small" onclick="event.stopPropagation(); openShare(${shareData.replace(/"/g, '&quot;')})" title="Share">Share</button>
