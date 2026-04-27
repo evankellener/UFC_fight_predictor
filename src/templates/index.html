@@ -340,6 +340,18 @@
   .autocomplete-item { padding: 0.5rem 0.8rem; cursor: pointer; font-size: 0.85rem; }
   .autocomplete-item:hover, .autocomplete-item.active { background: var(--hover); }
   .autocomplete-item .date { color: var(--muted); font-size: 0.75rem; margin-left: 0.5rem; }
+  .autocomplete-item .fight-count {
+    color: var(--muted); font-size: 0.72rem; margin-left: 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .autocomplete-item.rookie { opacity: 0.6; }
+  .autocomplete-item.rookie .rookie-badge {
+    color: #f59e0b; font-size: 0.65rem; font-weight: 700;
+    margin-left: 0.5rem; padding: 0.05rem 0.35rem;
+    background: rgba(245,158,11,0.12); border-radius: 3px;
+    border: 1px solid rgba(245,158,11,0.4); text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
 
   .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
 
@@ -2238,12 +2250,21 @@ function onFighterInput(input) {
       const res = await fetch(`${API}/api/fighters?q=${encodeURIComponent(q)}`);
       const fighters = await res.json();
       if (fighters.length === 0) { listEl.classList.remove('show'); return; }
-      listEl.innerHTML = fighters.map(f =>
-        `<div class="autocomplete-item" onclick="selectFighter('${f.jfighter}', '${row}', '${side}')">
-           ${formatName(f.jfighter)}
-           <span class="date">${f.last_fight || ''}</span>
-         </div>`
-      ).join('');
+      listEl.innerHTML = fighters.map(f => {
+        const n = f.ufc_fights || 0;
+        const rookie = n < 3;
+        const cls = rookie ? 'autocomplete-item rookie' : 'autocomplete-item';
+        const countLabel = `${n} UFC fight${n === 1 ? '' : 's'}`;
+        const rookieBadge = rookie
+          ? `<span class="rookie-badge" title="Backtest only validates fighters with ≥3 priors. Betting on rookies is unsupported.">ROOKIE</span>`
+          : '';
+        return `<div class="${cls}" onclick="selectFighter('${f.jfighter}', '${row}', '${side}')">
+                  ${formatName(f.jfighter)}
+                  <span class="fight-count">${countLabel}</span>
+                  ${rookieBadge}
+                  <span class="date">${f.last_fight || ''}</span>
+                </div>`;
+      }).join('');
       listEl.classList.add('show');
     } catch (e) {}
   }, 150);
@@ -3943,12 +3964,21 @@ function onExplorerInput(input) {
       const res = await fetch(`${API}/api/fighters?q=${encodeURIComponent(q)}`);
       const fighters = await res.json();
       if (!fighters.length) { listEl.classList.remove('show'); return; }
-      listEl.innerHTML = fighters.map(f =>
-        `<div class="autocomplete-item" onclick="selectExplorerFighter('${f.jfighter}','${side}')">
-           ${formatName(f.jfighter)}
-           <span class="date">${f.last_fight || ''}</span>
-         </div>`
-      ).join('');
+      listEl.innerHTML = fighters.map(f => {
+        const n = f.ufc_fights || 0;
+        const rookie = n < 3;
+        const cls = rookie ? 'autocomplete-item rookie' : 'autocomplete-item';
+        const countLabel = `${n} UFC fight${n === 1 ? '' : 's'}`;
+        const rookieBadge = rookie
+          ? `<span class="rookie-badge" title="Backtest only validates fighters with ≥3 priors.">ROOKIE</span>`
+          : '';
+        return `<div class="${cls}" onclick="selectExplorerFighter('${f.jfighter}','${side}')">
+                  ${formatName(f.jfighter)}
+                  <span class="fight-count">${countLabel}</span>
+                  ${rookieBadge}
+                  <span class="date">${f.last_fight || ''}</span>
+                </div>`;
+      }).join('');
       listEl.classList.add('show');
     } catch (e) {}
   }, 150);

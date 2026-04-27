@@ -343,16 +343,23 @@ def _load_vegas_odds_merged():
 
 
 def _load_fighter_list():
-    """Load all fighter names with their most recent fight date."""
+    """Load all fighter names with their most recent fight date AND prior UFC
+    fight count. The fight count lets the autocomplete UI flag rookies
+    (<3 priors) — the parlay strategy backtest is only validated on
+    veteran-vs-veteran matchups (FILTER_THRESHOLD=3 per
+    finding_threshold_matters.md), so betting on rookies is unsupported.
+    """
     conn = sqlite3.connect(DB_PATH)
     df = pd.read_sql_query(
-        """SELECT jfighter, MAX(DATE) as last_fight
+        """SELECT jfighter, MAX(DATE) as last_fight, COUNT(*) as ufc_fights
            FROM final_features_fast
            GROUP BY jfighter
            ORDER BY jfighter""",
         conn,
     )
     conn.close()
+    df["ufc_fights"] = df["ufc_fights"].astype(int)
+    df["is_rookie"] = (df["ufc_fights"] < 3).astype(int)
     return df.to_dict("records")
 
 
