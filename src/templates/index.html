@@ -201,6 +201,24 @@
     border-top: 1px dashed rgba(168,85,247,0.2);
   }
 
+  .parlay-divider {
+    border-top: 1px dashed rgba(168,85,247,0.25);
+    padding-top: 0.4rem; margin-top: 0.3rem;
+  }
+  .parlay-qual-yes {
+    color: #a855f7; font-weight: 700;
+    background: rgba(168,85,247,0.1);
+    padding: 0.1rem 0.4rem; border-radius: 3px;
+    border: 1px solid rgba(168,85,247,0.4);
+  }
+  .parlay-qual-no { color: var(--muted); font-size: 0.85em; }
+  .parlay-disagree {
+    margin-top: 0.4rem; padding: 0.4rem 0.55rem;
+    background: rgba(245,158,11,0.08); color: #f59e0b;
+    border: 1px solid rgba(245,158,11,0.3); border-radius: 4px;
+    font-size: 0.78rem;
+  }
+
   .bet-badge {
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
     padding: 0.3rem 0.6rem; border-radius: 4px;
@@ -2490,6 +2508,45 @@ function renderResults(data) {
               <span class="k">Suggested stake</span>
               <span class="v ev-pos">$${br.stake_suggestion.toFixed(2)} flat on ${pickName}</span>
             </div>` : ''}
+            ${(() => {
+              if (!p.parlay) return '';
+              const par = p.parlay;
+              const parlayPickIsA = par.predicted_winner === p.fighter_a;
+              const parlayPickName = parlayPickIsA ? p.display_a : p.display_b;
+              const parlayPickClass = parlayPickIsA ? 'a' : 'b';
+              const parPctA = (par.p_fighter_a * 100).toFixed(1);
+              const parPctB = ((1 - par.p_fighter_a) * 100).toFixed(1);
+              const ensembleAgrees = (parlayPickName === pickName);
+              const edgeStr = par.edge_pp != null ? `${par.edge_pp >= 0 ? '+' : ''}${par.edge_pp.toFixed(1)}pp` : '—';
+              const evStr   = par.ev_pct  != null ? `${par.ev_pct  >= 0 ? '+' : ''}${par.ev_pct .toFixed(1)}%` : '—';
+              const qualifyBadge = par.qualifies
+                ? `<span class="parlay-qual-yes">QUALIFIES ★</span>`
+                : (par.is_women
+                    ? `<span class="parlay-qual-no" title="Strategy filters women's fights — see backtest">women's fight (filtered)</span>`
+                    : `<span class="parlay-qual-no">does not qualify (need ev>0 AND edge≥5pp)</span>`);
+              const disagreeNote = !ensembleAgrees
+                ? `<div class="parlay-disagree">⚠ Parlay model disagrees with ensemble — picks <span class="${parlayPickClass}">${parlayPickName}</span></div>`
+                : '';
+              return `
+                <div class="bet-rec-row parlay-divider">
+                  <span class="k" style="font-weight:600;">Parlay model (λ=1.50)</span>
+                  <span class="v"><span class="${parlayPickClass}">${parlayPickName}</span> ${parPctA}% / ${parPctB}%</span>
+                </div>
+                <div class="bet-rec-row">
+                  <span class="k">Parlay edge</span>
+                  <span class="v ${par.edge_pp != null && par.edge_pp >= 5 ? 'ev-pos' : ''}">${edgeStr}</span>
+                </div>
+                <div class="bet-rec-row">
+                  <span class="k">Parlay EV</span>
+                  <span class="v ${par.ev_pct != null && par.ev_pct >= 0 ? 'ev-pos' : 'ev-neg'}">${evStr}</span>
+                </div>
+                <div class="bet-rec-row">
+                  <span class="k">Parlay status</span>
+                  <span class="v">${qualifyBadge}</span>
+                </div>
+                ${disagreeNote}
+              `;
+            })()}
           </div>
         </div>`;
     }
