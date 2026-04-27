@@ -2460,11 +2460,58 @@ function renderResults(data) {
                      </span>`;
     }
 
-    // Bet recommendation (only if user supplied odds on this row)
+    // Bet recommendation (only if user supplied odds on this row).
+    // When the parlay model is loaded, RECOMPUTE bet_rec client-side using
+    // its probabilities — keeps the entire fight card consistent with the
+    // headline pick. Falls back to the server-side ensemble bet_rec when
+    // the parlay model isn't available.
     let betRecHtml = '';
     let betBadge = '';
     if (p.bet_rec) {
-      const br = p.bet_rec;
+      let br = p.bet_rec;
+      // Recompute from parlay model if present
+      if (useParlay && p.user_odds) {
+        const ml_a = Number(p.user_odds.odds_a);
+        const ml_b = Number(p.user_odds.odds_b);
+        if (Number.isFinite(ml_a) && Number.isFinite(ml_b)) {
+          const amer = ml => 1 + (ml > 0 ? ml/100 : 100/Math.abs(ml));
+          const dec_a = amer(ml_a), dec_b = amer(ml_b);
+          const imp_a = 1/dec_a, imp_b = 1/dec_b;
+          const tot = imp_a + imp_b;
+          const devig_a = imp_a/tot, devig_b = imp_b/tot;
+          const p_a_par = p.parlay.p_fighter_a;
+          const pickIsA = p_a_par >= 0.5;
+          const p_pick = pickIsA ? p_a_par : (1 - p_a_par);
+          const dec_pick = pickIsA ? dec_a : dec_b;
+          const v_pick = pickIsA ? devig_a : devig_b;
+          const ev = p_pick * dec_pick - 1;
+          const edge_pp = (p_pick - v_pick) * 100;
+          // Edge buckets match server-side _bet_recommendation()
+          let bucket = 'no_bet', rec = 'PASS', stake = 0;
+          if (ev > 0) {
+            if (edge_pp >= 10) { bucket = 'large'; rec = 'BET (large edge — verify odds)'; stake = 10; }
+            else if (edge_pp >= 5) { bucket = 'medium'; rec = 'BET'; stake = 10; }
+            else if (edge_pp >= 2) { bucket = 'small'; rec = 'BET (small edge)'; stake = 5; }
+            else { bucket = 'tiny'; rec = 'BET (tiny edge)'; stake = 2; }
+          }
+          br = {
+            ...br,  // keep server fields like vig_pct
+            pick: pickIsA ? 'a' : 'b',
+            recommendation: rec,
+            edge_pp: Number(edge_pp.toFixed(2)),
+            ev_per_dollar: Number(ev.toFixed(4)),
+            edge_bucket: bucket,
+            stake_suggestion: stake,
+            devig_prob_a: Number(devig_a.toFixed(4)),
+            devig_prob_b: Number(devig_b.toFixed(4)),
+            implied_prob_a: Number(imp_a.toFixed(4)),
+            implied_prob_b: Number(imp_b.toFixed(4)),
+            dec_odds_a: Number(dec_a.toFixed(3)),
+            dec_odds_b: Number(dec_b.toFixed(3)),
+            _from_parlay_model: true,
+          };
+        }
+      }
       const pickName = br.pick === 'a' ? p.display_a : p.display_b;
       const pickClass = br.pick === 'a' ? 'a' : 'b';
       const oa = p.user_odds.odds_a > 0 ? `+${p.user_odds.odds_a}` : p.user_odds.odds_a;
