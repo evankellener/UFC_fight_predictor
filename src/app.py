@@ -1316,6 +1316,23 @@ def predict_card():
                 except (ValueError, TypeError):
                     bet_rec = None
 
+            # If user provided odds but DB had no match, populate vegas dict
+            # from user odds so parlay-strategy edge calc has Vegas devig probs.
+            if not vegas.get("implied_prob_a") and user_odds_a not in (None, "", 0) \
+                    and user_odds_b not in (None, "", 0):
+                try:
+                    imp_a_u = _american_to_implied(float(user_odds_a))
+                    imp_b_u = _american_to_implied(float(user_odds_b))
+                    if imp_a_u is not None and imp_b_u is not None:
+                        total_u = imp_a_u + imp_b_u
+                        vegas["odds_a"] = float(user_odds_a)
+                        vegas["odds_b"] = float(user_odds_b)
+                        vegas["implied_prob_a"] = round(imp_a_u / total_u, 4)
+                        vegas["implied_prob_b"] = round(imp_b_u / total_u, 4)
+                        vegas["source"] = "user_odds"
+                except (ValueError, TypeError):
+                    pass
+
             # Top feature drivers (LR coefficients × standardized values)
             try:
                 drivers = _get_top_drivers(r, models)
