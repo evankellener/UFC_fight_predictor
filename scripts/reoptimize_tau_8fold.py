@@ -73,17 +73,26 @@ signal.signal(signal.SIGINT, lambda *_: sys.exit(0))
 
 # ── Fold + search-space config ──────────────────────────────────────────
 TRAIN_YEARS = 4
-N_TRIALS    = 30
+N_TRIALS    = 10  # Reduced from 30 — feature rebuild is ~15min/trial,
+                  # 10 trials × 4 folds = ~10hr instead of 60hr.
 THRESHOLD   = 3
+ONLY_RECENT_FOLDS = True  # Run only the 4 most recent folds (fold_5..fold_8).
+                          # Earlier folds are 2024-Q2 / Q3 / Q4 / 2025-Q1 —
+                          # their τs aren't directly relevant for current
+                          # forward-looking deployment. fold_5..8 cover
+                          # 2025-Q2 → 2026-Q1.
 
 def build_folds():
     starts = pd.date_range("2024-04-01", "2026-01-01", freq="3MS")
-    return [{"name": f"fold_{i}",
-             "train_start": (s - pd.DateOffset(years=TRAIN_YEARS)),
-             "train_end":   s,
-             "test_start":  s,
-             "test_end":   (s + pd.DateOffset(months=3))}
-            for i, s in enumerate(starts, 1)]
+    folds = [{"name": f"fold_{i}",
+              "train_start": (s - pd.DateOffset(years=TRAIN_YEARS)),
+              "train_end":   s,
+              "test_start":  s,
+              "test_end":   (s + pd.DateOffset(months=3))}
+             for i, s in enumerate(starts, 1)]
+    if ONLY_RECENT_FOLDS:
+        folds = folds[-4:]  # fold_5 through fold_8
+    return folds
 FOLDS = build_folds()
 
 # Curated τ search subspaces (same as fold4 reopt; well-known to dominate signal)
