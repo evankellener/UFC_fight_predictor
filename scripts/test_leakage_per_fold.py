@@ -66,14 +66,14 @@ def per_fold_features(df_full, stat_cols, train_end):
 
 
 def main():
-    # Target fold: train_end = 2025-04-01, test_end = 2025-07-01
-    TRAIN_END = pd.Timestamp("2025-04-01")
-    # We compare features for fights ≤ TRAIN_END computed via the full vs
-    # the (TRAIN_END + 1mo)-truncated dataset. The tiny 1mo window is just
-    # to ensure per-fight Step 1-6 pipeline has access to all 2024-Q4
-    # fights for both runs (no spurious differences from 2024-Q4 fights
-    # being in one but not the other).
-    TRUNCATE_AT = pd.Timestamp("2025-05-01")  # full > trunc > train_end
+    # Match the actual user workflow: train_end = 2024-10-01.
+    TRAIN_END = pd.Timestamp("2024-10-01")
+    # Truncate dataset at a date AFTER train_end; verify features for
+    # fights ≤ train_end are unaffected by what happens after the truncation.
+    # Using 2026-04-01 means we're comparing FULL data vs a dataset that
+    # excludes the most recent ~3 months — should NOT affect features
+    # for fights ≤ 2024-10-01 if there's no leakage.
+    TRUNCATE_AT = pd.Timestamp("2026-04-01")
     print("=" * 78)
     print(f"PER-FOLD LEAKAGE TEST")
     print(f"Target fold's train_end = {TRAIN_END.date()}")
