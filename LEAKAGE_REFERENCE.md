@@ -2,6 +2,32 @@
 
 Checklist + index of every leakage guardrail in this repo. Any agent running a new experiment must verify each item below still holds for the code path they touch. Two historical models in this codebase were inflated by leakage (see §9) — treat these as load-bearing, not decorative.
 
+## 0. Mandatory audit (added 2026-04-27)
+
+**Every new walk-forward, backtest, ROI-evaluation, or hyperparameter-search
+script MUST be accompanied by a filled-in audit before any results from it
+are quoted, shipped, or trusted.**
+
+Procedure:
+1. Copy [`docs/LEAKAGE_AUDIT_TEMPLATE.md`](docs/LEAKAGE_AUDIT_TEMPLATE.md)
+   to `docs/audits/<script_name>.md`
+2. Fill in EVERY row of §1-§11 below — either "pass + code line" or
+   "N/A + one-sentence reason." Bare "N/A" is a leak waiting to happen.
+3. Commit the audit in the SAME commit as the script. No "I'll do it later."
+4. If any §1-§11 check fails, the script does not run until the failure is
+   fixed OR the failure is documented + the impact on quoted metrics is
+   bounded.
+
+Example of what an audit looks like:
+[`docs/audits/parlay_lambda120_8fold_4yr.md`](docs/audits/parlay_lambda120_8fold_4yr.md)
+— a retro audit of a shipped script that surfaced a §3 leak (global MAD
+denominator in AdjPerf z-scores). That leak should have been caught BEFORE
+deploy via this procedure.
+
+Why this exists: words like "I'll be careful about leakage" do not work.
+Procedural enforcement does. If the audit isn't written, the code doesn't
+get to claim it's clean.
+
 ## 1. Temporal splits (never shuffle, never touch test)
 
 - Train/test split is **chronological by DATE** — train on older fights, test on recent. [src/model.py:135](src/model.py:135)
