@@ -1,34 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(python3 *)",
-      "Bash(python *)",
-      "Bash(PYTHONUNBUFFERED=* *)",
-      "Bash(sqlite3 *)",
-      "Bash(cat *)",
-      "Bash(tail *)",
-      "Bash(head *)",
-      "Bash(grep *)",
-      "Bash(ls *)",
-      "Bash(cp *)",
-      "Bash(mv *)",
-      "Bash(rm /tmp/*)",
-      "Bash(git *)",
-      "Bash(echo *)",
-      "Bash(find *)",
-      "Bash(wc *)",
-      "Bash(sed *)",
-      "Bash(awk *)",
-      "Bash(jq *)",
-      "Bash(pkill *)",
-      "Bash(kill *)",
-      "Bash(ps *)",
-      "Bash(sleep *)",
-      "Bash(jupyter *)",
-      "Bash(curl *)",
-      "Bash(pip *)",
-      "Bash(test *)",
-      "Bash([ *)"
-    ]
+    "defaultMode": "bypassPermissions"
   }
 }

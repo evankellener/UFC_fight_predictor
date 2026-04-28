@@ -1,0 +1,67 @@
+#!/bin/bash
+# Pre-commit hook: require leakage audit for walk-forward / training / metric scripts.
+#
+# Install once:
+#   cp scripts/git-hooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+# What it blocks:
+#   New scripts/*.py that look like they train models, run walk-forward,
+#   or compute metrics — UNLESS docs/audits/<name>.md is also being committed.
+#
+# Bypass (NOT RECOMMENDED): git commit --no-verify
+
+set -e
+
+# New Python scripts being added in scripts/
+NEW_SCRIPTS=$(git diff --cached --name-only --diff-filter=A 2>/dev/null \
+              | grep '^scripts/.*\.py$' || true)
+
+if [ -z "$NEW_SCRIPTS" ]; then
+    exit 0
+fi
+
+# Heuristic: which new scripts need an audit?
+#   Scripts that import LR/XGBoost, do walk-forward, run pipeline,
+#   or compute metrics need an audit.
+NEEDS_AUDIT=()
+for script in $NEW_SCRIPTS; do
+    # Skip scripts that are obviously NOT walk-forward (small util scripts)
+    case "$(basename "$script")" in
+        diag_*|update_*) continue ;;  # diagnostic / one-off update helpers
+    esac
+
+    if grep -qE 'sklearn\.linear_model|sklearn\.ensemble|LogisticRegression|XGBClassifier|fit_predict|walk_forward|build_features|compute_adjperf|train.*test.*split|accuracy_score|log_loss|roc_auc|brier_score' "$script" 2>/dev/null; then
+        # This script likely needs an audit
+        name=$(basename "$script" .py)
+        # Audit must exist or be staged
+        if ! [ -f "docs/audits/${name}.md" ] \
+           && ! git diff --cached --name-only 2>/dev/null | grep -q "^docs/audits/${name}\.md$"; then
+            NEEDS_AUDIT+=("$script:docs/audits/${name}.md")
+        fi
+    fi
+done
+
+if [ ${#NEEDS_AUDIT[@]} -gt 0 ]; then
+    echo
+    echo "❌ commit blocked: walk-forward / training / metric scripts need a leakage audit"
+    echo
+    for entry in "${NEEDS_AUDIT[@]}"; do
+        IFS=':' read -r script audit <<< "$entry"
+        echo "   missing:  $audit  (for $script)"
+    done
+    echo
+    echo "Process:"
+    echo "  1. cp docs/LEAKAGE_AUDIT_TEMPLATE.md docs/audits/<script_name>.md"
+    echo "  2. fill in every row of §1-§11 (\"N/A + reason\" is OK)"
+    echo "  3. git add docs/audits/<script_name>.md and re-commit"
+    echo
+    echo "Reference:"
+    echo "  LEAKAGE_REFERENCE.md §0 (mandatory audit policy)"
+    echo "  CLAUDE.md (rules)"
+    echo
+    echo "Bypass (NOT RECOMMENDED): git commit --no-verify"
+    exit 1
+fi
+
+exit 0
