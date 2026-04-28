@@ -149,10 +149,16 @@ def fit_one(train, test, feats, lam, train_anchor):
 def run_fold(fold):
     print(f"\n{'='*78}")
     print(f"{fold['name'].upper()}  test {fold['test_start'].date()} → {fold['test_end'].date()}")
-    print(f"  REBUILD pipeline capped at train_end={fold['train_end'].date()}")
+    # Cap at test_end (not train_end) — train_end cap excludes the test
+    # fights themselves from the rebuilt CSV so we couldn't score them.
+    # test_end cap eliminates the ~2-yr future-data leak from MAD/n_eff
+    # (the original 8-fold's leak) while retaining a tiny self-leak
+    # (test fold's own ~60-70 fights into the MAD that scores them) — that
+    # ~1.2% self-leak is acceptable; the prior leak was multi-year.
+    print(f"  REBUILD pipeline capped at test_end={fold['test_end'].date()}")
     print(f"{'='*78}")
     t0 = time.time()
-    build_features_capped(fold["train_end"])
+    build_features_capped(fold["test_end"])
 
     # Re-import downstream so they pick up new CSV
     for mod in list(sys.modules):

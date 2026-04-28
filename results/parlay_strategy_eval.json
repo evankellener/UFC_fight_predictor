@@ -1,0 +1,58 @@
+[
+  {
+    "label": "S2: ALL +EV pairs on same card",
+    "n_parlays": 363,
+    "roi": 21.140362555831853,
+    "hits": 144,
+    "hit_rate": 39.66942148760331,
+    "n_legs": 726
+  },
+  {
+    "label": "S3: TOP-2 by edge (per card)",
+    "n_parlays": 69,
+    "roi": 49.48677884547018,
+    "hits": 28,
+    "hit_rate": 40.57971014492754,
+    "n_legs": 138
+  },
+  {
+    "label": "S4: TOP-2 by p_pick (per card)",
+    "n_parlays": 69,
+    "roi": 31.854382731997166,
+    "hits": 37,
+    "hit_rate": 53.62318840579711,
+    "n_legs": 138
+  },
+  {
+    "label": "S6: edge \u2265 5pp",
+    "n_parlays": 276,
+    "roi": 27.4188238610958,
+    "hits": 110,
+    "hit_rate": 39.85507246376812,
+    "n_legs": 552
+  },
+  {
+    "label": "S6b: edge \u2265 5pp, top-2 by edge",
+    "n_parlays": 65,
+    "roi": 51.50976587103258,
+    "hits": 26,
+    "hit_rate": 40.0,
+    "n_legs": 130
+  },
+  {
+    "label": "S7: p_pick \u2265 0.65 (favorites)",
+    "n_parlays": 130,
+    "roi": 17.882047507190748,
+    "hits": 65,
+    "hit_rate": 50.0,
+    "n_legs": 260
+  },
+  {
+    "label": "S7b: p_pick \u2265 0.65, top-2 by prob",
+    "n_parlays": 54,
+    "roi": 21.26255902683504,
+    "hits": 29,
+    "hit_rate": 53.70370370370371,
+    "n_legs": 108
+  }
+]

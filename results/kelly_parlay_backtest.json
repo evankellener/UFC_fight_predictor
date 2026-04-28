@@ -1,0 +1,90 @@
+[
+  {
+    "label": "Flat 1%",
+    "chron_final": 1177.0,
+    "chron_max_dd": 5.9,
+    "med": 1177.0,
+    "p10": 1177.0,
+    "p90": 1177.0,
+    "worst_dd": 15.8,
+    "med_dd": 7.7,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "Flat 2%",
+    "chron_final": 1360.0,
+    "chron_max_dd": 11.4,
+    "med": 1360.0,
+    "p10": 1360.0,
+    "p90": 1360.0,
+    "worst_dd": 31.9,
+    "med_dd": 14.9,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "Flat 5%",
+    "chron_final": 1897.0,
+    "chron_max_dd": 26.5,
+    "med": 1897.0,
+    "p10": 1897.0,
+    "p90": 1897.0,
+    "worst_dd": 59.3,
+    "med_dd": 34.4,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "\u00bc Kelly cap 5%",
+    "chron_final": 1886.0,
+    "chron_max_dd": 24.9,
+    "med": 1886.0,
+    "p10": 1886.0,
+    "p90": 1886.0,
+    "worst_dd": 55.2,
+    "med_dd": 32.7,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "\u00bd Kelly cap 5%",
+    "chron_final": 1913.0,
+    "chron_max_dd": 26.5,
+    "med": 1913.0,
+    "p10": 1913.0,
+    "p90": 1913.0,
+    "worst_dd": 62.8,
+    "med_dd": 33.7,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "\u00bd Kelly cap 10%",
+    "chron_final": 2527.0,
+    "chron_max_dd": 44.4,
+    "med": 2527.0,
+    "p10": 2527.0,
+    "p90": 2527.0,
+    "worst_dd": 85.0,
+    "med_dd": 54.2,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "Full Kelly cap 10%",
+    "chron_final": 2490.0,
+    "chron_max_dd": 46.9,
+    "med": 2490.0,
+    "p10": 2490.0,
+    "p90": 2490.0,
+    "worst_dd": 85.4,
+    "med_dd": 59.5,
+    "bust_rate": 0.0
+  },
+  {
+    "label": "Full Kelly cap 25%",
+    "chron_final": 1239.0,
+    "chron_max_dd": 79.3,
+    "med": 1239.0,
+    "p10": 1239.0,
+    "p90": 1239.0,
+    "worst_dd": 98.8,
+    "med_dd": 91.0,
+    "bust_rate": 13.0
+  }
+]

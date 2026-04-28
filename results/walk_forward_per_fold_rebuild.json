@@ -1,0 +1,37 @@
+{
+  "folds": [
+    {
+      "fold": "fold_1",
+      "test_start": "2024-04-01",
+      "test_end": "2024-07-01",
+      "train_end": "2024-04-01",
+      "n_train": 928,
+      "n_test": 0
+    },
+    {
+      "fold": "fold_2",
+      "test_start": "2024-07-01",
+      "test_end": "2024-10-01",
+      "train_end": "2024-07-01",
+      "n_train": 953,
+      "n_test": 0
+    },
+    {
+      "fold": "fold_3",
+      "test_start": "2024-10-01",
+      "test_end": "2025-01-01",
+      "train_end": "2024-10-01",
+      "n_train": 962,
+      "n_test": 0
+    },
+    {
+      "fold": "fold_4",
+      "test_start": "2025-01-01",
+      "test_end": "2025-04-01",
+      "train_end": "2025-01-01",
+      "n_train": 980,
+      "n_test": 0
+    }
+  ],
+  "parlay": []
+}

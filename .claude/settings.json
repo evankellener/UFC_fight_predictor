@@ -1,24 +1,34 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 scripts/*)",
-      "Bash(python3 -c *)",
-      "Bash(python3 -u scripts/*)",
-      "Bash(PYTHONUNBUFFERED=1 python3 *)",
       "Bash(python3 *)",
       "Bash(python *)",
-      "Bash(sqlite3 data/sqlite_db/*)",
-      "Bash(cat /tmp/*)",
-      "Bash(tail /tmp/*)",
-      "Bash(head /tmp/*)",
+      "Bash(PYTHONUNBUFFERED=* *)",
+      "Bash(sqlite3 *)",
+      "Bash(cat *)",
+      "Bash(tail *)",
+      "Bash(head *)",
       "Bash(grep *)",
       "Bash(ls *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm /tmp/*)",
       "Bash(git *)",
       "Bash(echo *)",
       "Bash(find *)",
       "Bash(wc *)",
-      "Bash(sed -n *)",
-      "Bash(awk *)"
+      "Bash(sed *)",
+      "Bash(awk *)",
+      "Bash(jq *)",
+      "Bash(pkill *)",
+      "Bash(kill *)",
+      "Bash(ps *)",
+      "Bash(sleep *)",
+      "Bash(jupyter *)",
+      "Bash(curl *)",
+      "Bash(pip *)",
+      "Bash(test *)",
+      "Bash([ *)"
     ]
   }
 }

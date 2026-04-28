@@ -1,0 +1,444 @@
+[
+  {
+    "label": "S2  | all +EV pairs/card",
+    "n": 363,
+    "realized_roi": 21.14,
+    "ci_lo": 3.71,
+    "ci_hi": 38.99,
+    "ci_crosses_zero": false,
+    "hit_rate": 39.67,
+    "theoretical_ev_model": 55.87,
+    "theoretical_ev_vegas": -8.42,
+    "avg_combined_odds": 3.54,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 96,
+        "roi": 38.447351468203145,
+        "hits": 42
+      },
+      "fold_2": {
+        "n": 65,
+        "roi": 59.05124290997663,
+        "hits": 31
+      },
+      "fold_3": {
+        "n": 109,
+        "roi": 17.81659273800803,
+        "hits": 45
+      },
+      "fold_4": {
+        "n": 93,
+        "roi": -19.326166997547265,
+        "hits": 26
+      }
+    }
+  },
+  {
+    "label": "S3  | top-2 by edge/card",
+    "n": 69,
+    "realized_roi": 49.49,
+    "ci_lo": 1.49,
+    "ci_hi": 103.15,
+    "ci_crosses_zero": false,
+    "hit_rate": 40.58,
+    "theoretical_ev_model": 80.59,
+    "theoretical_ev_vegas": -8.5,
+    "avg_combined_odds": 4.01,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 19,
+        "roi": 40.473789571662664,
+        "hits": 8
+      },
+      "fold_2": {
+        "n": 17,
+        "roi": 81.92658986266348,
+        "hits": 8
+      },
+      "fold_3": {
+        "n": 17,
+        "roi": 58.40497008591967,
+        "hits": 7
+      },
+      "fold_4": {
+        "n": 16,
+        "roi": 16.246826209371072,
+        "hits": 5
+      }
+    }
+  },
+  {
+    "label": "S4  | top-2 by p_pick/card",
+    "n": 69,
+    "realized_roi": 31.85,
+    "ci_lo": -0.04,
+    "ci_hi": 64.54,
+    "ci_crosses_zero": true,
+    "hit_rate": 53.62,
+    "theoretical_ev_model": 46.86,
+    "theoretical_ev_vegas": -8.46,
+    "avg_combined_odds": 2.75,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 19,
+        "roi": 73.65547191795689,
+        "hits": 12
+      },
+      "fold_2": {
+        "n": 17,
+        "roi": 79.8108047484129,
+        "hits": 12
+      },
+      "fold_3": {
+        "n": 17,
+        "roi": 4.606106339118989,
+        "hits": 8
+      },
+      "fold_4": {
+        "n": 16,
+        "roi": -39.78681540133865,
+        "hits": 5
+      }
+    }
+  },
+  {
+    "label": "S6  | edge\u22655pp, all pairs/card",
+    "n": 276,
+    "realized_roi": 27.42,
+    "ci_lo": 6.6,
+    "ci_hi": 48.47,
+    "ci_crosses_zero": false,
+    "hit_rate": 39.86,
+    "theoretical_ev_model": 65.71,
+    "theoretical_ev_vegas": -8.42,
+    "avg_combined_odds": 3.77,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 80,
+        "roi": 43.02572366710065,
+        "hits": 36
+      },
+      "fold_2": {
+        "n": 54,
+        "roi": 64.75494197019556,
+        "hits": 26
+      },
+      "fold_3": {
+        "n": 73,
+        "roi": 12.38462194057647,
+        "hits": 26
+      },
+      "fold_4": {
+        "n": 69,
+        "roi": -3.9899532718587554,
+        "hits": 22
+      }
+    }
+  },
+  {
+    "label": "S6b | edge\u22655pp, top-2 by edge",
+    "n": 65,
+    "realized_roi": 51.51,
+    "ci_lo": 1.5,
+    "ci_hi": 107.33,
+    "ci_crosses_zero": false,
+    "hit_rate": 40.0,
+    "theoretical_ev_model": 84.74,
+    "theoretical_ev_vegas": -8.52,
+    "avg_combined_odds": 4.11,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 18,
+        "roi": 34.9530304293568,
+        "hits": 7
+      },
+      "fold_2": {
+        "n": 17,
+        "roi": 81.92658986266348,
+        "hits": 8
+      },
+      "fold_3": {
+        "n": 16,
+        "roi": 68.30528071628964,
+        "hits": 7
+      },
+      "fold_4": {
+        "n": 14,
+        "roi": 16.667408197341512,
+        "hits": 4
+      }
+    }
+  },
+  {
+    "label": "S7  | p\u22650.65, all pairs/card",
+    "n": 130,
+    "realized_roi": 17.88,
+    "ci_lo": -3.79,
+    "ci_hi": 40.29,
+    "ci_crosses_zero": true,
+    "hit_rate": 50.0,
+    "theoretical_ev_model": 45.76,
+    "theoretical_ev_vegas": -8.26,
+    "avg_combined_odds": 2.56,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 36,
+        "roi": 43.770702931614814,
+        "hits": 19
+      },
+      "fold_2": {
+        "n": 27,
+        "roi": 4.632000220351417,
+        "hits": 12
+      },
+      "fold_3": {
+        "n": 30,
+        "roi": 44.7777799544026,
+        "hits": 20
+      },
+      "fold_4": {
+        "n": 37,
+        "roi": -19.44531173472707,
+        "hits": 14
+      }
+    }
+  },
+  {
+    "label": "S7b | p\u22650.65, top-2 by prob",
+    "n": 54,
+    "realized_roi": 21.26,
+    "ci_lo": -10.14,
+    "ci_hi": 54.5,
+    "ci_crosses_zero": true,
+    "hit_rate": 53.7,
+    "theoretical_ev_model": 46.3,
+    "theoretical_ev_vegas": -8.42,
+    "avg_combined_odds": 2.49,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 17,
+        "roi": 52.080943155758916,
+        "hits": 10
+      },
+      "fold_2": {
+        "n": 12,
+        "roi": 81.31876516384261,
+        "hits": 9
+      },
+      "fold_3": {
+        "n": 13,
+        "roi": -19.2175751658728,
+        "hits": 6
+      },
+      "fold_4": {
+        "n": 12,
+        "roi": -38.59954591738119,
+        "hits": 4
+      }
+    }
+  },
+  {
+    "label": "S5  | top-3 by edge",
+    "n": 56,
+    "realized_roi": 73.59,
+    "ci_lo": -10.59,
+    "ci_hi": 176.22,
+    "ci_crosses_zero": true,
+    "hit_rate": 26.79,
+    "theoretical_ev_model": 120.68,
+    "theoretical_ev_vegas": -12.5,
+    "avg_combined_odds": 7.47,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 16,
+        "roi": 89.00269297100343,
+        "hits": 5
+      },
+      "fold_2": {
+        "n": 13,
+        "roi": 188.15906844437208,
+        "hits": 5
+      },
+      "fold_3": {
+        "n": 15,
+        "roi": 56.21527320193527,
+        "hits": 4
+      },
+      "fold_4": {
+        "n": 12,
+        "roi": -49.36346625371015,
+        "hits": 1
+      }
+    }
+  },
+  {
+    "label": "S5b | top-3 by prob",
+    "n": 56,
+    "realized_roi": 66.99,
+    "ci_lo": 1.93,
+    "ci_hi": 141.13,
+    "ci_crosses_zero": false,
+    "hit_rate": 35.71,
+    "theoretical_ev_model": 87.42,
+    "theoretical_ev_vegas": -12.18,
+    "avg_combined_odds": 5.37,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 16,
+        "roi": 123.35594548325174,
+        "hits": 6
+      },
+      "fold_2": {
+        "n": 13,
+        "roi": 107.99334581878337,
+        "hits": 5
+      },
+      "fold_3": {
+        "n": 15,
+        "roi": 54.43119958193344,
+        "hits": 6
+      },
+      "fold_4": {
+        "n": 12,
+        "roi": -36.8886194274286,
+        "hits": 3
+      }
+    }
+  },
+  {
+    "label": "S5c | top-3 edge\u22655pp",
+    "n": 46,
+    "realized_roi": 94.21,
+    "ci_lo": -3.94,
+    "ci_hi": 210.96,
+    "ci_crosses_zero": true,
+    "hit_rate": 30.43,
+    "theoretical_ev_model": 135.81,
+    "theoretical_ev_vegas": -12.44,
+    "avg_combined_odds": 7.99,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 14,
+        "roi": 116.00307768114675,
+        "hits": 5
+      },
+      "fold_2": {
+        "n": 11,
+        "roi": 240.5516263433488,
+        "hits": 5
+      },
+      "fold_3": {
+        "n": 12,
+        "roi": 29.641072178747585,
+        "hits": 3
+      },
+      "fold_4": {
+        "n": 9,
+        "roi": -32.48462167161354,
+        "hits": 1
+      }
+    }
+  },
+  {
+    "label": "S5d | top-4 by edge",
+    "n": 30,
+    "realized_roi": 123.83,
+    "ci_lo": -45.68,
+    "ci_hi": 354.15,
+    "ci_crosses_zero": true,
+    "hit_rate": 20.0,
+    "theoretical_ev_model": 187.4,
+    "theoretical_ev_vegas": -16.18,
+    "avg_combined_odds": 16.42,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 8,
+        "roi": 4.939988522677297,
+        "hits": 1
+      },
+      "fold_2": {
+        "n": 6,
+        "roi": 349.67941007653064,
+        "hits": 1
+      },
+      "fold_3": {
+        "n": 9,
+        "roi": 171.79404519939777,
+        "hits": 3
+      },
+      "fold_4": {
+        "n": 7,
+        "roi": 4.46083959283038,
+        "hits": 1
+      }
+    }
+  },
+  {
+    "label": "S5e | top-4 by prob",
+    "n": 30,
+    "realized_roi": 110.19,
+    "ci_lo": -50.54,
+    "ci_hi": 339.1,
+    "ci_crosses_zero": true,
+    "hit_rate": 20.0,
+    "theoretical_ev_model": 125.94,
+    "theoretical_ev_vegas": -16.03,
+    "avg_combined_odds": 9.9,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 8,
+        "roi": 4.939988522677297,
+        "hits": 1
+      },
+      "fold_2": {
+        "n": 6,
+        "roi": 349.67941007653064,
+        "hits": 1
+      },
+      "fold_3": {
+        "n": 9,
+        "roi": 126.33496052160677,
+        "hits": 3
+      },
+      "fold_4": {
+        "n": 7,
+        "roi": 4.4608395928303555,
+        "hits": 1
+      }
+    }
+  },
+  {
+    "label": "S5f | top-4 edge\u22655pp",
+    "n": 24,
+    "realized_roi": 126.27,
+    "ci_lo": -56.86,
+    "ci_hi": 399.53,
+    "ci_crosses_zero": true,
+    "hit_rate": 20.83,
+    "theoretical_ev_model": 215.81,
+    "theoretical_ev_vegas": -16.04,
+    "avg_combined_odds": 18.11,
+    "fold_breakdown": {
+      "fold_1": {
+        "n": 7,
+        "roi": 19.931415454488338,
+        "hits": 1
+      },
+      "fold_2": {
+        "n": 5,
+        "roi": 439.6152920918367,
+        "hits": 1
+      },
+      "fold_3": {
+        "n": 7,
+        "roi": 65.95272114207947,
+        "hits": 2
+      },
+      "fold_4": {
+        "n": 5,
+        "roi": 46.24517542996253,
+        "hits": 1
+      }
+    }
+  }
+]

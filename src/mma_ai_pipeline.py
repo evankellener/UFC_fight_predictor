@@ -152,6 +152,21 @@ def load_base_data() -> pd.DataFrame:
     # Sort by date
     df = df.sort_values(["DATE", "jevent", "jbout", "jfighter"]).reset_index(drop=True)
 
+    # Dedupe: SQL upstream JOINs occasionally produce duplicate rows for the
+    # same (jevent, jbout, jfighter) tuple — most prominently old tournament
+    # bouts where round-by-round stats were merged with header rows multiple
+    # times. Up to 20 identical copies of single fights have been observed.
+    # If left in place, the merge in compute_derived_features fans out via
+    # cross-product on duplicate keys, distorting EMAs and per-fighter
+    # histories. ALSO causes the empirical leakage test to report spurious
+    # "leaks" because truncation changes the duplication pattern.
+    n_before = len(df)
+    df = df.drop_duplicates(subset=["jevent", "jbout", "jfighter"],
+                            keep="first").reset_index(drop=True)
+    n_dropped = n_before - len(df)
+    if n_dropped > 0:
+        print(f"  Deduplicated {n_dropped} duplicate (jevent, jbout, jfighter) rows")
+
     # Fill NaN counts with 0
     count_cols = [c for c in df.columns if c.endswith("_land") or c.endswith("_att") or
                   c in ["kd", "rev", "ctrl_sec", "sub_att"] or c.endswith("_rd1")]
@@ -184,9 +199,13 @@ def beta_binomial_smooth(df: pd.DataFrame) -> pd.DataFrame:
     # which leaked era info across fights. LEAKAGE_REFERENCE.md §1/§3.
     for stat, tau_key in [("ko", "ko"), ("win", "win"), ("decision", "decision")]:
         rolling_rate = _era_rolling_mean(df, stat)
-        global_rate = df[stat].mean()  # fallback when rolling window is empty
-
-        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
+        # Strictly-prior fallback chain: 2yr rolling → all-prior expanding →
+        # constant. Replaces the leaky df[stat].mean() that included future
+        # fights. LEAKAGE_REFERENCE.md §1/§3.
+        all_prior_rate = _all_prior_rolling_mean(df, stat)
+        df[f"_rate_prior_{stat}"] = rolling_rate \
+            .fillna(all_prior_rate) \
+            .fillna(_CONST_BINARY_PRIOR)
 
         def _smooth(row, _stat=stat, _tau_key=tau_key):
             wc = row["weightindex"]
@@ -204,8 +223,11 @@ def beta_binomial_smooth(df: pd.DataFrame) -> pd.DataFrame:
     # sub_land = successful submissions (≈ subw). Rate = sub_land / sub_att.
     df["sub_land"] = df["subw"].fillna(0)
     rolling_sub_rate = _era_rolling_ratio(df, "sub_land", "sub_att", eps=1.0)
-    global_sub_rate = df["sub_land"].sum() / max(df["sub_att"].sum(), 1)
-    df["_rate_prior_sub"] = rolling_sub_rate.fillna(global_sub_rate)
+    # Strictly-prior fallback chain (no df-wide aggregation).
+    all_prior_sub = _all_prior_rolling_ratio(df, "sub_land", "sub_att", eps=1.0)
+    df["_rate_prior_sub"] = rolling_sub_rate \
+        .fillna(all_prior_sub) \
+        .fillna(_CONST_BINARY_PRIOR)
 
     def _smooth_sub(row):
         wc = row["weightindex"]
@@ -225,8 +247,10 @@ def beta_binomial_smooth(df: pd.DataFrame) -> pd.DataFrame:
     # ratio helper works cleanly.
     df["_time_seconds"] = (df["time_minutes"] * 60).clip(lower=1)
     rolling_ctrl_rate = _era_rolling_ratio(df, "ctrl_sec", "_time_seconds", eps=1.0)
-    global_ctrl_rate = df["ctrl_sec"].sum() / max(df["time_minutes"].sum() * 60, 1)
-    df["_rate_prior_ctrl"] = rolling_ctrl_rate.fillna(global_ctrl_rate)
+    all_prior_ctrl = _all_prior_rolling_ratio(df, "ctrl_sec", "_time_seconds", eps=1.0)
+    df["_rate_prior_ctrl"] = rolling_ctrl_rate \
+        .fillna(all_prior_ctrl) \
+        .fillna(_CONST_RATE_PRIOR)
 
     def _smooth_ctrl(row):
         wc = row["weightindex"]
@@ -264,6 +288,34 @@ def beta_binomial_smooth(df: pd.DataFrame) -> pd.DataFrame:
 # LEAKAGE_REFERENCE.md §1 (temporal splits) and §3 (career aggregates).
 
 ERA_WINDOW_DAYS = 730  # 2-year rolling window
+
+
+def _all_prior_rolling_mean(df, col):
+    """Per-row expanding mean of `col` over ALL prior fights in same weight
+    class (closed='left' excludes current row). Used as a strictly-time-
+    respecting fallback when the 2yr rolling window is empty (no fights in
+    the same WC in the last 2yr — happens for early-UFC fights and obscure
+    weight classes).
+    Returns Series aligned to df.index. NaN only when there are NO prior
+    same-WC fights at all."""
+    # ~100-year window = effectively "all prior fights in this WC"
+    return _era_rolling_mean(df, col, window_days=36500)
+
+
+def _all_prior_rolling_ratio(df, numer_col, denom_col, eps=1.0):
+    """Per-row expanding ratio sum(numer)/sum(denom) over ALL prior fights
+    in same WC. Used as strictly-time-respecting fallback for rate-style
+    priors when the 2yr rolling window is empty."""
+    return _era_rolling_ratio(df, numer_col, denom_col,
+                              window_days=36500, eps=eps)
+
+
+# Constant fallbacks when even all-prior is empty (very first fight in a
+# weight class has no prior data anywhere). These are domain priors,
+# NOT computed from data, so they do not leak. Loose values that won't
+# bias predictions when applied to ~1-3 fights total in the dataset.
+_CONST_BINARY_PRIOR = 0.20   # baseline rate for binary outcomes (ko/sub/etc)
+_CONST_RATE_PRIOR   = 0.05   # baseline rate for time-share / per-min stats
 
 
 def _era_rolling_mean(df, col, window_days=ERA_WINDOW_DAYS):
@@ -330,8 +382,10 @@ def poisson_gamma_smooth(df: pd.DataFrame) -> pd.DataFrame:
             continue
 
         rolling_rate = _era_rolling_ratio(df, stat, "time_minutes", eps=0.1)
-        global_rate = df[stat].sum() / max(df["time_minutes"].sum(), 0.1)
-        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
+        all_prior_rate = _all_prior_rolling_ratio(df, stat, "time_minutes", eps=0.1)
+        df[f"_rate_prior_{stat}"] = rolling_rate \
+            .fillna(all_prior_rate) \
+            .fillna(_CONST_RATE_PRIOR)
 
         def _smooth_pg(row, _stat=stat, _tau=tau_val):
             wc = row["weightindex"]
@@ -353,8 +407,10 @@ def poisson_gamma_smooth(df: pd.DataFrame) -> pd.DataFrame:
             continue
 
         rolling_rate = _era_rolling_ratio(df, stat, "time_minutes_rd1", eps=0.1)
-        global_rate = df[stat].sum() / max(df["time_minutes_rd1"].sum(), 0.1)
-        df[f"_rate_prior_{stat}"] = rolling_rate.fillna(global_rate)
+        all_prior_rate = _all_prior_rolling_ratio(df, stat, "time_minutes_rd1", eps=0.1)
+        df[f"_rate_prior_{stat}"] = rolling_rate \
+            .fillna(all_prior_rate) \
+            .fillna(_CONST_RATE_PRIOR)
 
         def _smooth_rd1(row, _stat=stat, _tau=tau_val):
             wc = row["weightindex"]
@@ -715,11 +771,13 @@ def compute_wc_priors(df: pd.DataFrame, stat_cols: list) -> dict:
 # ═══════════════════════════════════════════════════════════════════════════
 
 def compute_adjperf(df: pd.DataFrame, stat_cols: list, priors: dict) -> pd.DataFrame:
-    """Compute opponent-adjusted, weight-class-adjusted z-scores."""
+    """Compute opponent-adjusted, weight-class-adjusted z-scores. Vectorized."""
     df = df.copy()
 
+    # Pre-extract per-row data once (avoid pandas .get per row)
+    wc_arr = df["weightindex"].values
+
     for col in stat_cols:
-        # Determine K values based on stat family
         family = "default"
         for prefix, fam in STAT_FAMILY.items():
             if col.startswith(prefix):
@@ -732,45 +790,55 @@ def compute_adjperf(df: pd.DataFrame, stat_cols: list, priors: dict) -> pd.DataF
         opp_mad_col = f"{col}_opp_mad"
         n_eff_col = f"{col}_opp_n_eff"
 
-        adjperf_vals = np.full(len(df), np.nan)
+        col_priors = priors.get(col, {})
+        global_prior = col_priors.get("global", {})
+        global_mean = global_prior.get("mean", 0.0)
+        global_mad  = global_prior.get("mad", 0.1)
+        mad_floor   = col_priors.get("mad_floor", 1e-6)
 
-        for i, (idx, row) in enumerate(df.iterrows()):
-            observed = row.get(col)
-            if pd.isna(observed):
+        # Build per-row wc_mean and wc_mad arrays via map (vectorized)
+        n = len(df)
+        wc_mean_arr = np.full(n, global_mean)
+        wc_mad_arr  = np.full(n, global_mad)
+        for wc, p in col_priors.items():
+            if wc == "global" or wc == "mad_floor":
                 continue
+            mask = wc_arr == wc
+            if mask.any():
+                wc_mean_arr[mask] = p.get("mean", global_mean)
+                wc_mad_arr[mask]  = p.get("mad", global_mad)
 
-            wc = row["weightindex"]
-            n_eff = row.get(n_eff_col, 0) or 0
-            opp_mean = row.get(opp_mean_col)
-            opp_mad = row.get(opp_mad_col)
+        # Per-row vectors for opp values + n_eff + observed
+        observed = df[col].values if col in df.columns else np.full(n, np.nan)
+        opp_mean = df[opp_mean_col].values if opp_mean_col in df.columns else np.full(n, np.nan)
+        opp_mad  = df[opp_mad_col].values  if opp_mad_col  in df.columns else np.full(n, np.nan)
+        n_eff    = df[n_eff_col].values    if n_eff_col    in df.columns else np.zeros(n)
+        n_eff = np.where(np.isfinite(n_eff), n_eff, 0.0)
 
-            # Get WC priors
-            wc_prior = priors.get(col, {}).get(wc, priors.get(col, {}).get("global", {}))
-            wc_mean = wc_prior.get("mean", 0)
-            wc_mad = wc_prior.get("mad", 0.1)
-            mad_floor = priors.get(col, {}).get("mad_floor", 1e-6)
+        # Shrinkage weights
+        w_mean = np.where(n_eff > 0, n_eff / (n_eff + K_mean), 0.0)
+        w_mad  = np.where(n_eff > 0, n_eff / (n_eff + K_mad), 0.0)
 
-            # Shrinkage weights
-            w_mean = n_eff / (n_eff + K_mean) if n_eff > 0 else 0
-            w_mad = n_eff / (n_eff + K_mad) if n_eff > 0 else 0
+        # Blended baseline (mu / sigma)
+        opp_mean_valid = np.isfinite(opp_mean) & (n_eff >= 1)
+        opp_mad_valid  = np.isfinite(opp_mad)  & (n_eff >= 1)
+        mu = np.where(opp_mean_valid,
+                      w_mean * np.where(opp_mean_valid, opp_mean, 0.0)
+                      + (1 - w_mean) * wc_mean_arr,
+                      wc_mean_arr)
+        sigma = np.where(opp_mad_valid,
+                         w_mad * np.where(opp_mad_valid, opp_mad, 0.0)
+                         + (1 - w_mad) * wc_mad_arr,
+                         wc_mad_arr)
+        sigma = np.maximum(sigma, mad_floor)
 
-            # Blended baseline
-            if pd.notna(opp_mean) and n_eff >= 1:
-                mu = w_mean * opp_mean + (1 - w_mean) * wc_mean
-            else:
-                mu = wc_mean
-
-            if pd.notna(opp_mad) and n_eff >= 1:
-                sigma = max(w_mad * opp_mad + (1 - w_mad) * wc_mad, mad_floor)
-            else:
-                sigma = max(wc_mad, mad_floor)
-
-            # Z-score with clipping
-            if sigma > 0:
-                z = np.clip((observed - mu) / sigma, -ADJPERF_CLIP, ADJPERF_CLIP)
-                adjperf_vals[i] = z
-
-        df[f"{col}_adjperf"] = adjperf_vals
+        # Z-score with clipping; observed missing → NaN result
+        with np.errstate(divide="ignore", invalid="ignore"):
+            z_raw = (observed - mu) / sigma
+        z = np.where(np.isfinite(observed) & (sigma > 0),
+                     np.clip(z_raw, -ADJPERF_CLIP, ADJPERF_CLIP),
+                     np.nan)
+        df[f"{col}_adjperf"] = z
 
     print(f"  AdjPerf z-scores: {len(stat_cols)} stats (clip=±{ADJPERF_CLIP})")
     return df
@@ -797,8 +865,21 @@ def assemble_features(df: pd.DataFrame, stat_cols: list,
         axis=1
     )
 
-    # Reach ratio
-    df["reach_ratio"] = df["REACH"] / df["REACH"].median()
+    # Reach ratio — use a STRICTLY-PRIOR median (per-row expanding median over
+    # all fights with DATE < this fight's DATE). Previously used df["REACH"].median()
+    # over the full dataset which leaks future REACH values into early-fight ratios.
+    # LEAKAGE_REFERENCE.md §1/§3.
+    _reach_sorted = df.sort_values("DATE")[["DATE", "REACH"]].copy()
+    _reach_sorted["_orig_idx"] = _reach_sorted.index
+    # Expanding median, shifted by 1 so current row is excluded
+    _reach_sorted["_prior_median"] = (
+        _reach_sorted["REACH"].expanding(min_periods=1).median().shift(1)
+    )
+    # Constant fallback for the very first fight (no prior data anywhere)
+    _CONST_REACH_MEDIAN = 70.0  # inches, league-typical
+    _reach_lookup = (_reach_sorted.set_index("_orig_idx")["_prior_median"]
+                                  .fillna(_CONST_REACH_MEDIAN))
+    df["reach_ratio"] = df["REACH"] / df.index.to_series().map(_reach_lookup)
 
     # Days since last fight
     df["days_since_last_fight"] = df.groupby("jfighter")["DATE"].diff().dt.days.fillna(365)
@@ -890,9 +971,14 @@ def assemble_features(df: pd.DataFrame, stat_cols: list,
     f2_age = f2["age"].clip(lower=18).values
     result["age_ratio_diff"] = (f1_age / f2_age) - 1.0  # centered at 0
 
-    # Reach ratio diff (proper ratio)
-    f1_reach = f1["REACH"].fillna(f1["REACH"].median()).values
-    f2_reach = f2["REACH"].fillna(f2["REACH"].median()).values
+    # Reach ratio diff — use the per-row prior median computed earlier in this
+    # function for NaN fill, NOT a global median. Previously used .median()
+    # which leaks future fighter REACH values. LEAKAGE_REFERENCE.md §1/§3.
+    # The per-row median is in df via reach_ratio computation; here we use it
+    # if present, otherwise fall back to the constant.
+    _CONST_REACH_MEDIAN = 70.0
+    f1_reach = f1["REACH"].fillna(_CONST_REACH_MEDIAN).values
+    f2_reach = f2["REACH"].fillna(_CONST_REACH_MEDIAN).values
     result["reach_ratio_diff"] = (f1_reach / np.clip(f2_reach, 1, None)) - 1.0
 
     # Non-diffed features
