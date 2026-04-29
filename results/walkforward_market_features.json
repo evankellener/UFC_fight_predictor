@@ -1,0 +1,122 @@
+{
+  "config": {
+    "train_start": "2016-01-01",
+    "train_end": "2024-10-01",
+    "test_end": "2026-04-01",
+    "threshold": 3,
+    "recency_lambda": 1.2,
+    "model": "ElasticNet",
+    "C": 0.05,
+    "l1_ratio": 0.5,
+    "n_train": 1907,
+    "n_test": 391,
+    "new_features": [
+      "home_advantage_diff",
+      "travel_distance_diff_km",
+      "tz_diff_diff_hr",
+      "is_main_event",
+      "card_position_norm_career_diff",
+      "stance_mismatch",
+      "southpaw_advantage_diff"
+    ],
+    "new_features_usable": [
+      "home_advantage_diff",
+      "travel_distance_diff_km",
+      "tz_diff_diff_hr",
+      "is_main_event",
+      "card_position_norm_career_diff"
+    ]
+  },
+  "results": {
+    "baseline": {
+      "n_features": 207,
+      "n_active": 37,
+      "new_features_tested": [],
+      "active_new": [],
+      "pooled_uncal": {
+        "n": 391,
+        "model_acc_pct": 69.56521739130434,
+        "log_loss": 0.5974694773547754,
+        "brier": 0.205033095912769,
+        "auc": 0.7531857279388339
+      },
+      "pooled_beta": {
+        "n": 391,
+        "model_acc_pct": 70.84398976982096,
+        "log_loss": 0.5961126739644778,
+        "brier": 0.2047718500007299,
+        "auc": 0.7531857279388339
+      },
+      "rookie_uncal": {
+        "n": 114,
+        "model_acc_pct": 68.42105263157895,
+        "log_loss": 0.5851892364105742,
+        "brier": 0.1999452325094435,
+        "auc": 0.7772682607271536
+      },
+      "rookie_beta": {
+        "n": 114,
+        "model_acc_pct": 73.68421052631578,
+        "log_loss": 0.5728014946477942,
+        "brier": 0.19385654753331272,
+        "auc": 0.7772682607271536
+      }
+    },
+    "market": {
+      "n_features": 212,
+      "n_active": 40,
+      "new_features_tested": [
+        "home_advantage_diff",
+        "travel_distance_diff_km",
+        "tz_diff_diff_hr",
+        "is_main_event",
+        "card_position_norm_career_diff"
+      ],
+      "active_new": [
+        "home_advantage_diff",
+        "card_position_norm_career_diff"
+      ],
+      "pooled_uncal": {
+        "n": 391,
+        "model_acc_pct": 69.82097186700767,
+        "log_loss": 0.5966888467578934,
+        "brier": 0.20465268392977498,
+        "auc": 0.7542741849846023
+      },
+      "pooled_beta": {
+        "n": 391,
+        "model_acc_pct": 71.0997442455243,
+        "log_loss": 0.5953405119161892,
+        "brier": 0.20439322344352842,
+        "auc": 0.7542741849846023
+      },
+      "rookie_uncal": {
+        "n": 114,
+        "model_acc_pct": 69.2982456140351,
+        "log_loss": 0.5853036036287175,
+        "brier": 0.20000097477553896,
+        "auc": 0.7775958074025549
+      },
+      "rookie_beta": {
+        "n": 114,
+        "model_acc_pct": 74.56140350877193,
+        "log_loss": 0.5726045502966388,
+        "brier": 0.19379101944850446,
+        "auc": 0.7775958074025549
+      }
+    },
+    "rookie_vegas_acc_pct": 80.7017543859649
+  },
+  "decision": {
+    "passed": true,
+    "active_new": [
+      "home_advantage_diff",
+      "card_position_norm_career_diff"
+    ],
+    "delta_ll": -0.0007721620482885605,
+    "delta_brier": -0.0003786265572014724,
+    "delta_auc": 0.0010884570457684317
+  },
+  "audit": "docs/audits/walkforward_market_features.md",
+  "total_runtime_min": 0.6
+}

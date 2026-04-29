@@ -1,0 +1,90 @@
+{
+  "config": {
+    "train_start": "2016-01-01",
+    "train_end": "2024-10-01",
+    "test_end": "2026-04-01",
+    "threshold": 3,
+    "recency_lambda": 1.2,
+    "model": "ElasticNet",
+    "C": 0.05,
+    "l1_ratio": 0.5,
+    "n_train": 1907,
+    "n_test": 391,
+    "new_features": [
+      "priors_diff",
+      "min_priors_x",
+      "max_priors_x",
+      "priors_log_ratio",
+      "rookie_diff",
+      "both_rookie"
+    ]
+  },
+  "results": {
+    "baseline": {
+      "n_active": 37,
+      "n_features": 209,
+      "added_features": [],
+      "pooled_uncal": {
+        "n": 391,
+        "model_acc_pct": 69.56521739130434,
+        "log_loss": 0.5974694700517569,
+        "brier": 0.20503309101347492
+      },
+      "pooled_beta": {
+        "n": 391,
+        "model_acc_pct": 70.84398976982096,
+        "log_loss": 0.5961126896820604,
+        "brier": 0.20477185481110047
+      },
+      "rookie_uncal": {
+        "n": 114,
+        "model_acc_pct": 68.42105263157895,
+        "log_loss": 0.5851892081049377,
+        "brier": 0.19994522022302766
+      },
+      "rookie_beta": {
+        "n": 114,
+        "model_acc_pct": 73.68421052631578,
+        "log_loss": 0.5728014494727336,
+        "brier": 0.19385652614315674
+      }
+    },
+    "priors": {
+      "n_active": 37,
+      "n_features": 215,
+      "added_features": [
+        "min_priors_x",
+        "max_priors_x",
+        "priors_log_ratio",
+        "both_rookie"
+      ],
+      "pooled_uncal": {
+        "n": 391,
+        "model_acc_pct": 69.56521739130434,
+        "log_loss": 0.5974694685799922,
+        "brier": 0.20503308939539636
+      },
+      "pooled_beta": {
+        "n": 391,
+        "model_acc_pct": 70.84398976982096,
+        "log_loss": 0.5961127318153894,
+        "brier": 0.20477187133535327
+      },
+      "rookie_uncal": {
+        "n": 114,
+        "model_acc_pct": 68.42105263157895,
+        "log_loss": 0.5851891936622257,
+        "brier": 0.19994521403911852
+      },
+      "rookie_beta": {
+        "n": 114,
+        "model_acc_pct": 73.68421052631578,
+        "log_loss": 0.5728013932761076,
+        "brier": 0.19385649650543413
+      }
+    },
+    "rookie_vegas_acc_pct": 80.7017543859649
+  },
+  "audit": "docs/audits/walkforward_priors_features.md",
+  "total_runtime_min": 1.4
+}

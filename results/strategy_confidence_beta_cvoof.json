@@ -1,0 +1,96 @@
+{
+  "prediction_column": "p_B_beta",
+  "n_cells_swept": 14,
+  "bonferroni_cut": 0.0035714285714285718,
+  "n_predictions": 386,
+  "mc_vegas_null": {
+    "all_picks": {
+      "n": 386,
+      "observed_roi_pct": 6.138045997174912,
+      "mc_p": 0.006399360063993601,
+      "mc_mean_roi_pct": -4.1178254704982376,
+      "mc_std_roi_pct": 4.10939814780129
+    },
+    "ev_positive": {
+      "n": 144,
+      "observed_roi_pct": 9.04781563171971,
+      "mc_p": 0.0627937206279372,
+      "mc_mean_roi_pct": -4.006535900949892,
+      "mc_std_roi_pct": 8.485110859773156
+    },
+    "edge_5pp": {
+      "n": 119,
+      "observed_roi_pct": 11.442423894030366,
+      "mc_p": 0.0580941905809419,
+      "mc_mean_roi_pct": -4.0676241054781235,
+      "mc_std_roi_pct": 9.76987618585713
+    },
+    "edge_10pp": {
+      "n": 82,
+      "observed_roi_pct": 4.403983527639065,
+      "mc_p": 0.25417458254174585,
+      "mc_mean_roi_pct": -4.07090232256734,
+      "mc_std_roi_pct": 12.835479483722779
+    }
+  },
+  "label_shuffle": {
+    "all_picks": {
+      "n": 386,
+      "perm_p": 1.0,
+      "perm_mean_roi_pct": 14.864840541138655,
+      "perm_std_roi_pct": 1.289514931816147
+    },
+    "ev_positive": {
+      "n": 144,
+      "perm_p": 1.0,
+      "perm_mean_roi_pct": 22.19890368479838,
+      "perm_std_roi_pct": 2.8999110937581016
+    },
+    "edge_5pp": {
+      "n": 119,
+      "perm_p": 1.0,
+      "perm_mean_roi_pct": 26.002360433518955,
+      "perm_std_roi_pct": 3.280758612529773
+    },
+    "edge_10pp": {
+      "n": 82,
+      "perm_p": 0.9997000299970003,
+      "perm_mean_roi_pct": 17.690541537253814,
+      "perm_std_roi_pct": 4.222508121054435
+    }
+  },
+  "preregistered_heldout": {
+    "heldout_start": "2025-10-01",
+    "val_per_strategy": {
+      "all_picks": {
+        "n": 264,
+        "win_pct": 71.5909090909091,
+        "roi_pct": 8.48185518268779
+      },
+      "ev_positive": {
+        "n": 103,
+        "win_pct": 61.165048543689316,
+        "roi_pct": 12.837266685172294
+      },
+      "edge_5pp": {
+        "n": 83,
+        "win_pct": 62.65060240963856,
+        "roi_pct": 19.971026024613426
+      },
+      "edge_10pp": {
+        "n": 58,
+        "win_pct": 53.44827586206896,
+        "roi_pct": 12.649554996421655
+      }
+    },
+    "chosen_strategy": "edge_5pp",
+    "heldout_n": 36,
+    "heldout_win_pct": 50.0,
+    "heldout_roi_pct": -8.220742129258353,
+    "heldout_roi_ci95": [
+      -41.81698697543247,
+      25.08631953270613
+    ],
+    "heldout_mc_p": 0.5833416658334166
+  }
+}
