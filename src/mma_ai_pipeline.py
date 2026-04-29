@@ -1003,7 +1003,7 @@ def assemble_features(df: pd.DataFrame, stat_cols: list,
     # Extract per-fighter latest individual stats (from pre-diff data)
     print("  Extracting per-fighter latest stats...")
     # Combine f1 and f2 back into a single df with all fighters
-    all_fighters = pd.concat([f1.reset_index(), f2.reset_index()])
+    all_fighters = pd.concat([f1.reset_index(), f2.reset_index()], ignore_index=True)
     all_fighters["DATE"] = pd.to_datetime(all_fighters["DATE"])
     latest_idx = all_fighters.groupby("jfighter")["DATE"].idxmax()
     latest = all_fighters.loc[latest_idx]
