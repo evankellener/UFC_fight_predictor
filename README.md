@@ -1,30 +1,38 @@
 # UFC Fight Predictor
 
-A machine-learning system that predicts UFC fight outcomes using fighter statistics, Elo ratings, recency-weighted feature engineering, and a logistic-regression + XGBoost blend.
+A machine-learning system that predicts UFC fight outcomes using fighter statistics, Elo ratings, recency-weighted feature engineering, and a λ-ensemble of logistic-regression models.
 
 The system trains on per-bout post-fight statistics with strict walk-forward validation. The production model is served via a Flask web app and a CLI.
 
 ## Current performance
 
-Walk-forward backtest (8 folds, 2025-04 → 2026-04, n=517 bouts) at the production blend weight:
+Walk-forward production baseline (commit `b075af2`, λ-ensemble shipped), 4 folds × 6-month test, n=522:
 
 | Metric    | Value |
 |-----------|-------|
-| Accuracy  | 67.9% |
-| Log loss  | 0.6206 |
-| Brier     | 0.2154 |
-| AUC       | 0.7080 |
+| Accuracy  | 71.78% |
+| Log loss  | 0.5880 |
+| Brier     | 0.2030 |
+| +EV ROI   | +14.08% on 256 bets vs Vegas at t=3 |
 
-Past-year +EV betting strategy: **+14% ROI** on the production ensemble (n=256 bets). Numbers are walk-forward and re-verified before every model release; see `LEAKAGE_REFERENCE.md` for the canonical leakage checklist used to keep them honest.
+Component ablations:
+- **λ=1.20** alone: 71.61% acc, +11.47% ROI, 228 bets, LL 0.5973
+- **λ=0.13** alone: 69.87% acc, +10.32% ROI, 300 bets, LL 0.6056
+- **Ensemble** (50/50 calibrated avg): **71.78% / +14.08% / LL 0.5880** ★
+
+Numbers are walk-forward and re-verified before every model release; see [LEAKAGE_REFERENCE.md](LEAKAGE_REFERENCE.md) for the canonical leakage checklist.
 
 ## Architecture
 
-- **Features**: fighter post-fight stats with sigmoid-weighted recency averages, Elo (overall + style — striking, grappling, finishing), age curve, physical attributes (height/weight/reach ratios), and matchup interactions. Population priors are computed era-rolling on a 2-year window to prevent leakage.
-- **Model**: ElasticNet logistic regression (`C=0.05`, `l1_ratio=0.5`) blended with XGBoost. The blend is retrained every 6 months in walk-forward.
-- **Calibration**: temperature-scaled out-of-fold (`T=0.7238`).
-- **Inference**: a separate "parlay" model (`λ=1.50`) is served alongside the general model (`λ=1.20`) for parlay picks.
+- **Features**: 207 features — fighter post-fight stats with sigmoid-weighted recency averages, Elo (overall + style: striking, grappling, finishing), Gaussian age-peak curve, physical attributes (height/weight/reach ratios), and matchup interactions. Population priors are 2-year era-rolling to prevent leakage.
+- **Production model**: λ-ensemble of two ElasticNet LRs (`C=0.05`, `l1_ratio=0.5`) trained with symmetric (doubled) rows:
+  - λ=1.20 recency weight (era-drift resilience)
+  - λ=0.13 recency weight (broad history)
+  - Each calibrated with its own temperature scaler, then averaged 50/50.
+- **Parlay model**: separate single LR at λ=1.50, 4-year training window, served on the parlay UI panel (walk-forward 8-fold × 3-mo: +36% pooled ROI on parlay-favorable subset).
+- **Retrain cadence**: every 6 months in walk-forward.
 
-The Flask app (`app/app.py`) loads artifacts from `app/models/blend/` and falls back to the legacy `UFCFightPredictor` if blend pickles are absent.
+The Flask app (`app/app.py`) uses `app/predictor_v2.py` loading from `app/models/blend_v2/`. The legacy `app/blend_predictor.py` (LR + XGBoost 50/50) is kept as a fallback only — XGBoost on this feature stack was tested in Tier B and **rejected** (lost to LR on every metric).
 
 ## Repository layout
 
@@ -32,9 +40,11 @@ The Flask app (`app/app.py`) loads artifacts from `app/models/blend/` and falls 
 UFC_fight_predictor/
 ├── app/                          # Flask web app (production)
 │   ├── app.py                    # Flask service
-│   ├── blend_predictor.py        # LR + XGBoost blend
-│   ├── model.py                  # Legacy predictor (fallback)
-│   ├── models/blend/             # Production model artifacts
+│   ├── predictor_v2.py           # Production λ-ensemble (λ=1.20 + λ=0.13) + λ=1.50 parlay
+│   ├── blend_predictor.py        # Legacy LR+XGB fallback (XGB rejected in Tier B)
+│   ├── model.py                  # Legacy predictor (last-resort fallback)
+│   ├── models/blend_v2/          # Production artifacts (lr*.pkl, calibrators, bios)
+│   ├── models/blend/             # Legacy artifacts (kept for fallback)
 │   └── templates/                # index, card_builder, historical_card_builder
 ├── src/                          # Pipeline, training, legacy CLI
 │   ├── mma_ai_pipeline.py        # Feature build (priors, smoothing, Elo)
