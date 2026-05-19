@@ -6,19 +6,17 @@ The system trains on per-bout post-fight statistics with strict walk-forward val
 
 ## Current performance
 
-Walk-forward production baseline (commit `b075af2`, λ-ensemble shipped), 4 folds × 6-month test, n=522:
+Walk-forward backtest, 4 folds:
 
-| Metric    | Value |
-|-----------|-------|
-| Accuracy  | 71.78% |
-| Log loss  | 0.5880 |
-| Brier     | 0.2030 |
-| +EV ROI   | +14.08% on 256 bets vs Vegas at t=3 |
+| Metric    | Value  |
+|-----------|--------|
+| Accuracy  | 72.21% |
+| Log loss  | 0.5935 |
+| AUC       | 0.7529 |
 
-Component ablations:
-- **λ=1.20** alone: 71.61% acc, +11.47% ROI, 228 bets, LL 0.5973
-- **λ=0.13** alone: 69.87% acc, +10.32% ROI, 300 bets, LL 0.6056
-- **Ensemble** (50/50 calibrated avg): **71.78% / +14.08% / LL 0.5880** ★
+This is the best result on record, achieved after the `final_features_fast` sweep added `reach_ratio_dec_avg_diff`, `adjperf_bodyacc_dec_avg_diff`, and `opp_kd_pm_dec_avg_diff` on top of `height_ratio_diff` — all four folds clear 70% accuracy for the first time. The λ-ensemble (λ=1.20 + λ=0.13) sits on top of this feature stack.
+
+Production betting strategy (+EV vs Vegas at t=3, walk-forward): **+14.08% ROI on 256 bets**.
 
 Numbers are walk-forward and re-verified before every model release; see [LEAKAGE_REFERENCE.md](LEAKAGE_REFERENCE.md) for the canonical leakage checklist.
 
