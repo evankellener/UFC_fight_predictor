@@ -1,209 +1,139 @@
 # UFC Fight Predictor
 
-A machine learning application that predicts the outcome of UFC fights using fighter statistics, ELO ratings, and advanced feature engineering.
+A machine-learning system that predicts UFC fight outcomes using fighter statistics, Elo ratings, recency-weighted feature engineering, and a logistic-regression + XGBoost blend.
 
-## Features
+The system trains on per-bout post-fight statistics with strict walk-forward validation. The production model is served via a Flask web app and a CLI.
 
-- **Fight Prediction**: Predict the winner of upcoming UFC fights
-- **ELO Decay**: Accounts for fighters who haven't fought in over 365 days
-- **Age Calculation**: Uses date of birth for accurate age calculations
-- **Postcomp Stats**: Uses post-fight statistics from previous fights to predict upcoming fights
-- **Multiple Interfaces**: Command-line, web app, and Python API
-- **Model Validation**: Validates predictions on test data
+## Current performance
 
-## Installation
+Walk-forward backtest (8 folds, 2025-04 → 2026-04, n=517 bouts) at the production blend weight:
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd UFC_fight_predictor
-```
+| Metric    | Value |
+|-----------|-------|
+| Accuracy  | 67.9% |
+| Log loss  | 0.6206 |
+| Brier     | 0.2154 |
+| AUC       | 0.7080 |
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+Past-year +EV betting strategy: **+14% ROI** on the production ensemble (n=256 bets). Numbers are walk-forward and re-verified before every model release; see `LEAKAGE_REFERENCE.md` for the canonical leakage checklist used to keep them honest.
 
-3. Ensure you have the required data files:
-   - `data/tmp/final.csv` - Main fighter data
-   - `data/tmp/final_data_with_dob.csv` - Date of birth data (optional)
+## Architecture
 
-## Usage
+- **Features**: fighter post-fight stats with sigmoid-weighted recency averages, Elo (overall + style — striking, grappling, finishing), age curve, physical attributes (height/weight/reach ratios), and matchup interactions. Population priors are computed era-rolling on a 2-year window to prevent leakage.
+- **Model**: ElasticNet logistic regression (`C=0.05`, `l1_ratio=0.5`) blended with XGBoost. The blend is retrained every 6 months in walk-forward.
+- **Calibration**: temperature-scaled out-of-fold (`T=0.7238`).
+- **Inference**: a separate "parlay" model (`λ=1.50`) is served alongside the general model (`λ=1.20`) for parlay picks.
 
-### Command Line Interface
+The Flask app (`app/app.py`) loads artifacts from `app/models/blend/` and falls back to the legacy `UFCFightPredictor` if blend pickles are absent.
 
-#### Basic Prediction
-```bash
-python src/ufc_predictor_cli.py --fighter1 "Nassourdine Imavov" --fighter2 "Caio Borralho" --weight-class 10
-```
-
-#### With Custom Date
-```bash
-python src/ufc_predictor_cli.py --fighter1 "Jon Jones" --fighter2 "Stipe Miocic" --weight-class 12 --fight-date "2024-06-15"
-```
-
-#### List Available Fighters
-```bash
-python src/ufc_predictor_cli.py --list-fighters
-```
-
-#### List Weight Classes
-```bash
-python src/ufc_predictor_cli.py --list-weight-classes
-```
-
-#### Get Fighter Info
-```bash
-python src/ufc_predictor_cli.py --fighter-info "Jon Jones"
-```
-
-#### Validate Model
-```bash
-python src/ufc_predictor_cli.py --validate
-```
-
-### Web Application
-
-1. Start the web server:
-```bash
-python src/ufc_predictor_web_app.py
-```
-
-2. Open your browser and go to `http://localhost:5000`
-
-3. Use the web interface to:
-   - Select fighters from dropdown menus
-   - Choose weight class
-   - Set fight date
-   - View prediction results with detailed statistics
-
-### Python API
-
-```python
-from src.ufc_fight_predictor_app import UFCFightPredictor
-from datetime import datetime, timedelta
-
-# Initialize predictor
-predictor = UFCFightPredictor()
-
-# Make a prediction
-fighter1 = "Nassourdine Imavov"
-fighter2 = "Caio Borralho"
-weight_class = 10  # Middleweight
-fight_date = datetime.now() + timedelta(days=30)
-
-result = predictor.predict_fight(fighter1, fighter2, weight_class, fight_date)
-
-print(f"Predicted Winner: {result['predicted_winner']}")
-print(f"Confidence: {result['confidence']:.1%}")
-print(f"American Odds: {result['american_odds']}")
-```
-
-## Weight Classes
-
-| ID | Weight Class |
-|----|--------------|
-| 1  | Strawweight (115 lbs) |
-| 2  | Women's Flyweight (125 lbs) |
-| 3  | Women's Bantamweight (135 lbs) |
-| 4  | Women's Featherweight (145 lbs) |
-| 5  | Flyweight (125 lbs) |
-| 6  | Bantamweight (135 lbs) |
-| 7  | Featherweight (145 lbs) |
-| 8  | Lightweight (155 lbs) |
-| 9  | Welterweight (170 lbs) |
-| 10 | Middleweight (185 lbs) |
-| 11 | Light Heavyweight (205 lbs) |
-| 12 | Heavyweight (265 lbs) |
-
-## Model Details
-
-### Features Used
-The model uses 33 features including:
-- Age and age ratio differences
-- ELO ratings (overall, striking, grappling)
-- Fight statistics (takedowns, strikes, accuracy)
-- Physical attributes (height, weight, reach)
-- Recent performance metrics
-
-### Training Data
-- **Training Period**: 2009-2023
-- **Test Period**: 2024-present
-- **Algorithm**: Logistic Regression with regularization
-- **Preprocessing**: Standard scaling and median imputation
-
-### Key Features
-
-1. **Postcomp Stats Usage**: Uses post-fight statistics from previous fights to predict upcoming fights
-2. **ELO Decay**: Applies 0.978 decay factor per year for fighters inactive >365 days
-3. **Age Calculation**: Calculates exact age from date of birth when available
-4. **Feature Mapping**: Maps precomp features to postcomp stats with fallbacks
-
-## Example Prediction
-
-For Nassourdine Imavov vs Caio Borralho at 185lbs:
-
-```bash
-python src/ufc_predictor_cli.py --fighter1 "Nassourdine Imavov" --fighter2 "Caio Borralho" --weight-class 10
-```
-
-This will:
-1. Get each fighter's most recent postcomp stats
-2. Apply ELO decay if needed (Borralho's last fight was 2024-08-24, so his ELO is decayed)
-3. Calculate age ratios from DOB
-4. Make prediction using the trained model
-5. Generate an inference example CSV
-
-## Validation
-
-The model can be validated on test data to ensure the prediction process works correctly:
-
-```bash
-python src/ufc_predictor_cli.py --validate
-```
-
-This runs predictions on all test data fights using the same process as real predictions, providing accuracy metrics and sample results.
-
-## File Structure
+## Repository layout
 
 ```
 UFC_fight_predictor/
-├── src/
-│   ├── ufc_fight_predictor_app.py      # Main predictor class
-│   ├── ufc_predictor_cli.py            # Command-line interface
-│   ├── ufc_predictor_web_app.py        # Flask web application
-│   └── templates/
-│       └── ufc_predictor.html          # Web interface template
-├── data/
-│   └── tmp/
-│       ├── final.csv                   # Main fighter data
-│       └── final_data_with_dob.csv     # Date of birth data
-├── requirements.txt                    # Python dependencies
-└── README.md                          # This file
+├── app/                          # Flask web app (production)
+│   ├── app.py                    # Flask service
+│   ├── blend_predictor.py        # LR + XGBoost blend
+│   ├── model.py                  # Legacy predictor (fallback)
+│   ├── models/blend/             # Production model artifacts
+│   └── templates/                # index, card_builder, historical_card_builder
+├── src/                          # Pipeline, training, legacy CLI
+│   ├── mma_ai_pipeline.py        # Feature build (priors, smoothing, Elo)
+│   ├── ensemble_model_best.py    # Production ensemble training
+│   ├── ufc_predictor_cli.py      # Legacy CLI
+│   └── ufc_predictor_web_app.py  # Legacy Flask app
+├── notebooks/
+│   └── 01_Fight_Predictor_Pipeline.ipynb   # Main driver notebook
+├── data/                         # SQLite + intermediate CSVs (most are gitignored)
+├── scripts/                      # Scrapers, backtests, experiments
+├── LEAKAGE_REFERENCE.md          # Leakage checklist (must read before new features)
+├── MMA_AI_SPEC.md                # Canonical pipeline spec
+├── Procfile / railway.json       # Railway deployment
+└── requirements.txt
 ```
 
-## API Endpoints (Web App)
+## Setup
 
-- `GET /` - Main prediction interface
-- `GET /api/fighters` - List available fighters
-- `GET /api/weight-classes` - List weight classes
-- `GET /api/fighter-versions/<name>` - Get fighter fight history
-- `POST /api/predict` - Make fight prediction
-- `GET /api/validate` - Run model validation
-- `GET /api/stats` - Get model statistics
+```bash
+git clone https://github.com/evankellener/UFC_Fight_Predictor.git
+cd UFC_Fight_Predictor
+pip install -r requirements.txt
+```
+
+The repo ships with `app/models/blend/*.pkl` so the Flask app runs out of the box. Full training requires `data/sqlite_db/sqlite_scrapper.db` (not committed — too large); the slim production DB (`app.db`) is gitignored but generated by `scripts/refresh_app_artifacts.sh`.
+
+## Running
+
+### Web app (production blend)
+
+```bash
+cd app
+gunicorn --bind 0.0.0.0:5000 app:app
+# or for local dev:
+python app.py
+```
+
+Then open `http://localhost:5000`. The UI includes:
+- Predict Card — full-card picks with per-fight model + parlay-model probabilities and edge vs Vegas
+- Model Insights — blend sweep, per-fold metrics, calibration, tier drill-down, head-to-head vs Vegas
+- Card Builder / Historical Card Builder — manual card construction
+
+### Legacy CLI
+
+```bash
+python src/ufc_predictor_cli.py --fighter1 "Islam Makhachev" --fighter2 "Arman Tsarukyan" --weight-class 8
+python src/ufc_predictor_cli.py --list-fighters
+python src/ufc_predictor_cli.py --validate
+```
+
+### Training / experiments
+
+The main driver is the notebook, not a `__main__` script:
+
+```bash
+jupyter notebook notebooks/01_Fight_Predictor_Pipeline.ipynb
+```
+
+Standalone scripts (in `scripts/`) cover scraping (`fightodds_scraper.py`, `scrape_fighter_nationality.py`), backtesting (`run_backtest_and_save.py`, `agreement_strategy_backtest.py`, `ev_strategy_backtest.py`), and feature experiments.
+
+## Weight classes
+
+| ID | Class                       |
+|----|-----------------------------|
+| 1  | Women's Strawweight (115)   |
+| 2  | Women's Flyweight (125)     |
+| 3  | Women's Bantamweight (135)  |
+| 4  | Women's Featherweight (145) |
+| 5  | Flyweight (125)             |
+| 6  | Bantamweight (135)          |
+| 7  | Featherweight (145)         |
+| 8  | Lightweight (155)           |
+| 9  | Welterweight (170)          |
+| 10 | Middleweight (185)          |
+| 11 | Light Heavyweight (205)     |
+| 12 | Heavyweight (265)           |
+
+## Web API
+
+- `GET /api/fighters` — fighter list (with UFC fight count, rookie flag)
+- `GET /api/weight-classes` — weight class table
+- `POST /api/predict` — fight prediction (general + parlay model)
+- `GET /api/model/summary` — production metrics
+- `GET /api/model/blend_sweep` — accuracy/LL/Brier/AUC across XGB weights 0.0–1.0
+- `GET /api/model/folds` — per-fold walk-forward metrics
+- `GET /api/model/calibration` — 5%-bucket calibration curve
+- `GET /api/model/tier_bouts?tier=65-75` — bouts in a confidence tier
+- `GET /api/model/feature_importance` — coefficients / gain
+
+## Deployment
+
+The app deploys to Railway via `Procfile` + `railway.json`. The slim production DB is built from the full scraper DB by `scripts/refresh_app_artifacts.sh`, which also regenerates `app/models/blend/backtest_predictions.json` (the source of truth for the Model Insights endpoints).
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+1. Read `LEAKAGE_REFERENCE.md` before adding any feature. Walk-forward only.
+2. Open a branch, run the notebook end-to-end, and report walk-forward metrics + ROI in the PR description.
+3. Don't recompute population priors or smoothing on the full dataset — see the `prior_cutoff` pattern in `src/mma_ai_pipeline.py`.
 
 ## Disclaimer
 
-This is a machine learning model for educational and research purposes. Fight predictions should not be used for gambling or betting purposes. Always gamble responsibly.
+Educational and research project. Do not use these predictions for gambling. Past performance does not predict future results.
